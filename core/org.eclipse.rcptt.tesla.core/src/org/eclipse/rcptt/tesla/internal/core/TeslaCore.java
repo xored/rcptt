@@ -16,16 +16,17 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.service.debug.DebugOptions;
+import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
+import org.eclipse.ui.internal.Workbench;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
 
-import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
-
 /**
  * The activator class controls the plug-in life cycle
  */
+@SuppressWarnings("restriction")
 public class TeslaCore extends Plugin {
 
 	// The plug-in ID
@@ -138,5 +139,13 @@ public class TeslaCore extends Plugin {
 	public static boolean isEclipse4() {
 		Version version = getPlatformVersion();
 		return version.getMajor() == 3 && version.getMinor() >= 103;
+	}
+	
+	
+	public static boolean isE4() {
+		Bundle bundle = Platform.getBundle("org.eclipse.e4.core.contexts");
+		boolean isE4ContextsBundleActive = bundle == null ? false : Bundle.ACTIVE == bundle.getState();
+		boolean isCompatibilityLayerDisabled = Workbench.getInstance() == null;
+		return isCompatibilityLayerDisabled && isEclipse4() && isE4ContextsBundleActive;
 	}
 }

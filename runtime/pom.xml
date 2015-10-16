@@ -46,6 +46,24 @@
        </modules>
        </profile>
        </profiles-->
+
+<profiles>
+
+	<profile>
+		<id>runtime4x</id>
+		<modules>
+			<module>org.eclipse.rcptt.runtime.ui.model.e4x</module>
+			<module>org.eclipse.rcptt.runtime.ui.aspects</module>
+		</modules>
+	</profile>
+	<profile>
+		<id>full</id>
+		<modules>
+			<module>updates</module>
+		</modules>
+	</profile>
+</profiles>
+
   <groupId>org.eclipse.rcptt</groupId>
   <version>2.1.0-SNAPSHOT</version>
   <artifactId>rcptt.runtime</artifactId>
@@ -55,6 +73,7 @@
     <module>tesla</module>
     <module>ecl</module>
     <module>org.eclipse.rcptt.runtime.ui</module>
+    
     <module>org.eclipse.rcptt.core.ecl.debug</module>
     <module>contexts</module>
     <module>verifications</module>

@@ -6,7 +6,9 @@ Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: org.eclipse.rcptt.tesla.core.am.Activator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.swt
+ org.eclipse.swt,
+ org.eclipse.ui.workbench
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.rcptt.tesla.core.am
+Import-Package: org.eclipse.rcptt.tesla.internal.core

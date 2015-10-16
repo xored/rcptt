@@ -28,8 +28,8 @@ import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 
 public abstract class UIRunnable<T> {
 	private enum RunningState {
@@ -42,7 +42,8 @@ public abstract class UIRunnable<T> {
 		final RunningState[] processed = new RunningState[] { RunningState.Starting };
 		final Throwable[] exception = new Throwable[] { null };
 		final UIJobCollector collector = new UIJobCollector();
-		final Display display = PlatformUI.getWorkbench().getDisplay();
+		//e4 support
+		final Display display = EclipseWorkbenchProvider.getProvider().getDisplay();
 		Job.getJobManager().addJobChangeListener(collector);
 		collector.enable();
 		ITeslaEventListener listener = null;
@@ -56,7 +57,7 @@ public abstract class UIRunnable<T> {
 					
 					boolean resultValue = true;
 					
-					if (!PlatformUI.getWorkbench().getDisplay()
+					if (!display
 							.equals(Display.getCurrent())) {
 						resultValue = false;
 					}
@@ -163,8 +164,8 @@ public abstract class UIRunnable<T> {
 		return TeslaLimits.getContextRunnableTimeout();
 	}
 
-	private static void storeTimeoutInReport(final Display display,
-			UIJobCollector collector) throws InterruptedException {
+	private static void storeTimeoutInReport(final Display display, UIJobCollector collector)
+			throws InterruptedException {
 		final ReportBuilder currentBuilder = ReportManager.getBuilder();
 		final boolean infoCollected[] = { false };
 		display.asyncExec(new Runnable() {
@@ -173,8 +174,7 @@ public abstract class UIRunnable<T> {
 				if (client != null) {
 					client.collectLastFailureInformation();
 				}
-				ReportScreenshotProvider.takeScreenshot(display, true,
-						"timeout");
+				ReportScreenshotProvider.takeScreenshot(display, true, "timeout");
 			}
 		});
 	}
