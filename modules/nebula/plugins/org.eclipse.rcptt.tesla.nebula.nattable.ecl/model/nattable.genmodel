@@ -3,13 +3,13 @@
     modelDirectory="/org.eclipse.rcptt.tesla.nebula.nattable.ecl/gen-src"
     modelPluginID="org.eclipse.rcptt.tesla.nebula.nattable.ecl" modelName="Nattable"
     modelPluginClass="" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
-    usedGenPackages="../../org.eclipse.rcptt.tesla.core/models/controls.genmodel#//ui ../../org.eclipse.rcptt.ecl.core/model/ecl.genmodel#//core platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.rcptt.tesla.core/models/info.genmodel#//info ../../org.eclipse.rcptt.tesla.core/models/rawProtocol.genmodel#//raw ../../org.eclipse.rcptt.tesla.core/models/protocol.genmodel#//protocol ../../org.eclipse.rcptt.tesla.ecl/model/tesla.genmodel#//model"
-    operationReflection="true" importOrganizing="true">
+    featureMapWrapperInternalInterface="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.5" usedGenPackages="../../org.eclipse.rcptt.tesla.core/models/controls.genmodel#//ui ../../org.eclipse.rcptt.ecl.core/model/ecl.genmodel#//core platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.rcptt.tesla.core/models/info.genmodel#//info ../../org.eclipse.rcptt.tesla.core/models/rawProtocol.genmodel#//raw ../../org.eclipse.rcptt.tesla.core/models/protocol.genmodel#//protocol ../../org.eclipse.rcptt.tesla.ecl/model/tesla.genmodel#//model"
+    operationReflection="false" importOrganizing="true">
   <foreignModel>nattable.ecore</foreignModel>
   <genPackages prefix="Nattable" basePackage="org.eclipse.rcptt.tesla.nebula.nattable.ecl"
       disposableProviderFactory="true" ecorePackage="nattable.ecore#/">
     <genClasses ecoreClass="nattable.ecore#//NebulaNatTable"/>
-    <genClasses ecoreClass="nattable.ecore#//GetNebulaNatTable"/>
+    <genClasses ecoreClass="nattable.ecore#//GetNatTable"/>
   </genPackages>
 </genmodel:GenModel>

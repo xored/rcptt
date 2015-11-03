@@ -80,8 +80,8 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 				return createNebulaNatTableAdapter();
 			}
 			@Override
-			public Adapter caseGetNebulaNatTable(GetNebulaNatTable object) {
-				return createGetNebulaNatTableAdapter();
+			public Adapter caseGetNatTable(GetNatTable object) {
+				return createGetNatTableAdapter();
 			}
 			@Override
 			public Adapter casePropertyNodeList(PropertyNodeList object) {
@@ -138,16 +138,16 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable <em>Get Nebula Nat Table</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable <em>Get Nat Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable
 	 * @generated
 	 */
-	public Adapter createGetNebulaNatTableAdapter() {
+	public Adapter createGetNatTableAdapter() {
 		return null;
 	}
 

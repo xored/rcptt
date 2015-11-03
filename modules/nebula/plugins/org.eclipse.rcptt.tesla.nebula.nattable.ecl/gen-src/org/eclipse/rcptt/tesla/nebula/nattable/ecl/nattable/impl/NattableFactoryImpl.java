@@ -57,7 +57,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case NattablePackage.NEBULA_NAT_TABLE: return createNebulaNatTable();
-			case NattablePackage.GET_NEBULA_NAT_TABLE: return createGetNebulaNatTable();
+			case NattablePackage.GET_NAT_TABLE: return createGetNatTable();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -78,9 +78,9 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GetNebulaNatTable createGetNebulaNatTable() {
-		GetNebulaNatTableImpl getNebulaNatTable = new GetNebulaNatTableImpl();
-		return getNebulaNatTable;
+	public GetNatTable createGetNatTable() {
+		GetNatTableImpl getNatTable = new GetNatTableImpl();
+		return getNatTable;
 	}
 
 	/**

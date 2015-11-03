@@ -14,6 +14,8 @@ import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.NebulaNatTableElementKinds;
 
+import com.google.common.base.Objects;
+
 public class NatTableCellElement extends NatTablePartElement {
 
 	private final ILayerCell cell;
@@ -39,11 +41,7 @@ public class NatTableCellElement extends NatTablePartElement {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((natTable == null) ? 0 : natTable.hashCode());
-		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
-		return result;
+		return Objects.hashCode(cell, natTable);
 	}
 
 	@Override
@@ -55,17 +53,7 @@ public class NatTableCellElement extends NatTablePartElement {
 		if (getClass() != obj.getClass())
 			return false;
 		NatTableCellElement other = (NatTableCellElement) obj;
-		if (cell == null) {
-			if (other.cell != null)
-				return false;
-		} else if (!cell.equals(other.cell))
-			return false;
-		if (natTable == null) {
-			if (other.natTable != null)
-				return false;
-		} else if (!natTable.equals(other.natTable))
-			return false;
-		return true;
+		return Objects.equal(cell, other.cell) && Objects.equal(natTable, other.natTable);
 	}
 
 }

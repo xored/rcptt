@@ -11,7 +11,7 @@ import org.eclipse.rcptt.tesla.core.ui.UiPackage;
 
 import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
 
-import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable;
@@ -35,7 +35,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass getNebulaNatTableEClass = null;
+	private EClass getNatTableEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -115,8 +115,8 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGetNebulaNatTable() {
-		return getNebulaNatTableEClass;
+	public EClass getGetNatTable() {
+		return getNatTableEClass;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		// Create classes and their features
 		nebulaNatTableEClass = createEClass(NEBULA_NAT_TABLE);
 
-		getNebulaNatTableEClass = createEClass(GET_NEBULA_NAT_TABLE);
+		getNatTableEClass = createEClass(GET_NAT_TABLE);
 	}
 
 	/**
@@ -185,12 +185,12 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 
 		// Add supertypes to classes
 		nebulaNatTableEClass.getESuperTypes().add(theUiPackage.getControl());
-		getNebulaNatTableEClass.getESuperTypes().add(theTeslaPackage.getSelector());
+		getNatTableEClass.getESuperTypes().add(theTeslaPackage.getSelector());
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(nebulaNatTableEClass, NebulaNatTable.class, "NebulaNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(getNebulaNatTableEClass, GetNebulaNatTable.class, "GetNebulaNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(getNatTableEClass, GetNatTable.class, "GetNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

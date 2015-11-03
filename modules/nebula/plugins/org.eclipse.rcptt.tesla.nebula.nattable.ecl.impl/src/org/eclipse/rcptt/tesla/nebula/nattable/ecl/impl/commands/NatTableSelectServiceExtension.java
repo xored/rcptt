@@ -33,12 +33,12 @@ public class NatTableSelectServiceExtension extends NatTableBaseActionService im
 		String path = (String) command.getItems().get(0);
 		if (path == null || path.isEmpty()) {
 			throw new CoreException(new Status(IStatus.ERROR, NatTablePlugin.PLUGIN_ID,
-					"Indexes for colomns is't specefied for NatTable select command"));
+					"Indexes for columns aren't specified for NatTable select command"));
 		}
 
 		if (!NatTableCellPosition.isValidPath(path)) {
 			throw new CoreException(new Status(IStatus.ERROR, NatTablePlugin.PLUGIN_ID,
-					"NatTable select comand should have following path format: (indexColumn:indexRow)"));
+					"NatTable select command should have following path format: (indexColumn:indexRow)"));
 		}
 
 		ControlHandler control = command.getControl();

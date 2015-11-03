@@ -22,16 +22,16 @@ import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Selector;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.NebulaNatTableElementKinds;
-import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable;
 
-public class GetNebulaNatTableService implements ICommandService {
+public class GetNatTableService implements ICommandService {
 
 	@Override
 	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
 		TeslaBridge.waitDelay();
 
 		ControlHandler handler = TeslaFactory.eINSTANCE.createControlHandler();
-		GetNebulaNatTable selector = (GetNebulaNatTable) command;
+		GetNatTable selector = (GetNatTable) command;
 		handler.setParent(selector.getParent());
 		handler.setAfter(selector.getAfter());
 
@@ -45,10 +45,10 @@ public class GetNebulaNatTableService implements ICommandService {
 	}
 
 	private static String customKindIdFrom(Selector s) {
-		if (s instanceof GetNebulaNatTable)
+		if (s instanceof GetNatTable)
 			return NebulaNatTableElementKinds.NAT_TABLE;
 
-		throw new IllegalArgumentException(GetNebulaNatTableService.class.getName() + " unknown selector type");
+		throw new IllegalArgumentException(GetNatTableService.class.getName() + " unknown selector type");
 	}
 
 }

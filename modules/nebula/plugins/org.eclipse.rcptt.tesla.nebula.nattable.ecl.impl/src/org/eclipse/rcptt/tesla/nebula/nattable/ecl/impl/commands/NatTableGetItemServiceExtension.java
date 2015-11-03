@@ -23,7 +23,7 @@ public class NatTableGetItemServiceExtension implements IScriptletExtension {
 
 		String path = ge.getPath();
 		if (path == null || path.isEmpty()) {
-			throw new InterruptedException("Indexes for colomns is't specefied for NatTable get-item command");
+			throw new InterruptedException("Indexes for columns aren't specified for NatTable get-item command");
 		}
 
 		if (!NatTableCellPosition.isValidPath(path)) {

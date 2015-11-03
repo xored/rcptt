@@ -44,7 +44,7 @@ public class NatTableSelectionProcessor {
 				boolean result = natTable.doCommand(natTableCommand);
 
 				if (!result) {
-					throw new Exception("Can't set specefied selection");
+					throw new Exception("Can't set specified selection");
 				}
 			}
 

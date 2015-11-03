@@ -13,27 +13,27 @@ import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
 
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 
-import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Get Nebula Nat Table</b></em>'.
+ * An implementation of the model object '<em><b>Get Nat Table</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl#getAfter <em>After</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl#getIndex <em>Index</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl#getParent <em>Parent</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl#getAfter <em>After</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl#getIndex <em>Index</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl#getParent <em>Parent</em>}</li>
+ * </ul>
  *
  * @generated
  */
-public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTable {
+public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -119,7 +119,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GetNebulaNatTableImpl() {
+	protected GetNatTableImpl() {
 		super();
 	}
 
@@ -130,7 +130,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return NattablePackage.Literals.GET_NEBULA_NAT_TABLE;
+		return NattablePackage.Literals.GET_NAT_TABLE;
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 		String oldId = id;
 		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NEBULA_NAT_TABLE__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NAT_TABLE__ID, oldId, id));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 			after = (ControlHandler)eResolveProxy(oldAfter);
 			if (after != oldAfter) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NattablePackage.GET_NEBULA_NAT_TABLE__AFTER, oldAfter, after));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NattablePackage.GET_NAT_TABLE__AFTER, oldAfter, after));
 			}
 		}
 		return after;
@@ -189,7 +189,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 		ControlHandler oldAfter = after;
 		after = newAfter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NEBULA_NAT_TABLE__AFTER, oldAfter, after));
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NAT_TABLE__AFTER, oldAfter, after));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 		String oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NEBULA_NAT_TABLE__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NAT_TABLE__TYPE, oldType, type));
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 		Integer oldIndex = index;
 		index = newIndex;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NEBULA_NAT_TABLE__INDEX, oldIndex, index));
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NAT_TABLE__INDEX, oldIndex, index));
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 			parent = (ControlHandler)eResolveProxy(oldParent);
 			if (parent != oldParent) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NattablePackage.GET_NEBULA_NAT_TABLE__PARENT, oldParent, parent));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NattablePackage.GET_NAT_TABLE__PARENT, oldParent, parent));
 			}
 		}
 		return parent;
@@ -269,7 +269,7 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 		ControlHandler oldParent = parent;
 		parent = newParent;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NEBULA_NAT_TABLE__PARENT, oldParent, parent));
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_NAT_TABLE__PARENT, oldParent, parent));
 	}
 
 	/**
@@ -280,16 +280,16 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case NattablePackage.GET_NEBULA_NAT_TABLE__ID:
+			case NattablePackage.GET_NAT_TABLE__ID:
 				return getId();
-			case NattablePackage.GET_NEBULA_NAT_TABLE__AFTER:
+			case NattablePackage.GET_NAT_TABLE__AFTER:
 				if (resolve) return getAfter();
 				return basicGetAfter();
-			case NattablePackage.GET_NEBULA_NAT_TABLE__TYPE:
+			case NattablePackage.GET_NAT_TABLE__TYPE:
 				return getType();
-			case NattablePackage.GET_NEBULA_NAT_TABLE__INDEX:
+			case NattablePackage.GET_NAT_TABLE__INDEX:
 				return getIndex();
-			case NattablePackage.GET_NEBULA_NAT_TABLE__PARENT:
+			case NattablePackage.GET_NAT_TABLE__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
 		}
@@ -304,19 +304,19 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case NattablePackage.GET_NEBULA_NAT_TABLE__ID:
+			case NattablePackage.GET_NAT_TABLE__ID:
 				setId((String)newValue);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__AFTER:
+			case NattablePackage.GET_NAT_TABLE__AFTER:
 				setAfter((ControlHandler)newValue);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__TYPE:
+			case NattablePackage.GET_NAT_TABLE__TYPE:
 				setType((String)newValue);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__INDEX:
+			case NattablePackage.GET_NAT_TABLE__INDEX:
 				setIndex((Integer)newValue);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__PARENT:
+			case NattablePackage.GET_NAT_TABLE__PARENT:
 				setParent((ControlHandler)newValue);
 				return;
 		}
@@ -331,19 +331,19 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case NattablePackage.GET_NEBULA_NAT_TABLE__ID:
+			case NattablePackage.GET_NAT_TABLE__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__AFTER:
+			case NattablePackage.GET_NAT_TABLE__AFTER:
 				setAfter((ControlHandler)null);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__TYPE:
+			case NattablePackage.GET_NAT_TABLE__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__INDEX:
+			case NattablePackage.GET_NAT_TABLE__INDEX:
 				setIndex(INDEX_EDEFAULT);
 				return;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__PARENT:
+			case NattablePackage.GET_NAT_TABLE__PARENT:
 				setParent((ControlHandler)null);
 				return;
 		}
@@ -358,15 +358,15 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case NattablePackage.GET_NEBULA_NAT_TABLE__ID:
+			case NattablePackage.GET_NAT_TABLE__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case NattablePackage.GET_NEBULA_NAT_TABLE__AFTER:
+			case NattablePackage.GET_NAT_TABLE__AFTER:
 				return after != null;
-			case NattablePackage.GET_NEBULA_NAT_TABLE__TYPE:
+			case NattablePackage.GET_NAT_TABLE__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case NattablePackage.GET_NEBULA_NAT_TABLE__INDEX:
+			case NattablePackage.GET_NAT_TABLE__INDEX:
 				return INDEX_EDEFAULT == null ? index != null : !INDEX_EDEFAULT.equals(index);
-			case NattablePackage.GET_NEBULA_NAT_TABLE__PARENT:
+			case NattablePackage.GET_NAT_TABLE__PARENT:
 				return parent != null;
 		}
 		return super.eIsSet(featureID);
@@ -392,4 +392,4 @@ public class GetNebulaNatTableImpl extends CommandImpl implements GetNebulaNatTa
 		return result.toString();
 	}
 
-} //GetNebulaNatTableImpl
+} //GetNatTableImpl

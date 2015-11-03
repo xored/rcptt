@@ -3,8 +3,8 @@
 <plugin>
    <extension point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.GetNebulaNatTableService"
-            name="GetNebulaNatTable"
+            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.GetNatTableService"
+            name="GetNatTable"
             namespace="http://eclipse.org/rcptt/tesla/nebula/nattable/ecl">
       </scriptlet>
    </extension>

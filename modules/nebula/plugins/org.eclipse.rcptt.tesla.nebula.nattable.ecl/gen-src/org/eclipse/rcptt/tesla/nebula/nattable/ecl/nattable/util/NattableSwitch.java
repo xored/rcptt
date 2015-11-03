@@ -2,10 +2,10 @@
  */
 package org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.util;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
+import java.util.List;
 
-import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.rcptt.ecl.core.Command;
 
@@ -30,7 +30,7 @@ import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.*;
  * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage
  * @generated
  */
-public class NattableSwitch<T> extends Switch<T> {
+public class NattableSwitch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -52,16 +52,14 @@ public class NattableSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Checks whether this is a switch for the given package.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
-	 * @return whether this is a switch for the given package.
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	@Override
-	protected boolean isSwitchFor(EPackage ePackage) {
-		return ePackage == modelPackage;
+	public T doSwitch(EObject theEObject) {
+		return doSwitch(theEObject.eClass(), theEObject);
 	}
 
 	/**
@@ -71,7 +69,26 @@ public class NattableSwitch<T> extends Switch<T> {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-	@Override
+	protected T doSwitch(EClass theEClass, EObject theEObject) {
+		if (theEClass.eContainer() == modelPackage) {
+			return doSwitch(theEClass.getClassifierID(), theEObject);
+		}
+		else {
+			List<EClass> eSuperTypes = theEClass.getESuperTypes();
+			return
+				eSuperTypes.isEmpty() ?
+					defaultCase(theEObject) :
+					doSwitch(eSuperTypes.get(0), theEObject);
+		}
+	}
+
+	/**
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @generated
+	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 			case NattablePackage.NEBULA_NAT_TABLE: {
@@ -83,11 +100,11 @@ public class NattableSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NattablePackage.GET_NEBULA_NAT_TABLE: {
-				GetNebulaNatTable getNebulaNatTable = (GetNebulaNatTable)theEObject;
-				T result = caseGetNebulaNatTable(getNebulaNatTable);
-				if (result == null) result = caseSelector(getNebulaNatTable);
-				if (result == null) result = caseCommand(getNebulaNatTable);
+			case NattablePackage.GET_NAT_TABLE: {
+				GetNatTable getNatTable = (GetNatTable)theEObject;
+				T result = caseGetNatTable(getNatTable);
+				if (result == null) result = caseSelector(getNatTable);
+				if (result == null) result = caseCommand(getNatTable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -111,17 +128,17 @@ public class NattableSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Get Nebula Nat Table</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Get Nat Table</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Get Nebula Nat Table</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Get Nat Table</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGetNebulaNatTable(GetNebulaNatTable object) {
+	public T caseGetNatTable(GetNatTable object) {
 		return null;
 	}
 
@@ -211,7 +228,6 @@ public class NattableSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
-	@Override
 	public T defaultCase(EObject object) {
 		return null;
 	}

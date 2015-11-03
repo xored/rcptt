@@ -31,13 +31,13 @@ public interface NattableFactory extends EFactory {
 	NebulaNatTable createNebulaNatTable();
 
 	/**
-	 * Returns a new object of class '<em>Get Nebula Nat Table</em>'.
+	 * Returns a new object of class '<em>Get Nat Table</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Get Nebula Nat Table</em>'.
+	 * @return a new object of class '<em>Get Nat Table</em>'.
 	 * @generated
 	 */
-	GetNebulaNatTable createGetNebulaNatTable();
+	GetNatTable createGetNatTable();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -1,5 +1,6 @@
 package org.eclipse.rcptt.tesla.nebula.nattable.model;
 
+import com.google.common.base.Objects;
 
 public class NatTableCellPosition {
 
@@ -50,7 +51,10 @@ public class NatTableCellPosition {
 
 		NatTableCellPosition position = (NatTableCellPosition) obj;
 
-		return row == position.getRow() && col == position.getCol();
+		return row == position.row
+				&& col == position.col
+				&& isIndexColumnCoordinate == position.isIndexRowCoordinate
+				&& isIndexRowCoordinate == position.isIndexRowCoordinate;
 	}
 
 	public boolean isIndexColumnCoordinate() {
@@ -67,6 +71,11 @@ public class NatTableCellPosition {
 
 	public void setIsIndexRowCoordinate(boolean isIndexRowCoordinate) {
 		this.isIndexRowCoordinate = isIndexRowCoordinate;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(col, row, isIndexColumnCoordinate, isIndexRowCoordinate);
 	}
 
 }

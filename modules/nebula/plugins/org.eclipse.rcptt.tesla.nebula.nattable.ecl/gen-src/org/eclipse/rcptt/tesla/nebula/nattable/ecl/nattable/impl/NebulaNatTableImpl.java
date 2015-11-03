@@ -13,8 +13,6 @@ import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Nebula Nat Table</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

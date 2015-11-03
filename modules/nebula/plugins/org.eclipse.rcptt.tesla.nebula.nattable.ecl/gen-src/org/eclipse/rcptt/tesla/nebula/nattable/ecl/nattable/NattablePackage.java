@@ -4,7 +4,9 @@ package org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.rcptt.tesla.core.ui.UiPackage;
+
 import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
 
 /**
@@ -14,7 +16,6 @@ import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
- *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -157,17 +158,14 @@ public interface NattablePackage extends EPackage {
 	int NEBULA_NAT_TABLE_FEATURE_COUNT = UiPackage.CONTROL_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl
-	 * <em>Get Nebula Nat Table</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl <em>Get Nat Table</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl
-	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.NattablePackageImpl#getGetNebulaNatTable()
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.NattablePackageImpl#getGetNatTable()
 	 * @generated
 	 */
-	int GET_NEBULA_NAT_TABLE = 1;
+	int GET_NAT_TABLE = 1;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -176,7 +174,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__HOST = TeslaPackage.SELECTOR__HOST;
+	int GET_NAT_TABLE__HOST = TeslaPackage.SELECTOR__HOST;
 
 	/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -185,7 +183,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__BINDINGS = TeslaPackage.SELECTOR__BINDINGS;
+	int GET_NAT_TABLE__BINDINGS = TeslaPackage.SELECTOR__BINDINGS;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -194,7 +192,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__ID = TeslaPackage.SELECTOR__ID;
+	int GET_NAT_TABLE__ID = TeslaPackage.SELECTOR__ID;
 
 	/**
 	 * The feature id for the '<em><b>After</b></em>' reference.
@@ -203,7 +201,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__AFTER = TeslaPackage.SELECTOR__AFTER;
+	int GET_NAT_TABLE__AFTER = TeslaPackage.SELECTOR__AFTER;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -212,7 +210,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__TYPE = TeslaPackage.SELECTOR__TYPE;
+	int GET_NAT_TABLE__TYPE = TeslaPackage.SELECTOR__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -221,7 +219,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__INDEX = TeslaPackage.SELECTOR__INDEX;
+	int GET_NAT_TABLE__INDEX = TeslaPackage.SELECTOR__INDEX;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -230,16 +228,17 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE__PARENT = TeslaPackage.SELECTOR__PARENT;
+	int GET_NAT_TABLE__PARENT = TeslaPackage.SELECTOR__PARENT;
 
 	/**
-	 * The number of structural features of the '<em>Get Nebula Nat Table</em>' class.
+	 * The number of structural features of the '<em>Get Nat Table</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NEBULA_NAT_TABLE_FEATURE_COUNT = TeslaPackage.SELECTOR_FEATURE_COUNT + 0;
+	int GET_NAT_TABLE_FEATURE_COUNT = TeslaPackage.SELECTOR_FEATURE_COUNT + 0;
+
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable <em>Nebula Nat Table</em>}'.
@@ -252,14 +251,14 @@ public interface NattablePackage extends EPackage {
 	EClass getNebulaNatTable();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable <em>Get Nebula Nat Table</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable <em>Get Nat Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Get Nebula Nat Table</em>'.
-	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNebulaNatTable
+	 * @return the meta object for class '<em>Get Nat Table</em>'.
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable
 	 * @generated
 	 */
-	EClass getGetNebulaNatTable();
+	EClass getGetNatTable();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -276,7 +275,6 @@ public interface NattablePackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
-	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
@@ -295,14 +293,14 @@ public interface NattablePackage extends EPackage {
 		EClass NEBULA_NAT_TABLE = eINSTANCE.getNebulaNatTable();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl <em>Get Nebula Nat Table</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl <em>Get Nat Table</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNebulaNatTableImpl
-		 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.NattablePackageImpl#getGetNebulaNatTable()
+		 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetNatTableImpl
+		 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.NattablePackageImpl#getGetNatTable()
 		 * @generated
 		 */
-		EClass GET_NEBULA_NAT_TABLE = eINSTANCE.getGetNebulaNatTable();
+		EClass GET_NAT_TABLE = eINSTANCE.getGetNatTable();
 
 	}
 

@@ -218,9 +218,8 @@ public class NatTableHelper {
 	}
 
 	/**
-	 * 
-	 * @param path
-	 * @return
+	 * Parses a string representation of a cell position in a {@link NatTable} in the form x:y, and returns the
+	 * corresponding {@link NatTableCellPosition}.
 	 */
 	public static NatTableCellPosition parsePath(String path) {
 		NatTableCellPosition position = new NatTableCellPosition();
@@ -250,11 +249,7 @@ public class NatTableHelper {
 	}
 
 	/**
-	 * 
-	 * @param natTable
-	 * @param position
-	 * @param isPositionCooridinateRequired
-	 * @return
+	 * Returns a string representation of the given {@link NatTable} cell, in the form x:y.
 	 */
 	public static String getPath(NatTable natTable, NatTableCellPosition position, Boolean isPositionCooridinateRequired) {
 		// position coordinates
@@ -274,7 +269,6 @@ public class NatTableHelper {
 			} else {
 				path.append(natTable.getLayer().getRowIndexByPosition(position.getRow()));
 			}
-
 
 			return path.toString();
 		}
