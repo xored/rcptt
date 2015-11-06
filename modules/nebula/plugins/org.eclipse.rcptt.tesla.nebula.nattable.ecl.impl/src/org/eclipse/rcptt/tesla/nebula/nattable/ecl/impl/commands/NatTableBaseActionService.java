@@ -15,9 +15,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.ecl.impl.AbstractActionService;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.NebulaNatTableElementKinds;
 
 public abstract class NatTableBaseActionService extends AbstractActionService {
 
@@ -28,11 +30,15 @@ public abstract class NatTableBaseActionService extends AbstractActionService {
 	}
 
 	protected static ViewerUIElement getNatTableUIElement(ControlHandler control) throws CoreException {
-		ViewerUIElement element = new ViewerUIElement(TeslaBridge.find(control),
-				TeslaBridge.getPlayer());
+		ViewerUIElement element = new ViewerUIElement(findNatTableElement(control), TeslaBridge.getPlayer());
 		TeslaBridge.storeLastControlUIElement(element);
 		return element;
 	}
 
-	
+	private static Element findNatTableElement(ControlHandler control) throws CoreException {
+		if (NebulaNatTableElementKinds.NAT_TABLE_CELL.equals(control.getCustomKindId())) {
+			control = control.getParent();
+		}
+		return TeslaBridge.find(control);
+	}
 }

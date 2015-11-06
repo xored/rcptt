@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.rcptt.tesla.nebula.nattable.NattablePackage"
+            uri="http://eclipse.org/rcptt/tesla/nebula/nattable">
+      </package>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated nattableTesla -->
+      <package
+            uri="http://eclipse.org/rcptt/tesla/nebula/nattable"
+            class="org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage"
+            genModel="model/nattableTesla.genmodel"/>
+   </extension>
+
+</plugin>

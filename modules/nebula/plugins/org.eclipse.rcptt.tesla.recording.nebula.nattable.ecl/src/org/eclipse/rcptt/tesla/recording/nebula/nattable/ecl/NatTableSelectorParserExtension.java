@@ -18,7 +18,7 @@ import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.recording.core.ecl.ISelectorParserExtension;
 
 /**
- * A parser extension for the {@code get-nebula-nat-parser} command.
+ * A parser extension for the {@code get-nat-table} command.
  */
 public class NatTableSelectorParserExtension implements ISelectorParserExtension {
 

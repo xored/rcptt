@@ -13,7 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.tesla.recording.aspects.swt,
  org.eclipse.rcptt.logging,
  org.eclipse.rcptt.util,
- org.eclipse.rcptt.util.swt
+ org.eclipse.rcptt.util.swt,
+ org.eclipse.rcptt.tesla.nebula.nattable,
+ com.google.guava
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.nebula.widgets.nattable,

@@ -118,7 +118,9 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 				break;
 			case ProtocolPackage.ACTIVATE_CELL_EDITOR:
 				ActivateCellEditor activateCell = (ActivateCellEditor) command;
-				if (activateCell.getElement().getKind().equals(NebulaNatTableElementKinds.NAT_TABLE)) {
+				String kind = activateCell.getElement().getKind();
+				if (NebulaNatTableElementKinds.NAT_TABLE.equals(kind)
+						|| NebulaNatTableElementKinds.NAT_TABLE_CELL.equals(kind)) {
 					return NatTableCellEditProcessor.executeActivateCell(activateCell, mapper, id, getPlayer());
 				}
 				break;
@@ -225,7 +227,6 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 			org.eclipse.rcptt.tesla.core.ui.Widget result) {
 		return mapWidget(element, result);
 	}
-	
 	
 	private SelectResponse createFailedSelect(String msg) {
 		SelectResponse response = ProtocolFactory.eINSTANCE

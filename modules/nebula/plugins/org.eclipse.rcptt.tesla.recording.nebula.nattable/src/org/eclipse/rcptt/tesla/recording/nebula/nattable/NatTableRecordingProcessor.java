@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.nebula.nattable;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
@@ -20,6 +22,8 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.nebula.nattable.NatTableHelper;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nebula.nattable.processors.NatTableProcessor;
+import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
+import org.eclipse.rcptt.tesla.protocol.nattable.SetSelectionNatTable;
 import org.eclipse.rcptt.tesla.recording.aspects.IBasicSWTEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
@@ -30,6 +34,8 @@ import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
+
+import com.google.common.primitives.Ints;
 
 public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSWTEventListener,
 		ISWTModelMapperExtension {
@@ -50,7 +56,6 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 		super();
 		SWTEventManager.addListener(this);
 	}
-
 
 	@Override
 	public void recordEvent(Widget widget, int type, Event event) {
@@ -113,18 +118,16 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 	}
 
 	private void recordCellSelection(NatTable natTable, FindResult result, NatTableCellPosition position) {
-		ViewerUIElement element = new ViewerUIElement(result.element, getLocator().getRecorder());
-		boolean isPositionCooridinateRequired = NatTableHelper.isHeaderLayer(natTable, position.getCol(),
-				position.getRow());
-		String path = NatTableHelper.getPath(natTable, position, isPositionCooridinateRequired);
-		element.setSelection(path);
+		TeslaRecorder player = locator.getRecorder();
+		SetSelectionNatTable selection = NattableFactory.eINSTANCE.createSetSelectionNatTable();
+		selection.setRow(position.getRow());
+		selection.setColumn(position.getCol());
+		selection.setElement((result.element != null) ? (Element) EcoreUtil.copy(result.element) : null);
+		player.safeExecuteCommand(selection);
 	}
 
 	private boolean isInterestingEvent(int type) {
-		for (Integer u : interestingEvents)
-			if (u == type)
-				return true;
-		return false;
+		return Ints.contains(interestingEvents, type);
 	}
 
 
@@ -167,9 +170,6 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 	public int getInitLevel() {
 		return 20;
 	}
-
-	//
-
 
 	@Override
 	public org.eclipse.rcptt.tesla.core.ui.Widget mapExtraValues(SWTUIElement element,

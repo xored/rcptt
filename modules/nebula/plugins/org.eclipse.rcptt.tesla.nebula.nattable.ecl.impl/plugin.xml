@@ -21,6 +21,11 @@
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
+            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableGetCellServiceExtension"
+            name="GetCell"
+            namespace="http://eclipse.org/rcptt/tesla/ecl">
+      </scriptletExtension>
+      <scriptletExtension
             class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableCellActionServiceExtension"
             name="ActivateCellEdit"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
