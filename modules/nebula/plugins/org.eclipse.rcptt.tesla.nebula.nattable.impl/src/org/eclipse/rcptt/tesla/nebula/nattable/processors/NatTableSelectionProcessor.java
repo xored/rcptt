@@ -37,7 +37,7 @@ class NatTableSelectionProcessor {
 			NatTableCellPosition position = NatTableHelper.getPositionByPathPosition(natTable, sourcePosition);
 
 			if (NatTableHelper.isHeaderLayer(natTable, position.getCol(), position.getRow())) {
-				NatTableHelper.clickOnCell(natTable, position, player);
+				NatTableHelper.clickOnCell(natTable, position.getCol(), position.getRow(), player);
 			} else {
 				ILayerCommand natTableCommand = new SelectCellCommand(natTable, position.getCol(), position.getRow(),
 						false, false);

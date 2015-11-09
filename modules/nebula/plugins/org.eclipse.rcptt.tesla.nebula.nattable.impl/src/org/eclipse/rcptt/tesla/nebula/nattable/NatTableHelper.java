@@ -124,8 +124,8 @@ public class NatTableHelper {
 	/**
 	 * Fire single left click event on cell
 	 */
-	public static void clickOnCell(final NatTable natTable, NatTableCellPosition position, final SWTUIPlayer player) {
-		ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
+	public static void clickOnCell(final NatTable natTable, int col, int row, final SWTUIPlayer player) {
+		ILayerCell cell = natTable.getCellByPosition(col, row);
 		final Event[] event = Events.createClick(Bounds.centerAbs(cell.getBounds()));
 		player.exec("Performing click on NatTable cell", new Runnable() {
 			@Override
@@ -138,11 +138,11 @@ public class NatTableHelper {
 	/**
 	 * Fire a mouse down event on the given cell
 	 */
-	public static void mouseDownEventOnCell(final NatTable natTable, NatTableCellPosition position, int button,
-			final SWTUIPlayer player) {
-		ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
+	public static void mouseDownEventOnCell(final NatTable natTable, int col, int row, int button,
+			final SWTUIPlayer player, int stateMask) {
+		ILayerCell cell = natTable.getCellByPosition(col, row);
 		Point point = Bounds.centerAbs(cell.getBounds());
-		final Event event = Events.createMouseDown(button, 1, Events.EMPTY_MASK, point.x, point.y);
+		final Event event = Events.createMouseDown(button, 1, stateMask, point.x, point.y);
 		player.exec("Performing mouse down event on NatTable cell", new Runnable() {
 			@Override
 			public void run() {
@@ -154,11 +154,11 @@ public class NatTableHelper {
 	/**
 	 * Fire a mouse up event on the given cell
 	 */
-	public static void mouseUpEventOnCell(final NatTable natTable, NatTableCellPosition position, int button,
-			final SWTUIPlayer player) {
-		ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
+	public static void mouseUpEventOnCell(final NatTable natTable, int col, int row, int button,
+			final SWTUIPlayer player, int stateMask) {
+		ILayerCell cell = natTable.getCellByPosition(col, row);
 		Point point = Bounds.centerAbs(cell.getBounds());
-		final Event event = Events.createMouseUp(button, 1, Events.EMPTY_MASK, point.x, point.y);
+		final Event event = Events.createMouseUp(button, 1, stateMask, point.x, point.y);
 		player.exec("Performing mouse up event on NatTable cell", new Runnable() {
 			@Override
 			public void run() {

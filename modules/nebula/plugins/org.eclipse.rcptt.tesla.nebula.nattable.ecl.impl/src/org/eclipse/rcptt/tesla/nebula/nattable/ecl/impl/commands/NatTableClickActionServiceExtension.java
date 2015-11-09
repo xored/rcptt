@@ -20,6 +20,7 @@ import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.NebulaNatTableElementKinds;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
+import org.eclipse.rcptt.util.swt.Events;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -32,7 +33,8 @@ public class NatTableClickActionServiceExtension extends NatTableBaseActionServi
 	protected Object exec(Command command) throws CoreException {
 		assert (command.eClass().getClassifierID() == TeslaPackage.CLICK);
 		ControlHandler control = ((Click) command).getControl();
-		return NatTableMouseActionServiceExtension.execMouseEvent(NatTableMouseEventKind.CLICK, control, 1);
+		return NatTableMouseActionServiceExtension.execMouseEvent(NatTableMouseEventKind.CLICK, control,
+				Events.DEFAULT_BUTTON, Events.EMPTY_MASK);
 	}
 
 	@Override

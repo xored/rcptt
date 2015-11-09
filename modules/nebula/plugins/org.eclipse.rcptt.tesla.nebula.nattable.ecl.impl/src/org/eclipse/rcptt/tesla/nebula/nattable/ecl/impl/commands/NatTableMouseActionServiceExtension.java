@@ -41,12 +41,13 @@ public class NatTableMouseActionServiceExtension extends NatTableBaseActionServi
 		Mouse mouseCommand = (Mouse) command;
 		NatTableMouseEventKind kind = NatTableMouseEventKind.getByName(mouseCommand.getEvent().toUpperCase());
 		int button = KeysAndButtons.getButtonNumber(mouseCommand.getButton());
+		int stateMask = KeysAndButtons.stateMaskFromStr(mouseCommand.getWith());
 		ControlHandler control = mouseCommand.getControl();
-		return execMouseEvent(kind, control, button);
+		return execMouseEvent(kind, control, button, stateMask);
 	}
 
-	static ControlHandler execMouseEvent(NatTableMouseEventKind kind, ControlHandler controlHandler, int button)
-			throws CoreException {
+	static ControlHandler execMouseEvent(NatTableMouseEventKind kind, ControlHandler controlHandler, int button,
+			int stateMask) throws CoreException {
 		NatTableMouseEvent mouseEvent = NattableFactory.eINSTANCE.createNatTableMouseEvent();
 		ViewerUIElement uiElement = getNatTableUIElement(controlHandler);
 		NatTableCellPosition position = NatTableHelper.parsePath(controlHandler.getPath());
@@ -55,6 +56,7 @@ public class NatTableMouseActionServiceExtension extends NatTableBaseActionServi
 		mouseEvent.setKind(kind);
 		mouseEvent.setElement(uiElement.getElement());
 		mouseEvent.setButton(button);
+		mouseEvent.setStateMask(stateMask);
 		TeslaBridge.getPlayer().safeExecuteCommand(mouseEvent);
 		return controlHandler;
 	}

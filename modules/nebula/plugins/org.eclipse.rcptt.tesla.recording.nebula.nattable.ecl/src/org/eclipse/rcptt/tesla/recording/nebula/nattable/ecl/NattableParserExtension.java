@@ -13,6 +13,7 @@ import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.recording.core.ecl.TeslaCommand;
 import org.eclipse.rcptt.tesla.recording.core.ecl.parser.TeslaParser;
+import org.eclipse.rcptt.util.swt.Events;
 import org.eclipse.rcptt.util.swt.KeysAndButtons;
 
 /**
@@ -27,12 +28,15 @@ public class NattableParserExtension extends TeslaScriptletFactory {
 	}
 
 	private static Command getMouseCommand(NatTableMouseEvent ntmEvent) {
-		if (ntmEvent.getKind() == NatTableMouseEventKind.CLICK && ntmEvent.getButton() == 1) {
+		if (ntmEvent.getKind() == NatTableMouseEventKind.CLICK
+				&& ntmEvent.getButton() == Events.DEFAULT_BUTTON
+				&& ntmEvent.getStateMask() == Events.EMPTY_MASK) {
 			return TeslaFactory.eINSTANCE.createClick();
 		} else {
 			Mouse command = TeslaFactory.eINSTANCE.createMouse();
 			command.setButton(KeysAndButtons.getButtonNameSafe(ntmEvent.getButton()));
 			command.setEvent(ntmEvent.getKind().getLiteral().toLowerCase());
+			command.setWith(KeysAndButtons.stateMaskToStr(ntmEvent.getStateMask()));
 			return command;
 		}
 	}

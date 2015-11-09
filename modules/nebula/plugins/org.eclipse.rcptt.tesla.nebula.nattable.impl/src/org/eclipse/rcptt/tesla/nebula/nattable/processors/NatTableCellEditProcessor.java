@@ -24,6 +24,8 @@ import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableSWTElement;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
+import org.eclipse.rcptt.util.swt.Events;
+import org.eclipse.swt.SWT;
 
 class NatTableCellEditProcessor {
 
@@ -63,34 +65,30 @@ class NatTableCellEditProcessor {
 		try {
 			NatTableSWTElement natTableElement = (NatTableSWTElement) SWTElementMapper.getMapper(id).get(
 					command.getElement());
-			final NatTable natTable = (NatTable) natTableElement.widget;
-			final NatTableCellPosition position = NatTableHelper
-					.parsePath(command.getColumn() + ":" + command.getRow());
+			NatTable natTable = (NatTable) natTableElement.widget;
+			int col = command.getColumn();
+			int row = command.getRow();
 			int button = command.getButton();
+			int stateMask = command.getStateMask();
 			switch (command.getKind()) {
 			case CLICK:
-				if (button == 1) {
-					NatTableHelper.clickOnCell(natTable, position, player);
+				if (button == Events.DEFAULT_BUTTON && stateMask == Events.EMPTY_MASK) {
+					NatTableHelper.clickOnCell(natTable, col, row, player);
 				} else {
-					NatTableHelper.mouseDownEventOnCell(natTable, position, button, player);
-					NatTableHelper.mouseUpEventOnCell(natTable, position, button, player);
+					NatTableHelper.mouseDownEventOnCell(natTable, col, row, button, player, stateMask);
+					NatTableHelper.mouseUpEventOnCell(natTable, col, row, button, player, stateMask);
+					selectCell(player, natTable, col, row, (stateMask & SWT.SHIFT) != 0, (stateMask & SWT.CTRL) != 0);
 				}
 				break;
 			case DOWN:
-				NatTableHelper.mouseDownEventOnCell(natTable, position, button, player);
+				NatTableHelper.mouseDownEventOnCell(natTable, col, row, button, player, stateMask);
 				break;
 			case UP:
-				NatTableHelper.mouseUpEventOnCell(natTable, position, button, player);
+				NatTableHelper.mouseUpEventOnCell(natTable, col, row, button, player, stateMask);
 				// Excplicitly send a SelectCellCommand because the MouseMove and MouseUp events don't seem to trigger
 				// the desired selection on replay.
 				// TODO: Find out why and fix this!
-				player.exec("Toggle selection of NatTable cell", new Runnable() {
-					@Override
-					public void run() {
-						natTable.doCommand(
-								new SelectCellCommand(natTable, position.getCol(), position.getRow(), true, false));
-					}
-				});
+				selectCell(player, natTable, col, row, true, false);
 				break;
 			}
 			response.setResult(true);
@@ -100,6 +98,16 @@ class NatTableCellEditProcessor {
 			response.setMessage(NLS.bind(TeslaSWTMessages.SWTUIProcessor_CannotSetSelection, e.getMessage()));
 		}
 		return response;
+	}
+
+	private static void selectCell(SWTUIPlayer player, final NatTable natTable, final int col, final int row,
+			final boolean shiftMask, final boolean controlMask) {
+		player.exec("Toggle selection of NatTable cell", new Runnable() {
+			@Override
+			public void run() {
+				natTable.doCommand(new SelectCellCommand(natTable, col, row, shiftMask, controlMask));
+			}
+		});
 	}
 
 	static Response executeApplyCellEditor(ApplyCellEditor command, IElementProcessorMapper mapper,

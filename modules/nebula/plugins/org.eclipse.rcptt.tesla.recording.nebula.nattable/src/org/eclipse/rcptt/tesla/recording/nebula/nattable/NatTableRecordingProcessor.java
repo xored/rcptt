@@ -92,12 +92,13 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 							recordActivateCellEditor(natTable, result, clickEndPosition);
 						} else {
 							recordMouseEvent(natTable, result, clickEndPosition, NatTableMouseEventKind.CLICK,
-									event.button);
+									event.button, event.stateMask);
 						}
 					} else {
 						recordMouseEvent(natTable, result, clickStartPosition, NatTableMouseEventKind.DOWN,
-								event.button);
-						recordMouseEvent(natTable, result, clickEndPosition, NatTableMouseEventKind.UP, event.button);
+								event.button, event.stateMask);
+						recordMouseEvent(natTable, result, clickEndPosition, NatTableMouseEventKind.UP, event.button,
+								event.stateMask);
 					}
 
 				}
@@ -114,10 +115,11 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 	}
 
 	private void recordMouseEvent(NatTable natTable, FindResult result, NatTableCellPosition position,
-			NatTableMouseEventKind kind, int button) {
+			NatTableMouseEventKind kind, int button, int stateMask) {
 		NatTableMouseEvent command = NattableFactory.eINSTANCE.createNatTableMouseEvent();
 		command.setKind(kind);
 		command.setButton(button);
+		command.setStateMask(stateMask);
 		command.setRow(position.getRow());
 		command.setColumn(position.getCol());
 		command.setElement((result.element != null) ? (Element) EcoreUtil.copy(result.element) : null);
