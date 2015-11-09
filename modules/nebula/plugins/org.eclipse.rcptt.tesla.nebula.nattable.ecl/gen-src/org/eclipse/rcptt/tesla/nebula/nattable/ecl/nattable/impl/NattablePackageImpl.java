@@ -106,6 +106,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getNebulaNatTable() {
 		return nebulaNatTableEClass;
 	}
@@ -115,6 +116,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGetNatTable() {
 		return getNatTableEClass;
 	}
@@ -124,6 +126,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NattableFactory getNattableFactory() {
 		return (NattableFactory)getEFactoryInstance();
 	}
@@ -188,9 +191,9 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		getNatTableEClass.getESuperTypes().add(theTeslaPackage.getSelector());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(nebulaNatTableEClass, NebulaNatTable.class, "NebulaNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(nebulaNatTableEClass, NebulaNatTable.class, "NebulaNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(getNatTableEClass, GetNatTable.class, "GetNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(getNatTableEClass, GetNatTable.class, "GetNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

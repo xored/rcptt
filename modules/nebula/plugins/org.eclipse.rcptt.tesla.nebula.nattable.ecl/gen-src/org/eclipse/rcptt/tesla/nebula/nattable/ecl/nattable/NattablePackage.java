@@ -31,7 +31,7 @@ public interface NattablePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "nattable";
+	String eNAME = "nattable"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -39,7 +39,7 @@ public interface NattablePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://eclipse.org/rcptt/tesla/nebula/nattable/ecl";
+	String eNS_URI = "http://eclipse.org/rcptt/tesla/nebula/nattable/ecl"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -47,7 +47,7 @@ public interface NattablePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.rcptt.tesla.nebula.nattable.ecl";
+	String eNS_PREFIX = "org.eclipse.rcptt.tesla.nebula.nattable.ecl"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

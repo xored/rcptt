@@ -87,11 +87,11 @@ public class NattableSwitch<T> {
 	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case NattablePackage.SET_SELECTION_NAT_TABLE: {
-				SetSelectionNatTable setSelectionNatTable = (SetSelectionNatTable)theEObject;
-				T result = caseSetSelectionNatTable(setSelectionNatTable);
-				if (result == null) result = caseElementCommand(setSelectionNatTable);
-				if (result == null) result = caseCommand(setSelectionNatTable);
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT: {
+				NatTableMouseEvent natTableMouseEvent = (NatTableMouseEvent)theEObject;
+				T result = caseNatTableMouseEvent(natTableMouseEvent);
+				if (result == null) result = caseElementCommand(natTableMouseEvent);
+				if (result == null) result = caseCommand(natTableMouseEvent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -100,17 +100,17 @@ public class NattableSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Set Selection Nat Table</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Nat Table Mouse Event</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Set Selection Nat Table</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Nat Table Mouse Event</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSetSelectionNatTable(SetSelectionNatTable object) {
+	public T caseNatTableMouseEvent(NatTableMouseEvent object) {
 		return null;
 	}
 

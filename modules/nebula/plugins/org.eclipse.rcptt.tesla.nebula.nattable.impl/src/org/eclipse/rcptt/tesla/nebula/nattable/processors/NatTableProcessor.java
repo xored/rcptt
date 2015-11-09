@@ -1,5 +1,7 @@
 package org.eclipse.rcptt.tesla.nebula.nattable.processors;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.nebula.widgets.nattable.NatTable;
@@ -35,10 +37,14 @@ import org.eclipse.rcptt.tesla.nebula.nattable.NatTablePlayerExtension;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.NebulaNatTableElementKinds;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
 import org.eclipse.swt.widgets.Widget;
+
+import com.google.common.collect.ImmutableSet;
 
 
 public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMapperExtension {
@@ -47,14 +53,14 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 	private final NatTablePlayerExtension extension = new NatTablePlayerExtension();
 	private String id;
 
-	private static final String[] allSelectors = {
+	private static final Set<String> SUPPORTED_SELECTORS = ImmutableSet.of(
 			NebulaNatTableElementKinds.NAT_TABLE,
-			NebulaNatTableElementKinds.NAT_TABLE_CELL,
-	};
+			NebulaNatTableElementKinds.NAT_TABLE_CELL);
 
-	private final EClass[] commandsSupported = {
-			ProtocolPackage.Literals.SELECT_COMMAND,
-	};
+	private static final Set<EClass> SUPPORTED_COMMANDS = ImmutableSet.of(
+			NattablePackage.Literals.NAT_TABLE_MOUSE_EVENT,
+			ProtocolPackage.Literals.CLICK,
+			ProtocolPackage.Literals.SELECT_COMMAND);
 
 	@Override
 	public void initialize(AbstractTeslaClient client, String id) {
@@ -70,12 +76,7 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 
 	@Override
 	public boolean isSelectorSupported(String kind) {
-		for (final String kindName : allSelectors) {
-			if (kindName.equals(kind)) {
-				return true;
-			}
-		}
-		return false;
+		return SUPPORTED_SELECTORS.contains(kind);
 	}
 
 	@Override
@@ -93,14 +94,7 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 
 	@Override
 	public boolean isCommandSupported(Command command) {
-		EClass ecl = command.eClass();
-		for (EClass cl : commandsSupported) {
-			if (cl.equals(ecl)) {
-				return true;
-			}
-		}
-
-		return false;
+		return SUPPORTED_COMMANDS.contains(command.eClass());
 	}
 
 	@Override
@@ -142,6 +136,16 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 					return NatTableCellEditProcessor.executeDeactivateCellEditor(deactivateCellEditor, mapper, id);
 				}
 				break;
+			}
+		} else if (pkg.equals(NattablePackage.eINSTANCE)) {
+			switch (eClass.getClassifierID()) {
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT:
+				NatTableMouseEvent event = (NatTableMouseEvent) command;
+				if (event.getElement().getKind().equals(NebulaNatTableElementKinds.NAT_TABLE)) {
+					return NatTableCellEditProcessor.executeMouseEvent(event, getMapper(), id, getPlayer());
+				}
+				break;
+
 			}
 		}
 

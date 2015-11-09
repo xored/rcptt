@@ -138,6 +138,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -147,6 +148,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setId(String newId) {
 		String oldId = id;
 		id = newId;
@@ -159,6 +161,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ControlHandler getAfter() {
 		if (after != null && after.eIsProxy()) {
 			InternalEObject oldAfter = (InternalEObject)after;
@@ -185,6 +188,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAfter(ControlHandler newAfter) {
 		ControlHandler oldAfter = after;
 		after = newAfter;
@@ -197,6 +201,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getType() {
 		return type;
 	}
@@ -206,6 +211,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setType(String newType) {
 		String oldType = type;
 		type = newType;
@@ -218,6 +224,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Integer getIndex() {
 		return index;
 	}
@@ -227,6 +234,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIndex(Integer newIndex) {
 		Integer oldIndex = index;
 		index = newIndex;
@@ -239,6 +247,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ControlHandler getParent() {
 		if (parent != null && parent.eIsProxy()) {
 			InternalEObject oldParent = (InternalEObject)parent;
@@ -265,6 +274,7 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setParent(ControlHandler newParent) {
 		ControlHandler oldParent = parent;
 		parent = newParent;
@@ -382,11 +392,11 @@ public class GetNatTableImpl extends CommandImpl implements GetNatTable {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
+		result.append(" (id: "); //$NON-NLS-1$
 		result.append(id);
-		result.append(", type: ");
+		result.append(", type: "); //$NON-NLS-1$
 		result.append(type);
-		result.append(", index: ");
+		result.append(", index: "); //$NON-NLS-1$
 		result.append(index);
 		result.append(')');
 		return result.toString();

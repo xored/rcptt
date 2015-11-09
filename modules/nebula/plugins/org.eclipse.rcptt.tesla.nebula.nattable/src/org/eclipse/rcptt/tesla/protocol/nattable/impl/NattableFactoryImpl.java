@@ -3,6 +3,7 @@
 package org.eclipse.rcptt.tesla.protocol.nattable.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -56,7 +57,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case NattablePackage.SET_SELECTION_NAT_TABLE: return createSetSelectionNatTable();
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT: return createNatTableMouseEvent();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -67,9 +68,14 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SetSelectionNatTable createSetSelectionNatTable() {
-		SetSelectionNatTableImpl setSelectionNatTable = new SetSelectionNatTableImpl();
-		return setSelectionNatTable;
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT_KIND:
+				return createNatTableMouseEventKindFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
 	}
 
 	/**
@@ -77,6 +83,53 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT_KIND:
+				return convertNatTableMouseEventKindToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NatTableMouseEvent createNatTableMouseEvent() {
+		NatTableMouseEventImpl natTableMouseEvent = new NatTableMouseEventImpl();
+		return natTableMouseEvent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NatTableMouseEventKind createNatTableMouseEventKindFromString(EDataType eDataType, String initialValue) {
+		NatTableMouseEventKind result = NatTableMouseEventKind.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertNatTableMouseEventKindToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NattablePackage getNattablePackage() {
 		return (NattablePackage)getEPackage();
 	}

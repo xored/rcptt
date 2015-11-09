@@ -22,13 +22,13 @@ public interface NattableFactory extends EFactory {
 	NattableFactory eINSTANCE = org.eclipse.rcptt.tesla.protocol.nattable.impl.NattableFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Set Selection Nat Table</em>'.
+	 * Returns a new object of class '<em>Nat Table Mouse Event</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Set Selection Nat Table</em>'.
+	 * @return a new object of class '<em>Nat Table Mouse Event</em>'.
 	 * @generated
 	 */
-	SetSelectionNatTable createSetSelectionNatTable();
+	NatTableMouseEvent createNatTableMouseEvent();
 
 	/**
 	 * Returns the package supported by this factory.

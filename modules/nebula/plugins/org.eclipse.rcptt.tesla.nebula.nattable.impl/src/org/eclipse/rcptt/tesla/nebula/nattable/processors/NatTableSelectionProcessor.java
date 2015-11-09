@@ -22,9 +22,9 @@ import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableSWTElement;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 
-public class NatTableSelectionProcessor {
+class NatTableSelectionProcessor {
 
-	public static Response executeCellSelection(SetSelection command, NatTableMapper mapper, String id,
+	static Response executeCellSelection(SetSelection command, NatTableMapper mapper, String id,
 			final SWTUIPlayer player) {
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		try {
@@ -48,7 +48,6 @@ public class NatTableSelectionProcessor {
 				}
 			}
 
-
 			response.setResult(true);
 		} catch (Exception e) {
 			response.setResult(false);
@@ -58,7 +57,7 @@ public class NatTableSelectionProcessor {
 		return response;
 	}
 
-	public static SelectResponse selectItem(SelectCommand command, NatTableMapper mapper, String id) {
+	static SelectResponse selectItem(SelectCommand command, NatTableMapper mapper, String id) {
 		SelectData data = command.getData();
 		NatTableSWTElement natTableElement = (NatTableSWTElement) SWTElementMapper.getMapper(id).get(data.getParent());
 		NatTableCellPosition position = NatTableHelper.parsePath(data.getPath().get(0));

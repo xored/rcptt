@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.nebula.nattable;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
@@ -22,8 +24,9 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.nebula.nattable.NatTableHelper;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nebula.nattable.processors.NatTableProcessor;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
-import org.eclipse.rcptt.tesla.protocol.nattable.SetSelectionNatTable;
 import org.eclipse.rcptt.tesla.recording.aspects.IBasicSWTEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
@@ -35,17 +38,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
-import com.google.common.primitives.Ints;
+import com.google.common.collect.ImmutableSet;
 
 public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSWTEventListener,
 		ISWTModelMapperExtension {
 
-	private static int[] interestingEvents = { SWT.Selection, SWT.MouseDoubleClick, SWT.MouseDown, SWT.MouseUp };
+	private static Set<Integer> INTERESTING_EVENTS = ImmutableSet.of(SWT.MouseDoubleClick, SWT.MouseDown, SWT.MouseUp);
 
 	private Event mouseDownEvent;
 	private SWTWidgetLocator locator;
 
-	public SWTWidgetLocator getLocator() {
+	private SWTWidgetLocator getLocator() {
 		if (locator == null) {
 			locator = SWTRecordingHelper.getHelper().getLocator();
 		}
@@ -59,57 +62,70 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 
 	@Override
 	public void recordEvent(Widget widget, int type, Event event) {
-		// ignoring not interesting events,
-		// it is essential to filter some event types like focusing
-		// to correctly determine menu source
-		if (widget instanceof NatTable && isInterestingEvent(type)) {
-			FindResult result = getLocator().findElement(widget, true, false, false);
-			NatTable natTable = (NatTable) widget;
-			switch (type) {
-			case SWT.Selection:
-				break;
-
-			case SWT.MouseDown:
-				if (NatTableHelper.isNatTableCell(natTable, event.x, event.y)) {
-					// store where mouse click was started
-					mouseDownEvent = event;
-				}
-
-				break;
-
-			case SWT.MouseUp:
-
-				// handle events only if event started on NatTable widget
-				if (mouseDownEvent != null) {
-					if (NatTableHelper.isNatTableCell(natTable, event.x, event.y)) {
-						NatTableCellPosition clickStartPosition = NatTableHelper.getCellPosition(natTable,
-								mouseDownEvent.x, mouseDownEvent.y);
-						NatTableCellPosition clickEndPosition = NatTableHelper.getCellPosition(natTable, event.x,
-								event.y);
-						if (clickStartPosition.equals(clickEndPosition)) {
-							if (NatTableHelper.isEditable(natTable, clickEndPosition)) {
-								recordActivateCellEditor(natTable, result, clickEndPosition);
-							} else {
-								recordCellSelection(natTable, result, clickEndPosition);
-							}
-
-						} else {
-							// TODO: support multi selection
-							recordCellSelection(natTable, result, clickStartPosition);
-						}
-
-					}
-					mouseDownEvent = null;
-				}
-
-				break;
+		if (!(widget instanceof NatTable) || !INTERESTING_EVENTS.contains(type)) {
+			// ignoring not interesting events,
+			// it is essential to filter some event types like focusing
+			// to correctly determine menu source
+			return;
+		}
+		FindResult result = getLocator().findElement(widget, true, false, false);
+		NatTable natTable = (NatTable) widget;
+		switch (type) {
+		case SWT.MouseDown:
+			if (NatTableHelper.isNatTableCell(natTable, event.x, event.y)) {
+				// store where mouse click was started
+				// TODO: Store separate events for different buttons?
+				mouseDownEvent = event;
 			}
 
+			break;
+
+		case SWT.MouseUp:
+			// handle events only if event started on NatTable widget
+			if (mouseDownEvent != null) {
+				if (NatTableHelper.isNatTableCell(natTable, event.x, event.y)) {
+					NatTableCellPosition clickStartPosition = NatTableHelper.getCellPosition(natTable,
+							mouseDownEvent.x, mouseDownEvent.y);
+					NatTableCellPosition clickEndPosition = NatTableHelper.getCellPosition(natTable, event.x, event.y);
+					if (clickStartPosition.equals(clickEndPosition)) {
+						if (NatTableHelper.isEditable(natTable, clickEndPosition)) {
+							recordActivateCellEditor(natTable, result, clickEndPosition);
+						} else {
+							recordMouseEvent(natTable, result, clickEndPosition, NatTableMouseEventKind.CLICK,
+									event.button);
+						}
+					} else {
+						recordMouseEvent(natTable, result, clickStartPosition, NatTableMouseEventKind.DOWN,
+								event.button);
+						recordMouseEvent(natTable, result, clickEndPosition, NatTableMouseEventKind.UP, event.button);
+					}
+
+				}
+				mouseDownEvent = null;
+			}
+			break;
+		// TODO: Handle double click?
 		}
 	}
 
+	@Override
+	public boolean isExclusiveEventHandle(Widget widget, int type, Event event) {
+		return (widget instanceof NatTable) && INTERESTING_EVENTS.contains(type);
+	}
+
+	private void recordMouseEvent(NatTable natTable, FindResult result, NatTableCellPosition position,
+			NatTableMouseEventKind kind, int button) {
+		NatTableMouseEvent command = NattableFactory.eINSTANCE.createNatTableMouseEvent();
+		command.setKind(kind);
+		command.setButton(button);
+		command.setRow(position.getRow());
+		command.setColumn(position.getCol());
+		command.setElement((result.element != null) ? (Element) EcoreUtil.copy(result.element) : null);
+		locator.getRecorder().safeExecuteCommand(command);
+	}
+
 	private void recordActivateCellEditor(NatTable natTable, FindResult result, NatTableCellPosition position) {
-		ViewerUIElement element = new ViewerUIElement(result.element, getLocator().getRecorder());
+		ViewerUIElement element = new ViewerUIElement(result.element, locator.getRecorder());
 		boolean isPositionCooridinateRequired = NatTableHelper.isHeaderLayer(natTable, position.getCol(),
 				position.getRow());
 		String path = NatTableHelper.getPath(natTable, position, isPositionCooridinateRequired);
@@ -117,33 +133,18 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 		element.activateCellEditor(path);
 	}
 
-	private void recordCellSelection(NatTable natTable, FindResult result, NatTableCellPosition position) {
-		TeslaRecorder player = locator.getRecorder();
-		SetSelectionNatTable selection = NattableFactory.eINSTANCE.createSetSelectionNatTable();
-		selection.setRow(position.getRow());
-		selection.setColumn(position.getCol());
-		selection.setElement((result.element != null) ? (Element) EcoreUtil.copy(result.element) : null);
-		player.safeExecuteCommand(selection);
-	}
-
-	private boolean isInterestingEvent(int type) {
-		return Ints.contains(interestingEvents, type);
-	}
-
 
 	// IRecordingProcessor implementation
 
 	@Override
 	public void initialize(TeslaRecorder teslaRecorder) {
-
 	}
 
 	@Override
 	public void clear() {
 		mouseDownEvent = null;
 		NatTableRecordingHelper.getHelper().clear();
-		SWTModelMapper.initializeExtensions(getLocator().getRecorder().getProcessors(
-				ISWTModelMapperExtension.class));
+		SWTModelMapper.initializeExtensions(getLocator().getRecorder().getProcessors(ISWTModelMapperExtension.class));
 		getLocator().cleanMenuSources();
 		locator = null;
 	}
@@ -162,11 +163,6 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 	}
 
 	@Override
-	public boolean isExclusiveEventHandle(Widget widget, int type, Event event) {
-		return (widget instanceof NatTable) && (type == SWT.MouseDown || type == SWT.MouseUp || type == SWT.MouseMove);
-	}
-
-	@Override
 	public int getInitLevel() {
 		return 20;
 	}
@@ -174,11 +170,6 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 	@Override
 	public org.eclipse.rcptt.tesla.core.ui.Widget mapExtraValues(SWTUIElement element,
 			org.eclipse.rcptt.tesla.core.ui.Widget result) {
-		return mapWidget(element, result);
-	}
-
-	public static org.eclipse.rcptt.tesla.core.ui.Widget mapWidget(
-			SWTUIElement element, org.eclipse.rcptt.tesla.core.ui.Widget result) {
 		return NatTableProcessor.mapWidget(element, result);
 	}
 

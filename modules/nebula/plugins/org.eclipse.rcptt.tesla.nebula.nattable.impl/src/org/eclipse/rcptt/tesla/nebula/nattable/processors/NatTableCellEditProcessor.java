@@ -5,6 +5,7 @@ import org.eclipse.nebula.widgets.nattable.edit.command.EditCellCommand;
 import org.eclipse.nebula.widgets.nattable.edit.editor.ICellEditor;
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer.MoveDirectionEnum;
+import org.eclipse.nebula.widgets.nattable.selection.command.SelectCellCommand;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.ApplyCellEditor;
@@ -18,13 +19,15 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.ResponseStatus;
 import org.eclipse.rcptt.tesla.internal.ui.SWTElementMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.nebula.nattable.NatTableHelper;
+import org.eclipse.rcptt.tesla.nebula.nattable.NatTableMapper;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableSWTElement;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 
-public class NatTableCellEditProcessor {
+class NatTableCellEditProcessor {
 
-	public static Response executeActivateCell(ActivateCellEditor command, IElementProcessorMapper mapper, String id,
+	static Response executeActivateCell(ActivateCellEditor command, IElementProcessorMapper mapper, String id,
 			SWTUIPlayer player) {
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		try {
@@ -40,10 +43,7 @@ public class NatTableCellEditProcessor {
 				@Override
 				public void run() {
 					natTable.doCommand(new EditCellCommand(natTable, natTable.getConfigRegistry(), cell));
-
-					// if (!result) {
-					// throw new Exception("Can't edit specified cell");
-					// }
+					// TODO: Handle return value: false indicates that the command hasn't been handled.
 				}
 			});
 
@@ -57,7 +57,52 @@ public class NatTableCellEditProcessor {
 		return response;
 	}
 
-	public static Response executeApplyCellEditor(ApplyCellEditor command, IElementProcessorMapper mapper,
+	static Response executeMouseEvent(NatTableMouseEvent command, NatTableMapper mapper, String id,
+			final SWTUIPlayer player) {
+		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
+		try {
+			NatTableSWTElement natTableElement = (NatTableSWTElement) SWTElementMapper.getMapper(id).get(
+					command.getElement());
+			final NatTable natTable = (NatTable) natTableElement.widget;
+			final NatTableCellPosition position = NatTableHelper
+					.parsePath(command.getColumn() + ":" + command.getRow());
+			int button = command.getButton();
+			switch (command.getKind()) {
+			case CLICK:
+				if (button == 1) {
+					NatTableHelper.clickOnCell(natTable, position, player);
+				} else {
+					NatTableHelper.mouseDownEventOnCell(natTable, position, button, player);
+					NatTableHelper.mouseUpEventOnCell(natTable, position, button, player);
+				}
+				break;
+			case DOWN:
+				NatTableHelper.mouseDownEventOnCell(natTable, position, button, player);
+				break;
+			case UP:
+				NatTableHelper.mouseUpEventOnCell(natTable, position, button, player);
+				// Excplicitly send a SelectCellCommand because the MouseMove and MouseUp events don't seem to trigger
+				// the desired selection on replay.
+				// TODO: Find out why and fix this!
+				player.exec("Toggle selection of NatTable cell", new Runnable() {
+					@Override
+					public void run() {
+						natTable.doCommand(
+								new SelectCellCommand(natTable, position.getCol(), position.getRow(), true, false));
+					}
+				});
+				break;
+			}
+			response.setResult(true);
+		} catch (Exception e) {
+			response.setResult(false);
+			response.setStatus(ResponseStatus.FAILED);
+			response.setMessage(NLS.bind(TeslaSWTMessages.SWTUIProcessor_CannotSetSelection, e.getMessage()));
+		}
+		return response;
+	}
+
+	static Response executeApplyCellEditor(ApplyCellEditor command, IElementProcessorMapper mapper,
 			String id) {
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		try {
@@ -81,7 +126,7 @@ public class NatTableCellEditProcessor {
 		return response;
 	}
 
-	public static Response executeCancelCellEditor(CancelCellEditor command, IElementProcessorMapper mapper,
+	static Response executeCancelCellEditor(CancelCellEditor command, IElementProcessorMapper mapper,
 			String id) {
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		try {
@@ -104,7 +149,7 @@ public class NatTableCellEditProcessor {
 		return response;
 	}
 
-	public static Response executeDeactivateCellEditor(DeactivateCellEditor command,
+	static Response executeDeactivateCellEditor(DeactivateCellEditor command,
 			IElementProcessorMapper mapper, String id) {
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		try {

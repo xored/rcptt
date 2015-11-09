@@ -19,9 +19,11 @@ import com.google.common.base.Objects;
 public class NatTableCellElement extends NatTablePartElement {
 
 	private final ILayerCell cell;
+	private final NatTableCellPosition position;
 
 	public NatTableCellElement(NatTableSWTElement natTable, NatTableCellPosition position) {
 		super(natTable);
+		this.position = position;
 		this.cell = findCellObject(position);
 	}
 
@@ -37,6 +39,10 @@ public class NatTableCellElement extends NatTablePartElement {
 
 	public ILayerCell getCell() {
 		return cell;
+	}
+
+	public NatTableCellPosition getPosition() {
+		return this.position;
 	}
 
 	@Override

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
-            class="org.eclipse.rcptt.tesla.nebula.nattable.NattablePackage"
+            class="org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage"
             uri="http://eclipse.org/rcptt/tesla/nebula/nattable">
       </package>
    </extension>

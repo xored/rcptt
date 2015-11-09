@@ -5,12 +5,12 @@ package org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.*;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattableFactory;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,7 +59,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 			case NattablePackage.NEBULA_NAT_TABLE: return createNebulaNatTable();
 			case NattablePackage.GET_NAT_TABLE: return createGetNatTable();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -68,6 +68,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NebulaNatTable createNebulaNatTable() {
 		NebulaNatTableImpl nebulaNatTable = new NebulaNatTableImpl();
 		return nebulaNatTable;
@@ -78,6 +79,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GetNatTable createGetNatTable() {
 		GetNatTableImpl getNatTable = new GetNatTableImpl();
 		return getNatTable;
@@ -88,6 +90,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NattablePackage getNattablePackage() {
 		return (NattablePackage)getEPackage();
 	}

@@ -10,7 +10,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.tesla.ecl.impl,
  org.eclipse.rcptt.ecl.dispatch,
  org.eclipse.rcptt.util,
- com.google.guava
+ com.google.guava,
+ org.eclipse.nebula.widgets.nattable.core,
+ org.eclipse.rcptt.tesla.nebula.nattable,
+ org.eclipse.rcptt.util.swt;bundle-version="[2.1.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.nebula.widgets.nattable,

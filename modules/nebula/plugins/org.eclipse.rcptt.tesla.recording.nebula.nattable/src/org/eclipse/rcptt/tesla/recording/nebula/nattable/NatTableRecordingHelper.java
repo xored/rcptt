@@ -13,11 +13,11 @@ package org.eclipse.rcptt.tesla.recording.nebula.nattable;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper;
 
-public class NatTableRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
+class NatTableRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
 
 	private static NatTableRecordingHelper mapper;
 
-	public static NatTableRecordingHelper getHelper() {
+	static NatTableRecordingHelper getHelper() {
 		if (mapper == null) {
 			mapper = new NatTableRecordingHelper();
 		}

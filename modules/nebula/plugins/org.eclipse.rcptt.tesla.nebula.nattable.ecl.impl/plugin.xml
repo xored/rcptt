@@ -44,6 +44,16 @@
             class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableCellActionServiceExtension"
             name="CancelCellEdit"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
+      </scriptletExtension>
+      <scriptletExtension
+            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableClickActionServiceExtension"
+            name="Click"
+            namespace="http://eclipse.org/rcptt/tesla/ecl">
+      </scriptletExtension>
+      <scriptletExtension
+            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableMouseActionServiceExtension"
+            name="Mouse"
+            namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>      
    </extension>
 </plugin>

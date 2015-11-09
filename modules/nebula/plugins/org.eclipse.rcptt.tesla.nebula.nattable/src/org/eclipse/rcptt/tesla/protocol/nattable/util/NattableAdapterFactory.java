@@ -72,8 +72,8 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 	protected NattableSwitch<Adapter> modelSwitch =
 		new NattableSwitch<Adapter>() {
 			@Override
-			public Adapter caseSetSelectionNatTable(SetSelectionNatTable object) {
-				return createSetSelectionNatTableAdapter();
+			public Adapter caseNatTableMouseEvent(NatTableMouseEvent object) {
+				return createNatTableMouseEventAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -104,16 +104,16 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.protocol.nattable.SetSelectionNatTable <em>Set Selection Nat Table</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent <em>Nat Table Mouse Event</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.tesla.protocol.nattable.SetSelectionNatTable
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent
 	 * @generated
 	 */
-	public Adapter createSetSelectionNatTableAdapter() {
+	public Adapter createNatTableMouseEventAdapter() {
 		return null;
 	}
 

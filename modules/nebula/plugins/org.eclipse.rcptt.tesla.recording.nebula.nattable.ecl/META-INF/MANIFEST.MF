@@ -6,6 +6,8 @@ Bundle-Version: 2.1.0.qualifier
 Require-Bundle: org.eclipse.rcptt.tesla.recording.core.ecl;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.nebula.nattable.ecl;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.rcptt.tesla.nebula.nattable;bundle-version="2.1.0"
+ org.eclipse.rcptt.tesla.nebula.nattable;bundle-version="[2.1.0,3.0.0)",
+ org.eclipse.rcptt.util.swt;bundle-version="[2.1.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %providerName
+Bundle-ActivationPolicy: lazy
