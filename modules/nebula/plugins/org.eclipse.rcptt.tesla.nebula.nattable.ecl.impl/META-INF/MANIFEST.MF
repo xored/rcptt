@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RCPTT Runtime ECL Implementation for Nebula (Incubation)
-Bundle-SymbolicName: org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl;singleton:=true
+Bundle-SymbolicName: org.eclipse.rcptt.tesla.nattable.ecl.impl;singleton:=true
 Bundle-Version: 2.1.0.qualifier
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
@@ -12,12 +12,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.util,
  com.google.guava,
  org.eclipse.nebula.widgets.nattable.core,
- org.eclipse.rcptt.tesla.nebula.nattable,
+ org.eclipse.rcptt.tesla.nattable,
  org.eclipse.rcptt.util.swt;bundle-version="[2.1.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.nebula.widgets.nattable,
- org.eclipse.rcptt.tesla.nebula.nattable,
- org.eclipse.rcptt.tesla.nebula.nattable.ecl,
- org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable,
- org.eclipse.rcptt.tesla.nebula.nattable.model
+ org.eclipse.rcptt.tesla.nattable.ecl.nattable,
+ org.eclipse.rcptt.tesla.nattable,
+ org.eclipse.rcptt.tesla.nattable.ecl,
+ org.eclipse.rcptt.tesla.nattable.model

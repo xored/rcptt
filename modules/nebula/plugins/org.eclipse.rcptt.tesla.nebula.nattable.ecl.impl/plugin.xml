@@ -3,65 +3,65 @@
 <plugin>
    <extension point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.GetNatTableService"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.GetNatTableService"
             name="GetNatTable"
-            namespace="http://eclipse.org/rcptt/tesla/nebula/nattable/ecl">
+            namespace="http://eclipse.org/rcptt/tesla/nattable/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.GetRowService"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.GetRowService"
             name="GetRowHeader"
-            namespace="http://eclipse.org/rcptt/tesla/nebula/nattable/ecl">
+            namespace="http://eclipse.org/rcptt/tesla/nattable/ecl">
       </scriptlet>
    </extension>
    
    <extension point="org.eclipse.rcptt.ecl.dispatch.scriptletExtension">
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableSelectServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.SelectServiceExtension"
             name="Select"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableGetItemServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.GetItemServiceExtension"
             name="GetItem"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableGetCellServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.GetCellServiceExtension"
             name="GetCell"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableCellActionServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.CellActionServiceExtension"
             name="ActivateCellEdit"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableCellActionServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.CellActionServiceExtension"
             name="ApplyCellEdit"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>      
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableCellActionServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.CellActionServiceExtension"
             name="DeactivateCellEdit"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>  
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableCellActionServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.CellActionServiceExtension"
             name="CancelCellEdit"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableClickActionServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.ClickActionServiceExtension"
             name="Click"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableMouseActionServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.MouseActionServiceExtension"
             name="Mouse"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>
       <scriptletExtension
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl.commands.NatTableGetColumnServiceExtension"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.impl.commands.GetColumnServiceExtension"
             name="GetColumnHeader"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptletExtension>

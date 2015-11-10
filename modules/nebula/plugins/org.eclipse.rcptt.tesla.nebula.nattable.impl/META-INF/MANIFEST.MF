@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Nebula NatTable Implementation (Incubation)
-Bundle-SymbolicName: org.eclipse.rcptt.tesla.nebula.nattable.impl;singleton:=true
+Bundle-SymbolicName: org.eclipse.rcptt.tesla.nattable.impl;singleton:=true
 Bundle-Version: 2.1.0.qualifier
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -18,16 +18,16 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.util,
  org.eclipse.nebula.widgets.nattable.core,
  com.google.guava,
- org.eclipse.rcptt.tesla.nebula.nattable
+ org.eclipse.rcptt.tesla.nattable
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.rcptt.logging,
  org.eclipse.rcptt.tesla.jobs,
- org.eclipse.rcptt.tesla.nebula.nattable.ecl,
- org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable,
- org.eclipse.rcptt.tesla.nebula.nattable.model,
+ org.eclipse.rcptt.tesla.nattable.ecl.nattable,
+ org.eclipse.rcptt.tesla.nattable.ecl,
+ org.eclipse.rcptt.tesla.nattable.model,
  org.eclipse.rcptt.tesla.recording.core,
  org.eclipse.rcptt.tesla.recording.core.swt
-Export-Package: org.eclipse.rcptt.tesla.nebula.nattable,
- org.eclipse.rcptt.tesla.nebula.nattable.describer,
- org.eclipse.rcptt.tesla.nebula.nattable.model,
- org.eclipse.rcptt.tesla.nebula.nattable.processors
+Export-Package: org.eclipse.rcptt.tesla.nattable,
+ org.eclipse.rcptt.tesla.nattable.describer,
+ org.eclipse.rcptt.tesla.nattable.model,
+ org.eclipse.rcptt.tesla.nattable.processors

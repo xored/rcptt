@@ -4,14 +4,14 @@
     <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
-            class="org.eclipse.rcptt.tesla.nebula.nattable.processors.NatTableProcessor">
+            class="org.eclipse.rcptt.tesla.nattable.processors.NatTableProcessor">
       </provider>
    </extension>
    
    <extension
    		point="org.eclipse.rcptt.tesla.swt.describerExtensions">
         <describerExtension
-               class="org.eclipse.rcptt.tesla.nebula.nattable.describer.NatTableDescriberExtension" priority="10">
+               class="org.eclipse.rcptt.tesla.nattable.describer.NatTableDescriberExtension" priority="10">
         </describerExtension>
    </extension>
    

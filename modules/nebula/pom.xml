@@ -53,10 +53,10 @@
     <module>runtime-site</module>
     <module>plugins/org.eclipse.rcptt.module.nebula.updates</module>
     <module>features/org.eclipse.rcptt.module.nebula</module>
-    <module>plugins/org.eclipse.rcptt.tesla.nebula.nattable.impl</module>
-    <module>plugins/org.eclipse.rcptt.tesla.nebula.nattable.ecl</module>
-    <module>plugins/org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl</module>
-    <module>plugins/org.eclipse.rcptt.tesla.recording.nebula.nattable</module>
+    <module>plugins/org.eclipse.rcptt.tesla.nattable.impl</module>
+    <module>plugins/org.eclipse.rcptt.tesla.nattable.ecl</module>
+    <module>plugins/org.eclipse.rcptt.tesla.nattable.ecl.impl</module>
+    <module>plugins/org.eclipse.rcptt.tesla.recording.nattable</module>
     <module>site</module>
   </modules>
 </project>

@@ -13,8 +13,8 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated nattable -->
       <package
-            uri="http://eclipse.org/rcptt/tesla/nebula/nattable/ecl"
-            class="org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage"
+            uri="http://eclipse.org/rcptt/tesla/nattable/ecl"
+            class="org.eclipse.rcptt.tesla.nattable.ecl.nattable.NattablePackage"
             genModel="model/nattable.genmodel"/>
    </extension>
 

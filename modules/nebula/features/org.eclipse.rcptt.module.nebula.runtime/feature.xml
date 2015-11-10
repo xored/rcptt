@@ -46,21 +46,21 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.rcptt.tesla.nebula.nattable.ecl"
+         id="org.eclipse.rcptt.tesla.nattable.ecl"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.rcptt.tesla.nebula.nattable.ecl.impl"
+         id="org.eclipse.rcptt.tesla.nattable.ecl.impl"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.rcptt.tesla.nebula.nattable.impl"
+         id="org.eclipse.rcptt.tesla.nattable.impl"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
@@ -81,7 +81,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.rcptt.tesla.recording.nebula.nattable"
+         id="org.eclipse.rcptt.tesla.recording.nattable"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"

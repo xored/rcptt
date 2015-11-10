@@ -4,13 +4,13 @@
    <extension
          point="org.eclipse.rcptt.tesla.recording.core.recorder">
       <recorder
-            class="org.eclipse.rcptt.tesla.recording.nebula.nattable.NatTableRecordingProcessor">
+            class="org.eclipse.rcptt.tesla.recording.nattable.NatTableRecordingProcessor">
       </recorder>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.recording.swt.describerExtensions">
       <describerExtension
-            class="org.eclipse.rcptt.tesla.recording.nebula.nattable.NatTableRecordingDescriberExtension" priority="50">
+            class="org.eclipse.rcptt.tesla.recording.nattable.NatTableRecordingDescriberExtension" priority="50">
       </describerExtension>
    </extension>
 </plugin>

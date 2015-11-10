@@ -4,13 +4,13 @@
    <extension
          point="org.eclipse.rcptt.tesla.recording.core.ecl.selectorExtension">
       <selectorExtension
-            class="org.eclipse.rcptt.tesla.recording.nebula.nattable.ecl.NatTableSelectorParserExtension">
+            class="org.eclipse.rcptt.tesla.recording.nattable.ecl.NatTableSelectorParserExtension">
       </selectorExtension>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.recording.core.ecl.parserExtension">
       <parserExtension
-            class="org.eclipse.rcptt.tesla.recording.nebula.nattable.ecl.NattableParserExtension">
+            class="org.eclipse.rcptt.tesla.recording.nattable.ecl.NattableParserExtension">
       </parserExtension>
    </extension>
 
