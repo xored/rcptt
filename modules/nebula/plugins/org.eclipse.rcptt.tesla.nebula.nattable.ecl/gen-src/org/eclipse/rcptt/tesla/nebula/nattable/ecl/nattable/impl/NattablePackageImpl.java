@@ -4,14 +4,11 @@ package org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.rcptt.tesla.core.ui.UiPackage;
-
 import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
-
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetRowHeader;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable;
@@ -36,6 +33,13 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * @generated
 	 */
 	private EClass getNatTableEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass getRowHeaderEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -127,6 +131,16 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * @generated
 	 */
 	@Override
+	public EClass getGetRowHeader() {
+		return getRowHeaderEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NattableFactory getNattableFactory() {
 		return (NattableFactory)getEFactoryInstance();
 	}
@@ -153,6 +167,8 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		nebulaNatTableEClass = createEClass(NEBULA_NAT_TABLE);
 
 		getNatTableEClass = createEClass(GET_NAT_TABLE);
+
+		getRowHeaderEClass = createEClass(GET_ROW_HEADER);
 	}
 
 	/**
@@ -189,11 +205,14 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		// Add supertypes to classes
 		nebulaNatTableEClass.getESuperTypes().add(theUiPackage.getControl());
 		getNatTableEClass.getESuperTypes().add(theTeslaPackage.getSelector());
+		getRowHeaderEClass.getESuperTypes().add(theTeslaPackage.getSelector());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(nebulaNatTableEClass, NebulaNatTable.class, "NebulaNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(getNatTableEClass, GetNatTable.class, "GetNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(getRowHeaderEClass, GetRowHeader.class, "GetRowHeader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

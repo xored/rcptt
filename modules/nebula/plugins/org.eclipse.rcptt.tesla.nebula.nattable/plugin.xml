@@ -9,12 +9,5 @@
       </package>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated nattableTesla -->
-      <package
-            uri="http://eclipse.org/rcptt/tesla/nebula/nattable"
-            class="org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage"
-            genModel="model/nattableTesla.genmodel"/>
-   </extension>
-
+null
 </plugin>

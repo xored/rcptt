@@ -131,13 +131,31 @@ public interface NattablePackage extends EPackage {
 	int NAT_TABLE_MOUSE_EVENT__KIND = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Column Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Row Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_MOUSE_EVENT__ROW_HEADER = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Nat Table Mouse Event</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 5;
+	int NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind <em>Nat Table Mouse Event Kind</em>}' enum.
@@ -214,6 +232,28 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNatTableMouseEvent_Kind();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isColumnHeader <em>Column Header</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Column Header</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isColumnHeader()
+	 * @see #getNatTableMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableMouseEvent_ColumnHeader();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isRowHeader <em>Row Header</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Row Header</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isRowHeader()
+	 * @see #getNatTableMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableMouseEvent_RowHeader();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind <em>Nat Table Mouse Event Kind</em>}'.
@@ -296,6 +336,22 @@ public interface NattablePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NAT_TABLE_MOUSE_EVENT__KIND = eINSTANCE.getNatTableMouseEvent_Kind();
+
+		/**
+		 * The meta object literal for the '<em><b>Column Header</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER = eINSTANCE.getNatTableMouseEvent_ColumnHeader();
+
+		/**
+		 * The meta object literal for the '<em><b>Row Header</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_MOUSE_EVENT__ROW_HEADER = eINSTANCE.getNatTableMouseEvent_RowHeader();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind <em>Nat Table Mouse Event Kind</em>}' enum.

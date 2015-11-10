@@ -108,6 +108,14 @@ public class NattableSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NattablePackage.GET_ROW_HEADER: {
+				GetRowHeader getRowHeader = (GetRowHeader)theEObject;
+				T result = caseGetRowHeader(getRowHeader);
+				if (result == null) result = caseSelector(getRowHeader);
+				if (result == null) result = caseCommand(getRowHeader);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -139,6 +147,21 @@ public class NattableSwitch<T> {
 	 * @generated
 	 */
 	public T caseGetNatTable(GetNatTable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Get Row Header</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Get Row Header</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGetRowHeader(GetRowHeader object) {
 		return null;
 	}
 

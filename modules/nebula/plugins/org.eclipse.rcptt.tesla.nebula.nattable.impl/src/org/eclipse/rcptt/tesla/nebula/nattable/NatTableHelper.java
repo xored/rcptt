@@ -19,13 +19,12 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.nebula.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.util.swt.Bounds;
 import org.eclipse.rcptt.util.swt.Events;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Event;
 
 public class NatTableHelper {
 
 	/**
-	 * Check if column is editable
+	 * Check if cell is editable
 	 */
 	public static boolean isEditable(NatTable natTable, NatTableCellPosition position) {
 		ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
@@ -67,17 +66,16 @@ public class NatTableHelper {
 	 * @return
 	 */
 	public static boolean isHeaderLayer(NatTable natTable, int col, int row) {
-		ILayer layerByPosition = natTable.getLayer().getUnderlyingLayerByPosition(col, row);
+		ILayer layer = natTable.getLayer();
+		ILayer layerByPosition = layer.getUnderlyingLayerByPosition(col, row);
 		if (layerByPosition instanceof ColumnHeaderLayer) {
 			return true;
 		}
 
-		ILayer layer = natTable.getLayer();
 		if (layer instanceof GridLayer) {
 			ILayer bodyLayer = ((GridLayer) layer).getBodyLayer();
 			return !bodyLayer.equals(layerByPosition);
 		}
-
 
 		return false;
 	}
@@ -131,38 +129,6 @@ public class NatTableHelper {
 			@Override
 			public void run() {
 				player.getEvents().sendAll(natTable, event);
-			}
-		});
-	}
-
-	/**
-	 * Fire a mouse down event on the given cell
-	 */
-	public static void mouseDownEventOnCell(final NatTable natTable, int col, int row, int button,
-			final SWTUIPlayer player, int stateMask) {
-		ILayerCell cell = natTable.getCellByPosition(col, row);
-		Point point = Bounds.centerAbs(cell.getBounds());
-		final Event event = Events.createMouseDown(button, 1, stateMask, point.x, point.y);
-		player.exec("Performing mouse down event on NatTable cell", new Runnable() {
-			@Override
-			public void run() {
-				player.getEvents().sendEvent(natTable, event);
-			}
-		});
-	}
-
-	/**
-	 * Fire a mouse up event on the given cell
-	 */
-	public static void mouseUpEventOnCell(final NatTable natTable, int col, int row, int button,
-			final SWTUIPlayer player, int stateMask) {
-		ILayerCell cell = natTable.getCellByPosition(col, row);
-		Point point = Bounds.centerAbs(cell.getBounds());
-		final Event event = Events.createMouseUp(button, 1, stateMask, point.x, point.y);
-		player.exec("Performing mouse up event on NatTable cell", new Runnable() {
-			@Override
-			public void run() {
-				player.getEvents().sendEvent(natTable, event);
 			}
 		});
 	}
@@ -264,7 +230,8 @@ public class NatTableHelper {
 	/**
 	 * Returns a string representation of the given {@link NatTable} cell, in the form x:y.
 	 */
-	public static String getPath(NatTable natTable, NatTableCellPosition position, Boolean isPositionCooridinateRequired) {
+	public static String getPath(NatTable natTable, NatTableCellPosition position,
+			Boolean isPositionCooridinateRequired) {
 		// position coordinates
 		if (isPositionCooridinateRequired) {
 			StringBuilder path = new StringBuilder();

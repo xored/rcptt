@@ -40,6 +40,15 @@ public interface NattableFactory extends EFactory {
 	GetNatTable createGetNatTable();
 
 	/**
+	 * Returns a new object of class '<em>Get Row Header</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Get Row Header</em>'.
+	 * @generated
+	 */
+	GetRowHeader createGetRowHeader();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

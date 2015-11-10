@@ -84,6 +84,10 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 				return createGetNatTableAdapter();
 			}
 			@Override
+			public Adapter caseGetRowHeader(GetRowHeader object) {
+				return createGetRowHeaderAdapter();
+			}
+			@Override
 			public Adapter casePropertyNodeList(PropertyNodeList object) {
 				return createPropertyNodeListAdapter();
 			}
@@ -148,6 +152,20 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGetNatTableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetRowHeader <em>Get Row Header</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetRowHeader
+	 * @generated
+	 */
+	public Adapter createGetRowHeaderAdapter() {
 		return null;
 	}
 

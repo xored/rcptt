@@ -6,12 +6,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
-
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
@@ -167,6 +164,26 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * @generated
 	 */
 	@Override
+	public EAttribute getNatTableMouseEvent_ColumnHeader() {
+		return (EAttribute)natTableMouseEventEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getNatTableMouseEvent_RowHeader() {
+		return (EAttribute)natTableMouseEventEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EEnum getNatTableMouseEventKind() {
 		return natTableMouseEventKindEEnum;
 	}
@@ -206,6 +223,8 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		createEAttribute(natTableMouseEventEClass, NAT_TABLE_MOUSE_EVENT__BUTTON);
 		createEAttribute(natTableMouseEventEClass, NAT_TABLE_MOUSE_EVENT__STATE_MASK);
 		createEAttribute(natTableMouseEventEClass, NAT_TABLE_MOUSE_EVENT__KIND);
+		createEAttribute(natTableMouseEventEClass, NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER);
+		createEAttribute(natTableMouseEventEClass, NAT_TABLE_MOUSE_EVENT__ROW_HEADER);
 
 		// Create enums
 		natTableMouseEventKindEEnum = createEEnum(NAT_TABLE_MOUSE_EVENT_KIND);
@@ -252,6 +271,8 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		initEAttribute(getNatTableMouseEvent_Button(), theEcorePackage.getEInt(), "button", null, 0, 1, NatTableMouseEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNatTableMouseEvent_StateMask(), theEcorePackage.getEInt(), "stateMask", null, 0, 1, NatTableMouseEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNatTableMouseEvent_Kind(), this.getNatTableMouseEventKind(), "kind", "DOWN", 0, 1, NatTableMouseEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNatTableMouseEvent_ColumnHeader(), ecorePackage.getEBoolean(), "columnHeader", "false", 0, 1, NatTableMouseEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNatTableMouseEvent_RowHeader(), ecorePackage.getEBoolean(), "rowHeader", "false", 0, 1, NatTableMouseEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(natTableMouseEventKindEEnum, NatTableMouseEventKind.class, "NatTableMouseEventKind");

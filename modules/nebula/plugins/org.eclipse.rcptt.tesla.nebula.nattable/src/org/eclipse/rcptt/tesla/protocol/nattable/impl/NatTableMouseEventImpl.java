@@ -4,15 +4,11 @@ package org.eclipse.rcptt.tesla.protocol.nattable.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
-
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
@@ -32,6 +28,8 @@ import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getButton <em>Button</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getStateMask <em>State Mask</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#isColumnHeader <em>Column Header</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#isRowHeader <em>Row Header</em>}</li>
  * </ul>
  *
  * @generated
@@ -166,6 +164,46 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 	 * @ordered
 	 */
 	protected NatTableMouseEventKind kind = KIND_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isColumnHeader() <em>Column Header</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isColumnHeader()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean COLUMN_HEADER_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isColumnHeader() <em>Column Header</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isColumnHeader()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean columnHeader = COLUMN_HEADER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isRowHeader() <em>Row Header</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRowHeader()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ROW_HEADER_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isRowHeader() <em>Row Header</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRowHeader()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean rowHeader = ROW_HEADER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -375,6 +413,52 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 	 * @generated
 	 */
 	@Override
+	public boolean isColumnHeader() {
+		return columnHeader;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setColumnHeader(boolean newColumnHeader) {
+		boolean oldColumnHeader = columnHeader;
+		columnHeader = newColumnHeader;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER, oldColumnHeader, columnHeader));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isRowHeader() {
+		return rowHeader;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setRowHeader(boolean newRowHeader) {
+		boolean oldRowHeader = rowHeader;
+		rowHeader = newRowHeader;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW_HEADER, oldRowHeader, rowHeader));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ELEMENT:
@@ -405,6 +489,10 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 				return getStateMask();
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__KIND:
 				return getKind();
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER:
+				return isColumnHeader();
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW_HEADER:
+				return isRowHeader();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -437,6 +525,12 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 				return;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__KIND:
 				setKind((NatTableMouseEventKind)newValue);
+				return;
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER:
+				setColumnHeader((Boolean)newValue);
+				return;
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW_HEADER:
+				setRowHeader((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -471,6 +565,12 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__KIND:
 				setKind(KIND_EDEFAULT);
 				return;
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER:
+				setColumnHeader(COLUMN_HEADER_EDEFAULT);
+				return;
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW_HEADER:
+				setRowHeader(ROW_HEADER_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -497,6 +597,10 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 				return stateMask != STATE_MASK_EDEFAULT;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__KIND:
 				return kind != KIND_EDEFAULT;
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER:
+				return columnHeader != COLUMN_HEADER_EDEFAULT;
+			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW_HEADER:
+				return rowHeader != ROW_HEADER_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -523,6 +627,10 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 		result.append(stateMask);
 		result.append(", kind: ");
 		result.append(kind);
+		result.append(", columnHeader: ");
+		result.append(columnHeader);
+		result.append(", rowHeader: ");
+		result.append(rowHeader);
 		result.append(')');
 		return result.toString();
 	}

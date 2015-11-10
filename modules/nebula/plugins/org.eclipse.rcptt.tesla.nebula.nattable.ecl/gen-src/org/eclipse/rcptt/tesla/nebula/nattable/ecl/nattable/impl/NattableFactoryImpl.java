@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetNatTable;
+import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetRowHeader;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable;
@@ -58,6 +59,7 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 		switch (eClass.getClassifierID()) {
 			case NattablePackage.NEBULA_NAT_TABLE: return createNebulaNatTable();
 			case NattablePackage.GET_NAT_TABLE: return createGetNatTable();
+			case NattablePackage.GET_ROW_HEADER: return createGetRowHeader();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -83,6 +85,17 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	public GetNatTable createGetNatTable() {
 		GetNatTableImpl getNatTable = new GetNatTableImpl();
 		return getNatTable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public GetRowHeader createGetRowHeader() {
+		GetRowHeaderImpl getRowHeader = new GetRowHeaderImpl();
+		return getRowHeader;
 	}
 
 	/**

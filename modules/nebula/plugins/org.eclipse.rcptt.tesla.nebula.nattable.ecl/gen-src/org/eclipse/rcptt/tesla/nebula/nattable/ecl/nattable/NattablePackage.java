@@ -241,6 +241,89 @@ public interface NattablePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetRowHeaderImpl <em>Get Row Header</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetRowHeaderImpl
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.NattablePackageImpl#getGetRowHeader()
+	 * @generated
+	 */
+	int GET_ROW_HEADER = 2;
+
+	/**
+	 * The feature id for the '<em><b>Host</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__HOST = TeslaPackage.SELECTOR__HOST;
+
+	/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__BINDINGS = TeslaPackage.SELECTOR__BINDINGS;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__ID = TeslaPackage.SELECTOR__ID;
+
+	/**
+	 * The feature id for the '<em><b>After</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__AFTER = TeslaPackage.SELECTOR__AFTER;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__TYPE = TeslaPackage.SELECTOR__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__INDEX = TeslaPackage.SELECTOR__INDEX;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__PARENT = TeslaPackage.SELECTOR__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Get Row Header</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER_FEATURE_COUNT = TeslaPackage.SELECTOR_FEATURE_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.NebulaNatTable <em>Nebula Nat Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -259,6 +342,16 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGetNatTable();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetRowHeader <em>Get Row Header</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Get Row Header</em>'.
+	 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.GetRowHeader
+	 * @generated
+	 */
+	EClass getGetRowHeader();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -301,6 +394,16 @@ public interface NattablePackage extends EPackage {
 		 * @generated
 		 */
 		EClass GET_NAT_TABLE = eINSTANCE.getGetNatTable();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetRowHeaderImpl <em>Get Row Header</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.GetRowHeaderImpl
+		 * @see org.eclipse.rcptt.tesla.nebula.nattable.ecl.nattable.impl.NattablePackageImpl#getGetRowHeader()
+		 * @generated
+		 */
+		EClass GET_ROW_HEADER = eINSTANCE.getGetRowHeader();
 
 	}
 

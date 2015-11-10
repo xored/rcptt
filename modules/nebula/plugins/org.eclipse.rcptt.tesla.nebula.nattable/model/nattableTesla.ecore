@@ -11,6 +11,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateMask" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//NatTableMouseEventKind"
         defaultValueLiteral="DOWN"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="columnHeader" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowHeader" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="NatTableMouseEventKind">
     <eLiterals name="DOWN" literal="DOWN"/>

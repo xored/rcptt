@@ -14,6 +14,9 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.nebula.widgets.nattable.NatTable;
+import org.eclipse.nebula.widgets.nattable.grid.layer.ColumnHeaderLayer;
+import org.eclipse.nebula.widgets.nattable.grid.layer.RowHeaderLayer;
+import org.eclipse.nebula.widgets.nattable.layer.ILayer;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
@@ -34,6 +37,7 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
+import org.eclipse.rcptt.util.swt.Events;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
@@ -83,12 +87,13 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 		case SWT.MouseUp:
 			// handle events only if event started on NatTable widget
 			if (mouseDownEvent != null) {
-				if (NatTableHelper.isNatTableCell(natTable, event.x, event.y)) {
+				NatTableCellPosition clickEndPosition = NatTableHelper.getCellPosition(natTable, event.x, event.y);
+				if (clickEndPosition != null) {
 					NatTableCellPosition clickStartPosition = NatTableHelper.getCellPosition(natTable,
 							mouseDownEvent.x, mouseDownEvent.y);
-					NatTableCellPosition clickEndPosition = NatTableHelper.getCellPosition(natTable, event.x, event.y);
 					if (clickStartPosition.equals(clickEndPosition)) {
-						if (NatTableHelper.isEditable(natTable, clickEndPosition)) {
+						if (event.button == Events.DEFAULT_BUTTON
+								&& NatTableHelper.isEditable(natTable, clickEndPosition)) {
 							recordActivateCellEditor(natTable, result, clickEndPosition);
 						} else {
 							recordMouseEvent(natTable, result, clickEndPosition, NatTableMouseEventKind.CLICK,
@@ -122,6 +127,9 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 		command.setStateMask(stateMask);
 		command.setRow(position.getRow());
 		command.setColumn(position.getCol());
+		ILayer layer = natTable.getLayer().getUnderlyingLayerByPosition(position.getCol(), position.getRow());
+		command.setColumnHeader(layer instanceof ColumnHeaderLayer);
+		command.setRowHeader(layer instanceof RowHeaderLayer);
 		command.setElement((result.element != null) ? (Element) EcoreUtil.copy(result.element) : null);
 		locator.getRecorder().safeExecuteCommand(command);
 	}

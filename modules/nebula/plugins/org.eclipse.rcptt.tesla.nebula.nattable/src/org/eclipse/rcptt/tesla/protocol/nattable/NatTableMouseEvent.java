@@ -18,6 +18,8 @@ import org.eclipse.rcptt.tesla.core.protocol.ElementCommand;
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getButton <em>Button</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getStateMask <em>State Mask</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isColumnHeader <em>Column Header</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isRowHeader <em>Row Header</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage#getNatTableMouseEvent()
@@ -160,5 +162,59 @@ public interface NatTableMouseEvent extends ElementCommand {
 	 * @generated
 	 */
 	void setKind(NatTableMouseEventKind value);
+
+	/**
+	 * Returns the value of the '<em><b>Column Header</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Column Header</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Column Header</em>' attribute.
+	 * @see #setColumnHeader(boolean)
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage#getNatTableMouseEvent_ColumnHeader()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isColumnHeader();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isColumnHeader <em>Column Header</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Column Header</em>' attribute.
+	 * @see #isColumnHeader()
+	 * @generated
+	 */
+	void setColumnHeader(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Row Header</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Row Header</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Row Header</em>' attribute.
+	 * @see #setRowHeader(boolean)
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage#getNatTableMouseEvent_RowHeader()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isRowHeader();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#isRowHeader <em>Row Header</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Row Header</em>' attribute.
+	 * @see #isRowHeader()
+	 * @generated
+	 */
+	void setRowHeader(boolean value);
 
 } // NatTableMouseEvent
