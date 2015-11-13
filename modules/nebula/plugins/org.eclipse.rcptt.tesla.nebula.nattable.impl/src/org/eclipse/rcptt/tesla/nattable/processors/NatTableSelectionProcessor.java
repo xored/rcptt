@@ -33,7 +33,7 @@ class NatTableSelectionProcessor {
 			final NatTable natTable = (NatTable) natTableElement.widget;
 			String path = command.getPath().get(0);
 
-			NatTableCellPosition sourcePosition = NatTableHelper.parsePath(path);
+			NatTableCellPosition sourcePosition = NatTableCellPosition.fromPath(path);
 			NatTableCellPosition position = NatTableHelper.getPositionByPathPosition(natTable, sourcePosition);
 
 			if (NatTableHelper.isHeaderLayer(natTable, position.getCol(), position.getRow())) {
@@ -60,7 +60,7 @@ class NatTableSelectionProcessor {
 	static SelectResponse selectItem(SelectCommand command, NatTableMapper mapper, String id) {
 		SelectData data = command.getData();
 		NatTableSWTElement natTableElement = (NatTableSWTElement) SWTElementMapper.getMapper(id).get(data.getParent());
-		NatTableCellPosition position = NatTableHelper.parsePath(data.getPath().get(0));
+		NatTableCellPosition position = NatTableCellPosition.fromPath(data.getPath().get(0));
 		NatTableCellElement cell = new NatTableCellElement(natTableElement, position);
 
 		Element element = mapper.get(cell);

@@ -23,8 +23,6 @@ import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
  * <ul>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getElement <em>Element</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getRow <em>Row</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getColumn <em>Column</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getButton <em>Button</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getStateMask <em>State Mask</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableMouseEventImpl#getKind <em>Kind</em>}</li>
@@ -34,7 +32,7 @@ import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
  *
  * @generated
  */
-public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container implements NatTableMouseEvent {
+public abstract class NatTableMouseEventImpl extends MinimalEObjectImpl.Container implements NatTableMouseEvent {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -64,46 +62,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 	 * @ordered
 	 */
 	protected Element element;
-
-	/**
-	 * The default value of the '{@link #getRow() <em>Row</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRow()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int ROW_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getRow() <em>Row</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRow()
-	 * @generated
-	 * @ordered
-	 */
-	protected int row = ROW_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getColumn() <em>Column</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getColumn()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int COLUMN_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getColumn() <em>Column</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getColumn()
-	 * @generated
-	 * @ordered
-	 */
-	protected int column = COLUMN_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getButton() <em>Button</em>}' attribute.
@@ -298,52 +256,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 	 * @generated
 	 */
 	@Override
-	public int getRow() {
-		return row;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setRow(int newRow) {
-		int oldRow = row;
-		row = newRow;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW, oldRow, row));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int getColumn() {
-		return column;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setColumn(int newColumn) {
-		int oldColumn = column;
-		column = newColumn;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN, oldColumn, column));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public int getButton() {
 		return button;
 	}
@@ -479,10 +391,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 				return getId();
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ELEMENT:
 				return getElement();
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW:
-				return getRow();
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN:
-				return getColumn();
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__BUTTON:
 				return getButton();
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__STATE_MASK:
@@ -510,12 +418,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 				return;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ELEMENT:
 				setElement((Element)newValue);
-				return;
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW:
-				setRow((Integer)newValue);
-				return;
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN:
-				setColumn((Integer)newValue);
 				return;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__BUTTON:
 				setButton((Integer)newValue);
@@ -550,12 +452,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ELEMENT:
 				setElement((Element)null);
 				return;
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW:
-				setRow(ROW_EDEFAULT);
-				return;
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN:
-				setColumn(COLUMN_EDEFAULT);
-				return;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__BUTTON:
 				setButton(BUTTON_EDEFAULT);
 				return;
@@ -587,10 +483,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 				return id != ID_EDEFAULT;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ELEMENT:
 				return element != null;
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__ROW:
-				return row != ROW_EDEFAULT;
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT__COLUMN:
-				return column != COLUMN_EDEFAULT;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__BUTTON:
 				return button != BUTTON_EDEFAULT;
 			case NattablePackage.NAT_TABLE_MOUSE_EVENT__STATE_MASK:
@@ -617,10 +509,6 @@ public class NatTableMouseEventImpl extends MinimalEObjectImpl.Container impleme
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
-		result.append(", row: ");
-		result.append(row);
-		result.append(", column: ");
-		result.append(column);
 		result.append(", button: ");
 		result.append(button);
 		result.append(", stateMask: ");

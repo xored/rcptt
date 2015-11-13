@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.nattable;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -27,7 +28,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.nattable.NatTableHelper;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nattable.processors.NatTableProcessor;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.recording.aspects.IBasicSWTEventListener;
@@ -43,13 +44,14 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
 
 public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSWTEventListener,
 		ISWTModelMapperExtension {
 
 	private static Set<Integer> INTERESTING_EVENTS = ImmutableSet.of(SWT.MouseDoubleClick, SWT.MouseDown, SWT.MouseUp);
 
-	private Event mouseDownEvent;
+	private Map<Integer, Event> mouseDownEvents = Maps.newHashMap();
 	private SWTWidgetLocator locator;
 
 	private SWTWidgetLocator getLocator() {
@@ -78,15 +80,15 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 		case SWT.MouseDown:
 			if (NatTableHelper.isNatTableCell(natTable, event.x, event.y)) {
 				// store where mouse click was started
-				// TODO: Store separate events for different buttons?
-				mouseDownEvent = event;
+				mouseDownEvents.put(event.button, event);
 			}
 
 			break;
 
 		case SWT.MouseUp:
 			// handle events only if event started on NatTable widget
-			if (mouseDownEvent != null) {
+			if (mouseDownEvents.containsKey(event.button)) {
+				Event mouseDownEvent = mouseDownEvents.get(event.button);
 				NatTableCellPosition clickEndPosition = NatTableHelper.getCellPosition(natTable, event.x, event.y);
 				if (clickEndPosition != null) {
 					NatTableCellPosition clickStartPosition = NatTableHelper.getCellPosition(natTable,
@@ -121,7 +123,7 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 
 	private void recordMouseEvent(NatTable natTable, FindResult result, NatTableCellPosition position,
 			NatTableMouseEventKind kind, int button, int stateMask) {
-		NatTableMouseEvent command = NattableFactory.eINSTANCE.createNatTableMouseEvent();
+		NatTableCellMouseEvent command = NattableFactory.eINSTANCE.createNatTableCellMouseEvent();
 		command.setKind(kind);
 		command.setButton(button);
 		command.setStateMask(stateMask);
@@ -152,7 +154,7 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 
 	@Override
 	public void clear() {
-		mouseDownEvent = null;
+		mouseDownEvents.clear();
 		NatTableRecordingHelper.getHelper().clear();
 		SWTModelMapper.initializeExtensions(getLocator().getRecorder().getProcessors(ISWTModelMapperExtension.class));
 		getLocator().cleanMenuSources();

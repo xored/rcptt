@@ -24,6 +24,7 @@ import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NattablePackage;
  *   <li>{@link org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl.GetRowHeaderImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl.GetRowHeaderImpl#getIndex <em>Index</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl.GetRowHeaderImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl.GetRowHeaderImpl#getText <em>Text</em>}</li>
  * </ul>
  *
  * @generated
@@ -108,6 +109,26 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 	 * @ordered
 	 */
 	protected ControlHandler parent;
+
+	/**
+	 * The default value of the '{@link #getText() <em>Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getText()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TEXT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getText()
+	 * @generated
+	 * @ordered
+	 */
+	protected String text = TEXT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -282,6 +303,27 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setText(String newText) {
+		String oldText = text;
+		text = newText;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NattablePackage.GET_ROW_HEADER__TEXT, oldText, text));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -297,6 +339,8 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 			case NattablePackage.GET_ROW_HEADER__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
+			case NattablePackage.GET_ROW_HEADER__TEXT:
+				return getText();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -323,6 +367,9 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 				return;
 			case NattablePackage.GET_ROW_HEADER__PARENT:
 				setParent((ControlHandler)newValue);
+				return;
+			case NattablePackage.GET_ROW_HEADER__TEXT:
+				setText((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -351,6 +398,9 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 			case NattablePackage.GET_ROW_HEADER__PARENT:
 				setParent((ControlHandler)null);
 				return;
+			case NattablePackage.GET_ROW_HEADER__TEXT:
+				setText(TEXT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -373,6 +423,8 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 				return INDEX_EDEFAULT == null ? index != null : !INDEX_EDEFAULT.equals(index);
 			case NattablePackage.GET_ROW_HEADER__PARENT:
 				return parent != null;
+			case NattablePackage.GET_ROW_HEADER__TEXT:
+				return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -393,6 +445,8 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 		result.append(type);
 		result.append(", index: "); //$NON-NLS-1$
 		result.append(index);
+		result.append(", text: "); //$NON-NLS-1$
+		result.append(text);
 		result.append(')');
 		return result.toString();
 	}

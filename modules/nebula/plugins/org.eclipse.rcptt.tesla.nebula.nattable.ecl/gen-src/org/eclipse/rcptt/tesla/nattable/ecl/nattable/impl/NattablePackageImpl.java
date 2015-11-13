@@ -2,6 +2,7 @@
  */
 package org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -140,6 +141,15 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getGetRowHeader_Text() {
+		return (EAttribute)getRowHeaderEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NattableFactory getNattableFactory() {
 		return (NattableFactory)getEFactoryInstance();
@@ -169,6 +179,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		getNatTableEClass = createEClass(GET_NAT_TABLE);
 
 		getRowHeaderEClass = createEClass(GET_ROW_HEADER);
+		createEAttribute(getRowHeaderEClass, GET_ROW_HEADER__TEXT);
 	}
 
 	/**
@@ -213,6 +224,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 		initEClass(getNatTableEClass, GetNatTable.class, "GetNatTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(getRowHeaderEClass, GetRowHeader.class, "GetRowHeader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getGetRowHeader_Text(), ecorePackage.getEString(), "text", null, 0, 1, GetRowHeader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

@@ -22,13 +22,31 @@ public interface NattableFactory extends EFactory {
 	NattableFactory eINSTANCE = org.eclipse.rcptt.tesla.protocol.nattable.impl.NattableFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Nat Table Mouse Event</em>'.
+	 * Returns a new object of class '<em>Nat Table Cell Mouse Event</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Nat Table Mouse Event</em>'.
+	 * @return a new object of class '<em>Nat Table Cell Mouse Event</em>'.
 	 * @generated
 	 */
-	NatTableMouseEvent createNatTableMouseEvent();
+	NatTableCellMouseEvent createNatTableCellMouseEvent();
+
+	/**
+	 * Returns a new object of class '<em>Nat Table Column Header Mouse Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Nat Table Column Header Mouse Event</em>'.
+	 * @generated
+	 */
+	NatTableColumnHeaderMouseEvent createNatTableColumnHeaderMouseEvent();
+
+	/**
+	 * Returns a new object of class '<em>Nat Table Row Header Mouse Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Nat Table Row Header Mouse Event</em>'.
+	 * @generated
+	 */
+	NatTableRowHeaderMouseEvent createNatTableRowHeaderMouseEvent();
 
 	/**
 	 * Returns the package supported by this factory.

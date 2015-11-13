@@ -7,10 +7,10 @@ import org.eclipse.rcptt.tesla.ecl.model.GetCell;
 import org.eclipse.rcptt.tesla.ecl.model.GetColumnHeader;
 import org.eclipse.rcptt.tesla.ecl.model.Mouse;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;
+import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
 import org.eclipse.rcptt.tesla.nattable.ecl.nattable.GetRowHeader;
 import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NattableFactory;
-import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.recording.core.ecl.TeslaCommand;
@@ -23,14 +23,14 @@ import org.eclipse.rcptt.util.swt.KeysAndButtons;
  */
 public class NattableParserExtension extends TeslaScriptletFactory {
 
-	@TeslaCommand(packageUri = NattablePackage.eNS_URI, classifier = "NatTableMouseEvent")
-	public static Command natTableMouseEvent(TeslaParser parser, NatTableMouseEvent ntmEvent) {
+	@TeslaCommand(packageUri = NattablePackage.eNS_URI, classifier = "NatTableCellMouseEvent")
+	public static Command natTableMouseEvent(TeslaParser parser, NatTableCellMouseEvent ntmEvent) {
 		return makePipe(parser.selectorOf(ntmEvent.getElement()),
 				createGetCommand(ntmEvent),
 				createMouseCommand(ntmEvent));
 	}
 
-	private static Command createMouseCommand(NatTableMouseEvent ntmEvent) {
+	private static Command createMouseCommand(NatTableCellMouseEvent ntmEvent) {
 		if (ntmEvent.getKind() == NatTableMouseEventKind.CLICK
 				&& ntmEvent.getButton() == Events.DEFAULT_BUTTON
 				&& ntmEvent.getStateMask() == Events.EMPTY_MASK) {
@@ -44,7 +44,7 @@ public class NattableParserExtension extends TeslaScriptletFactory {
 		}
 	}
 
-	private static Command createGetCommand(NatTableMouseEvent event) {
+	private static Command createGetCommand(NatTableCellMouseEvent event) {
 		ControlHandler controlHandler = TeslaFactory.eINSTANCE.createControlHandler();
 		controlHandler.setCustomKindId(NebulaNatTableElementKinds.NAT_TABLE);
 		if (event.isColumnHeader()) {

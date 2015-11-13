@@ -85,6 +85,7 @@ public class NatTableHelper {
 	 */
 	public static NatTableCellPosition getPositionByPathPosition(NatTable natTable,
 			NatTableCellPosition sourcePosition) {
+		// TODO: What if the position is given by text?
 		if (!sourcePosition.isIndexColumnCoordinate() && !sourcePosition.isIndexRowCoordinate()) {
 			return new NatTableCellPosition(sourcePosition.getCol(), sourcePosition.getRow());
 		}
@@ -197,43 +198,13 @@ public class NatTableHelper {
 	}
 
 	/**
-	 * Parses a string representation of a cell position in a {@link NatTable} in the form x:y, and returns the
-	 * corresponding {@link NatTableCellPosition}.
-	 */
-	public static NatTableCellPosition parsePath(String path) {
-		NatTableCellPosition position = new NatTableCellPosition();
-		String[] elements = path.split(":");
-
-		// parse column coordinate
-		String colParam = elements[0];
-		if (colParam.startsWith("p")) {
-			position.setCol(Integer.parseInt(colParam.substring(1)));
-			position.setIsIndexColumnCoordinate(false);
-		} else {
-			position.setCol(Integer.parseInt(colParam));
-			position.setIsIndexColumnCoordinate(true);
-		}
-
-		// parse row coordinate
-		String rowParam = elements[1];
-		if (rowParam.startsWith("p")) {
-			position.setRow(Integer.parseInt(rowParam.substring(1)));
-			position.setIsIndexRowCoordinate(false);
-		} else {
-			position.setRow(Integer.parseInt(rowParam));
-			position.setIsIndexRowCoordinate(true);
-		}
-
-		return position;
-	}
-
-	/**
 	 * Returns a string representation of the given {@link NatTable} cell, in the form x:y.
 	 */
 	public static String getPath(NatTable natTable, NatTableCellPosition position,
-			Boolean isPositionCooridinateRequired) {
+			boolean isPositionCoordinateRequired) {
+		// TODO: This seems wrong. Verify!
 		// position coordinates
-		if (isPositionCooridinateRequired) {
+		if (isPositionCoordinateRequired) {
 			StringBuilder path = new StringBuilder();
 			if (position.getCol() == 0) {
 				path.append("p");

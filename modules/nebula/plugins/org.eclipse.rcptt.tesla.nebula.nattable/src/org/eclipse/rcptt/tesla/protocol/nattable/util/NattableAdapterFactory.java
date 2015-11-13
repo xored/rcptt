@@ -76,6 +76,18 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 				return createNatTableMouseEventAdapter();
 			}
 			@Override
+			public Adapter caseNatTableCellMouseEvent(NatTableCellMouseEvent object) {
+				return createNatTableCellMouseEventAdapter();
+			}
+			@Override
+			public Adapter caseNatTableColumnHeaderMouseEvent(NatTableColumnHeaderMouseEvent object) {
+				return createNatTableColumnHeaderMouseEventAdapter();
+			}
+			@Override
+			public Adapter caseNatTableRowHeaderMouseEvent(NatTableRowHeaderMouseEvent object) {
+				return createNatTableRowHeaderMouseEventAdapter();
+			}
+			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
 			}
@@ -114,6 +126,48 @@ public class NattableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNatTableMouseEventAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent <em>Nat Table Cell Mouse Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent
+	 * @generated
+	 */
+	public Adapter createNatTableCellMouseEventAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent <em>Nat Table Column Header Mouse Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent
+	 * @generated
+	 */
+	public Adapter createNatTableColumnHeaderMouseEventAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent <em>Nat Table Row Header Mouse Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent
+	 * @generated
+	 */
+	public Adapter createNatTableRowHeaderMouseEventAdapter() {
 		return null;
 	}
 

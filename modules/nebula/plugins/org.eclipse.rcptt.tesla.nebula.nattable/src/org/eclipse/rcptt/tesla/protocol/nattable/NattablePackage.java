@@ -86,31 +86,13 @@ public interface NattablePackage extends EPackage {
 	int NAT_TABLE_MOUSE_EVENT__ELEMENT = ProtocolPackage.ELEMENT_COMMAND__ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Row</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NAT_TABLE_MOUSE_EVENT__ROW = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Column</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NAT_TABLE_MOUSE_EVENT__COLUMN = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Button</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT__BUTTON = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 2;
+	int NAT_TABLE_MOUSE_EVENT__BUTTON = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>State Mask</b></em>' attribute.
@@ -119,7 +101,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT__STATE_MASK = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 3;
+	int NAT_TABLE_MOUSE_EVENT__STATE_MASK = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -128,7 +110,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT__KIND = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 4;
+	int NAT_TABLE_MOUSE_EVENT__KIND = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Column Header</b></em>' attribute.
@@ -137,7 +119,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 5;
+	int NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Row Header</b></em>' attribute.
@@ -146,7 +128,7 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT__ROW_HEADER = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 6;
+	int NAT_TABLE_MOUSE_EVENT__ROW_HEADER = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Nat Table Mouse Event</em>' class.
@@ -155,7 +137,307 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 7;
+	int NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT = ProtocolPackage.ELEMENT_COMMAND_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableCellMouseEventImpl <em>Nat Table Cell Mouse Event</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableCellMouseEventImpl
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableCellMouseEvent()
+	 * @generated
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__ID = NAT_TABLE_MOUSE_EVENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__ELEMENT = NAT_TABLE_MOUSE_EVENT__ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Button</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__BUTTON = NAT_TABLE_MOUSE_EVENT__BUTTON;
+
+	/**
+	 * The feature id for the '<em><b>State Mask</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__STATE_MASK = NAT_TABLE_MOUSE_EVENT__STATE_MASK;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__KIND = NAT_TABLE_MOUSE_EVENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Column Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__COLUMN_HEADER = NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER;
+
+	/**
+	 * The feature id for the '<em><b>Row Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__ROW_HEADER = NAT_TABLE_MOUSE_EVENT__ROW_HEADER;
+
+	/**
+	 * The feature id for the '<em><b>Row</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__ROW = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Column</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT__COLUMN = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Nat Table Cell Mouse Event</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_CELL_MOUSE_EVENT_FEATURE_COUNT = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableColumnHeaderMouseEventImpl <em>Nat Table Column Header Mouse Event</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableColumnHeaderMouseEventImpl
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableColumnHeaderMouseEvent()
+	 * @generated
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__ID = NAT_TABLE_MOUSE_EVENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__ELEMENT = NAT_TABLE_MOUSE_EVENT__ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Button</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__BUTTON = NAT_TABLE_MOUSE_EVENT__BUTTON;
+
+	/**
+	 * The feature id for the '<em><b>State Mask</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__STATE_MASK = NAT_TABLE_MOUSE_EVENT__STATE_MASK;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__KIND = NAT_TABLE_MOUSE_EVENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Column Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__COLUMN_HEADER = NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER;
+
+	/**
+	 * The feature id for the '<em><b>Row Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__ROW_HEADER = NAT_TABLE_MOUSE_EVENT__ROW_HEADER;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__INDEX = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__TEXT = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Nat Table Column Header Mouse Event</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT_FEATURE_COUNT = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableRowHeaderMouseEventImpl <em>Nat Table Row Header Mouse Event</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableRowHeaderMouseEventImpl
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableRowHeaderMouseEvent()
+	 * @generated
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__ID = NAT_TABLE_MOUSE_EVENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__ELEMENT = NAT_TABLE_MOUSE_EVENT__ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Button</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__BUTTON = NAT_TABLE_MOUSE_EVENT__BUTTON;
+
+	/**
+	 * The feature id for the '<em><b>State Mask</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__STATE_MASK = NAT_TABLE_MOUSE_EVENT__STATE_MASK;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__KIND = NAT_TABLE_MOUSE_EVENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Column Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__COLUMN_HEADER = NAT_TABLE_MOUSE_EVENT__COLUMN_HEADER;
+
+	/**
+	 * The feature id for the '<em><b>Row Header</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__ROW_HEADER = NAT_TABLE_MOUSE_EVENT__ROW_HEADER;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__INDEX = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT__TEXT = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Nat Table Row Header Mouse Event</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAT_TABLE_ROW_HEADER_MOUSE_EVENT_FEATURE_COUNT = NAT_TABLE_MOUSE_EVENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind <em>Nat Table Mouse Event Kind</em>}' enum.
@@ -165,7 +447,7 @@ public interface NattablePackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableMouseEventKind()
 	 * @generated
 	 */
-	int NAT_TABLE_MOUSE_EVENT_KIND = 1;
+	int NAT_TABLE_MOUSE_EVENT_KIND = 4;
 
 
 	/**
@@ -177,28 +459,6 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getNatTableMouseEvent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getRow <em>Row</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Row</em>'.
-	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getRow()
-	 * @see #getNatTableMouseEvent()
-	 * @generated
-	 */
-	EAttribute getNatTableMouseEvent_Row();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getColumn <em>Column</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Column</em>'.
-	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getColumn()
-	 * @see #getNatTableMouseEvent()
-	 * @generated
-	 */
-	EAttribute getNatTableMouseEvent_Column();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent#getButton <em>Button</em>}'.
@@ -256,6 +516,102 @@ public interface NattablePackage extends EPackage {
 	EAttribute getNatTableMouseEvent_RowHeader();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent <em>Nat Table Cell Mouse Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Nat Table Cell Mouse Event</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent
+	 * @generated
+	 */
+	EClass getNatTableCellMouseEvent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent#getRow <em>Row</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Row</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent#getRow()
+	 * @see #getNatTableCellMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableCellMouseEvent_Row();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent#getColumn <em>Column</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Column</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent#getColumn()
+	 * @see #getNatTableCellMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableCellMouseEvent_Column();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent <em>Nat Table Column Header Mouse Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Nat Table Column Header Mouse Event</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent
+	 * @generated
+	 */
+	EClass getNatTableColumnHeaderMouseEvent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent#getIndex()
+	 * @see #getNatTableColumnHeaderMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableColumnHeaderMouseEvent_Index();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent#getText <em>Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Text</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent#getText()
+	 * @see #getNatTableColumnHeaderMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableColumnHeaderMouseEvent_Text();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent <em>Nat Table Row Header Mouse Event</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Nat Table Row Header Mouse Event</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent
+	 * @generated
+	 */
+	EClass getNatTableRowHeaderMouseEvent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent#getIndex()
+	 * @see #getNatTableRowHeaderMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableRowHeaderMouseEvent_Index();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent#getText <em>Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Text</em>'.
+	 * @see org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent#getText()
+	 * @see #getNatTableRowHeaderMouseEvent()
+	 * @generated
+	 */
+	EAttribute getNatTableRowHeaderMouseEvent_Text();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind <em>Nat Table Mouse Event Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -298,22 +654,6 @@ public interface NattablePackage extends EPackage {
 		EClass NAT_TABLE_MOUSE_EVENT = eINSTANCE.getNatTableMouseEvent();
 
 		/**
-		 * The meta object literal for the '<em><b>Row</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NAT_TABLE_MOUSE_EVENT__ROW = eINSTANCE.getNatTableMouseEvent_Row();
-
-		/**
-		 * The meta object literal for the '<em><b>Column</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NAT_TABLE_MOUSE_EVENT__COLUMN = eINSTANCE.getNatTableMouseEvent_Column();
-
-		/**
 		 * The meta object literal for the '<em><b>Button</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -352,6 +692,84 @@ public interface NattablePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NAT_TABLE_MOUSE_EVENT__ROW_HEADER = eINSTANCE.getNatTableMouseEvent_RowHeader();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableCellMouseEventImpl <em>Nat Table Cell Mouse Event</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableCellMouseEventImpl
+		 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableCellMouseEvent()
+		 * @generated
+		 */
+		EClass NAT_TABLE_CELL_MOUSE_EVENT = eINSTANCE.getNatTableCellMouseEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Row</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_CELL_MOUSE_EVENT__ROW = eINSTANCE.getNatTableCellMouseEvent_Row();
+
+		/**
+		 * The meta object literal for the '<em><b>Column</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_CELL_MOUSE_EVENT__COLUMN = eINSTANCE.getNatTableCellMouseEvent_Column();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableColumnHeaderMouseEventImpl <em>Nat Table Column Header Mouse Event</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableColumnHeaderMouseEventImpl
+		 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableColumnHeaderMouseEvent()
+		 * @generated
+		 */
+		EClass NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT = eINSTANCE.getNatTableColumnHeaderMouseEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__INDEX = eINSTANCE.getNatTableColumnHeaderMouseEvent_Index();
+
+		/**
+		 * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT__TEXT = eINSTANCE.getNatTableColumnHeaderMouseEvent_Text();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableRowHeaderMouseEventImpl <em>Nat Table Row Header Mouse Event</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NatTableRowHeaderMouseEventImpl
+		 * @see org.eclipse.rcptt.tesla.protocol.nattable.impl.NattablePackageImpl#getNatTableRowHeaderMouseEvent()
+		 * @generated
+		 */
+		EClass NAT_TABLE_ROW_HEADER_MOUSE_EVENT = eINSTANCE.getNatTableRowHeaderMouseEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_ROW_HEADER_MOUSE_EVENT__INDEX = eINSTANCE.getNatTableRowHeaderMouseEvent_Index();
+
+		/**
+		 * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAT_TABLE_ROW_HEADER_MOUSE_EVENT__TEXT = eINSTANCE.getNatTableRowHeaderMouseEvent_Text();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind <em>Nat Table Mouse Event Kind</em>}' enum.

@@ -2,6 +2,7 @@
  */
 package org.eclipse.rcptt.tesla.nattable.ecl.nattable;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -314,13 +315,22 @@ public interface NattablePackage extends EPackage {
 	int GET_ROW_HEADER__PARENT = TeslaPackage.SELECTOR__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_ROW_HEADER__TEXT = TeslaPackage.SELECTOR_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Get Row Header</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_ROW_HEADER_FEATURE_COUNT = TeslaPackage.SELECTOR_FEATURE_COUNT + 0;
+	int GET_ROW_HEADER_FEATURE_COUNT = TeslaPackage.SELECTOR_FEATURE_COUNT + 1;
 
 
 	/**
@@ -352,6 +362,17 @@ public interface NattablePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGetRowHeader();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.nattable.ecl.nattable.GetRowHeader#getText <em>Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Text</em>'.
+	 * @see org.eclipse.rcptt.tesla.nattable.ecl.nattable.GetRowHeader#getText()
+	 * @see #getGetRowHeader()
+	 * @generated
+	 */
+	EAttribute getGetRowHeader_Text();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -404,6 +425,14 @@ public interface NattablePackage extends EPackage {
 		 * @generated
 		 */
 		EClass GET_ROW_HEADER = eINSTANCE.getGetRowHeader();
+
+		/**
+		 * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GET_ROW_HEADER__TEXT = eINSTANCE.getGetRowHeader_Text();
 
 	}
 

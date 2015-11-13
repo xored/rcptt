@@ -6,12 +6,14 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.rcptt.tesla.protocol.nattable.*;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
+import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -57,7 +59,9 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT: return createNatTableMouseEvent();
+			case NattablePackage.NAT_TABLE_CELL_MOUSE_EVENT: return createNatTableCellMouseEvent();
+			case NattablePackage.NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT: return createNatTableColumnHeaderMouseEvent();
+			case NattablePackage.NAT_TABLE_ROW_HEADER_MOUSE_EVENT: return createNatTableRowHeaderMouseEvent();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -99,9 +103,31 @@ public class NattableFactoryImpl extends EFactoryImpl implements NattableFactory
 	 * @generated
 	 */
 	@Override
-	public NatTableMouseEvent createNatTableMouseEvent() {
-		NatTableMouseEventImpl natTableMouseEvent = new NatTableMouseEventImpl();
-		return natTableMouseEvent;
+	public NatTableCellMouseEvent createNatTableCellMouseEvent() {
+		NatTableCellMouseEventImpl natTableCellMouseEvent = new NatTableCellMouseEventImpl();
+		return natTableCellMouseEvent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NatTableColumnHeaderMouseEvent createNatTableColumnHeaderMouseEvent() {
+		NatTableColumnHeaderMouseEventImpl natTableColumnHeaderMouseEvent = new NatTableColumnHeaderMouseEventImpl();
+		return natTableColumnHeaderMouseEvent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NatTableRowHeaderMouseEvent createNatTableRowHeaderMouseEvent() {
+		NatTableRowHeaderMouseEventImpl natTableRowHeaderMouseEvent = new NatTableRowHeaderMouseEventImpl();
+		return natTableRowHeaderMouseEvent;
 	}
 
 	/**

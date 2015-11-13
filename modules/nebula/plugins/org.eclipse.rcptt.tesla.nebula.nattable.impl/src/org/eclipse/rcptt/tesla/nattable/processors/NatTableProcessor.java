@@ -5,11 +5,13 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.nebula.widgets.nattable.NatTable;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.ApplyCellEditor;
+import org.eclipse.rcptt.tesla.core.protocol.BooleanResponse;
 import org.eclipse.rcptt.tesla.core.protocol.CancelCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.DeactivateCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.IElementProcessorMapper;
@@ -25,20 +27,23 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.ResponseStatus;
 import org.eclipse.rcptt.tesla.internal.core.AbstractTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.processing.ElementGenerator;
 import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
+import org.eclipse.rcptt.tesla.internal.ui.SWTElementMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTEvents;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
-import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NattableFactory;
-import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NebulaNatTable;
 import org.eclipse.rcptt.tesla.nattable.NatTableMapper;
 import org.eclipse.rcptt.tesla.nattable.NatTablePlayerExtension;
 import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
+import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NattableFactory;
+import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NebulaNatTable;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
+import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
@@ -138,14 +143,21 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 				break;
 			}
 		} else if (pkg.equals(NattablePackage.eINSTANCE)) {
-			switch (eClass.getClassifierID()) {
-			case NattablePackage.NAT_TABLE_MOUSE_EVENT:
-				NatTableMouseEvent event = (NatTableMouseEvent) command;
-				if (event.getElement().getKind().equals(NebulaNatTableElementKinds.NAT_TABLE)) {
-					return NatTableCellEditProcessor.executeMouseEvent(event, getMapper(), id, getPlayer());
+			if (command instanceof NatTableMouseEvent) {
+				BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
+				try {
+					NatTableMouseEvent event = (NatTableMouseEvent) command;
+					NatTable natTable = (NatTable) SWTElementMapper.getMapper(id).get(event.getElement()).widget;
+					SWTUIPlayer player = getPlayer();
+					SWTEvents events = player.getEvents();
+					player.exec("mouse event on NatTable", new NatTableMouseEventRunner(natTable, events, event));
+					response.setResult(true);
+				} catch (Exception e) {
+					response.setResult(false);
+					response.setStatus(ResponseStatus.FAILED);
+					response.setMessage(NLS.bind(TeslaSWTMessages.SWTUIProcessor_CannotSetSelection, e.getMessage()));
 				}
-				break;
-
+				return response;
 			}
 		}
 

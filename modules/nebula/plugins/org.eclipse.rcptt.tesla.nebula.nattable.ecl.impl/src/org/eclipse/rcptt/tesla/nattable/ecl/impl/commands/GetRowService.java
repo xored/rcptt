@@ -20,8 +20,11 @@ import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;
-import org.eclipse.rcptt.tesla.nattable.ecl.nattable.GetRowHeader;
 import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
+import org.eclipse.rcptt.tesla.nattable.ecl.nattable.GetRowHeader;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
+
+import com.google.common.base.Strings;
 
 public class GetRowService implements ICommandService {
 
@@ -34,7 +37,11 @@ public class GetRowService implements ICommandService {
 		handler.setAfter(grCommand.getAfter());
 		handler.setKind(ElementKind.Custom);
 		handler.setCustomKindId(NebulaNatTableElementKinds.NAT_TABLE_CELL);
-		handler.setPath("0:" + grCommand.getIndex());
+		if (!Strings.isNullOrEmpty(grCommand.getText())) {
+			handler.setPath(NatTableCellPosition.forRowText(grCommand.getText()).getPath());
+		} else {
+			handler.setPath(new NatTableCellPosition(0, grCommand.getIndex()).getPath());
+		}
 		TeslaBridge.find(handler);
 		TeslaBridge.waitExecution();
 		context.getOutput().write(handler);

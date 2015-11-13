@@ -22,6 +22,9 @@ import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.GetColumnHeader;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;
 import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
+
+import com.google.common.base.Strings;
 
 public class GetColumnServiceExtension implements IScriptletExtension {
 
@@ -34,7 +37,11 @@ public class GetColumnServiceExtension implements IScriptletExtension {
 		handler.setAfter(gcCommand.getAfter());
 		handler.setKind(ElementKind.Custom);
 		handler.setCustomKindId(NebulaNatTableElementKinds.NAT_TABLE_CELL);
-		handler.setPath(gcCommand.getIndex() + ":0");
+		if (!Strings.isNullOrEmpty(gcCommand.getText())) {
+			handler.setPath(NatTableCellPosition.forColumnText(gcCommand.getText()).getPath());
+		} else {
+			handler.setPath(new NatTableCellPosition(gcCommand.getIndex(), 0).getPath());
+		}
 		TeslaBridge.find(handler);
 		TeslaBridge.waitExecution();
 		context.getOutput().write(handler);

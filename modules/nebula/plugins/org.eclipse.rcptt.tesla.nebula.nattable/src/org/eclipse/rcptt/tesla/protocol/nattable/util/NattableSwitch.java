@@ -95,6 +95,33 @@ public class NattableSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NattablePackage.NAT_TABLE_CELL_MOUSE_EVENT: {
+				NatTableCellMouseEvent natTableCellMouseEvent = (NatTableCellMouseEvent)theEObject;
+				T result = caseNatTableCellMouseEvent(natTableCellMouseEvent);
+				if (result == null) result = caseNatTableMouseEvent(natTableCellMouseEvent);
+				if (result == null) result = caseElementCommand(natTableCellMouseEvent);
+				if (result == null) result = caseCommand(natTableCellMouseEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NattablePackage.NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT: {
+				NatTableColumnHeaderMouseEvent natTableColumnHeaderMouseEvent = (NatTableColumnHeaderMouseEvent)theEObject;
+				T result = caseNatTableColumnHeaderMouseEvent(natTableColumnHeaderMouseEvent);
+				if (result == null) result = caseNatTableMouseEvent(natTableColumnHeaderMouseEvent);
+				if (result == null) result = caseElementCommand(natTableColumnHeaderMouseEvent);
+				if (result == null) result = caseCommand(natTableColumnHeaderMouseEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NattablePackage.NAT_TABLE_ROW_HEADER_MOUSE_EVENT: {
+				NatTableRowHeaderMouseEvent natTableRowHeaderMouseEvent = (NatTableRowHeaderMouseEvent)theEObject;
+				T result = caseNatTableRowHeaderMouseEvent(natTableRowHeaderMouseEvent);
+				if (result == null) result = caseNatTableMouseEvent(natTableRowHeaderMouseEvent);
+				if (result == null) result = caseElementCommand(natTableRowHeaderMouseEvent);
+				if (result == null) result = caseCommand(natTableRowHeaderMouseEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -111,6 +138,51 @@ public class NattableSwitch<T> {
 	 * @generated
 	 */
 	public T caseNatTableMouseEvent(NatTableMouseEvent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Nat Table Cell Mouse Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Nat Table Cell Mouse Event</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNatTableCellMouseEvent(NatTableCellMouseEvent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Nat Table Column Header Mouse Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Nat Table Column Header Mouse Event</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNatTableColumnHeaderMouseEvent(NatTableColumnHeaderMouseEvent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Nat Table Row Header Mouse Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Nat Table Row Header Mouse Event</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNatTableRowHeaderMouseEvent(NatTableRowHeaderMouseEvent object) {
 		return null;
 	}
 
