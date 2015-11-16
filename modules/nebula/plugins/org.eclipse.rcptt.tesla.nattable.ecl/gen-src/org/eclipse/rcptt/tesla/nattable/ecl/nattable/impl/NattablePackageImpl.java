@@ -141,6 +141,7 @@ public class NattablePackageImpl extends EPackageImpl implements NattablePackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getGetRowHeader_Text() {
 		return (EAttribute)getRowHeaderEClass.getEStructuralFeatures().get(0);
 	}

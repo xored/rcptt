@@ -303,6 +303,7 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText() {
 		return text;
 	}
@@ -312,6 +313,7 @@ public class GetRowHeaderImpl extends CommandImpl implements GetRowHeader {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setText(String newText) {
 		String oldText = text;
 		text = newText;
