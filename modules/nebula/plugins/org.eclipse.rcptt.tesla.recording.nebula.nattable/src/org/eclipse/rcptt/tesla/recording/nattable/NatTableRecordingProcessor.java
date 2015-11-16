@@ -138,9 +138,7 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 
 	private void recordActivateCellEditor(NatTable natTable, FindResult result, NatTableCellPosition position) {
 		ViewerUIElement element = new ViewerUIElement(result.element, locator.getRecorder());
-		boolean isPositionCooridinateRequired = NatTableHelper.isHeaderLayer(natTable, position.getCol(),
-				position.getRow());
-		String path = NatTableHelper.getPath(natTable, position, isPositionCooridinateRequired);
+		String path = position.getPath();
 		element.setSelection(path);
 		element.activateCellEditor(path);
 	}

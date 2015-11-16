@@ -12,9 +12,6 @@ public class NatTableCellPosition {
 	private int row;
 	private int col;
 
-	private boolean isIndexColumnCoordinate = false;
-	private boolean isIndexRowCoordinate = false;
-
 	private String text;
 
 	/**
@@ -29,28 +26,9 @@ public class NatTableCellPosition {
 			return forRowText(path.substring(ROW_PREFIX.length()));
 		}
 		String[] elements = path.split(":");
-		NatTableCellPosition position = new NatTableCellPosition(0, 0);
-
-		// parse column coordinate
 		String colParam = elements[0];
-		if (colParam.startsWith("p")) {
-			position.col = Integer.parseInt(colParam.substring(1));
-			position.isIndexColumnCoordinate = false;
-		} else {
-			position.col = Integer.parseInt(colParam);
-			position.isIndexColumnCoordinate = true;
-		}
-
-		// parse row coordinate
 		String rowParam = elements[1];
-		if (rowParam.startsWith("p")) {
-			position.row = Integer.parseInt(rowParam.substring(1));
-			position.isIndexColumnCoordinate = false;
-		} else {
-			position.row = Integer.parseInt(rowParam);
-			position.isIndexRowCoordinate = true;
-		}
-		return position;
+		return new NatTableCellPosition(Integer.parseInt(colParam), Integer.parseInt(rowParam));
 	}
 
 	/**
@@ -62,17 +40,7 @@ public class NatTableCellPosition {
 		} else if (row == -1) {
 			return ROW_PREFIX + text;
 		}
-		StringBuilder path = new StringBuilder();
-		if (!isIndexColumnCoordinate) {
-			path.append("p");
-		}
-		path.append(col);
-		path.append(":");
-		if (!isIndexRowCoordinate) {
-			path.append("p");
-		}
-		path.append(row);
-		return path.toString();
+		return String.format("%d:%d", col, row);
 	}
 
 	/**
@@ -103,29 +71,30 @@ public class NatTableCellPosition {
 		return path.startsWith(COL_PREFIX) || path.startsWith(ROW_PREFIX) || path.matches("[p]*[\\d]+:[p]*[\\d]+");
 	}
 
+	/**
+	 * Returns the row coordinate, or -1 for header cells given by their text.
+	 */
 	public int getRow() {
 		return row;
 	}
 
+	/**
+	 * Returns the column coordinate, or -1 for header cells given by their text.
+	 */
 	public int getCol() {
 		return col;
 	}
 
+	/**
+	 * Returns the column or row header text, or null if the cell is specified by its coordinates.
+	 */
 	public String getText() {
 		return text;
 	}
 
-	public boolean isIndexColumnCoordinate() {
-		return isIndexColumnCoordinate;
-	}
-
-	public boolean isIndexRowCoordinate() {
-		return isIndexRowCoordinate;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(col, row, isIndexColumnCoordinate, isIndexRowCoordinate);
+		return Objects.hashCode(col, row, text);
 	}
 
 	@Override
@@ -141,8 +110,7 @@ public class NatTableCellPosition {
 
 		return row == position.row
 				&& col == position.col
-				&& isIndexColumnCoordinate == position.isIndexRowCoordinate
-				&& isIndexRowCoordinate == position.isIndexRowCoordinate;
+				&& Objects.equal(text, position.text);
 	}
 
 }

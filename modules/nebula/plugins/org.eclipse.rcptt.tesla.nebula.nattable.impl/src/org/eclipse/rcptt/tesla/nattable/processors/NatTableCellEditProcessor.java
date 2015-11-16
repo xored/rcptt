@@ -17,7 +17,6 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
 import org.eclipse.rcptt.tesla.core.protocol.raw.ResponseStatus;
 import org.eclipse.rcptt.tesla.internal.ui.SWTElementMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
-import org.eclipse.rcptt.tesla.nattable.NatTableHelper;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableSWTElement;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
@@ -33,7 +32,6 @@ class NatTableCellEditProcessor {
 			final NatTable natTable = (NatTable) natTableElement.widget;
 			final String path = command.getPath().get(0);
 			NatTableCellPosition position = NatTableCellPosition.fromPath(path);
-			position = NatTableHelper.getPositionByPathPosition(natTable, position);
 			final ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
 
 			player.exec("Start editing of NatTable cell", new Runnable() {

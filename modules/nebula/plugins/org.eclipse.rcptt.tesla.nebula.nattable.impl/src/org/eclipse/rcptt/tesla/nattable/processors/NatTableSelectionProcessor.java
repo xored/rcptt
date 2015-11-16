@@ -33,8 +33,7 @@ class NatTableSelectionProcessor {
 			final NatTable natTable = (NatTable) natTableElement.widget;
 			String path = command.getPath().get(0);
 
-			NatTableCellPosition sourcePosition = NatTableCellPosition.fromPath(path);
-			NatTableCellPosition position = NatTableHelper.getPositionByPathPosition(natTable, sourcePosition);
+			NatTableCellPosition position = NatTableCellPosition.fromPath(path);
 
 			if (NatTableHelper.isHeaderLayer(natTable, position.getCol(), position.getRow())) {
 				NatTableHelper.clickOnCell(natTable, position.getCol(), position.getRow(), player);
