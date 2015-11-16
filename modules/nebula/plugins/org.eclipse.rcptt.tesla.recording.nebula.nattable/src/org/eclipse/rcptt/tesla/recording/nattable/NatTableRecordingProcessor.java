@@ -109,7 +109,7 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 					}
 
 				}
-				mouseDownEvent = null;
+				mouseDownEvents.remove(event.button);
 			}
 			break;
 		// TODO: Handle double click?
