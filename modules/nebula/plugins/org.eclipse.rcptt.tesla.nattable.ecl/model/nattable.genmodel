@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/org.eclipse.rcptt.tesla.nattable.ecl/gen-src"
+    editDirectory="/org.eclipse.rcptt.tesla.nattable.ecl.edit/src" editorDirectory="/org.eclipse.rcptt.tesla.nattable.ecl.editor/src"
+    modelPluginID="org.eclipse.rcptt.tesla.nattable.ecl" modelName="Nattable" modelPluginClass=""
+    editPluginClass="org.eclipse.rcptt.tesla.nattable.ecl.nattable.provider.NattableEditPlugin"
+    editorPluginClass="org.eclipse.rcptt.tesla.nattable.ecl.nattable.presentation.NattableEditorPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    featureMapWrapperInternalInterface="" testSuiteClass="org.eclipse.rcptt.tesla.nattable.ecl.nattable.tests.NattableAllTests"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    editPluginID="org.eclipse.rcptt.tesla.nattable.ecl.edit" editorPluginID="org.eclipse.rcptt.tesla.nattable.ecl.editor"
+    runtimeVersion="2.5" usedGenPackages="../../org.eclipse.rcptt.tesla.core/models/controls.genmodel#//ui ../../org.eclipse.rcptt.ecl.core/model/ecl.genmodel#//core platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.rcptt.tesla.core/models/info.genmodel#//info ../../org.eclipse.rcptt.tesla.core/models/rawProtocol.genmodel#//raw ../../org.eclipse.rcptt.tesla.core/models/protocol.genmodel#//protocol ../../org.eclipse.rcptt.tesla.ecl/model/tesla.genmodel#//model"
+    importOrganizing="true" pluginKey="nattable">
+  <foreignModel>nattable.ecore</foreignModel>
+  <genPackages prefix="Nattable" basePackage="org.eclipse.rcptt.tesla.nattable.ecl"
+      disposableProviderFactory="true" ecorePackage="nattable.ecore#/">
+    <genClasses ecoreClass="nattable.ecore#//NebulaNatTable"/>
+    <genClasses ecoreClass="nattable.ecore#//GetNatTable"/>
+    <genClasses ecoreClass="nattable.ecore#//GetRowHeader"/>
+  </genPackages>
+</genmodel:GenModel>

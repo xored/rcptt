@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="nattable" nsURI="http://eclipse.org/rcptt/tesla/nattable/ecl"
+    nsPrefix="org.eclipse.rcptt.tesla.nattable.ecl">
+  <eClassifiers xsi:type="ecore:EClass" name="NebulaNatTable" eSuperTypes="../../org.eclipse.rcptt.tesla.core/models/ui.ecore#//Control"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GetNatTable" eSuperTypes="../../org.eclipse.rcptt.tesla.ecl/model/tesla.ecore#//Selector"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GetRowHeader" eSuperTypes="../../org.eclipse.rcptt.tesla.ecl/model/tesla.ecore#//Selector">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>
