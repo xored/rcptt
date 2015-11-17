@@ -4,29 +4,19 @@ Bundle-Name: RCPTT Recording Nebula Support (Incubation)
 Bundle-SymbolicName: org.eclipse.rcptt.tesla.recording.nattable;singleton:=true
 Bundle-Version: 2.1.0.qualifier
 Bundle-Vendor: Eclipse RCP Testing Tool Project
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui,
- org.eclipse.rcptt.tesla.core,
- org.eclipse.rcptt.tesla.swt,
+Require-Bundle: org.eclipse.rcptt.tesla.swt,
  org.eclipse.rcptt.tesla.recording.core,
  org.eclipse.rcptt.tesla.recording.swt,
  org.eclipse.rcptt.tesla.recording.aspects.swt,
  org.eclipse.rcptt.logging,
- org.eclipse.rcptt.util,
  org.eclipse.rcptt.util.swt,
  org.eclipse.rcptt.tesla.nattable,
  com.google.guava,
- org.eclipse.nebula.widgets.nattable.core
+ org.eclipse.nebula.widgets.nattable.core,
+ org.eclipse.rcptt.tesla.nattable.ecl;bundle-version="2.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.nebula.widgets.nattable,
- org.eclipse.nebula.widgets.nattable.config,
- org.eclipse.nebula.widgets.nattable.edit,
- org.eclipse.nebula.widgets.nattable.layer,
- org.eclipse.nebula.widgets.nattable.layer.cell,
- org.eclipse.nebula.widgets.nattable.style,
- org.eclipse.rcptt.tesla.nattable.ecl.nattable,
- org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl,
  org.eclipse.rcptt.tesla.nattable,
  org.eclipse.rcptt.tesla.nattable.describer,
  org.eclipse.rcptt.tesla.nattable.model,

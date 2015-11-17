@@ -11,6 +11,4 @@ Export-Package: org.eclipse.rcptt.tesla.protocol.nattable,
  org.eclipse.rcptt.tesla.protocol.nattable.util
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.rcptt.tesla.core;bundle-version="[2.1.0,3.0.0)";visibility:=reexport
+Require-Bundle: org.eclipse.rcptt.tesla.core;bundle-version="[2.1.0,3.0.0)";visibility:=reexport

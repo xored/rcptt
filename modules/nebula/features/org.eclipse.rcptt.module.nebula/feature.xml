@@ -39,7 +39,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.rcptt.tesla.nattable"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.rcptt.tesla.nattable.ecl"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.tesla.recording.nattable.ecl"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"

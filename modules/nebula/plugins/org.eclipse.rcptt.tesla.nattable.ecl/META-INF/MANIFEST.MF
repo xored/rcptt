@@ -11,11 +11,6 @@ Export-Package: org.eclipse.rcptt.tesla.nattable.ecl,
  org.eclipse.rcptt.tesla.nattable.ecl.nattable,
  org.eclipse.rcptt.tesla.nattable.ecl.nattable.impl,
  org.eclipse.rcptt.tesla.nattable.ecl.nattable.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.rcptt.tesla.core;visibility:=reexport,
- org.eclipse.rcptt.ecl.core;visibility:=reexport,
- org.eclipse.rcptt.tesla.ecl;visibility:=reexport,
- org.eclipse.rcptt.tesla.recording.core.ecl
+Require-Bundle: org.eclipse.rcptt.tesla.ecl;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 
