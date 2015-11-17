@@ -22,6 +22,7 @@ import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.GetCell;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;
 import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
 
 public class GetCellServiceExtension implements IScriptletExtension {
 
@@ -34,7 +35,7 @@ public class GetCellServiceExtension implements IScriptletExtension {
 		handler.setAfter(gcCommand.getAfter());
 		handler.setKind(ElementKind.Custom);
 		handler.setCustomKindId(NebulaNatTableElementKinds.NAT_TABLE_CELL);
-		handler.setPath(gcCommand.getColumn() + ":" + gcCommand.getRow());
+		handler.setPath(new NatTableCellPosition(gcCommand.getColumn(), gcCommand.getRow()).getPath());
 		TeslaBridge.find(handler);
 		TeslaBridge.waitExecution();
 		context.getOutput().write(handler);

@@ -5,6 +5,9 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.nebula.widgets.nattable.NatTable;
+import org.eclipse.nebula.widgets.nattable.command.ILayerCommand;
+import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
+import org.eclipse.nebula.widgets.nattable.selection.command.SelectCellCommand;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
@@ -18,6 +21,7 @@ import org.eclipse.rcptt.tesla.core.protocol.IElementProcessorMapper;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
 import org.eclipse.rcptt.tesla.core.protocol.SelectCommand;
+import org.eclipse.rcptt.tesla.core.protocol.SelectData;
 import org.eclipse.rcptt.tesla.core.protocol.SelectResponse;
 import org.eclipse.rcptt.tesla.core.protocol.SetSelection;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
@@ -36,17 +40,24 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
+import org.eclipse.rcptt.tesla.nattable.NatTableHelper;
 import org.eclipse.rcptt.tesla.nattable.NatTableMapper;
 import org.eclipse.rcptt.tesla.nattable.NatTablePlayerExtension;
 import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
 import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.nattable.ecl.nattable.NebulaNatTable;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableCellElement;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableSWTElement;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
+import org.eclipse.rcptt.util.swt.Bounds;
+import org.eclipse.rcptt.util.swt.Events;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 import com.google.common.collect.ImmutableSet;
@@ -91,7 +102,7 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 			return getSWTProcessor().select(cmd, generator, mapper);
 		}
 		if (kind.equals(NebulaNatTableElementKinds.NAT_TABLE_CELL)) {
-			return NatTableSelectionProcessor.selectItem(cmd, getMapper(), id);
+			return selectItem(cmd);
 		}
 
 		return createFailedSelect("Incorrect selection request.");
@@ -111,9 +122,8 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 			case ProtocolPackage.SET_SELECTION:
 				SetSelection select = (SetSelection) command;
 				if (select.getElement().getKind().equals(NebulaNatTableElementKinds.NAT_TABLE)) {
-					return NatTableSelectionProcessor.executeCellSelection(select, getMapper(), id, getPlayer());
+					return executeCellSelection(select);
 				}
-
 				break;
 			case ProtocolPackage.ACTIVATE_CELL_EDITOR:
 				ActivateCellEditor activateCell = (ActivateCellEditor) command;
@@ -162,6 +172,71 @@ public class NatTableProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 		}
 
 		return null;
+	}
+
+	private Response executeCellSelection(SetSelection command) {
+		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
+		try {
+			NatTableSWTElement natTableElement = (NatTableSWTElement) SWTElementMapper.getMapper(id).get(
+					command.getElement());
+			final NatTable natTable = (NatTable) natTableElement.widget;
+			final NatTableCellPosition position = NatTableCellPosition.fromPath(command.getPath().get(0));
+
+			getPlayer().exec("Select NatTable cell", new Runnable() {
+				@Override
+				public void run() {
+					if (NatTableHelper.isRowHeader(natTable, position)
+							|| NatTableHelper.isColumnHeader(natTable, position)) {
+						clickOnCell(natTable, position);
+					} else {
+						ILayerCell cell = position.getCell(natTable);
+						ILayerCommand natTableCommand = new SelectCellCommand(natTable, cell.getColumnPosition(),
+								cell.getRowPosition(), false, false);
+						boolean result = natTable.doCommand(natTableCommand);
+
+						if (!result) {
+							// TODO!
+							throw new RuntimeException("Can't set specified selection");
+						}
+					}
+				}
+			});
+
+			response.setResult(true);
+		} catch (Exception e) {
+			response.setResult(false);
+			response.setStatus(ResponseStatus.FAILED);
+			response.setMessage(NLS.bind(TeslaSWTMessages.SWTUIProcessor_CannotSetSelection, e.getMessage()));
+		}
+		return response;
+	}
+
+	private SelectResponse selectItem(SelectCommand command) {
+		SelectData data = command.getData();
+		NatTableSWTElement natTableElement = (NatTableSWTElement) SWTElementMapper.getMapper(id).get(data.getParent());
+		NatTableCellPosition position = NatTableCellPosition.fromPath(data.getPath().get(0));
+		NatTableCellElement cell = new NatTableCellElement(natTableElement, position);
+
+		Element element = getMapper().get(cell);
+		SelectResponse response = ProtocolFactory.eINSTANCE.createSelectResponse();
+		response.getElements().add(element);
+
+		return response;
+	}
+
+	/**
+	 * Fire single left click event on cell
+	 */
+	private void clickOnCell(final NatTable natTable, NatTableCellPosition position) {
+		ILayerCell cell = position.getCell(natTable);
+		final Event[] event = Events.createClick(Bounds.centerAbs(cell.getBounds()));
+		final SWTUIPlayer player = getPlayer();
+		player.exec("Performing click on NatTable cell", new Runnable() {
+			@Override
+			public void run() {
+				player.getEvents().sendAll(natTable, event);
+			}
+		});
 	}
 
 	@Override

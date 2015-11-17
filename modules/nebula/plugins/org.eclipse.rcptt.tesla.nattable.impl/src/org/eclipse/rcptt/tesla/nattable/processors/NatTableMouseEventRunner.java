@@ -12,11 +12,8 @@ import org.eclipse.nebula.widgets.nattable.selection.command.SelectRowsCommand;
 import org.eclipse.rcptt.tesla.core.protocol.BooleanResponse;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTEvents;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent;
+import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent;
-import org.eclipse.rcptt.tesla.protocol.nattable.NattablePackage;
 import org.eclipse.rcptt.util.swt.Bounds;
 import org.eclipse.rcptt.util.swt.Events;
 import org.eclipse.swt.SWT;
@@ -40,59 +37,14 @@ class NatTableMouseEventRunner implements Runnable {
 
 	@Override
 	public void run() {
-		int col;
-		int row;
-		switch (event.eClass().getClassifierID()) {
-		case NattablePackage.NAT_TABLE_CELL_MOUSE_EVENT:
-			col = ((NatTableCellMouseEvent) event).getColumn();
-			row = ((NatTableCellMouseEvent) event).getRow();
-			break;
-		case NattablePackage.NAT_TABLE_COLUMN_HEADER_MOUSE_EVENT:
-			col = getColumnIndex((NatTableColumnHeaderMouseEvent) event);
-			row = 0;
-			break;
-		case NattablePackage.NAT_TABLE_ROW_HEADER_MOUSE_EVENT:
-			col = 0;
-			row = getRowIndex((NatTableRowHeaderMouseEvent) event);
-			break;
-		default:
-			return;
-		}
-		if (col == -1 || row == -1) {
+		ILayerCell cell = NatTableCellPosition.fromMouseEvent(event).getCell(natTable);
+		if (cell == null) {
 			return; // TODO: Throw an exception??
 		}
-		executeMouseEvent(event, col, row);
+		executeMouseEvent(event, cell);
 	}
 
-	/**
-	 * Returns the index of the first column header with the given text, or -1 if not found.
-	 */
-	private int getColumnIndex(NatTableColumnHeaderMouseEvent event) {
-		return getFirstIndex(event.getIndex(), event.getText(), 1, 0);
-	}
-
-	/**
-	 * Returns the index of the first row header with the given text, or -1 if not found.
-	 */
-	private int getRowIndex(NatTableRowHeaderMouseEvent event) {
-		return getFirstIndex(event.getIndex(), event.getText(), 0, 1);
-	}
-
-	private int getFirstIndex(int index, String text, int dx, int dy) {
-		if (index != -1) {
-			return index;
-		}
-		for (int i = 0; i < natTable.getColumnCount(); i++) {
-			ILayerCell cell = natTable.getCellByPosition(i * dx, i * dy);
-			Object dataValue = cell.getDataValue();
-			if (dataValue != null && dataValue.toString().equals(text)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	private void executeMouseEvent(NatTableMouseEvent command, int col, int row) {
+	private void executeMouseEvent(NatTableMouseEvent command, ILayerCell cell) {
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		int button = command.getButton();
 		int stateMask = command.getStateMask();
@@ -101,30 +53,29 @@ class NatTableMouseEventRunner implements Runnable {
 		switch (command.getKind()) {
 		case CLICK:
 			if (button == Events.DEFAULT_BUTTON && stateMask == Events.EMPTY_MASK) {
-				ILayerCell cell = natTable.getCellByPosition(col, row);
 				Event[] event = Events.createClick(Bounds.centerAbs(cell.getBounds()));
 				events.sendAll(natTable, event);
 			} else {
-				mouseDownEventOnCell(col, row, button, stateMask);
-				mouseUpEventOnCell(col, row, button, stateMask);
+				mouseDownEventOnCell(cell, button, stateMask);
+				mouseUpEventOnCell(cell, button, stateMask);
 				if (button == Events.DEFAULT_BUTTON) {
-					selectCell(col, row, shiftMask, ctrlMask);
+					selectCell(cell, shiftMask, ctrlMask);
 				}
 			}
 			break;
 		case DOWN:
-			mouseDownEventOnCell(col, row, button, stateMask);
+			mouseDownEventOnCell(cell, button, stateMask);
 			if (button == Events.DEFAULT_BUTTON) {
-				selectCell(col, row, shiftMask, ctrlMask);
+				selectCell(cell, shiftMask, ctrlMask);
 			}
 			break;
 		case UP:
-			mouseUpEventOnCell(col, row, button, stateMask);
+			mouseUpEventOnCell(cell, button, stateMask);
 			// Explicitly send a SelectCellCommand because the MouseMove and MouseUp events don't seem to trigger
 			// the desired selection on replay.
 			// TODO: Find out why and fix this!
 			if (button == Events.DEFAULT_BUTTON) {
-				selectCell(col, row, true, ctrlMask);
+				selectCell(cell, true, ctrlMask);
 			}
 			break;
 		}
@@ -136,7 +87,9 @@ class NatTableMouseEventRunner implements Runnable {
 	 * a column header, a {@link SelectColumnCommand} is sent, specifying the first cell below the column header cell.
 	 * Similarly for {@link SelectRowCommand}s.
 	 */
-	private void selectCell(final int col, final int row, final boolean shiftMask, final boolean ctrlMask) {
+	private void selectCell(ILayerCell cell, boolean shiftMask, boolean ctrlMask) {
+		int col = cell.getColumnPosition();
+		int row = cell.getRowPosition();
 		ILayer layer = natTable.getLayer().getUnderlyingLayerByPosition(col, row);
 		ILayerCommand command;
 		if (layer instanceof ColumnHeaderLayer) {
@@ -152,8 +105,7 @@ class NatTableMouseEventRunner implements Runnable {
 	/**
 	 * Fire a mouse down event on the given cell
 	 */
-	private void mouseDownEventOnCell(int col, int row, int button, int stateMask) {
-		ILayerCell cell = natTable.getCellByPosition(col, row);
+	private void mouseDownEventOnCell(ILayerCell cell, int button, int stateMask) {
 		Point point = Bounds.centerAbs(cell.getBounds());
 		Event event = Events.createMouseDown(button, 1, stateMask, point.x, point.y);
 		events.sendEvent(natTable, event);
@@ -162,8 +114,7 @@ class NatTableMouseEventRunner implements Runnable {
 	/**
 	 * Fire a mouse up event on the given cell
 	 */
-	private void mouseUpEventOnCell(int col, int row, int button, int stateMask) {
-		ILayerCell cell = natTable.getCellByPosition(col, row);
+	private void mouseUpEventOnCell(ILayerCell cell, int button, int stateMask) {
 		Point point = Bounds.centerAbs(cell.getBounds());
 		Event event = Events.createMouseUp(button, 1, stateMask, point.x, point.y);
 		events.sendEvent(natTable, event);

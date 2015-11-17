@@ -11,7 +11,6 @@
 package org.eclipse.rcptt.tesla.nattable.describer;
 
 import org.eclipse.nebula.widgets.nattable.NatTable;
-import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
 import org.eclipse.rcptt.tesla.ui.describers.WidgetDescriber;
@@ -47,8 +46,7 @@ public class NatTableCellDescriber implements IWidgetDescriber {
 
 	@Override
 	public Rectangle getBounds() {
-		ILayerCell cell = natTable.getCellByPosition(cellPosition.getCol(), cellPosition.getRow());
-		return cell.getBounds();
+		return cellPosition.getCell(natTable).getBounds();
 	}
 
 	@Override

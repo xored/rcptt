@@ -5,15 +5,11 @@ import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.config.IEditableRule;
 import org.eclipse.nebula.widgets.nattable.edit.EditConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.grid.layer.ColumnHeaderLayer;
-import org.eclipse.nebula.widgets.nattable.grid.layer.GridLayer;
+import org.eclipse.nebula.widgets.nattable.grid.layer.RowHeaderLayer;
 import org.eclipse.nebula.widgets.nattable.layer.ILayer;
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
-import org.eclipse.rcptt.util.swt.Bounds;
-import org.eclipse.rcptt.util.swt.Events;
-import org.eclipse.swt.widgets.Event;
 
 public class NatTableHelper {
 
@@ -21,7 +17,7 @@ public class NatTableHelper {
 	 * Check if cell is editable
 	 */
 	public static boolean isEditable(NatTable natTable, NatTableCellPosition position) {
-		ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
+		ILayerCell cell = position.getCell(natTable);
 		IConfigRegistry configRegistry = natTable.getConfigRegistry();
 		IEditableRule rule = configRegistry.getConfigAttribute(
 				EditConfigAttributes.CELL_EDITABLE_RULE, DisplayMode.EDIT, cell.getConfigLabels()
@@ -51,41 +47,24 @@ public class NatTableHelper {
 	}
 
 	/**
-	 * 
-	 * @param natTable
-	 * @param col
-	 *            position coordinate
-	 * @param row
-	 *            position coordinate
-	 * @return
+	 * Returns whether the position points to a column header cell.
 	 */
-	public static boolean isHeaderLayer(NatTable natTable, int col, int row) {
-		ILayer layer = natTable.getLayer();
-		ILayer layerByPosition = layer.getUnderlyingLayerByPosition(col, row);
-		if (layerByPosition instanceof ColumnHeaderLayer) {
-			return true;
-		}
-
-		if (layer instanceof GridLayer) {
-			ILayer bodyLayer = ((GridLayer) layer).getBodyLayer();
-			return !bodyLayer.equals(layerByPosition);
-		}
-
-		return false;
+	public static boolean isColumnHeader(NatTable natTable, NatTableCellPosition position) {
+		return getUnderlyingLayer(natTable, position) instanceof ColumnHeaderLayer;
 	}
 
 	/**
-	 * Fire single left click event on cell
+	 * Returns whether the position points to a row header cell.
 	 */
-	public static void clickOnCell(final NatTable natTable, int col, int row, final SWTUIPlayer player) {
-		ILayerCell cell = natTable.getCellByPosition(col, row);
-		final Event[] event = Events.createClick(Bounds.centerAbs(cell.getBounds()));
-		player.exec("Performing click on NatTable cell", new Runnable() {
-			@Override
-			public void run() {
-				player.getEvents().sendAll(natTable, event);
-			}
-		});
+	public static boolean isRowHeader(NatTable natTable, NatTableCellPosition position) {
+		return getUnderlyingLayer(natTable, position) instanceof RowHeaderLayer;
+	}
+
+	private static ILayer getUnderlyingLayer(NatTable natTable, NatTableCellPosition position) {
+		ILayerCell cell = position.getCell(natTable);
+		int col = cell.getColumnPosition();
+		int row = cell.getRowPosition();
+		return natTable.getLayer().getUnderlyingLayerByPosition(col, row);
 	}
 
 }

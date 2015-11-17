@@ -22,12 +22,8 @@ import org.eclipse.rcptt.tesla.ecl.model.Mouse;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
 import org.eclipse.rcptt.tesla.nattable.ecl.NebulaNatTableElementKinds;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableColumnHeaderMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableRowHeaderMouseEvent;
-import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
 import org.eclipse.rcptt.util.swt.KeysAndButtons;
 
 import com.google.common.collect.ImmutableSet;
@@ -50,7 +46,7 @@ public class MouseActionServiceExtension extends BaseActionService implements IS
 
 	static ControlHandler execMouseEvent(NatTableMouseEventKind kind, ControlHandler controlHandler, int button,
 			int stateMask) throws CoreException {
-		NatTableMouseEvent mouseEvent = createMouseEvent(controlHandler.getPath());
+		NatTableMouseEvent mouseEvent = NatTableCellPosition.fromPath(controlHandler.getPath()).toMouseEvent();
 		ViewerUIElement uiElement = getNatTableUIElement(controlHandler);
 		mouseEvent.setKind(kind);
 		mouseEvent.setElement(uiElement.getElement());
@@ -58,24 +54,6 @@ public class MouseActionServiceExtension extends BaseActionService implements IS
 		mouseEvent.setStateMask(stateMask);
 		TeslaBridge.getPlayer().safeExecuteCommand(mouseEvent);
 		return controlHandler;
-	}
-
-	static private NatTableMouseEvent createMouseEvent(String path) {
-		NatTableCellPosition position = NatTableCellPosition.fromPath(path);
-		if (position.getCol() == -1) {
-			NatTableColumnHeaderMouseEvent event = NattableFactory.eINSTANCE.createNatTableColumnHeaderMouseEvent();
-			event.setText(position.getText());
-			return event;
-		} else if (position.getRow() == -1) {
-			NatTableRowHeaderMouseEvent event = NattableFactory.eINSTANCE.createNatTableRowHeaderMouseEvent();
-			event.setText(position.getText());
-			return event;
-		} else {
-			NatTableCellMouseEvent event = NattableFactory.eINSTANCE.createNatTableCellMouseEvent();
-			event.setColumn(position.getCol());
-			event.setRow(position.getRow());
-			return event;
-		}
 	}
 
 	@Override

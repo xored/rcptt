@@ -31,8 +31,7 @@ class NatTableCellEditProcessor {
 					command.getElement());
 			final NatTable natTable = (NatTable) natTableElement.widget;
 			final String path = command.getPath().get(0);
-			NatTableCellPosition position = NatTableCellPosition.fromPath(path);
-			final ILayerCell cell = natTable.getCellByPosition(position.getCol(), position.getRow());
+			final ILayerCell cell = NatTableCellPosition.fromPath(path).getCell(natTable);
 
 			player.exec("Start editing of NatTable cell", new Runnable() {
 				@Override

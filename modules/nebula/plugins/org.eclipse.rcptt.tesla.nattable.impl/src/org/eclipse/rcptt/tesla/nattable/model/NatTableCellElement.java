@@ -24,17 +24,12 @@ public class NatTableCellElement extends NatTablePartElement {
 	public NatTableCellElement(NatTableSWTElement natTable, NatTableCellPosition position) {
 		super(natTable);
 		this.position = position;
-		this.cell = findCellObject(position);
+		this.cell = position.getCell((NatTable) getNatTable().widget);
 	}
 
 	@Override
 	public String getGenerationKind() {
 		return NebulaNatTableElementKinds.NAT_TABLE_CELL;
-	}
-
-	protected ILayerCell findCellObject(NatTableCellPosition position) {
-		NatTable table = (NatTable) getNatTable().widget;
-		return table.getCellByPosition(position.getCol(), position.getRow());
 	}
 
 	public ILayerCell getCell() {

@@ -15,9 +15,6 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.nebula.widgets.nattable.NatTable;
-import org.eclipse.nebula.widgets.nattable.grid.layer.ColumnHeaderLayer;
-import org.eclipse.nebula.widgets.nattable.grid.layer.RowHeaderLayer;
-import org.eclipse.nebula.widgets.nattable.layer.ILayer;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
@@ -28,9 +25,8 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.nattable.NatTableHelper;
 import org.eclipse.rcptt.tesla.nattable.model.NatTableCellPosition;
 import org.eclipse.rcptt.tesla.nattable.processors.NatTableProcessor;
-import org.eclipse.rcptt.tesla.protocol.nattable.NatTableCellMouseEvent;
+import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEvent;
 import org.eclipse.rcptt.tesla.protocol.nattable.NatTableMouseEventKind;
-import org.eclipse.rcptt.tesla.protocol.nattable.NattableFactory;
 import org.eclipse.rcptt.tesla.recording.aspects.IBasicSWTEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
@@ -123,15 +119,12 @@ public class NatTableRecordingProcessor implements IRecordingProcessor, IBasicSW
 
 	private void recordMouseEvent(NatTable natTable, FindResult result, NatTableCellPosition position,
 			NatTableMouseEventKind kind, int button, int stateMask) {
-		NatTableCellMouseEvent command = NattableFactory.eINSTANCE.createNatTableCellMouseEvent();
+		NatTableMouseEvent command = position.toMouseEvent();
 		command.setKind(kind);
 		command.setButton(button);
 		command.setStateMask(stateMask);
-		command.setRow(position.getRow());
-		command.setColumn(position.getCol());
-		ILayer layer = natTable.getLayer().getUnderlyingLayerByPosition(position.getCol(), position.getRow());
-		command.setColumnHeader(layer instanceof ColumnHeaderLayer);
-		command.setRowHeader(layer instanceof RowHeaderLayer);
+		command.setColumnHeader(NatTableHelper.isColumnHeader(natTable, position));
+		command.setRowHeader(NatTableHelper.isRowHeader(natTable, position));
 		command.setElement((result.element != null) ? (Element) EcoreUtil.copy(result.element) : null);
 		locator.getRecorder().safeExecuteCommand(command);
 	}
