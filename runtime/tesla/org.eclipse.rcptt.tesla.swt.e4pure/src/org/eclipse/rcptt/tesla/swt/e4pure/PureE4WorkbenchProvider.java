@@ -72,7 +72,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.ISelectionService;
@@ -100,6 +99,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return null;
 	}
 
+	@Override
 	public Menu getViewMenu(IWorkbenchPart workbenchPart, IWorkbenchPartReference reference, boolean create) {
 
 		ViewSite site = as(ViewSite.class, workbenchPart.getSite());
@@ -121,11 +121,12 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return man.getMenu();
 	}
 
-	@SuppressWarnings("rawtypes")
+	@Override
 	public List<?> getPaneFolderButtonListeners(Object paneFolder) {
-		return new ArrayList();
+		return new ArrayList<Object>();
 	}
 
+	@Override
 	public Control getToolbar(IWorkbenchPartReference reference) {
 		try {
 			return ((ToolBarManager) ((PartSite) ((WorkbenchPartReference) reference).getPart(false).getSite())
@@ -137,10 +138,12 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
+	@Override
 	public boolean canClickView(IWorkbenchPartReference reference) {
 		return true;
 	}
 
+	@Override
 	public Map<Control, SWTUIElement> getWorkbenchReference(SWTUIPlayer player) {
 		Map<Control, SWTUIElement> references = new HashMap<Control, SWTUIElement>();
 
@@ -148,7 +151,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			return references;
 		}
 
-		// get all parts (visible and acitve parts) from THIS window
+		// get all parts (visible and active parts) from THIS window
 		Collection<MPart> parts = E4ModelProcessor.getPartService().getParts();
 
 		for (MPart part : parts) {
@@ -161,6 +164,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return references;
 	}
 
+	@Override
 	public void processTabFolderButton(Widget widget, int buttonId) {
 		if (!(widget instanceof CTabFolder)) {
 			if (widget.getData("modelElement") != null && widget instanceof Control) {
@@ -223,6 +227,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
+	@Override
 	public void processTabShowList(Widget widget) {
 		if (!(widget instanceof CTabFolder)) {
 			if (widget.getData("modelElement") != null && widget instanceof Control) {
@@ -264,6 +269,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		chevronItem.notifyListeners(SWT.Selection, e);
 	}
 
+	@Override
 	public boolean isVisible(IWorkbenchPartReference reference) {
 		IWorkbenchPart part = reference.getPart(false);
 		if (part != null) {
@@ -272,11 +278,13 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return false;
 	}
 
+	@Override
 	public boolean isActiveContainsView(IWorkbenchPage page, IWorkbenchPartReference reference) {
 		// return isVisible(reference);
 		return true;
 	}
 
+	@Override
 	public boolean isViewOrEditorButton(Widget widget) {
 		if (!(widget instanceof ToolItem))
 			return false;
@@ -291,7 +299,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			return true;
 
 		// restore button
-		if (item.getParent() instanceof ToolBar && TeslaSWTAccess.getThis(TrimStack.class, item, SWT.Selection) != null)
+		if (TeslaSWTAccess.getThis(TrimStack.class, item, SWT.Selection) != null)
 			return true;
 
 		Composite parent = item.getParent().getParent();
@@ -302,13 +310,12 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return control != null;
 	}
 
+	@Override
 	public boolean isSupported() {
-		if (TeslaCore.isE4()) {
-			return true;
-		}
-		return false;
+		return TeslaCore.isE4();
 	}
 
+	@Override
 	public Widget extractViewOrEditorControl(CTabFolder tabFolder) {
 		if (tabFolder.getSelection() == null)
 			return null;
@@ -339,6 +346,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			return null;
 	}
 
+	@Override
 	public CTabFolder getTabFolderFromButton(ToolItem button) {
 		Composite parent = button.getParent().getParent();
 		if (parent instanceof CTabFolder)
@@ -385,6 +393,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	private static final String JUNO_TEXT_FIELD = "getFilterText";
 	private static final String KEPLER_TEXT_FIELD = "getQuickAccessSearchText";
 
+	@Override
 	public Text getQuickAccess() {
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window == null)
@@ -416,6 +425,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return result == null ? null : (Text) result;
 	}
 
+	@Override
 	public void updateActiveSelection(List<Object> selectionData, SWTUIElement parent) {
 		List<SWTUIElement> parentsList = parent.getPlayer().getParentsList(parent);
 		parentsList.add(parent);
@@ -434,6 +444,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
+	@Override
 	public String getViewId(Widget widget) {
 		// not supported for now
 		return null;
@@ -447,7 +458,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	@Override
 	public String getWidgetRawText(Widget widget) {
 		Object partObject = widget.getData("modelElement");
-		if (partObject != null && partObject instanceof MPart) {
+		if (partObject instanceof MPart) {
 			MPart part = (MPart) partObject;
 			return part.getLabel();
 		}
@@ -542,6 +553,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		try {
 			Display display = E4ModelProcessor.getDisplay();
 			display.asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					collector.enable();
 				}

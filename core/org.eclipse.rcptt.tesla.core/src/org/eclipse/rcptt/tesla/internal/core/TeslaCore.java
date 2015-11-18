@@ -144,7 +144,7 @@ public class TeslaCore extends Plugin {
 	
 	public static boolean isE4() {
 		Bundle bundle = Platform.getBundle("org.eclipse.e4.core.contexts");
-		boolean isE4ContextsBundleActive = bundle == null ? false : Bundle.ACTIVE == bundle.getState();
+		boolean isE4ContextsBundleActive = bundle != null && Bundle.ACTIVE == bundle.getState();
 		boolean isCompatibilityLayerDisabled = Workbench.getInstance() == null;
 		return isCompatibilityLayerDisabled && isEclipse4() && isE4ContextsBundleActive;
 	}

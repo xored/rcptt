@@ -66,7 +66,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorReference;
@@ -100,6 +99,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return null;
 	}
 
+	@Override
 	public Menu getViewMenu(IWorkbenchPart workbenchPart, IWorkbenchPartReference reference, boolean create) {
 
 		ViewSite site = as(ViewSite.class, workbenchPart.getSite());
@@ -121,11 +121,12 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return man.getMenu();
 	}
 
-	@SuppressWarnings("rawtypes")
+	@Override
 	public List<?> getPaneFolderButtonListeners(Object paneFolder) {
-		return new ArrayList();
+		return new ArrayList<Object>();
 	}
 
+	@Override
 	public Control getToolbar(IWorkbenchPartReference reference) {
 		try {
 			return ((ToolBarManager) ((PartSite) ((WorkbenchPartReference) reference).getPart(false).getSite())
@@ -137,10 +138,12 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
+	@Override
 	public boolean canClickView(IWorkbenchPartReference reference) {
 		return true;
 	}
 
+	@Override
 	public Map<Control, SWTUIElement> getWorkbenchReference(SWTUIPlayer player) {
 
 		IWorkbench workbench = PlatformUI.getWorkbench();
@@ -185,6 +188,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return references;
 	}
 
+	@Override
 	public void processTabFolderButton(Widget widget, int buttonId) {
 		if (!(widget instanceof CTabFolder)) {
 			if (widget.getData("modelElement") != null && widget instanceof Control) {
@@ -247,6 +251,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
+	@Override
 	public void processTabShowList(Widget widget) {
 		if (!(widget instanceof CTabFolder)) {
 			if (widget.getData("modelElement") != null && widget instanceof Control) {
@@ -288,6 +293,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		chevronItem.notifyListeners(SWT.Selection, e);
 	}
 
+	@Override
 	public boolean isVisible(IWorkbenchPartReference reference) {
 		IWorkbenchPart part = reference.getPart(false);
 		if (part != null) {
@@ -296,11 +302,13 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return false;
 	}
 
+	@Override
 	public boolean isActiveContainsView(IWorkbenchPage page, IWorkbenchPartReference reference) {
 		// return isVisible(reference);
 		return true;
 	}
 
+	@Override
 	public boolean isViewOrEditorButton(Widget widget) {
 		if (!(widget instanceof ToolItem))
 			return false;
@@ -315,7 +323,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			return true;
 
 		// restore button
-		if (item.getParent() instanceof ToolBar && TeslaSWTAccess.getThis(TrimStack.class, item, SWT.Selection) != null)
+		if (TeslaSWTAccess.getThis(TrimStack.class, item, SWT.Selection) != null)
 			return true;
 
 		Composite parent = item.getParent().getParent();
@@ -326,6 +334,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return control != null;
 	}
 
+	@Override
 	public boolean isSupported() {
 		Version version = TeslaCore.getPlatformVersion();
 		if (version.getMajor() == 3 && version.getMinor() >= 103) {
@@ -334,6 +343,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return false;
 	}
 
+	@Override
 	public Widget extractViewOrEditorControl(CTabFolder tabFolder) {
 		if (tabFolder.getSelection() == null)
 			return null;
@@ -364,6 +374,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			return null;
 	}
 
+	@Override
 	public CTabFolder getTabFolderFromButton(ToolItem button) {
 		Composite parent = button.getParent().getParent();
 		if (parent instanceof CTabFolder)
@@ -410,6 +421,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	private static final String JUNO_TEXT_FIELD = "getFilterText";
 	private static final String KEPLER_TEXT_FIELD = "getQuickAccessSearchText";
 
+	@Override
 	public Text getQuickAccess() {
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window == null)
@@ -441,6 +453,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return result == null ? null : (Text) result;
 	}
 
+	@Override
 	public void updateActiveSelection(List<Object> selectionData, SWTUIElement parent) {
 		List<SWTUIElement> parentsList = parent.getPlayer().getParentsList(parent);
 		parentsList.add(parent);
@@ -459,6 +472,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
+	@Override
 	public String getViewId(Widget widget) {
 		// not supported for now
 		return null;
@@ -522,12 +536,12 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	
 		final WorkbenchContext ctx = (WorkbenchContext) context;
 
-		
 		final UIJobCollector collector = new UIJobCollector();
 		Job.getJobManager().addJobChangeListener(collector);
 		try {
 			Display display = PlatformUI.getWorkbench().getDisplay();
 			display.asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					collector.enable();
 				}
@@ -559,7 +573,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 				// Wait until some jobs to finish, before trying to close
 				// perspective
 				// collector.addAllJobs(10 * 1000);
-				for (final IPerspectiveDescriptor desc : descriptors) {
+				for (IPerspectiveDescriptor desc : descriptors) {
 					setPageInput(page, getDefaultPageInput());
 					UIRunnable.exec(closePerspective(page, desc));
 				}
@@ -601,11 +615,14 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			}
 		}
 	};
+
 	private Runnable closeModalDialogsAsync = new Runnable() {
+		@Override
 		public void run() {
 			Utils.closeDialogs();
 		}
 	};
+
 	private UIRunnable<Object> closeIntro = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
@@ -624,6 +641,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 			return null;
 		}
 	};
+
 	private UIRunnable<Object> clearClipboard = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
@@ -862,8 +880,5 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 		return activePage;
 	}
-	
-	
-	
 	
 }
