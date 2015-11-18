@@ -42,7 +42,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -166,7 +165,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
 import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
@@ -2655,8 +2653,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 	public synchronized SWTUIPlayer getPlayer() {
 		if (internalPlayer == null) {
-			internalPlayer = SWTUIPlayer.getPlayer(PlatformUI.getWorkbench()
-					.getDisplay());
+			internalPlayer = SWTUIPlayer.getPlayer();
 		}
 		return internalPlayer;
 	}
@@ -2751,8 +2748,12 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		// }
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor#collectInformation(org.eclipse.rcptt.tesla.core.info.AdvancedInformation, org.eclipse.rcptt.tesla.core.protocol.raw.Command)
+	 */
 	public void collectInformation(AdvancedInformation information,
 			Command lastCommand) {
+		
 		Node root = InfoUtils.newNode("swt.info").add(information);
 		Element element = null;
 		if (lastCommand instanceof ElementCommand) {
@@ -2762,6 +2763,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		} else if (lastCommand instanceof SelectCommand) {
 			element = ((SelectCommand) lastCommand).getData().getParent();
 		}
+		
 		// Required element hierarchy
 		SWTUIElement uiElement = null;
 		if (element != null) {
@@ -2772,26 +2774,28 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		}
 		Node root2 = root.child("eclipse.windows");
 
-		// Use all eclipse windows as roots
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
-				.getWorkbenchWindows();
-		for (IWorkbenchWindow win : windows) {
-			Set<SWTUIElement> processed = new HashSet<SWTUIElement>();
-			processChildren(win, root2, processed);
-		}
-
-		Node player = InfoUtils.newNode("swt.player").add(information);
-		SWTUIPlayer swtuiPlayer = getPlayer();
-		UIJobCollector collector = swtuiPlayer.getCollector();
-		List<Job> jobs = collector.getJobs();
-		if (jobs.size() > 0) {
-			Node jobsNode = player.child("ui.job.collector.jobs");
-			for (Job job : jobs) {
-				Node child = jobsNode.child("job:" + job.getName());
-				child.property("job.class", job.getClass().getName());
-			}
-		}
+		//TODO uncomment this
+		//e4 quickfix
+//		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
+//				.getWorkbenchWindows();
+//		for (IWorkbenchWindow win : windows) {
+//			Set<SWTUIElement> processed = new HashSet<SWTUIElement>();
+//			processChildren(win, root2, processed);
+//		}
+//
+//		Node player = InfoUtils.newNode("swt.player").add(information);
+//		SWTUIPlayer swtuiPlayer = getPlayer();
+//		UIJobCollector collector = swtuiPlayer.getCollector();
+//		List<Job> jobs = collector.getJobs();
+//		if (jobs.size() > 0) {
+//			Node jobsNode = player.child("ui.job.collector.jobs");
+//			for (Job job : jobs) {
+//				Node child = jobsNode.child("job:" + job.getName());
+//				child.property("job.class", job.getClass().getName());
+//			}
+//		}
 	}
+	
 
 	private void processChildren(IWorkbenchWindow win, Node root2,
 			Set<SWTUIElement> processed) {

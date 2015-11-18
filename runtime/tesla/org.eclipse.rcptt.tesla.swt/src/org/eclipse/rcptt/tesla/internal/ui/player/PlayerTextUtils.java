@@ -22,6 +22,12 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
+import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -46,10 +52,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.rcptt.util.StringUtils;
-import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
-import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
-import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 
 public class PlayerTextUtils {
 	// for static utility methods only
@@ -59,8 +61,7 @@ public class PlayerTextUtils {
 		if (result != null) {
 			String finalResult;
 			Widget widget = unwrapWidget(uiElement);
-			if (widget instanceof Text
-					&& (((Text) widget).getStyle() & SWT.MULTI) != 0) {
+			if (widget instanceof Text && (((Text) widget).getStyle() & SWT.MULTI) != 0) {
 				finalResult = replaceMultilines(result);
 			} else {
 				finalResult = result.replaceAll("\n|\r", "").trim();
@@ -114,6 +115,7 @@ public class PlayerTextUtils {
 		if (widget == null || widget.isDisposed()) {
 			return TeslaSWTMessages.SWTUIPlayer_DisposedControl_RawText;
 		}
+
 		if (widget instanceof Decorations) {
 			result = ((Decorations) widget).getText();
 		}
@@ -176,9 +178,14 @@ public class PlayerTextUtils {
 			result = ((Shell) widget).getText();
 		}
 		if (widget instanceof Spinner) {
-			result = Double.toString(((Spinner) widget).getSelection()
-					/ Math.pow(10, ((Spinner) widget).getDigits()));
+			result = Double.toString(((Spinner) widget).getSelection() / Math.pow(10, ((Spinner) widget).getDigits()));
 		}
+
+		// e4 support
+		if (result == null && TeslaCore.isE4()) {
+			result = EclipseWorkbenchProvider.getProvider().getWidgetRawText(widget);
+		}
+
 		if (result == null) {
 			for (ISWTUIPlayerExtension ext : SWTUIPlayer.extensions) {
 				String text = ext.getRawText(uiElement);
@@ -299,13 +306,11 @@ public class PlayerTextUtils {
 	}
 
 	public static String getTimeValue(DateTime dt) {
-		return "" + dt.getHours() + ":" + dt.getMinutes() + ":"
-				+ dt.getSeconds();
+		return "" + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 	}
 
 	public static String getDateValue(DateTime dt) {
-		return "" + dt.getYear() + "/" + (dt.getMonth() + 1) + "/"
-				+ dt.getDay();
+		return "" + dt.getYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDay();
 	}
 
 	public static List<StyleRangeEntry> captureStyleRanges(StyledText widget) {
@@ -314,8 +319,7 @@ public class PlayerTextUtils {
 		int totalDelta = 0;
 		for (StyleRange r : styledText.getStyleRanges()) {
 			int delta = countLineEndingConversions(styledText.getTextRange(r.start, r.length));
-			StyleRangeEntry rangeEntry = SWTModelMapper.makeStyleRangeEntry(
-					r, r.start - totalDelta, r.length - delta);
+			StyleRangeEntry rangeEntry = SWTModelMapper.makeStyleRangeEntry(r, r.start - totalDelta, r.length - delta);
 			rangeEntry.setStartPos(SWTModelMapper.offsetToPosition(widget, r.start));
 
 			result.add(rangeEntry);

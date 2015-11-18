@@ -33,6 +33,12 @@
       <layout>p2</layout>
       <url>${ajdt37repository}</url>
     </repository>
+	
+ 	
+
+ 	
+       
+
   </repositories>
 
   <modules>
@@ -53,11 +59,20 @@
         <module>../../repository/e4x</module>
       </modules>
       <repositories>
-        <repository>
+	
+	<repository>
           <id>juno</id>
           <layout>p2</layout>
           <url>http://download.eclipse.org/releases/juno</url>
         </repository>
+
+        <repository>
+          <id>mars</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/mars</url>
+        </repository>
+
+       
       </repositories>
     </profile>    
   </profiles>

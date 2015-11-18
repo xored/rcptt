@@ -328,6 +328,13 @@ public class SWTEventRecorder implements IRecordingProcessor,
 				window.addPageListener(pageListener);
 			}
 		};
+		
+		SWTEventManager.addListener(this);
+		// JFaceEventManager.addListener(this);
+		
+		//e4 quick fix
+		if(TeslaCore.isE4()) return;
+		
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		workbench.addWindowListener(windowListener);
 		IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
@@ -339,8 +346,6 @@ public class SWTEventRecorder implements IRecordingProcessor,
 			}
 		}
 
-		SWTEventManager.addListener(this);
-		// JFaceEventManager.addListener(this);
 		// WorkbenchEventManager.addListener(this);
 		// FormsEventManager.addListener(this);
 	}

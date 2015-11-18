@@ -67,7 +67,9 @@
       <modules>
 	<module>org.eclipse.rcptt.tesla.runtime.e4x-feature</module>
 	<module>org.eclipse.rcptt.tesla.swt.e4x</module>
+	<module>org.eclipse.rcptt.tesla.swt.e4pure</module>
 	<module>org.eclipse.rcptt.tesla.workbench.aspects.e4x</module>
+
       </modules>
     </profile>
   </profiles>

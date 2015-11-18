@@ -24,6 +24,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
@@ -39,20 +40,28 @@ public class Utils {
 	private static IStatus doCloseDialogs() {
 		SWTDialogManager.setCancelMessageBoxesDisplay(true);
 		try {
-			final IWorkbench workbench = PlatformUI.getWorkbench();
-			final Display display = workbench.getDisplay();
-
-			// Dummy call for E4, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=440850
-			workbench.getActiveWorkbenchWindow();
-
-			IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
+			//e4 support
+			final Display display = EclipseWorkbenchProvider.getProvider().getDisplay();
 			Set<Shell> windowShells = new HashSet<Shell>();
-			for (IWorkbenchWindow window : windows) {
-				Shell shell = window.getShell();
-				if (shell != null) {
-					windowShells.add(shell);
+			if (TeslaCore.isE4()) {
+				windowShells.add(display.getActiveShell());
+				
+			} else {
+				
+				final IWorkbench workbench = PlatformUI.getWorkbench();
+				
+				// Dummy call for E4, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=440850
+				workbench.getActiveWorkbenchWindow();
+				
+				IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
+				for (IWorkbenchWindow window : windows) {
+					Shell shell = window.getShell();
+					if (shell != null) {
+						windowShells.add(shell);
+					}
 				}
 			}
+			
 			// Close all shells for non workbench display
 			Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
 			for (Thread t : map.keySet()) {

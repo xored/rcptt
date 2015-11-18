@@ -13,32 +13,20 @@ package org.eclipse.rcptt.internal.runtime.ui;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.core.protocol.raw.TeslaMode;
 import org.eclipse.rcptt.tesla.internal.core.network.server.ITeslaNetworkClientProcessor;
 import org.eclipse.rcptt.tesla.internal.core.network.server.NetworkTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.network.server.TeslaNetworkClientConnection;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
+import org.eclipse.swt.widgets.Shell;
 
 public class Q7NetworkClientProcessor implements ITeslaNetworkClientProcessor {
 
 	public void activateMode(SetMode command, TeslaMode oldMode) {
-		// Focus on AUT
-		IWorkbenchWindow window = getWorkbench().getActiveWorkbenchWindow();
-		if (window == null) {
-			IWorkbenchWindow[] windows = getWorkbench().getWorkbenchWindows();
-			if (windows.length > 0) {
-				window = windows[0];
-			} else {
-				return;
-			}
-		}
-		final Shell shell = window.getShell();
+		final Shell shell = EclipseWorkbenchProvider.getProvider().getActiveShell();
 		if (shell != null && !shell.isDisposed()) {
 			if (Thread.currentThread() == shell.getDisplay().getThread()) {
 				makeActive(shell);
@@ -62,11 +50,7 @@ public class Q7NetworkClientProcessor implements ITeslaNetworkClientProcessor {
 		}
 		shell.forceFocus();
 	}
-
-	private IWorkbench getWorkbench() {
-		return PlatformUI.getWorkbench();
-	}
-
+	
 	public void initialize(
 			TeslaNetworkClientConnection teslaNetworkClientConnection,
 			DataInputStream din, DataOutputStream dout,

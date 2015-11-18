@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCPTT E4 Runtime UI Aspects
+Bundle-SymbolicName: org.eclipse.rcptt.runtime.ui.aspects;singleton:=true
+Bundle-Version: 2.1.0.qualifier
+Bundle-Activator: org.eclipse.rcptt.runtime.ui.aspects.E4UIAspectsActivator
+Bundle-Vendor: Eclipse RCP Testing Tool Project
+Require-Bundle: org.aspectj.runtime;visibility:=reexport, 
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.aspectj.runtime,
+ org.eclipse.rcptt.runtime.ui,
+ org.eclipse.rcptt.reporting
+Import-Package: org.eclipse.debug.core,
+ org.eclipse.debug.core.model,
+ org.eclipse.e4.ui.services.internal.events;resolution:=optional,
+ org.eclipse.e4.ui.workbench;resolution:=optional,
+ org.eclipse.rcptt.tesla.core.am
+Eclipse-SupplementBundle: org.eclipse.e4.ui.services
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.rcptt.runtime.ui.aspects

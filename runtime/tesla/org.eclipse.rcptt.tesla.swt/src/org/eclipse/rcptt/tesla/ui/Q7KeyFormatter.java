@@ -18,10 +18,9 @@ import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.formatting.AbstractKeyFormatter;
 import org.eclipse.jface.bindings.keys.formatting.KeyFormatterFactory;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.WorkbenchWindow;
 
 @SuppressWarnings("restriction")
@@ -55,9 +54,10 @@ public class Q7KeyFormatter extends AbstractKeyFormatter {
 	}
 
 	public static void installQ7Formatter() {
+
 		KeyFormatterFactory.setDefault(new Q7KeyFormatter());
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		for (IWorkbenchWindow w : workbench.getWorkbenchWindows()) {
+		IWorkbenchWindow[] wwindows = EclipseWorkbenchProvider.getProvider().getWorkbenchWindows();
+		for (IWorkbenchWindow w : wwindows) {
 			if (!(w instanceof WorkbenchWindow))
 				continue;
 
@@ -80,4 +80,5 @@ public class Q7KeyFormatter extends AbstractKeyFormatter {
 				});
 		}
 	}
+
 }

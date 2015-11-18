@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.swt.e3x"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.swt.e4x"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

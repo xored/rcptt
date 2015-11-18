@@ -36,15 +36,15 @@ public class WorkbenchRecordingProcessor implements IRecordingProcessor,
 
 	public WorkbenchRecordingProcessor() {
 		WorkbenchEventManager.addListener(this);
-		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
-			public boolean preShutdown(IWorkbench workbench, boolean forced) {
-				return true;
-			}
-
-			public void postShutdown(IWorkbench workbench) {
-				restartEclipse();
-			}
-		});
+//		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+//			public boolean preShutdown(IWorkbench workbench, boolean forced) {
+//				return true;
+//			}
+//
+//			public void postShutdown(IWorkbench workbench) {
+//				restartEclipse();
+//			}
+//		});
 	}
 
 	public void closeEditors(IEditorReference[] refArray) {

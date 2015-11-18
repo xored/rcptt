@@ -22,26 +22,23 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 
 public class GetQ7InformationService implements ICommandService {
 
-	public IStatus service(Command command, IProcess context)
-			throws InterruptedException, CoreException {
+	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
 		IPipe output = context.getOutput();
 		Q7Information info = Q7CoreFactory.eINSTANCE.createQ7Information();
 		// eclipse 3.4 compatibility:
 		// getVersion().toString() replaced with
 		// getHeaders().get("Bundle-Version")
-		info.setVersion(Platform.getBundle(RcpttPlugin.PLUGIN_ID).getHeaders()
-				.get("Bundle-Version").toString());
+		info.setVersion(Platform.getBundle(RcpttPlugin.PLUGIN_ID).getHeaders().get("Bundle-Version").toString());
 		IStatus result = AspectManager.initialize();
-		info.setTeslaActive(result.isOK()
-				&& TeslaServerManager.getServer() != null);
+		info.setTeslaActive(result.isOK() && TeslaServerManager.getServer() != null);
 		if (info.isTeslaActive()) {
 			info.setTeslaPort(TeslaServerManager.getServer().getPort());
 		}
-		info.setWindowCount(PlatformUI.getWorkbench().getWorkbenchWindowCount());
+		info.setWindowCount(EclipseWorkbenchProvider.getProvider().getWorkbenchWindowCount());
 
 		output.write(info);
 		return result;
