@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.core;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
@@ -52,12 +53,12 @@ public class TeslaCore extends Plugin {
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		DebugOptions service = null;
-		final ServiceReference reference = context
+		final ServiceReference<?> reference = context
 				.getServiceReference(DebugOptions.class.getName());
 		if (reference != null)
 			service = (DebugOptions) context.getService(reference);
@@ -79,6 +80,7 @@ public class TeslaCore extends Plugin {
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
@@ -103,12 +105,12 @@ public class TeslaCore extends Plugin {
 		// Check if Eclipse is being restarted
 		if (TeslaCore.getDefault() != null) {
 			getDefault().getLog().log(
-					new Status(Status.ERROR, PLUGIN_ID, t.getMessage(), t));
+					new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
 		}
 	}
 
 	public static void log(String message) {
-		getDefault().getLog().log(new Status(Status.ERROR, PLUGIN_ID, message));
+		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, message));
 	}
 
 	@SuppressWarnings("deprecation")

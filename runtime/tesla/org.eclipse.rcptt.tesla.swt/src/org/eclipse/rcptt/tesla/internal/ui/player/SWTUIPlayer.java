@@ -1632,13 +1632,11 @@ public final class SWTUIPlayer {
 			}
 		}
 
-		// e4 support
-		if (TeslaCore.isE4()) {
-			return EclipseWorkbenchProvider.getProvider().getWidgetKind(w);
-		}
-
 		ElementKind kind = elementKinds.get(w.getClass());
 		if (kind == null) {
+			if (TeslaCore.isE4()) {
+				return EclipseWorkbenchProvider.getProvider().getWidgetKind(w);
+			}
 			for (Map.Entry<Class<?>, ElementKind> entry : elementKinds.entrySet()) {
 				Class<?> key = entry.getKey();
 				if (key.isInstance(w)) {

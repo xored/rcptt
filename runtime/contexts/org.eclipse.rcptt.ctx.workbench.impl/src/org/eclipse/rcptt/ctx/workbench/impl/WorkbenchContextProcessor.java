@@ -31,7 +31,7 @@ import org.eclipse.ui.PlatformUI;
 
 public class WorkbenchContextProcessor implements IContextProcessor {
 
-
+	@Override
 	public boolean isApplied(final Context context) {
 		return UIRunnable.safeExec(new UIRunnable<Boolean>() {
 			@Override
@@ -54,16 +54,12 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	public boolean isCreateAllowed() {
 		return true;
 	}
-	
 
+	@Override
 	public void apply(final Context context) throws CoreException {
 		EclipseWorkbenchProvider.getProvider().applyContext(context);
 	}
 	
-	
-
-	
-
 	@SuppressWarnings("restriction")
 	protected void setPageInput(IWorkbenchPage page, Object value) {
 		try {
@@ -81,6 +77,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 		}
 	}
 
+	@Override
 	public Context create(EObject param) throws CoreException {
 		return UIRunnable.exec(new UIRunnable<WorkbenchContext>() {
 			@Override
@@ -89,9 +86,6 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 			}
 		});
 	}
-
-	
-
 
 	private WorkbenchContext doCreate() throws CoreException {
 		IWorkbenchWindow window = getWindow();
@@ -166,6 +160,5 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 		WorkbenchContext pContext = (WorkbenchContext) context;
 		return pContext.getPerspectiveId();
 	}
-
 	
 }

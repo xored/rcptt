@@ -535,14 +535,15 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 	@Override
 	public Shell getActiveShell() {
-		Shell display = getDisplay().getActiveShell();
-		if (display == null) {
-			List<MWindow> windows = E4ModelProcessor.getApplication().getChildren();
-			if (!windows.isEmpty()) {
-				display = (Shell) windows.get(0).getWidget();
-			}
+		Display display = getDisplay();
+		if (display == Display.getCurrent()) {
+			return getDisplay().getActiveShell();
 		}
-		return display;
+		List<MWindow> windows = E4ModelProcessor.getApplication().getChildren();
+		if (!windows.isEmpty()) {
+			return (Shell) windows.get(0).getWidget();
+		}
+		return null;
 	}
 
 	@Override

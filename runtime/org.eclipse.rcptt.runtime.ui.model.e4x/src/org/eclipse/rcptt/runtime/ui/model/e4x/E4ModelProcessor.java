@@ -31,18 +31,19 @@ public class E4ModelProcessor {
 	@Inject
 	MApplication application;
 
-	@Inject
 	Display display;
 
 	@Execute
 	public void execute(Display display) {
+		this.display = display;
 		INSTANCE = this;
 	}
 
 	public static GenericElementKind getPartKind(Object w) {
 		if (w instanceof Widget) {
 			Object part_ = ((Widget) w).getData("modelElement");
-			if (part_ != null && part_ instanceof MPart) {
+			if (part_ instanceof MPart) {
+				// TODO: Find a better way to recognize editors.
 				MPart part = (MPart) part_;
 				
 				Field[] fields = null;
@@ -50,7 +51,7 @@ public class E4ModelProcessor {
 				if (!isPartRendered) {
 					String bundleName = part.getContributorURI().replace("platform:/plugin/", "");
 					Bundle bundle = Activator.getDefault().getBundleForName(bundleName);
-			
+
 					int lastSlashIndex = part.getContributionURI().lastIndexOf("/");
 					String clazzName = part.getContributionURI().substring(++lastSlashIndex);
 					try {
@@ -76,12 +77,12 @@ public class E4ModelProcessor {
 			}
 			
 		}
-		return new GenericElementKind(ElementKind.Unknown);
+		return GenericElementKind.Unknown;
 		
 	}
 	
 	public static boolean isEditor(MPart part) {
-		return ElementKind.Editor.equals(E4ModelProcessor.getPartKind(part).kind);
+		return ElementKind.Editor.equals(getPartKind(part).kind);
 	}
 
 	public static Display getDisplay() {
@@ -94,8 +95,7 @@ public class E4ModelProcessor {
 		for (MWindow window : children) {
 			IEclipseContext context = window.getContext();
 			if (context != null) {
-				IWorkbenchWindow wwindow = (IWorkbenchWindow) context.get(IWorkbenchWindow.class
-						.getName());
+				IWorkbenchWindow wwindow = context.get(IWorkbenchWindow.class);
 				if (wwindow != null) {
 					windows.add(wwindow);
 				}

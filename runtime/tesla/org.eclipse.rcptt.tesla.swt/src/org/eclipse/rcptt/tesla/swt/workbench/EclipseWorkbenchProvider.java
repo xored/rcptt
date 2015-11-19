@@ -31,10 +31,10 @@ public class EclipseWorkbenchProvider {
 							extensionPointId);
 			for (IConfigurationElement cfg : elements) {
 				try {
-					IEclipseWorkbenchProvider object = (IEclipseWorkbenchProvider) cfg
+					IEclipseWorkbenchProvider provider = (IEclipseWorkbenchProvider) cfg
 							.createExecutableExtension("class");
-					if (((IEclipseWorkbenchProvider) object).isSupported()) {
-						currentProvider = (IEclipseWorkbenchProvider) object;
+					if (provider.isSupported()) {
+						currentProvider = provider;
 					}
 				} catch (CoreException e) {
 					throw new RuntimeException("Failed to create " + cfg.getName(), e);
