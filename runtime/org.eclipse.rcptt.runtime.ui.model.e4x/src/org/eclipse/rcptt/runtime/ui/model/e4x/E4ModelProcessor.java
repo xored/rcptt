@@ -19,7 +19,6 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.osgi.framework.Bundle;
 
@@ -39,46 +38,34 @@ public class E4ModelProcessor {
 		INSTANCE = this;
 	}
 
-	public static GenericElementKind getPartKind(Object w) {
-		if (w instanceof Widget) {
-			Object part_ = ((Widget) w).getData("modelElement");
-			if (part_ instanceof MPart) {
-				// TODO: Find a better way to recognize editors.
-				MPart part = (MPart) part_;
-				
-				Field[] fields = null;
-				boolean isPartRendered = part.getObject() != null;
-				if (!isPartRendered) {
-					String bundleName = part.getContributorURI().replace("platform:/plugin/", "");
-					Bundle bundle = Activator.getDefault().getBundleForName(bundleName);
-
-					int lastSlashIndex = part.getContributionURI().lastIndexOf("/");
-					String clazzName = part.getContributionURI().substring(++lastSlashIndex);
-					try {
-						Class<?> clazz = bundle.loadClass(clazzName);
-						fields = clazz.getDeclaredFields();
-					} catch (ClassNotFoundException e) {
-						// ignore, its aren't going to happen
-						// because part is created from targetClass (origin class of the 
-						//part)
-					}
-				} else {
-					fields = part.getObject().getClass().getDeclaredFields();
-				}
-				for (Field field : fields) {
-					boolean isEditor = MDirtyable.class.equals(field.getType());
-					if (isEditor)
-						return new GenericElementKind(ElementKind.Editor);
-				}
-			
-				return new GenericElementKind(ElementKind.View);
-				
-				
+	/**
+	 * Tries to guess whether the given part is used as a view or an editor, and returns the corresponding
+	 * {@link GenericElementKind}.
+	 */
+	public static GenericElementKind getPartKind(MPart part) {
+		// TODO: Find a better way to recognize editors! Currently, this considers a part to be an editor if the
+		// implementing model has a field of type MDirtyable, otherwise it considers it to be a view.
+		Object object = part.getObject();
+		Class<?> clazz;
+		if (object != null) {
+			clazz = object.getClass();
+		} else {
+			// The part has not been rendered yet. Load class manually.
+			String bundleName = part.getContributorURI().replace("platform:/plugin/", "");
+			Bundle bundle = Activator.getDefault().getBundleForName(bundleName);
+			int lastSlashIndex = part.getContributionURI().lastIndexOf("/");
+			String clazzName = part.getContributionURI().substring(++lastSlashIndex);
+			try {
+				clazz = bundle.loadClass(clazzName);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Class extracted from contributor URI not found.", e);
 			}
-			
 		}
-		return GenericElementKind.Unknown;
-		
+		for (Field field : clazz.getDeclaredFields()) {
+			if (MDirtyable.class.equals(field.getType()))
+				return new GenericElementKind(ElementKind.Editor);
+		}
+		return new GenericElementKind(ElementKind.View);
 	}
 	
 	public static boolean isEditor(MPart part) {

@@ -92,6 +92,7 @@ import org.eclipse.ui.intro.IIntroPart;
 
 @SuppressWarnings("restriction")
 public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
+	// TODO: Deduplicate the functionality in common with E4WorkbenchProvider.
 
 	private static <T> T as(Class<T> class_, Object object) {
 		if (class_.isInstance(object))
@@ -164,26 +165,26 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return references;
 	}
 
+	private CTabFolder getCTabFolder(Widget widget) {
+		if (widget instanceof CTabFolder) {
+			return (CTabFolder) widget;
+		}
+		if (widget instanceof Control && widget.getData("modelElement") != null) {
+			Composite parent = ((Control) widget).getParent();
+			if (parent == null || parent instanceof CTabFolder)
+				return (CTabFolder) parent;
+			parent = parent.getParent();
+			if (parent instanceof CTabFolder)
+				return (CTabFolder) parent;
+		}
+		return null;
+	}
+
 	@Override
 	public void processTabFolderButton(Widget widget, int buttonId) {
-		if (!(widget instanceof CTabFolder)) {
-			if (widget.getData("modelElement") != null && widget instanceof Control) {
-				Composite parent = ((Control) widget).getParent();
-				if (!(parent instanceof CTabFolder)) {
-					parent = parent.getParent();
-					if (!(parent instanceof CTabFolder))
-						return;
-				}
-				widget = parent;
-			}
-		}
-
-		if (!(widget instanceof CTabFolder))
+		CTabFolder tabFolder = getCTabFolder(widget);
+		if (tabFolder == null)
 			return;
-
-		// --
-
-		CTabFolder tabFolder = (CTabFolder) widget;
 
 		ToolItem maxItem = null, minItem = null;
 		try {
@@ -229,24 +230,9 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 	@Override
 	public void processTabShowList(Widget widget) {
-		if (!(widget instanceof CTabFolder)) {
-			if (widget.getData("modelElement") != null && widget instanceof Control) {
-				Composite parent = ((Control) widget).getParent();
-				if (!(parent instanceof CTabFolder)) {
-					parent = parent.getParent();
-					if (!(parent instanceof CTabFolder))
-						return;
-				}
-				widget = parent;
-			}
-		}
-
-		if (!(widget instanceof CTabFolder))
+		CTabFolder tabFolder = getCTabFolder(widget);
+		if (tabFolder == null)
 			return;
-
-		// --
-
-		CTabFolder tabFolder = (CTabFolder) widget;
 
 		ToolItem chevronItem = null;
 		try {
@@ -451,8 +437,12 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	}
 
 	@Override
-	public GenericElementKind getWidgetKind(Object w) {
-		return E4ModelProcessor.getPartKind(w);
+	public GenericElementKind getWidgetKind(Widget widget) {
+		Object data = widget.getData("modelElement");
+		if (data instanceof MPart) {
+			return E4ModelProcessor.getPartKind((MPart) data);
+		}
+		return GenericElementKind.Unknown;
 	}
 
 	@Override
@@ -492,9 +482,7 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 		Collection<MPart> parts = E4ModelProcessor.getPartService().getParts();
 		for (MPart part : parts) {
-			boolean isSameKind = kind.kind.equals(E4ModelProcessor.getPartKind(part).kind);
-
-			if (matches(part.getLabel(), pattern) && isSameKind) {
+			if (E4ModelProcessor.getPartKind(part).is(kind) && matches(part.getLabel(), pattern)) {
 				E4ModelProcessor.getModelService().bringToTop(part);
 				return (Widget) part.getWidget();
 			}

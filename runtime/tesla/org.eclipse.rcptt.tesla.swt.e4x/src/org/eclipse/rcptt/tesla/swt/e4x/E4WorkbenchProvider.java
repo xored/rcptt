@@ -479,7 +479,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	}
 
 	@Override
-	public GenericElementKind getWidgetKind(Object w) {
+	public GenericElementKind getWidgetKind(Widget widget) {
 		// not supported for now
 		return null;
 	}

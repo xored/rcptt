@@ -68,7 +68,7 @@ public interface IEclipseWorkbenchProvider {
 
 	String getViewId(Widget widget);
 
-	GenericElementKind getWidgetKind(Object w);
+	GenericElementKind getWidgetKind(Widget widget);
 
 	String getWidgetRawText(Widget widget);
 
