@@ -153,16 +153,19 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 
 		// get all parts (visible and active parts) from THIS window
-		Collection<MPart> parts = E4ModelProcessor.getPartService().getParts();
-
-		for (MPart part : parts) {
-			if (part.isVisible()) {
-				SWTUIElement swtUIElement = player.wrap(part.getWidget());
-				references.put((Control) part.getWidget(), swtUIElement);
+		try {
+			Collection<MPart> parts = E4ModelProcessor.getPartService().getParts();
+			for (MPart part : parts) {
+				if (part.isVisible()) {
+					SWTUIElement swtUIElement = player.wrap(part.getWidget());
+					references.put((Control) part.getWidget(), swtUIElement);
+				}
 			}
+			return references;
+		} catch (IllegalStateException e) {
+			// There are no active parts.
+			return references;
 		}
-
-		return references;
 	}
 
 	private CTabFolder getCTabFolder(Widget widget) {

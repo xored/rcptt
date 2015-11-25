@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -13,12 +14,14 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.osgi.framework.Bundle;
 
@@ -28,13 +31,22 @@ public class E4ModelProcessor {
 	private static E4ModelProcessor INSTANCE = null;
 
 	@Inject
-	MApplication application;
+	private MApplication application;
 
-	Display display;
+	private Display display;
+	private Shell activeShell;
+	private MPart activePart;
+	private EPartService partService;
 
 	@Execute
-	public void execute(Display display) {
+	public void execute(Display display,
+			@Named(IServiceConstants.ACTIVE_PART) MPart activePart,
+			@Named(IServiceConstants.ACTIVE_SHELL) Shell activeShell,
+			EPartService partService) {
 		this.display = display;
+		this.activeShell = activeShell;
+		this.activePart = activePart;
+		this.partService = partService;
 		INSTANCE = this;
 	}
 
@@ -104,7 +116,15 @@ public class E4ModelProcessor {
 	}
 	
 	public static EPartService getPartService() {
-		return INSTANCE.application.getContext().get(EPartService.class);
+		return INSTANCE.partService;
+	}
+
+	public static MPart getActivePart() {
+		return INSTANCE.activePart;
+	}
+
+	public static Shell getActiveShell() {
+		return INSTANCE.activeShell;
 	}
 
 }
