@@ -11,7 +11,6 @@
 package org.eclipse.rcptt.tesla.swt.e4x;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +89,6 @@ import org.eclipse.ui.intro.IIntroPart;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
 
-@SuppressWarnings("restriction")
 public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 	private static <T> T as(Class<T> class_, Object object) {
@@ -121,12 +119,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return man.getMenu();
 	}
 
-	@Override
-	public List<?> getPaneFolderButtonListeners(Object paneFolder) {
-		return new ArrayList<Object>();
-	}
-
-	@Override
+	@SuppressWarnings("restriction")
 	public Control getToolbar(IWorkbenchPartReference reference) {
 		try {
 			return ((ToolBarManager) ((PartSite) ((WorkbenchPartReference) reference).getPart(false).getSite())
@@ -188,26 +181,25 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return references;
 	}
 
-	@Override
-	public void processTabFolderButton(Widget widget, int buttonId) {
-		if (!(widget instanceof CTabFolder)) {
-			if (widget.getData("modelElement") != null && widget instanceof Control) {
-				Composite parent = ((Control) widget).getParent();
-				if (!(parent instanceof CTabFolder)) {
-					parent = parent.getParent();
-					if (!(parent instanceof CTabFolder))
-						return;
-				}
-				widget = parent;
-			}
+	private CTabFolder getCTabFolder(Widget widget) {
+		if (widget instanceof CTabFolder) {
+			return (CTabFolder) widget;
 		}
+		if (widget instanceof Control && widget.getData("modelElement") != null) {
+			Composite parent = ((Control) widget).getParent();
+			if (parent == null || parent instanceof CTabFolder)
+				return (CTabFolder) parent;
+			parent = parent.getParent();
+			if (parent instanceof CTabFolder)
+				return (CTabFolder) parent;
+		}
+		return null;
+	}
 
-		if (!(widget instanceof CTabFolder))
+	public void processTabFolderButton(Widget widget, int buttonId) {
+		CTabFolder tabFolder = getCTabFolder(widget);
+		if (tabFolder == null)
 			return;
-
-		// --
-
-		CTabFolder tabFolder = (CTabFolder) widget;
 
 		ToolItem maxItem = null, minItem = null;
 		try {
@@ -253,24 +245,9 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 	@Override
 	public void processTabShowList(Widget widget) {
-		if (!(widget instanceof CTabFolder)) {
-			if (widget.getData("modelElement") != null && widget instanceof Control) {
-				Composite parent = ((Control) widget).getParent();
-				if (!(parent instanceof CTabFolder)) {
-					parent = parent.getParent();
-					if (!(parent instanceof CTabFolder))
-						return;
-				}
-				widget = parent;
-			}
-		}
-
-		if (!(widget instanceof CTabFolder))
+		CTabFolder tabFolder = getCTabFolder(widget);
+		if (tabFolder == null)
 			return;
-
-		// --
-
-		CTabFolder tabFolder = (CTabFolder) widget;
 
 		ToolItem chevronItem = null;
 		try {

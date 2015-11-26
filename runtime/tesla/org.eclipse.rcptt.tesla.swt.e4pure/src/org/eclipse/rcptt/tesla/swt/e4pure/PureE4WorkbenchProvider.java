@@ -123,11 +123,6 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	}
 
 	@Override
-	public List<?> getPaneFolderButtonListeners(Object paneFolder) {
-		return new ArrayList<Object>();
-	}
-
-	@Override
 	public Control getToolbar(IWorkbenchPartReference reference) {
 		try {
 			return ((ToolBarManager) ((PartSite) ((WorkbenchPartReference) reference).getPart(false).getSite())
