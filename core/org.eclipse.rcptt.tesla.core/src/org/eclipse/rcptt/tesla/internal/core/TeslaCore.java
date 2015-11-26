@@ -53,13 +53,13 @@ public class TeslaCore extends Plugin {
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" }) // ServiceReference was not generic in Eclipse 4.4 and earlier.
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		DebugOptions service = null;
-		final ServiceReference<?> reference = context
-				.getServiceReference(DebugOptions.class.getName());
+		final ServiceReference reference = context.getServiceReference(DebugOptions.class.getName());
 		if (reference != null)
 			service = (DebugOptions) context.getService(reference);
 		if (service == null)

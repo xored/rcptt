@@ -112,7 +112,7 @@ public class ClassicEclipseWorkbenchProvider implements IEclipseWorkbenchProvide
 		return menuManager.getMenu();
 	}
 
-	public List<?> getPaneFolderButtonListeners(Object paneFolder) {
+	private List<?> getPaneFolderButtonListeners(Object paneFolder) {
 		try {
 			Field field = PaneFolder.class.getDeclaredField("buttonListeners");
 			field.setAccessible(true);
@@ -326,7 +326,7 @@ public class ClassicEclipseWorkbenchProvider implements IEclipseWorkbenchProvide
 	}
 
 	@Override
-	public GenericElementKind getWidgetKind(Object w) {
+	public GenericElementKind getWidgetKind(Widget w) {
 		// not supported for now
 		return null;
 	}

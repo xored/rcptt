@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -14,7 +13,6 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
-import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
@@ -34,19 +32,16 @@ public class E4ModelProcessor {
 	private MApplication application;
 
 	private Display display;
-	private Shell activeShell;
-	private MPart activePart;
 	private EPartService partService;
+	private EModelService modelService;
 
 	@Execute
 	public void execute(Display display,
-			@Named(IServiceConstants.ACTIVE_PART) MPart activePart,
-			@Named(IServiceConstants.ACTIVE_SHELL) Shell activeShell,
+			EModelService modelService,
 			EPartService partService) {
 		this.display = display;
-		this.activeShell = activeShell;
-		this.activePart = activePart;
 		this.partService = partService;
+		this.modelService = modelService;
 		INSTANCE = this;
 	}
 
@@ -108,7 +103,7 @@ public class E4ModelProcessor {
 	}
 	
 	public static EModelService getModelService() {
-		return INSTANCE.application.getContext().get(EModelService.class);
+		return INSTANCE.modelService;
 	}
 	
 	public static ESelectionService getSelectionService() {
@@ -120,11 +115,11 @@ public class E4ModelProcessor {
 	}
 
 	public static MPart getActivePart() {
-		return INSTANCE.activePart;
+		return INSTANCE.application.getContext().getActiveLeaf().get(MPart.class);
 	}
 
 	public static Shell getActiveShell() {
-		return INSTANCE.activeShell;
+		return INSTANCE.application.getContext().getActiveLeaf().get(Shell.class);
 	}
 
 }

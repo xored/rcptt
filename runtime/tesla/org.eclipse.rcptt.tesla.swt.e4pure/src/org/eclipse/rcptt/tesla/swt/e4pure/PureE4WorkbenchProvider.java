@@ -558,11 +558,13 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 				@Override
 				public Object run() throws CoreException {
-					MPart activePart = E4ModelProcessor.getPartService().getActivePart();
-					MPerspective currentPerspective = E4ModelProcessor.getModelService().getPerspectiveFor(activePart);
+					MPart activePart = E4ModelProcessor.getActivePart();
+					boolean noActivePerspective = activePart == null;
+
+					MPerspective currentPerspective = noActivePerspective ? null
+							: E4ModelProcessor.getModelService().getPerspectiveFor(activePart);
 					String ctxPerspectiveId = ctx.getPerspectiveId();
 
-					boolean noActivePerspective = activePart == null;
 					boolean areWeOnDifferentPerspective = ctxPerspectiveId != null
 							&& !ctxPerspectiveId.equals(currentPerspective.getElementId());
 					if (noActivePerspective || areWeOnDifferentPerspective) {
@@ -651,8 +653,9 @@ public class PureE4WorkbenchProvider implements IEclipseWorkbenchProvider {
 					if (perspectives.isEmpty()) {
 						perspectives = modelService.findElements(app, null, MPerspective.class, null);
 					}
-
-					E4ModelProcessor.getPartService().switchPerspective(perspectives.get(0));
+					if (!perspectives.isEmpty()) {
+						E4ModelProcessor.getPartService().switchPerspective(perspectives.get(0));
+					}
 
 					return null;
 				}
