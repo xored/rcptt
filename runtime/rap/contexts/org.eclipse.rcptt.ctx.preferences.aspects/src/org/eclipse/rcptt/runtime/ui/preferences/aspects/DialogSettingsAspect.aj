@@ -1,8 +1,8 @@
 package org.eclipse.rcptt.runtime.ui.preferences.aspects;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
-import org.eclipse.rap.jface.dialogs.IDialogSettings;
-import org.eclipse.rap.ui.plugin.AbstractUIPlugin;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.eclipse.rcptt.internal.runtime.ui.preferences.Activator;
 import org.eclipse.rcptt.runtime.ui.preferences.DialogSettingsManager;
