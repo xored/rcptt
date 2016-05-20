@@ -185,14 +185,14 @@ public class ActionService extends AbstractActionService {
 		else if (command instanceof DoubleClickText)
 			handleDoubleClickText((DoubleClickText) command);
 		else if (command instanceof Decrypt)
-			return handleDecrypt((Decrypt)command);
+			return handleDecrypt((Decrypt) command);
 		// Options
 		else if (command instanceof Options)
 			handleOptions((Options) command);
 		return result;
 	}
 
-	private DecryptResult  handleDecrypt(Decrypt command) {
+	private DecryptResult handleDecrypt(Decrypt command) {
 		DecryptResult result = TeslaFactory.eINSTANCE.createDecryptResult();
 		result.setValue(command.getValue());
 		return result;
@@ -395,23 +395,23 @@ public class ActionService extends AbstractActionService {
 			traverseType = SWT.TRAVERSE_TAB_NEXT;
 		else if (Key.equals("TRAVERSE_TAB_PREVIOUS"))
 			traverseType = SWT.TRAVERSE_TAB_PREVIOUS;
-		else if (Key.equals("TRAVERSE_ARROW_NEXT"))
-			traverseType = SWT.TRAVERSE_ARROW_NEXT;
-		else if (Key.equals("TRAVERSE_ARROW_PREVIOUS"))
-			traverseType = SWT.TRAVERSE_ARROW_PREVIOUS;
-		else if (Key.equals("TRAVERSE_MNEMONIC")) {
-			traverseType = SWT.TRAVERSE_MNEMONIC;
-			String charStr = kt.getChar();
-			try {
-				ch = charStr == null ? 0 : stringToChar(charStr);
-			} catch (ParseException e1) {
-				throw new CoreException(
-						TeslaImplPlugin.err("Illegal character"));
-			}
-		} else if (Key.equals("TRAVERSE_PAGE_NEXT"))
-			traverseType = SWT.TRAVERSE_PAGE_NEXT;
-		else if (Key.equals("TRAVERSE_PAGE_PREVIOUS"))
-			traverseType = SWT.TRAVERSE_PAGE_PREVIOUS;
+		// else if (Key.equals("TRAVERSE_ARROW_NEXT"))
+		// traverseType = SWT.TRAVERSE_ARROW_NEXT;
+		// else if (Key.equals("TRAVERSE_ARROW_PREVIOUS"))
+		// traverseType = SWT.TRAVERSE_ARROW_PREVIOUS;
+		// else if (Key.equals("TRAVERSE_MNEMONIC")) {
+		// traverseType = SWT.TRAVERSE_MNEMONIC;
+		// String charStr = kt.getChar();
+		// try {
+		// ch = charStr == null ? 0 : stringToChar(charStr);
+		// } catch (ParseException e1) {
+		// throw new CoreException(
+		// TeslaImplPlugin.err("Illegal character"));
+		// }
+		// } else if (Key.equals("TRAVERSE_PAGE_NEXT"))
+		// traverseType = SWT.TRAVERSE_PAGE_NEXT;
+		// else if (Key.equals("TRAVERSE_PAGE_PREVIOUS"))
+		// traverseType = SWT.TRAVERSE_PAGE_PREVIOUS;
 
 		if (traverseType != null) {
 			ControlUIElement controlUIElement = getControlUIElement(kt
@@ -676,22 +676,7 @@ public class ActionService extends AbstractActionService {
 		Integer height = ma.getHeight();
 		Integer width = ma.getWidth();
 		if (height != null && width != null) {
-			// List<Integer> editPartPath = null;
-			// List<Integer> figurePath = null;
 			ControlHandler target = control;
-			// if (target.getKind().is(ElementKind.DiagramFigure)) {
-			// if ("editpart/address".equals(target.getPath())) {
-			// editPartPath = TeslaBridge
-			// .parseIndexes(target.getIndexes());
-			// } else if ("rawFigure/address".equals(target.getPath())) {
-			// figurePath = TeslaBridge.parseIndexes(target.getIndexes());
-			// } else {
-			// throw new CoreException(
-			// TeslaImplPlugin.err("Illegal figure path: "
-			// + target.getIndexes()));
-			// }
-			// //target = target.getParent();
-			// }
 			if (target.getKind().equals(ElementKind.PaletteEntry)) {
 				Element paletteEntry = TeslaBridge.find(target);
 				FigureUIElement uiElement = new FigureUIElement(paletteEntry,
@@ -709,19 +694,7 @@ public class ActionService extends AbstractActionService {
 						/* figurePath */null, width, height, width, height, mask);
 				return target;
 			}
-			// if (target.getKind().is(ElementKind.DiagramFigure)) {
-			// if ("editpart/address".equals(target.getPath())) {
-			// editPartPath = TeslaBridge
-			// .parseIndexes(target.getIndexes());
-			// } else if ("rawFigure/address".equals(target.getPath())) {
-			// figurePath = TeslaBridge.parseIndexes(target.getIndexes());
-			// } else {
-			// throw new CoreException(
-			// TeslaImplPlugin.err("Illegal figure path: "
-			// + target.getIndexes()));
-			// }
-			// target = target.getParent();
-			// }
+
 			switch (target.getKind()) {
 			case DiagramFigure:
 				FigureUIElement element = getFigureUIElement(target);
@@ -947,6 +920,7 @@ public class ActionService extends AbstractActionService {
 		getControlUIElement(c.getControl()).setFocus();
 		return c.getControl();
 	}
+
 	private ControlHandler handleUnfocus(Unfocus c) throws CoreException {
 		getControlUIElement(c.getControl()).unfocus();
 		return c.getControl();

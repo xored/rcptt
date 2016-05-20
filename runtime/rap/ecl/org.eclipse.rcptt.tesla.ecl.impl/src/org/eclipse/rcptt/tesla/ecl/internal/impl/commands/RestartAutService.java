@@ -27,7 +27,8 @@ public class RestartAutService implements ICommandService {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				PlatformUI.getWorkbench().restart();
+				// TODO RAP-FIX: Does not support: eclipse.org/bugs/show_bug.cgi?id=201545
+				// PlatformUI.getWorkbench().restart();
 			}
 		});
 		return Status.OK_STATUS;
