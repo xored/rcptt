@@ -31,9 +31,6 @@ import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
 import org.eclipse.rcptt.tesla.ecl.impl.Utils;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
@@ -101,14 +98,14 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	private UIRunnable<Object> clearClipboard = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
-			Clipboard clipboard = new Clipboard(PlatformUI.getWorkbench().getDisplay());
-			// First put something into clipboard, to force our
-			// clipboard became owner of system clipboard
-			clipboard.setContents(new Object[] { " " }, new Transfer[] { TextTransfer.getInstance() });
-
-			// clipboard.clearContents(DND.CLIPBOARD);
-			// clipboard.clearContents(DND.SELECTION_CLIPBOARD);
-			clipboard.clearContents();
+			// Clipboard clipboard = new Clipboard(PlatformUI.getWorkbench().getDisplay());
+			// // First put something into clipboard, to force our
+			// // clipboard became owner of system clipboard
+			// clipboard.setContents(new Object[] { " " }, new Transfer[] { TextTransfer.getInstance() });
+			//
+			// // clipboard.clearContents(DND.CLIPBOARD);
+			// // clipboard.clearContents(DND.SELECTION_CLIPBOARD);
+			// clipboard.clearContents();
 			return null;
 		}
 	};

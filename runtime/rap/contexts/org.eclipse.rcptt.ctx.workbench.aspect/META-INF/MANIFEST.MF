@@ -7,8 +7,7 @@ Bundle-Activator: org.eclipse.rcptt.ctx.workbench.aspect.Activator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.aspectj.runtime;visibility:=reexport,
  org.eclipse.rap.ui,
- org.eclipse.core.runtime,
- org.eclipse.rap.ui.views.log
+ org.eclipse.core.runtime
 Import-Package: org.osgi.framework
 Eclipse-SupplementBundle: org.eclipse.rap.ui.views.log
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

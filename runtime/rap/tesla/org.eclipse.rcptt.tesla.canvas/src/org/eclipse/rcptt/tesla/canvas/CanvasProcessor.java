@@ -10,10 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.canvas;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Event;
-
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
@@ -34,6 +30,9 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTEvents;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Event;
 
 public class CanvasProcessor implements ITeslaCommandProcessor {
 
@@ -99,26 +98,26 @@ public class CanvasProcessor implements ITeslaCommandProcessor {
 					e.type = SWT.MouseDown;
 					events.sendEvent(element, e);
 					break;
-				case ENTER:
-					e.type = SWT.MouseEnter;
-					events.sendEvent(element, e);
-					break;
-				case EXIT:
-					e.type = SWT.MouseExit;
-					events.sendEvent(element, e);
-					break;
-				case HOVER:
-					e.type = SWT.MouseHover;
-					events.sendEvent(element, e);
-					break;
+				// case ENTER:
+				// e.type = SWT.MouseEnter;
+				// events.sendEvent(element, e);
+				// break;
+				// case EXIT:
+				// e.type = SWT.MouseExit;
+				// events.sendEvent(element, e);
+				// break;
+				// case HOVER:
+				// e.type = SWT.MouseHover;
+				// events.sendEvent(element, e);
+				// break;
 				case UP:
 					e.type = SWT.MouseUp;
 					events.sendEvent(element, e);
 					break;
-				case MOVE:
-					e.type = SWT.MouseMove;
-					events.sendEvent(element, e);
-					break;
+				// case MOVE:
+				// e.type = SWT.MouseMove;
+				// events.sendEvent(element, e);
+				// break;
 				case DOUBLE_CLICK:
 					e.type = SWT.MouseDoubleClick;
 					e.count = 2;

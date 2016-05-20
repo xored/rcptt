@@ -16,17 +16,15 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.rcptt.core.scenario.Editor;
 import org.eclipse.rcptt.core.scenario.FileEditor;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
 import org.eclipse.rcptt.core.scenario.WorkbenchContext;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 
 public class ResourcesSupport {
 
@@ -50,7 +48,7 @@ public class ResourcesSupport {
 			UIRunnable.exec(new UIRunnable<Object>() {
 				@Override
 				public Object run() throws CoreException {
-					IDE.openEditor(page, file);
+					// IDE.openEditor(page, file);
 					return null;
 				}
 			});
@@ -92,9 +90,6 @@ public class ResourcesSupport {
 	}
 
 	private static IFile getFile(IEditorInput input) {
-		if (input instanceof IFileEditorInput) {
-			return ((IFileEditorInput) input).getFile();
-		}
 		try {
 			return (IFile) input.getAdapter(IFile.class);
 		} catch (Exception e) {
