@@ -1,15 +1,11 @@
 package org.eclipse.rcptt.tesla.jface;
 
-import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.program.Program;
-import org.eclipse.ui.internal.misc.ExternalProgramImageDescriptor;
 import org.osgi.framework.Bundle;
 
 public enum DescriptorInfo {
@@ -92,48 +88,47 @@ public enum DescriptorInfo {
 		String extract(ImageDescriptor descriptor) {
 			return extract(descriptor.toString());
 		}
-	},
+	};
 
 	/**
 	 * Gets info from program because ExternalProgramImageDescriptor.toString() has no useful information
 	 */
-	EXTERNAL_PROGRAM() {
-		private final boolean isWindows = Platform.getOS().equals(Platform.OS_WIN32);
-		
-		@Override
-		String extract(ImageDescriptor descriptor) {
-			if (descriptor instanceof ExternalProgramImageDescriptor) {
-				if (isWindows) {
-					try {
-						Program p = ((ExternalProgramImageDescriptor) descriptor).program;
-	
-						Field extensionField = p.getClass().getDeclaredField("extension");
-						extensionField.setAccessible(true);
-						String extension = (String) extensionField.get(p);
-						if (extension != null && !extension.isEmpty()) {
-							return extension;
-						}
-	
-						Field iconNameField = p.getClass().getDeclaredField("iconName");
-						iconNameField.setAccessible(true);
-						String iconName = (String) iconNameField.get(p);
-						if (iconName != null && !iconName.isEmpty()) {
-							return iconName;
-						}
-					} catch (IllegalArgumentException e) {
-						JFaceAspectsActivator.log(e);
-					} catch (IllegalAccessException e) {
-						JFaceAspectsActivator.log(e);
-					} catch (NoSuchFieldException e) {
-						JFaceAspectsActivator.log(e);
-					} catch (SecurityException e) {
-						JFaceAspectsActivator.log(e);
-					}
-				}
-			}
-			return null;
-		}
-	};
+	// EXTERNAL_PROGRAM() {
+	// private final boolean isWindows = Platform.getOS().equals(Platform.OS_WIN32);
+	//
+	// @Override
+	// String extract(ImageDescriptor descriptor) {
+	// if (descriptor instanceof ExternalProgramImageDescriptor) {
+	// if (isWindows) {
+	// try {
+	// Program p = ((ExternalProgramImageDescriptor) descriptor).program;
+	//
+	// Field extensionField = p.getClass().getDeclaredField("extension");
+	// extensionField.setAccessible(true);
+	// String extension = (String) extensionField.get(p);
+	// if (extension != null && !extension.isEmpty()) {
+	// return extension;
+	// }
+	//
+	// Field iconNameField = p.getClass().getDeclaredField("iconName");
+	// iconNameField.setAccessible(true);
+	// String iconName = (String) iconNameField.get(p);
+	// if (iconName != null && !iconName.isEmpty()) {
+	// return iconName;
+	// }
+	// } catch (IllegalArgumentException e) {
+	// JFaceAspectsActivator.log(e);
+	// } catch (IllegalAccessException e) {
+	// JFaceAspectsActivator.log(e);
+	// } catch (NoSuchFieldException e) {
+	// JFaceAspectsActivator.log(e);
+	// } catch (SecurityException e) {
+	// JFaceAspectsActivator.log(e);
+	// }
+	// }
+	// }
+	// return null;
+	// }
 
 	public static String getInfo(ImageDescriptor descriptor) {
 		for (DescriptorInfo i : DescriptorInfo.values()) {

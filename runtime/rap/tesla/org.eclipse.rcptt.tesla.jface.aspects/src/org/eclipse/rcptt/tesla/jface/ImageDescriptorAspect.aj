@@ -1,8 +1,8 @@
 package org.eclipse.rcptt.tesla.jface;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
-import org.eclipse.rap.jface.resource.ImageDescriptor;
-import org.eclipse.rap.jface.resource.CompositeImageDescriptor;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 

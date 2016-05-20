@@ -3,11 +3,11 @@ package org.eclipse.rcptt.tesla.jface;
 import java.lang.reflect.Field;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
-import org.eclipse.rap.jface.dialogs.IDialogConstants;
-import org.eclipse.rap.jface.dialogs.MessageDialog;
-import org.eclipse.rap.jface.fieldassist.ControlDecoration;
-import org.eclipse.rap.jface.viewers.CellEditor;
-import org.eclipse.rap.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -80,13 +80,13 @@ public aspect CellEditorAspect {
 				int no_id = -1;
 				int cancel_id = -1;
 				for (int i = 0; i < fields.length; i++) {
-					if (fields[i].equals(IDialogConstants.NO_LABEL)) {
+					if (fields[i].equals(IDialogConstants.get().NO_LABEL)) {
 						no_id = i;
 					}
-					if (fields[i].equals(IDialogConstants.NO_TO_ALL_LABEL)) {
+					if (fields[i].equals(IDialogConstants.get().NO_TO_ALL_LABEL)) {
 						no_id = i;
 					}
-					if (fields[i].equals(IDialogConstants.CANCEL_LABEL)) {
+					if (fields[i].equals(IDialogConstants.get().CANCEL_LABEL)) {
 						cancel_id = i;
 					}
 				}

@@ -7,14 +7,11 @@ import java.io.File;
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -187,7 +184,7 @@ public aspect RecordingAspect {
 		Object result = proceed(widget, type);
 		try {
 			if (SWTEventManager.isFreeze(widget, type, null)) {
-				if ((widget instanceof Tree) || (widget instanceof StyledText)
+				if ((widget instanceof Tree)
 						|| (widget instanceof Table)) {
 					return result;
 				}
@@ -217,17 +214,14 @@ public aspect RecordingAspect {
 
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(Control ctrl): execution( boolean Control.sendMouseEvent (..)) && target(ctrl) {
-		if (SWTEventManager.isShouldProceed(ctrl, SWT.MouseMove)) {
-			return proceed(ctrl);
-		}
 		try {
-			if (SWTEventManager.isFreeze(ctrl, SWT.MouseMove, null)) {
+			if (SWTEventManager.isFreeze(ctrl, 0, null)) {
 				Event e = new Event();
 				Point loc = Display.getCurrent().getCursorLocation();
 				loc = ctrl.toControl(loc.x, loc.y);
 				e.x = loc.x;
 				e.y = loc.y;
-				SWTEventManager.handleEventInFreeze(ctrl, SWT.MouseMove, e);
+				SWTEventManager.handleEventInFreeze(ctrl, 0, e);
 			}
 		} catch (Throwable e) {
 			RecordingSWTActivator.log(e);
@@ -318,31 +312,31 @@ public aspect RecordingAspect {
 		return proceed(ctrl, type);
 	}
 
-	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(FileDialog dialog): execution(String FileDialog.open()) && target(dialog) {
-		Object dialogResult = proceed(dialog);
-		try {
-			String[] result = dialog.getFileNames().clone();
-			for (int i = 0; i < result.length; i++) {
-				result[i] = dialog.getFilterPath() + File.separator + result[i];
-			}
-			SWTEventManager.recordSWTDialog(dialog, result);
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-		return dialogResult;
-	}
-
-	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(DirectoryDialog dialog): execution(String DirectoryDialog.open()) && target(dialog) {
-		Object result = proceed(dialog);
-		try {
-			SWTEventManager.recordSWTDialog(dialog, result);
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-		return result;
-	}
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	Object around(FileDialog dialog): execution(String FileDialog.open()) && target(dialog) {
+//		Object dialogResult = proceed(dialog);
+//		try {
+//			String[] result = dialog.getFileNames().clone();
+//			for (int i = 0; i < result.length; i++) {
+//				result[i] = dialog.getFilterPath() + File.separator + result[i];
+//			}
+//			SWTEventManager.recordSWTDialog(dialog, result);
+//		} catch (Throwable e) {
+//			RecordingSWTActivator.log(e);
+//		}
+//		return dialogResult;
+//	}
+//
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	Object around(DirectoryDialog dialog): execution(String DirectoryDialog.open()) && target(dialog) {
+//		Object result = proceed(dialog);
+//		try {
+//			SWTEventManager.recordSWTDialog(dialog, result);
+//		} catch (Throwable e) {
+//			RecordingSWTActivator.log(e);
+//		}
+//		return result;
+//	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(FontDialog dialog): execution(org.eclipse.swt.graphics.FontData FontDialog.open()) && target(dialog) {
@@ -386,46 +380,46 @@ public aspect RecordingAspect {
 		}
 	}
 
-	@SuppressAjWarnings("adviceDidNotMatch")
-	after(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) && target(text) && args(action) {
-		try {
-			SWTEventManager.recordStyledTextActionAfter(text, action);
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-	}
-
-	@SuppressAjWarnings("adviceDidNotMatch")
-	before(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) && target(text) && args(action) {
-		try {
-			SWTEventManager.recordStyledTextActionBefore(text, action);
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-	}
-
-	@SuppressAjWarnings("adviceDidNotMatch")
-	after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretOffset(int, int)) && target(text) {
-		try {
-			SWTEventManager.recordStyledTextOffset(text);
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-	}
-
-	// eclipse 3.4 support:
-	// setCaretOffset(int, int) - no such method in 3.4
-	// added after setCaretLocation()
-	@SuppressAjWarnings("adviceDidNotMatch")
-	after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretLocation()) && target(text) {
-		try {
-			if (TeslaUtils.getEclipseVersion().getMajor() <= 3
-					&& TeslaUtils.getEclipseVersion().getMinor() <= 4)
-				SWTEventManager.recordStyledTextOffset(text);
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-	}
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	after(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) && target(text) && args(action) {
+//		try {
+//			SWTEventManager.recordStyledTextActionAfter(text, action);
+//		} catch (Throwable e) {
+//			RecordingSWTActivator.log(e);
+//		}
+//	}
+//
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	before(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) && target(text) && args(action) {
+//		try {
+//			SWTEventManager.recordStyledTextActionBefore(text, action);
+//		} catch (Throwable e) {
+//			RecordingSWTActivator.log(e);
+//		}
+//	}
+//
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretOffset(int, int)) && target(text) {
+//		try {
+//			SWTEventManager.recordStyledTextOffset(text);
+//		} catch (Throwable e) {
+//			RecordingSWTActivator.log(e);
+//		}
+//	}
+//
+//	// eclipse 3.4 support:
+//	// setCaretOffset(int, int) - no such method in 3.4
+//	// added after setCaretLocation()
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretLocation()) && target(text) {
+//		try {
+//			if (TeslaUtils.getEclipseVersion().getMajor() <= 3
+//					&& TeslaUtils.getEclipseVersion().getMinor() <= 4)
+//				SWTEventManager.recordStyledTextOffset(text);
+//		} catch (Throwable e) {
+//			RecordingSWTActivator.log(e);
+//		}
+//	}
 
 	// Collect menu sources
 	@SuppressAjWarnings("adviceDidNotMatch")

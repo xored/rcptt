@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Event;
@@ -211,23 +210,23 @@ public final class SWTEventManager {
 		comboList.removeAll(toRemove);
 	}
 
-	public static void recordStyledTextActionBefore(StyledText text, int action) {
-		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
-			listener.recordStyledTextActionBefore(text, action);
-		}
-	}
-
-	public static void recordStyledTextActionAfter(StyledText text, int after) {
-		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
-			listener.recordStyledTextActionAfter(text, after);
-		}
-	}
-
-	public static void recordStyledTextOffset(StyledText text) {
-		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
-			listener.recordStyledTextOffset(text);
-		}
-	}
+	// public static void recordStyledTextActionBefore(StyledText text, int action) {
+	// for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
+	// listener.recordStyledTextActionBefore(text, action);
+	// }
+	// }
+	//
+	// public static void recordStyledTextActionAfter(StyledText text, int after) {
+	// for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
+	// listener.recordStyledTextActionAfter(text, after);
+	// }
+	// }
+	//
+	// public static void recordStyledTextOffset(StyledText text) {
+	// for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
+	// listener.recordStyledTextOffset(text);
+	// }
+	// }
 
 	public static void recordTabFolderEvent(Control tabControl, int eventId) {
 		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {

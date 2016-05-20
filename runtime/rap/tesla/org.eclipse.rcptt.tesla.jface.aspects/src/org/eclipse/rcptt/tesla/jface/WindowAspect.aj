@@ -1,7 +1,7 @@
 package org.eclipse.rcptt.tesla.jface;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
-import org.eclipse.rap.jface.window.Window;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
