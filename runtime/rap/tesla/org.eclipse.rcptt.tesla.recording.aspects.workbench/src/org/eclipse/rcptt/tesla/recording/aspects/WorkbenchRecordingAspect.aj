@@ -3,9 +3,9 @@ package org.eclipse.rcptt.tesla.recording.aspects;
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.rap.ui.IEditorReference;
-import org.eclipse.rap.ui.statushandlers.StatusAdapter;
-import org.eclipse.rap.ui.statushandlers.WorkbenchStatusDialogManager;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.statushandlers.StatusAdapter;
+import org.eclipse.ui.statushandlers.WorkbenchStatusDialogManager;
 
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;

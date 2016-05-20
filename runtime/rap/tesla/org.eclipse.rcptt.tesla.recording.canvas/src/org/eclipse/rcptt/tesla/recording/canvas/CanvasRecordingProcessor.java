@@ -13,12 +13,6 @@ package org.eclipse.rcptt.tesla.recording.canvas;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
-
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
 import org.eclipse.rcptt.tesla.core.features.IMLFeatures;
 import org.eclipse.rcptt.tesla.core.protocol.ControlUIElement;
@@ -31,6 +25,11 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Widget;
 
 public class CanvasRecordingProcessor implements IRecordingProcessor,
 		IBasicSWTEventListener {
@@ -83,19 +82,19 @@ public class CanvasRecordingProcessor implements IRecordingProcessor,
 			return;
 		}
 		if (widget instanceof Canvas && swtRecorder.isCanvas(widget, type)) {
-			if (type != SWT.MouseEnter && type != SWT.MouseExit
-					&& type != SWT.MouseHover) {
-				if (type != SWT.MouseMove) {
-					workingWidgets.add(widget);
-				}
-				if (workingWidgets.contains(widget)) {
-					FindResult canvas = swtRecorder.getLocator().findElement(
-							widget, false, false, false);
-					if (canvas != null) {
-						processCavas(widget, type, event, canvas);
-					}
+			// if (type != SWT.MouseEnter && type != SWT.MouseExit
+			// && type != SWT.MouseHover) {
+			// if (type != SWT.MouseMove) {
+			// workingWidgets.add(widget);
+			// }
+			if (workingWidgets.contains(widget)) {
+				FindResult canvas = swtRecorder.getLocator().findElement(
+						widget, false, false, false);
+				if (canvas != null) {
+					processCavas(widget, type, event, canvas);
 				}
 			}
+			// }
 		}
 	}
 
@@ -108,23 +107,23 @@ public class CanvasRecordingProcessor implements IRecordingProcessor,
 			Canvas cv = (Canvas) widget;
 			final Rectangle bounds = cv.getBounds();
 			switch (type) {
-			case SWT.MouseEnter:
-				// canvasCtrl.executeMouseCommand(event.x, event.y,
-				// event.button,
-				// MouseCommandKind.ENTER, bounds.width, bounds.height,
-				// event.stateMask);
-				break;
-			case SWT.MouseExit:
-				// canvasCtrl.executeMouseCommand(event.x, event.y,
-				// event.button,
-				// MouseCommandKind.EXIT, bounds.width, bounds.height,
-				// event.stateMask);
-				break;
-			case SWT.MouseHover:
-				canvasCtrl.executeMouseCommand(event.x, event.y, event.button,
-						MouseCommandKind.HOVER, bounds.width, bounds.height,
-						event.stateMask);
-				break;
+			// case SWT.MouseEnter:
+			// // canvasCtrl.executeMouseCommand(event.x, event.y,
+			// // event.button,
+			// // MouseCommandKind.ENTER, bounds.width, bounds.height,
+			// // event.stateMask);
+			// break;
+			// case SWT.MouseExit:
+			// // canvasCtrl.executeMouseCommand(event.x, event.y,
+			// // event.button,
+			// // MouseCommandKind.EXIT, bounds.width, bounds.height,
+			// // event.stateMask);
+			// break;
+			// case SWT.MouseHover:
+			// canvasCtrl.executeMouseCommand(event.x, event.y, event.button,
+			// MouseCommandKind.HOVER, bounds.width, bounds.height,
+			// event.stateMask);
+			// break;
 			case SWT.MouseDown:
 				canvasCtrl.executeMouseCommand(event.x, event.y, event.button,
 						MouseCommandKind.DOWN, bounds.width, bounds.height,
@@ -135,11 +134,11 @@ public class CanvasRecordingProcessor implements IRecordingProcessor,
 						MouseCommandKind.UP, bounds.width, bounds.height,
 						event.stateMask);
 				break;
-			case SWT.MouseMove:
-				canvasCtrl.executeMouseCommand(event.x, event.y, event.button,
-						MouseCommandKind.MOVE, bounds.width, bounds.height,
-						event.stateMask);
-				break;
+			// case SWT.MouseMove:
+			// canvasCtrl.executeMouseCommand(event.x, event.y, event.button,
+			// MouseCommandKind.MOVE, bounds.width, bounds.height,
+			// event.stateMask);
+			// break;
 			case SWT.MouseDoubleClick:
 				canvasCtrl.executeMouseCommand(event.x, event.y, event.button,
 						MouseCommandKind.DOUBLE_CLICK, bounds.width,
