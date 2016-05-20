@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.aspects;
 
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Event;
@@ -21,11 +20,11 @@ public interface IExtendedSWTEventListener extends IBasicSWTEventListener {
 
 	public void recordSWTDialog(Dialog dialog, Object result);
 
-	public void recordStyledTextOffset(StyledText text);
-
-	public void recordStyledTextActionBefore(StyledText text, int action);
-
-	public void recordStyledTextActionAfter(StyledText text, int action);
+	// public void recordStyledTextOffset(StyledText text);
+	//
+	// public void recordStyledTextActionBefore(StyledText text, int action);
+	//
+	// public void recordStyledTextActionAfter(StyledText text, int action);
 
 	public void recordTabFolderEvent(Control tabControl, int eventId);
 

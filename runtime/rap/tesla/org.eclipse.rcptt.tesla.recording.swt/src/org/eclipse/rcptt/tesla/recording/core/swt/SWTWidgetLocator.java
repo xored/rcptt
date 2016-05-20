@@ -56,7 +56,6 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.ControlEditor;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.graphics.Point;
@@ -889,12 +888,12 @@ public final class SWTWidgetLocator {
 		classes.add(CLabel.class);
 		classes.add(Link.class);
 		classes.add(getSearchableClass(control));
-		if (control instanceof StyledText) {
-			classes.add(Text.class);
-		}
-		if (control instanceof Text) {
-			classes.add(StyledText.class);
-		}
+		// if (control instanceof StyledText) {
+		// classes.add(Text.class);
+		// }
+		// if (control instanceof Text) {
+		// classes.add(StyledText.class);
+		// }
 		if (control instanceof Spinner) {
 			classes.add(Spinner.class);
 		}
@@ -948,10 +947,10 @@ public final class SWTWidgetLocator {
 		if (p != null) {
 			List<Class> classes = new ArrayList<Class>();
 			classes.add(getSearchableClass(w));
-			if (w instanceof StyledText)
-				classes.add(Text.class);
-			if (w instanceof Text)
-				classes.add(StyledText.class);
+			// if (w instanceof StyledText)
+			// classes.add(Text.class);
+			// if (w instanceof Text)
+			// classes.add(StyledText.class);
 			if (w instanceof Spinner)
 				classes.add(Spinner.class);
 			if (w instanceof Button)

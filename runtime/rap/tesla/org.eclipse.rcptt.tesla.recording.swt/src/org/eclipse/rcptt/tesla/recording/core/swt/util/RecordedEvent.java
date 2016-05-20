@@ -13,13 +13,11 @@ package org.eclipse.rcptt.tesla.recording.core.swt.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import org.eclipse.rcptt.tesla.core.ui.Browser;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
-
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 
 public class RecordedEvent {
 	public final int type;
@@ -60,9 +58,11 @@ public class RecordedEvent {
 			t = opName + "(" + type + ")";
 		}
 		String text = "";
-		if (!(widget instanceof StyledText || widget instanceof Browser)) {
+
+		if (!(/* widget instanceof StyledText || */ widget instanceof Browser)) {
 			text = player.wrap(widget).getText();
 		}
+
 		if (text != null && text.length() > 1024) {
 			text = text.substring(0, 1024);
 		}

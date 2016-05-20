@@ -24,7 +24,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.bindings.Binding;
@@ -53,8 +52,6 @@ import org.eclipse.rcptt.tesla.core.protocol.SelectCommand;
 import org.eclipse.rcptt.tesla.core.protocol.SelectData;
 import org.eclipse.rcptt.tesla.core.protocol.SetSWTDialogInfo;
 import org.eclipse.rcptt.tesla.core.protocol.SetSelection;
-import org.eclipse.rcptt.tesla.core.protocol.SetTextOffset;
-import org.eclipse.rcptt.tesla.core.protocol.SetTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.TextUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.Type;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
@@ -91,7 +88,6 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.ViewForm;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.graphics.FontData;
@@ -109,10 +105,8 @@ import org.eclipse.swt.widgets.CoolItem;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Decorations;
 import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -144,7 +138,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.keys.IBindingService;
-import org.eclipse.ui.testing.TestableObject;
 import org.osgi.framework.Bundle;
 
 /**
@@ -648,7 +641,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		} else if (type == SWT.Traverse) {
 			keysSeen = false;
 
-			if (event.detail != SWT.TRAVERSE_PAGE_NEXT && event.detail != SWT.TRAVERSE_PAGE_PREVIOUS) {
+			if (/* event.detail != SWT.TRAVERSE_PAGE_NEXT && event.detail != SWT.TRAVERSE_PAGE_PREVIOUS */true) {
 				// Don't record traverse events for Browser - key pressing
 				// recorded on KeyUp event
 				if (!(widget instanceof Browser)) {
@@ -662,8 +655,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 				lastTraverseDetail = event.detail;
 			}
 		} else if (type == SWT.MouseDoubleClick) {
-			Listener[] listeners = widget.getListeners(SWT.MouseDoubleClick);
-			if (listeners.length != 0 && !(widget instanceof ViewForm) && !(widget instanceof Sash)) {
+			// Listener[] listeners = widget.getListeners(SWT.MouseDoubleClick);
+			if (/* listeners.length != 0 && */ !(widget instanceof ViewForm) && !(widget instanceof Sash)) {
 				FindResult result = getLocator().findElement(widget, true, false, false);
 
 				// System.out.println("RESULT is:" + result);
@@ -785,12 +778,15 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			}
 		}
 
-		if (widget instanceof Canvas && !(widget instanceof Shell) && !(widget instanceof StyledText)
+		if (widget instanceof Canvas && !(widget instanceof Shell) /* && !(widget instanceof StyledText) */
 				&& !(widget instanceof Browser) && !(widget instanceof CLabel)) {
 			// Fiter events came to EditDomain
-			if (type == SWT.MouseDown || type == SWT.MouseUp || type == SWT.MouseMove || type == SWT.MouseDoubleClick
-					|| type == SWT.MouseEnter || type == SWT.MouseExit || type == SWT.MouseHover
-					|| type == SWT.MouseWheel) {
+			if (type == SWT.MouseDown || type == SWT.MouseUp /* || type == SWT.MouseMove */
+					|| type == SWT.MouseDoubleClick
+			/*
+			 * || type == SWT.MouseEnter || type == SWT.MouseExit || type == SWT.MouseHover
+			 * || type == SWT.MouseWheel
+			 */) {
 				String clName = widget.getClass().getName();
 				if (!clName.equals("org.eclipse.draw2d.FigureCanvas")) {
 					return true;
@@ -835,17 +831,11 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			return false;
 		}
 
-		// if (Platform.getOS().equals(Platform.OS_MACOSX)) {
 		if (!ctx.contains("org.eclipse.swt.widgets.Display", "windowProc")
 				&& !ctx.contains("org.eclipse.swt.widgets.Display", "runDeferredEvents")
 				&& !ctx.contains("org.eclipse.swt.widgets.Control", "traverse")) {
 			return true;
 		}
-		// } else {
-		// if (!ctx.contains("org.eclipse.swt.widgets.Display", "windowProc")) {
-		// return true;
-		// }
-		// }
 
 		return false;
 	}
@@ -906,7 +896,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		if (swtuiElement != null && swtuiElement.getKind().is(ElementKind.Unknown))
 			return true;
 
-		if ((widget instanceof Canvas && !(widget instanceof StyledText))
+		if (widget instanceof Canvas
 				&& Arrays.asList(SWT.Selection, SWT.DefaultSelection).contains(type)) {
 			return true;
 		}
@@ -1001,8 +991,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		}
 
 		boolean isCheckable = Platform.getOS().equals(Platform.OS_WIN32) && isTreeOrTableOrList;
-		boolean isMouseOrKeyOps = lastEvents.checkType(widget, SWT.MouseUp, SWT.MouseDown, SWT.Arm, SWT.KeyDown,
-				SWT.KeyUp, SWT.MouseDoubleClick, SWT.MouseMove);
+		// boolean isMouseOrKeyOps = lastEvents.checkType(widget, SWT.MouseUp, SWT.MouseDown, SWT.Arm, SWT.KeyDown,
+		// SWT.KeyUp, SWT.MouseDoubleClick, SWT.MouseMove);
 
 		boolean isFromFilteredItemsSelectionDialog = ctx.contains("org.eclipse.ui.dialogs.FilteredItemsSelectionDialog",
 				"refresh");
@@ -1017,8 +1007,9 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 
 		boolean isButtonFocusEvent = widget instanceof Button
 				&& (lastEvents.checkType(widget, SWT.FocusIn) || ((Button) widget).isFocusControl());
-		boolean isListTreeTableActivate = (widget instanceof Table || widget instanceof Tree
-				|| widget instanceof org.eclipse.swt.widgets.List) && lastEvents.checkType(widget, SWT.Activate);
+
+		// boolean isListTreeTableActivate = (widget instanceof Table || widget instanceof Tree
+		// || widget instanceof org.eclipse.swt.widgets.List) && lastEvents.checkType(widget, SWT.Activate);
 		if (widget instanceof Sash) {
 			return;
 		}
@@ -1031,7 +1022,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 					e.setText(Integer.toString(((Spinner) widget).getSelection()));
 				}
 			}
-			if (widget instanceof Text || widget instanceof StyledText || widget instanceof Browser) {
+			if (widget instanceof Text || widget instanceof Browser) {
 				processTextWidgetSelectionEvent(widget);
 				return;
 			}
@@ -1043,8 +1034,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 					ControlUIElement e = new ControlUIElement(result.element, getRecorder());
 					e.clickAndWait(type == SWT.DefaultSelection);
 				}
-			} else if ((isMouseOrKeyOps || isWidgetSendSelectionNonWin32 || isRunDefferedEventsOSX || isButtonFocusEvent
-					|| isListTreeTableActivate || isCheckable) && !(isRadioWidget && !((Button) widget).getSelection())
+			} else if ((isWidgetSendSelectionNonWin32 || isRunDefferedEventsOSX || isButtonFocusEvent
+					|| isCheckable) && !(isRadioWidget && !((Button) widget).getSelection())
 					&& !isTabFolder || (type == SWT.DefaultSelection && isTreeOrTableOrList)) {
 				if (widget instanceof MenuItem) {
 					MenuItem mi = (MenuItem) widget;
@@ -1155,32 +1146,34 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			FindResult result = getLocator().findElement(widget, true, false, false);
 			if (result != null) {
 				TextUIElement textCtrl = new TextUIElement(result.element, getRecorder());
-				if (widget instanceof StyledText) {
-					StyledText styledText = ((StyledText) widget);
-					Point selection = styledText.getSelectionRange();
-					if (selection.y != 0) {
-						Command last = getRecorder().getContainer().getLast();
-						if (last instanceof SetTextOffset) {
-							SetTextOffset offset = (SetTextOffset) last;
-							if (EcoreUtil.equals(offset.getElement(), result.element)) {
-								getRecorder().removeLast();
-							}
-						}
-
-						int startLine = styledText.getLineAtOffset(selection.x);
-						int startOffset = selection.x - styledText.getOffsetAtLine(startLine);
-
-						int endLine = styledText.getLineAtOffset(selection.x + selection.y);
-						int endOffset = (selection.x + selection.y) - styledText.getOffsetAtLine(endLine);
-
-						int caretOffset = styledText.getCaretOffset();
-						if (caretOffset == selection.x) {
-							textCtrl.setSelection(endLine, endOffset, startLine, startOffset);
-						} else {
-							textCtrl.setSelection(startLine, startOffset, endLine, endOffset);
-						}
-					}
-				}
+				/*
+				 * if (widget instanceof StyledText) {
+				 * StyledText styledText = ((StyledText) widget);
+				 * Point selection = styledText.getSelectionRange();
+				 * if (selection.y != 0) {
+				 * Command last = getRecorder().getContainer().getLast();
+				 * if (last instanceof SetTextOffset) {
+				 * SetTextOffset offset = (SetTextOffset) last;
+				 * if (EcoreUtil.equals(offset.getElement(), result.element)) {
+				 * getRecorder().removeLast();
+				 * }
+				 * }
+				 * 
+				 * int startLine = styledText.getLineAtOffset(selection.x);
+				 * int startOffset = selection.x - styledText.getOffsetAtLine(startLine);
+				 * 
+				 * int endLine = styledText.getLineAtOffset(selection.x + selection.y);
+				 * int endOffset = (selection.x + selection.y) - styledText.getOffsetAtLine(endLine);
+				 * 
+				 * int caretOffset = styledText.getCaretOffset();
+				 * if (caretOffset == selection.x) {
+				 * textCtrl.setSelection(endLine, endOffset, startLine, startOffset);
+				 * } else {
+				 * textCtrl.setSelection(startLine, startOffset, endLine, endOffset);
+				 * }
+				 * }
+				 * }
+				 */
 			}
 		}
 	}
@@ -1553,7 +1546,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 						|| event.keyCode == SWT.COMMAND)) {
 					if ((event.keyCode & SWT.KEYCODE_BIT) == 0 && event.stateMask == 0
 							&& !Character.isISOControl(event.character)) {
-						if (widget instanceof StyledText || widget instanceof Browser
+						if (widget instanceof Browser
 								|| widget.getListeners(SWT.KeyDown).length > 0
 								|| widget.getListeners(SWT.KeyUp).length > 0) {
 							ctrl.type(new String(new char[] { event.character }), widget instanceof Browser);
@@ -1565,7 +1558,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 						// if (typeActionId != null) {
 						// ctrl.typeAction(typeActionId);
 						// } else {
-						if (widget instanceof StyledText || widget instanceof Browser) {
+						if (widget instanceof Browser) {
 							if (event.stateMask == SWT.SHIFT && !Character.isISOControl(event.character)) {
 								ctrl.type(new String(new char[] { event.character }), widget instanceof Browser);
 							} else {
@@ -1608,7 +1601,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		// * SWT.TRAVERSE_PAGE_PREVIOUS
 
 		// detecting assert/record mode shortcuts
-		if (event.detail == SWT.TRAVERSE_MNEMONIC) {
+		if (false) {
 			TeslaRecorder recorder = getRecorder();
 			if (recorder == null) {
 				return;
@@ -1645,7 +1638,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		}
 
 		boolean radioWidgetIgnored = widget instanceof Button && (((Button) widget).getStyle() & SWT.RADIO) != 0
-				&& (event.detail == SWT.TRAVERSE_ARROW_NEXT || event.detail == SWT.TRAVERSE_ARROW_PREVIOUS);
+		/* && (event.detail == SWT.TRAVERSE_ARROW_NEXT || event.detail == SWT.TRAVERSE_ARROW_PREVIOUS) */;
 
 		boolean isEscapeChain = false;
 
@@ -1937,21 +1930,21 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	static {
 		mouseToEventKind.put(SWT.MouseDoubleClick, MouseEventKind.DOUBLE_CLICK);
 		mouseToEventKind.put(SWT.MouseDown, MouseEventKind.DOWN);
-		mouseToEventKind.put(SWT.MouseEnter, MouseEventKind.ENTER);
-		mouseToEventKind.put(SWT.MouseExit, MouseEventKind.EXIT);
-		mouseToEventKind.put(SWT.MouseMove, MouseEventKind.MOVE);
+		// mouseToEventKind.put(SWT.MouseEnter, MouseEventKind.ENTER);
+		// mouseToEventKind.put(SWT.MouseExit, MouseEventKind.EXIT);
+		// mouseToEventKind.put(SWT.MouseMove, MouseEventKind.MOVE);
 		mouseToEventKind.put(SWT.MouseUp, MouseEventKind.UP);
-		mouseToEventKind.put(SWT.MouseHover, MouseEventKind.HOVER);
+		// mouseToEventKind.put(SWT.MouseHover, MouseEventKind.HOVER);
 	}
 	private static final Map<Integer, Integer> defaultCounts = new HashMap<Integer, Integer>();
 	static {
 		defaultCounts.put(SWT.MouseDoubleClick, 2);
 		defaultCounts.put(SWT.MouseDown, 1);
-		defaultCounts.put(SWT.MouseEnter, 0);
-		defaultCounts.put(SWT.MouseExit, 0);
-		defaultCounts.put(SWT.MouseMove, 0);
+		// defaultCounts.put(SWT.MouseEnter, 0);
+		// defaultCounts.put(SWT.MouseExit, 0);
+		// defaultCounts.put(SWT.MouseMove, 0);
 		defaultCounts.put(SWT.MouseUp, 1);
-		defaultCounts.put(SWT.MouseHover, 0);
+		// defaultCounts.put(SWT.MouseHover, 0);
 	}
 
 	@SuppressWarnings("unused")
@@ -2211,11 +2204,13 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			return;
 		}
 		SetSWTDialogInfo info = ProtocolFactory.eINSTANCE.createSetSWTDialogInfo();
-		if (dialog instanceof FileDialog) {
-			info.setKind(SWTDialogKind.FILE_SELECTOR);
-		} else if (dialog instanceof DirectoryDialog) {
-			info.setKind(SWTDialogKind.FOLDER_SELECTOR);
-		} else if (dialog instanceof MessageBox) {
+		/*
+		 * if (dialog instanceof FileDialog) {
+		 * info.setKind(SWTDialogKind.FILE_SELECTOR);
+		 * } else if (dialog instanceof DirectoryDialog) {
+		 * info.setKind(SWTDialogKind.FOLDER_SELECTOR);
+		 * } else
+		 */ if (dialog instanceof MessageBox) {
 			info.setKind(SWTDialogKind.MESSAGE_BOX);
 		} else if (dialog instanceof FontDialog) {
 			info.setKind(SWTDialogKind.FONT_DIALOG);
@@ -2226,16 +2221,20 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		}
 		if (result instanceof String[]) {
 			for (String currentStr : (String[]) result) {
-				if (dialog instanceof FileDialog) {
-					processFileDialogValue(info, currentStr);
-				} else {
+				/*
+				 * if (dialog instanceof FileDialog) {
+				 * processFileDialogValue(info, currentStr);
+				 * } else
+				 */ {
 					info.getPath().add(currentStr);
 				}
 			}
 		} else if (result instanceof String) {
-			if (dialog instanceof DirectoryDialog) {
-				processFileDialogValue(info, (String) result);
-			} else {
+			/*
+			 * if (dialog instanceof DirectoryDialog) {
+			 * processFileDialogValue(info, (String) result);
+			 * } else
+			 */ {
 				info.getPath().add((String) result);
 			}
 		} else if (result instanceof Integer) {
@@ -2286,75 +2285,76 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		// SWTEventManager.setFreeze(value);
 	}
 
-	public void recordStyledTextOffset(StyledText text) {
-		if (inStyledTextAction) {
-			return;
-		}
-		if (getRecorder() == null) {
-			return;
-		}
-		if (!getRecorder().hasListeners()) {
-			return;
-		}
-		if (!enabled) {
-			enable();
-		}
-		// Check for extension to ignore recording against one of controls
-		List<IRecordingProcessorExtension> list = getRecorder().getProcessors(IRecordingProcessorExtension.class);
-		for (IRecordingProcessorExtension ext : list) {
-			if (ext.isIgnored(text, SWT.Selection, null)) {
-				return;
-			}
-		}
-		if (isIgnored(text)) {
-			return;
-		}
-		Context context = ContextManagement.currentContext();
-		if (!context.contains("org.eclipse.swt.custom.StyledText", "doContent")
-				&& !context.contains("org.eclipse.swt.custom.StyledText", "setContent")
-				&& !context.contains("org.eclipse.swt.custom.StyledText", "reset")
-				&& !context.contains("org.eclipse.swt.custom.StyledText", "handleKey")
-				&& !context.contains("org.eclipse.swt.custom.StyledText", "setSelectionRange")
-				&& !context.contains("org.eclipse.swt.custom.StyledText", "setSelection")
-				&& !context.contains("org.eclipse.swt.custom.StyledText", "setStyleRanges")) {
-			Command last = getRecorder().getContainer().getLast();
-			if (last instanceof Type) {
-				Type type = (Type) last;
-				if (type.getCode() != null && type.getCode().intValue() == SWT.BS && type.getState() != null
-						&& type.getState().intValue() == SWT.CTRL) {
-					// This is Ctrl+Backspace. Ignore position change.
-					return;
-				}
-				if (type.getCode() != null && type.getCode().intValue() == SWT.TAB && type.getState() != null
-						&& type.getState().intValue() == 0) {
-					// This is Tab. Ignore position change.
-					return;
-				}
-			}
-			FindResult element = getLocator().findElement(text, false, false, false);
-			if (element != null) {
-				TextUIElement textCtrl = new TextUIElement(element.element, getRecorder());
-				int offset = text.getCaretOffset();
-				int lineAtOffset = text.getLineAtOffset(offset);
-				int offsetAtLine = text.getOffsetAtLine(lineAtOffset);
-				if (!(last instanceof SetTextSelection
-						&& EcoreUtil.equals(((SetTextSelection) last).getElement(), element.element))) {
-					// Ignore after setSelection
-					textCtrl.setTextOffset(lineAtOffset, offset - offsetAtLine);
-
-				}
-			}
-		}
-	}
-
-	public void recordStyledTextActionAfter(StyledText text, int action) {
-		inStyledTextAction = false;
-	}
-
-	public void recordStyledTextActionBefore(StyledText text, int action) {
-		inStyledTextAction = true;
-	}
-
+	/*
+	 * public void recordStyledTextOffset(StyledText text) {
+	 * if (inStyledTextAction) {
+	 * return;
+	 * }
+	 * if (getRecorder() == null) {
+	 * return;
+	 * }
+	 * if (!getRecorder().hasListeners()) {
+	 * return;
+	 * }
+	 * if (!enabled) {
+	 * enable();
+	 * }
+	 * // Check for extension to ignore recording against one of controls
+	 * List<IRecordingProcessorExtension> list = getRecorder().getProcessors(IRecordingProcessorExtension.class);
+	 * for (IRecordingProcessorExtension ext : list) {
+	 * if (ext.isIgnored(text, SWT.Selection, null)) {
+	 * return;
+	 * }
+	 * }
+	 * if (isIgnored(text)) {
+	 * return;
+	 * }
+	 * Context context = ContextManagement.currentContext();
+	 * if (!context.contains("org.eclipse.swt.custom.StyledText", "doContent")
+	 * && !context.contains("org.eclipse.swt.custom.StyledText", "setContent")
+	 * && !context.contains("org.eclipse.swt.custom.StyledText", "reset")
+	 * && !context.contains("org.eclipse.swt.custom.StyledText", "handleKey")
+	 * && !context.contains("org.eclipse.swt.custom.StyledText", "setSelectionRange")
+	 * && !context.contains("org.eclipse.swt.custom.StyledText", "setSelection")
+	 * && !context.contains("org.eclipse.swt.custom.StyledText", "setStyleRanges")) {
+	 * Command last = getRecorder().getContainer().getLast();
+	 * if (last instanceof Type) {
+	 * Type type = (Type) last;
+	 * if (type.getCode() != null && type.getCode().intValue() == SWT.BS && type.getState() != null
+	 * && type.getState().intValue() == SWT.CTRL) {
+	 * // This is Ctrl+Backspace. Ignore position change.
+	 * return;
+	 * }
+	 * if (type.getCode() != null && type.getCode().intValue() == SWT.TAB && type.getState() != null
+	 * && type.getState().intValue() == 0) {
+	 * // This is Tab. Ignore position change.
+	 * return;
+	 * }
+	 * }
+	 * FindResult element = getLocator().findElement(text, false, false, false);
+	 * if (element != null) {
+	 * TextUIElement textCtrl = new TextUIElement(element.element, getRecorder());
+	 * int offset = text.getCaretOffset();
+	 * int lineAtOffset = text.getLineAtOffset(offset);
+	 * int offsetAtLine = text.getOffsetAtLine(lineAtOffset);
+	 * if (!(last instanceof SetTextSelection
+	 * && EcoreUtil.equals(((SetTextSelection) last).getElement(), element.element))) {
+	 * // Ignore after setSelection
+	 * textCtrl.setTextOffset(lineAtOffset, offset - offsetAtLine);
+	 * 
+	 * }
+	 * }
+	 * }
+	 * }
+	 * 
+	 * public void recordStyledTextActionAfter(StyledText text, int action) {
+	 * inStyledTextAction = false;
+	 * }
+	 * 
+	 * public void recordStyledTextActionBefore(StyledText text, int action) {
+	 * inStyledTextAction = true;
+	 * }
+	 */
 	private TeslaRecorder recorder = null;
 
 	public void initialize(final TeslaRecorder teslaRecorder) {

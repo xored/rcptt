@@ -81,11 +81,11 @@ public class WidgetDetailsProvider {
 		eventTypes.put(SWT.KeyUp, "KeyUp");
 		eventTypes.put(SWT.MouseDown, "MouseDown");
 		eventTypes.put(SWT.MouseUp, "MouseUp");
-		eventTypes.put(SWT.MouseMove, "MouseMove");
-		eventTypes.put(SWT.MouseEnter, "MouseEnter");
-		eventTypes.put(SWT.MouseExit, "MouseExit");
+		// eventTypes.put(SWT.MouseMove, "MouseMove");
+		// eventTypes.put(SWT.MouseEnter, "MouseEnter");
+		// eventTypes.put(SWT.MouseExit, "MouseExit");
 		eventTypes.put(SWT.MouseDoubleClick, "MouseDoubleClick");
-		eventTypes.put(SWT.Paint, "Paint");
+		// eventTypes.put(SWT.Paint, "Paint");
 		eventTypes.put(SWT.Move, "Move");
 		eventTypes.put(SWT.Resize, "Resize");
 		eventTypes.put(SWT.Dispose, "Dispose");
@@ -95,9 +95,9 @@ public class WidgetDetailsProvider {
 		eventTypes.put(SWT.FocusOut, "FocusOut");
 		eventTypes.put(SWT.Expand, "Expand");
 		eventTypes.put(SWT.Collapse, "Collapse");
-		eventTypes.put(SWT.Iconify, "Iconify");
-		eventTypes.put(SWT.Deiconify, "Deiconify");
-		eventTypes.put(SWT.Close, "Close");
+		// eventTypes.put(SWT.Iconify, "Iconify");
+		// eventTypes.put(SWT.Deiconify, "Deiconify");
+		// eventTypes.put(SWT.Close, "Close");
 		eventTypes.put(SWT.Show, "Show");
 		eventTypes.put(SWT.Hide, "Hide");
 		eventTypes.put(SWT.Modify, "Modify");
@@ -108,155 +108,155 @@ public class WidgetDetailsProvider {
 		eventTypes.put(SWT.DragDetect, "DragDetect");
 		eventTypes.put(SWT.Arm, "Arm");
 		eventTypes.put(SWT.Traverse, "Traverse");
-		eventTypes.put(SWT.MouseHover, "MouseHover");
-		eventTypes.put(SWT.HardKeyDown, "HardKeyDown");
-		eventTypes.put(SWT.HardKeyUp, "HardKeyUp");
+		// eventTypes.put(SWT.MouseHover, "MouseHover");
+		// eventTypes.put(SWT.HardKeyDown, "HardKeyDown");
+		// eventTypes.put(SWT.HardKeyUp, "HardKeyUp");
 		eventTypes.put(SWT.MenuDetect, "MenuDetect");
 		eventTypes.put(SWT.SetData, "SetData");
-		eventTypes.put(SWT.MouseVerticalWheel, "MouseVerticalWheel");
-		eventTypes.put(SWT.MouseHorizontalWheel, "MouseHorizontalWheel");
-		eventTypes.put(SWT.MouseWheel, "MouseWheel");
+		// eventTypes.put(SWT.MouseVerticalWheel, "MouseVerticalWheel");
+		// eventTypes.put(SWT.MouseHorizontalWheel, "MouseHorizontalWheel");
+		// eventTypes.put(SWT.MouseWheel, "MouseWheel");
 		eventTypes.put(SWT.Settings, "Settings");
-		eventTypes.put(SWT.EraseItem, "EraseItem");
-		eventTypes.put(SWT.MeasureItem, "MeasureItem");
-		eventTypes.put(SWT.PaintItem, "PaintItem");
-		eventTypes.put(SWT.ImeComposition, "ImeComposition");
-		eventTypes.put(SWT.OrientationChange, "OrientationChange");
+		// eventTypes.put(SWT.EraseItem, "EraseItem");
+		// eventTypes.put(SWT.MeasureItem, "MeasureItem");
+		// eventTypes.put(SWT.PaintItem, "PaintItem");
+		// eventTypes.put(SWT.ImeComposition, "ImeComposition");
+		// eventTypes.put(SWT.OrientationChange, "OrientationChange");
 		eventTypes.put(SWT.Skin, "Skin");
-		eventTypes.put(SWT.OpenDocument, "OpenDocument");
-		eventTypes.put(SWTTouch, "Touch");
-		eventTypes.put(SWTGesture, "Gesture");
+		// eventTypes.put(SWT.OpenDocument, "OpenDocument");
+		// eventTypes.put(SWTTouch, "Touch");
+		// eventTypes.put(SWTGesture, "Gesture");
 
 		widgetStyles.put(
 				Decorations.class,
 				styles(//
-				style(SWT.NO_TRIM, "NoTrim"),//
-						style(SWT.CLOSE, "Close"),//
-						style(SWT.TITLE, "Title"),//
-						style(SWT.MIN, "Min"),//
-						style(SWT.NO_TRIM, "NoTrim"),//
-						style(SWT.ON_TOP, "OnTop"),//
-						style(SWT.TOOL, "Tool"),//
-						style(SWT.SHELL_TRIM, "ShellTrim"),//
-						style(SWT.MAX, "Max"),//
-						style(SWT.RESIZE, "Resize"),//
-						style(SWT.MENU, "Menu"), //
-						style(SWT.CLOSE, "Close"),//
-						style(SWT.TRANSPARENT, "Transparent"),//
-						style(SWT.SYSTEM_MODAL, "SystemModal"),//
+						style(SWT.NO_TRIM, "NoTrim"), //
+						style(SWT.CLOSE, "Close"), //
+						style(SWT.TITLE, "Title"), //
+						style(SWT.MIN, "Min"), //
+						style(SWT.NO_TRIM, "NoTrim"), //
+						style(SWT.ON_TOP, "OnTop"), //
+						style(SWT.TOOL, "Tool"), //
+						style(SWT.SHELL_TRIM, "ShellTrim"), //
+						style(SWT.MAX, "Max"), //
+						style(SWT.RESIZE, "Resize"), //
+						// style(SWT.MENU, "Menu"), //
+						style(SWT.CLOSE, "Close"), //
+						// style(SWT.TRANSPARENT, "Transparent"), //
+						style(SWT.SYSTEM_MODAL, "SystemModal"), //
 						style(SWT.APPLICATION_MODAL, "ApplicationModal"),
 						style(SWT.PRIMARY_MODAL, "PrimaryModal")));
 		widgetStyles.put(
 				Shell.class,
 				styles(//
-				style(SWT.TRANSPARENT, "Transparent"),//
-						style(SWT.SYSTEM_MODAL, "SystemModal"),//
+						// style(SWT.TRANSPARENT, "Transparent"), //
+						style(SWT.SYSTEM_MODAL, "SystemModal"), //
 						style(SWT.APPLICATION_MODAL, "ApplicationModal"),
 						style(SWT.PRIMARY_MODAL, "PrimaryModal")));
 		widgetStyles.put(Button.class, styles(//
-				style(SWT.PUSH, "Push"),//
-				style(SWT.ARROW, "Arrow"),//
-				style(SWT.CHECK, "Check"),//
-				style(SWT.RADIO, "Radio"),//
-				style(SWT.TOGGLE, "Toggle"),//
-				style(SWT.CENTER, "Center"),//
-				style(SWT.LEFT, "Left"),//
-				style(SWT.RIGHT, "Right"),//
-				style(SWT.UP, "Up"),//
+				style(SWT.PUSH, "Push"), //
+				style(SWT.ARROW, "Arrow"), //
+				style(SWT.CHECK, "Check"), //
+				style(SWT.RADIO, "Radio"), //
+				style(SWT.TOGGLE, "Toggle"), //
+				style(SWT.CENTER, "Center"), //
+				style(SWT.LEFT, "Left"), //
+				style(SWT.RIGHT, "Right"), //
+				style(SWT.UP, "Up"), //
 				style(SWT.DOWN, "Down")//
-				));
+		));
 		widgetStyles.put(Label.class, styles(//
-				style(SWT.SEPARATOR, "Separator"),//
-				style(SWT.HORIZONTAL, "Horizontal"),//
-				style(SWT.VERTICAL, "Vertical"),//
-				style(SWT.SHADOW_IN, "ShadowIn"),//
-				style(SWT.SHADOW_OUT, "ShadowOut"),//
-				style(SWT.SHADOW_NONE, "ShadowNone"),//
-				style(SWT.LEFT, "Left"),//
-				style(SWT.RIGHT, "Right"),//
-				style(SWT.CENTER, "Centre"),//
+				style(SWT.SEPARATOR, "Separator"), //
+				style(SWT.HORIZONTAL, "Horizontal"), //
+				style(SWT.VERTICAL, "Vertical"), //
+				style(SWT.SHADOW_IN, "ShadowIn"), //
+				style(SWT.SHADOW_OUT, "ShadowOut"), //
+				style(SWT.SHADOW_NONE, "ShadowNone"), //
+				style(SWT.LEFT, "Left"), //
+				style(SWT.RIGHT, "Right"), //
+				style(SWT.CENTER, "Centre"), //
 				style(SWT.WRAP, "Wrap")//
-				));
+		));
 		widgetStyles.put(CLabel.class, styles(//
-				style(SWT.SHADOW_IN, "ShadowIn"),//
-				style(SWT.SHADOW_OUT, "ShadowOut"),//
-				style(SWT.SHADOW_NONE, "ShadowNone"),//
-				style(SWT.LEFT, "Left"),//
-				style(SWT.RIGHT, "Right"),//
+				style(SWT.SHADOW_IN, "ShadowIn"), //
+				style(SWT.SHADOW_OUT, "ShadowOut"), //
+				style(SWT.SHADOW_NONE, "ShadowNone"), //
+				style(SWT.LEFT, "Left"), //
+				style(SWT.RIGHT, "Right"), //
 				style(SWT.CENTER, "Centre")//
-				));
+		));
 		widgetStyles.put(Scrollable.class, styles(//
-				style(SWT.H_SCROLL, "HScroll"),//
+				style(SWT.H_SCROLL, "HScroll"), //
 				style(SWT.V_SCROLL, "VScroll")//
-				));
+		));
 		widgetStyles.put(Composite.class, styles(//
-				style(SWT.NO_BACKGROUND, "NoBackground"),//
-				style(SWT.NO_FOCUS, "NoFocus"),//
-				style(SWT.NO_MERGE_PAINTS, "NoMergePaints"),//
-				style(SWT.NO_REDRAW_RESIZE, "NoRedrawResize"),//
-				style(SWT.NO_RADIO_GROUP, "NoRadioGroup"),//
-				style(SWT.EMBEDDED, "Embedded"),//
+				style(SWT.NO_BACKGROUND, "NoBackground"), //
+				style(SWT.NO_FOCUS, "NoFocus"), //
+				style(SWT.NO_MERGE_PAINTS, "NoMergePaints"), //
+				style(SWT.NO_REDRAW_RESIZE, "NoRedrawResize"), //
+				style(SWT.NO_RADIO_GROUP, "NoRadioGroup"), //
+				// style(SWT.EMBEDDED, "Embedded"), //
 				style(SWT.DOUBLE_BUFFERED, "DoubleBuffered")//
-				));
+		));
 		widgetStyles.put(Control.class, styles(//
-				style(SWT.BORDER, "Border"),//
+				style(SWT.BORDER, "Border"), //
 				// style(SWT.LEFT_TO_RIGHT, "LeftToRight"),//
 				style(SWT.RIGHT_TO_LEFT, "RightToLeft")//
-				));
+		));
 		widgetStyles.put(Table.class, styles(//
-				style(SWT.SINGLE, "Single"),//
-				style(SWT.MULTI, "Multi"),//
-				style(SWT.CHECK, "Check"),//
-				style(SWT.FULL_SELECTION, "FullSelection"),//
-				style(SWT.HIDE_SELECTION, "HideSelection"),//
-				style(SWT.VIRTUAL, "Virtual"),//
+				style(SWT.SINGLE, "Single"), //
+				style(SWT.MULTI, "Multi"), //
+				style(SWT.CHECK, "Check"), //
+				style(SWT.FULL_SELECTION, "FullSelection"), //
+				style(SWT.HIDE_SELECTION, "HideSelection"), //
+				style(SWT.VIRTUAL, "Virtual"), //
 				style(SWT.NO_SCROLL, "NoScroll")//
-				));
+		));
 		widgetStyles.put(Tree.class, styles(//
-				style(SWT.SINGLE, "Single"),//
-				style(SWT.MULTI, "Multi"),//
-				style(SWT.CHECK, "Check"),//
-				style(SWT.FULL_SELECTION, "FullSelection"),//
-				style(SWT.VIRTUAL, "Virtual"),//
+				style(SWT.SINGLE, "Single"), //
+				style(SWT.MULTI, "Multi"), //
+				style(SWT.CHECK, "Check"), //
+				style(SWT.FULL_SELECTION, "FullSelection"), //
+				style(SWT.VIRTUAL, "Virtual"), //
 				style(SWT.NO_SCROLL, "NoScroll")//
-				));
+		));
 		widgetStyles.put(Combo.class, styles(//
-				style(SWT.DROP_DOWN, "DropDown"),//
-				style(SWT.READ_ONLY, "ReadOnly"),//
+				style(SWT.DROP_DOWN, "DropDown"), //
+				style(SWT.READ_ONLY, "ReadOnly"), //
 				style(SWT.SIMPLE, "Simple")//
-				));
+		));
 		widgetStyles.put(CCombo.class, styles(//
-				style(SWT.DROP_DOWN, "DropDown"),//
-				style(SWT.READ_ONLY, "ReadOnly"),//
-				style(SWT.FLAT, "Flat"),//
+				style(SWT.DROP_DOWN, "DropDown"), //
+				style(SWT.READ_ONLY, "ReadOnly"), //
+				style(SWT.FLAT, "Flat"), //
 				style(SWT.SIMPLE, "Simple")//
-				));
+		));
 		widgetStyles.put(TabFolder.class, styles(//
-				style(SWT.TOP, "Top"),//
+				style(SWT.TOP, "Top"), //
 				style(SWT.BOTTOM, "Bottom")//
-				));
+		));
 		widgetStyles.put(TabFolder.class, styles(//
-				style(SWT.TOP, "Top"),//
-				style(SWT.CLOSE, "Close"),//
-				style(SWT.FLAT, "Flat"),//
-				style(SWT.SINGLE, "Single"),//
-				style(SWT.MULTI, "Multi"),//
+				style(SWT.TOP, "Top"), //
+				style(SWT.CLOSE, "Close"), //
+				style(SWT.FLAT, "Flat"), //
+				style(SWT.SINGLE, "Single"), //
+				style(SWT.MULTI, "Multi"), //
 				style(SWT.BOTTOM, "Bottom")//
-				));
+		));
 		widgetStyles.put(Group.class, styles(//
-				style(SWT.SHADOW_ETCHED_IN, "ShadowEtchIn"),//
-				style(SWT.SHADOW_ETCHED_OUT, "ShadowEtchOut"),//
-				style(SWT.SHADOW_IN, "ShadowIn"),//
-				style(SWT.SHADOW_OUT, "ShadowOut"),//
+				style(SWT.SHADOW_ETCHED_IN, "ShadowEtchIn"), //
+				style(SWT.SHADOW_ETCHED_OUT, "ShadowEtchOut"), //
+				style(SWT.SHADOW_IN, "ShadowIn"), //
+				style(SWT.SHADOW_OUT, "ShadowOut"), //
 				style(SWT.SHADOW_NONE, "ShadowNone")//
-				));
+		));
 		widgetStyles.put(MenuItem.class, styles(//
-				style(SWT.CHECK, "Check"),//
-				style(SWT.CASCADE, "Cascade"),//
-				style(SWT.PUSH, "Push"),//
-				style(SWT.RADIO, "Radio"),//
+				style(SWT.CHECK, "Check"), //
+				style(SWT.CASCADE, "Cascade"), //
+				style(SWT.PUSH, "Push"), //
+				style(SWT.RADIO, "Radio"), //
 				style(SWT.SEPARATOR, "Separator")//
-				));
+		));
 	}
 
 	private static List<Style> styles(Style... style) {
@@ -293,7 +293,8 @@ public class WidgetDetailsProvider {
 
 		result.append("WidgetID: ")
 				.append(SWTRecordingHelper.getHelper().getLocator()
-						.getWidgetID(widget)).append("\n");
+						.getWidgetID(widget))
+				.append("\n");
 
 		int style = widget.getStyle();
 		result.append("Style flags: ").append(style)
@@ -393,7 +394,8 @@ public class WidgetDetailsProvider {
 								.append(contentProvider.getClass().getName())
 								.append("\n\t\t\t")
 								.append(DetailUtils.extractSupers(contentProvider
-										.getClass())).append("\n");
+										.getClass()))
+								.append("\n");
 					}
 				}
 
