@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.tesla.core;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.swt;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.emf.ecore,
- org.eclipse.swt,
+ org.eclipse.rap.rwt,
  org.eclipse.rcptt.tesla.swt.aspects;bundle-version="[2.1.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

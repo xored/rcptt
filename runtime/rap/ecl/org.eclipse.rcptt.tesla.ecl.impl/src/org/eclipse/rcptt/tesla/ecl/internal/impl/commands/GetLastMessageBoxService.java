@@ -16,7 +16,7 @@ public class GetLastMessageBoxService implements ICommandService {
 		if (!(command instanceof GetLastMessageBox)) {
 			return Status.CANCEL_STATUS;
 		}
-		final MessageBoxInfo info = SWTDialogManager.getMessageBoxInfo();
+		final MessageBoxInfo info = null;// SWTDialogManager.getMessageBoxInfo();
 		if (info == null) {
 			return TeslaImplPlugin.err("Message box info is absent.");
 		}

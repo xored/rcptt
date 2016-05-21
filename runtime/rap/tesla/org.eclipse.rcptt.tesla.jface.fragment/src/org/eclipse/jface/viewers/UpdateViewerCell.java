@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jface.viewers;
 
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
@@ -64,12 +63,12 @@ public class UpdateViewerCell extends ViewerCell {
 	public void setImage(Image image) {
 	}
 
-	public void setStyleRanges(StyleRange[] styleRanges) {
-	}
-
-	public StyleRange[] getStyleRanges() {
-		return null;
-	}
+//	public void setStyleRanges(StyleRange[] styleRanges) {
+//	}
+//
+//	public StyleRange[] getStyleRanges() {
+//		return null;
+//	}
 
 	void update(ViewerRow rowItem, int column, Object element) {
 	}

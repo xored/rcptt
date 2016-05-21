@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.jface.util.Policy;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -35,7 +34,7 @@ import org.eclipse.swt.widgets.Widget;
 public class TableTreeUtil {
 	/**
 	 * Returns name for {@link TreeColumn} or {@link TableColumn}
-	 * 
+	 *
 	 * @param widget
 	 * @return
 	 */
@@ -46,7 +45,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Returns width for {@link TreeColumn} or {@link TableColumn}
-	 * 
+	 *
 	 * @param widget
 	 * @return
 	 */
@@ -57,7 +56,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Returns column order from {@link Tree} or {@link Table}
-	 * 
+	 *
 	 * @param widget
 	 * @return
 	 */
@@ -68,7 +67,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Returns column from {@link Table} or {@link Tree} identified by index
-	 * 
+	 *
 	 * @param parent
 	 * @param index
 	 * @return
@@ -81,7 +80,7 @@ public class TableTreeUtil {
 	/**
 	 * Returns column index from {@link Table} or {@link Tree} identified by
 	 * column name
-	 * 
+	 *
 	 * @param parent
 	 * @param columnName
 	 * @return
@@ -106,7 +105,7 @@ public class TableTreeUtil {
 	/**
 	 * Returns {@link Table} by {@link TableColumn} or {@link Tree} by
 	 * {@link TreeColumn}
-	 * 
+	 *
 	 * @param widget
 	 * @return
 	 */
@@ -125,7 +124,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Returns all columns from {@link Tree} or {@link Table} in display order
-	 * 
+	 *
 	 * @param widget
 	 * @return
 	 */
@@ -165,7 +164,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Returns column count for {@link Table} or {@link Tree}
-	 * 
+	 *
 	 * @param widget
 	 * @return
 	 */
@@ -244,7 +243,7 @@ public class TableTreeUtil {
 
 	/**
 	 * (row, col) if found, <code>null</code> otherwise
-	 * 
+	 *
 	 * @param widget
 	 * @param coords
 	 * @return
@@ -268,7 +267,7 @@ public class TableTreeUtil {
 
 	/**
 	 * row if found, <code>-1</code> otherwise
-	 * 
+	 *
 	 * @param widget
 	 * @param coords
 	 * @return
@@ -294,17 +293,17 @@ public class TableTreeUtil {
 		return getExpandedItems(widget)[row];
 	}
 
-	public static StyleRange[] getStyleRanges(Item item) {
-		return getStyleRanges(item, 0);
-	}
+//	public static StyleRange[] getStyleRanges(Item item) {
+//		return getStyleRanges(item, 0);
+//	}
 
 	public static String getRangeDataKey(int column) {
 		return String.format("%sstyled_label_key_%d", Policy.JFACE, column);
 	}
 
-	public static StyleRange[] getStyleRanges(Item item, int column) {
-		return (StyleRange[]) item.getData(getRangeDataKey(column));
-	}
+//	public static StyleRange[] getStyleRanges(Item item, int column) {
+//		return (StyleRange[]) item.getData(getRangeDataKey(column));
+//	}
 
 	public static Item[] getAllChildren(Item item) {
 		if (item instanceof TableItem) {
@@ -372,7 +371,7 @@ public class TableTreeUtil {
 	/**
 	 * Convenince method - returns empty array for {@link TableItem} or childre
 	 * for {@link TreeItem}
-	 * 
+	 *
 	 * @return
 	 */
 	public static Item[] getChildren(Widget item) {
@@ -405,7 +404,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Searches for a column in {@link Table} or {@link Tree}
-	 * 
+	 *
 	 * @param parent
 	 * @param name
 	 * @param index
@@ -435,7 +434,7 @@ public class TableTreeUtil {
 
 	/**
 	 * Searches for a column in {@link Table} or {@link Tree}
-	 * 
+	 *
 	 * @param parent
 	 * @param name
 	 * @param index

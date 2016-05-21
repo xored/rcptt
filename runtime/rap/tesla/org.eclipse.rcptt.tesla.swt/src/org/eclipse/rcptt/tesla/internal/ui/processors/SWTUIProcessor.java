@@ -902,26 +902,26 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	 * final String text = element.getText();
 	 * final String ref = command.getRef() == null ? LinkUIElement
 	 * .firstRef(text) : command.getRef();
-	 * 
+	 *
 	 * if (ref == null) {
 	 * return failResponse(TeslaSWTMessages.SWTUIProcessor_NoLinkFragments);
 	 * }
-	 * 
+	 *
 	 * if (!(element.widget instanceof Link)) {
 	 * return failResponse(TeslaSWTMessages.SWTUIProcessor_WidgetIsNotLink);
 	 * }
-	 * 
+	 *
 	 * if (!(element.getText().contains(ref))) {
 	 * return failResponse(NLS.bind(
 	 * TeslaSWTMessages.SWTUIProcessor_InvalidLinkRef, ref));
 	 * }
-	 * 
+	 *
 	 * if (element.isDisabled()) {
 	 * return failResponse(TeslaSWTMessages.SWTUIProcessor_LinkDisabled);
 	 * }
-	 * 
+	 *
 	 * getPlayer().exec("clickLink", new Runnable() { //$NON-NLS-1$
-	 * 
+	 *
 	 * @Override
 	 * public void run() {
 	 * // TODO Auto-generated method stub
@@ -1386,7 +1386,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		 * if (!(control instanceof StyledText)) {
 		 * return result;
 		 * }
-		 * 
+		 *
 		 * final StyledText styledText = (StyledText) control;
 		 * final int line = command.getLine();
 		 * if (line < 0 || line >= styledText.getLineCount()) {
@@ -1396,7 +1396,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		 * styledText.getLineCount() - 1));
 		 * return result;
 		 * }
-		 * 
+		 *
 		 * final int offset = command.getOffset()
 		 * + styledText.getOffsetAtLine(line);
 		 * if (offset < 0 || offset >= styledText.getContent().getCharCount()) {
@@ -1406,9 +1406,9 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		 * offset, styledText.getCharCount() - 1));
 		 * return result;
 		 * }
-		 * 
+		 *
 		 * getPlayer().exec("Hover at text offset", new Runnable() {
-		 * 
+		 *
 		 * @Override
 		 * public void run() {
 		 * styledText.setTopIndex(line);
@@ -1626,7 +1626,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	/**
 	 * If path starts with platform: resolves it, otherwise returns it as is. If
 	 * path == null or resolution fails, returns null
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -2359,11 +2359,11 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
-			if (element.widget instanceof StyledText) {
-				return failResponse("Trying to close "
-						+ element.widget.getClass().getName()
-						+ ". StyledText should not be closed.");
-			}
+//			if (element.widget instanceof StyledText) {
+//				return failResponse("Trying to close "
+//						+ element.widget.getClass().getName()
+//						+ ". StyledText should not be closed.");
+//			}
 			getPlayer().close(element);
 			getMapper().remove(command.getElement());
 		} else {
@@ -2558,7 +2558,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	protected Response handleClickAboutMenu(ClickAboutMenu command) {
-		runCommand(ActionFactory.ABOUT);
+		//runCommand(ActionFactory.ABOUT);
 		return RawFactory.eINSTANCE.createResponse();
 	}
 
@@ -2853,7 +2853,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 	/**
 	 * Added because of QS-2489: CommonNavigator#isDirty() was throwing a NPE
-	 * 
+	 *
 	 * @return boolean or error message
 	 */
 	private static Object isViewDirty(IViewReference ref) {
@@ -2955,10 +2955,10 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 					/*
 					 * if (rawWidget instanceof StyledText) {
 					 * StyledText text = (StyledText) rawWidget;
-					 * 
+					 *
 					 * start = startOffset;
 					 * start += text.getOffsetAtLine(startLine);
-					 * 
+					 *
 					 * end = endOffset;
 					 * end += text.getOffsetAtLine(endLine);
 					 * }

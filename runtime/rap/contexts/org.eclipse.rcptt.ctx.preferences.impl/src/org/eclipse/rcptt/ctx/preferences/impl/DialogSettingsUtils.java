@@ -29,8 +29,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.osgi.framework.Bundle;
-
 import org.eclipse.rcptt.internal.preferences.PrefUtils;
 import org.eclipse.rcptt.preferences.ListPrefData;
 import org.eclipse.rcptt.preferences.PrefData;
@@ -38,6 +36,7 @@ import org.eclipse.rcptt.preferences.PrefNode;
 import org.eclipse.rcptt.preferences.PreferencesFactory;
 import org.eclipse.rcptt.preferences.StringPrefData;
 import org.eclipse.rcptt.runtime.ui.preferences.DialogSettingsManager;
+import org.osgi.framework.Bundle;
 
 @SuppressWarnings("restriction")
 public final class DialogSettingsUtils {
