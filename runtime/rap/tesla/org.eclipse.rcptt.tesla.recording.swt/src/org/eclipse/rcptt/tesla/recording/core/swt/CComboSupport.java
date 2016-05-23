@@ -23,6 +23,10 @@ import org.eclipse.swt.widgets.Widget;
 public class CComboSupport {
 
 	public static boolean isComboWidget(CCombo combo, Widget widget) {
+		if (combo == widget) {
+			return true;
+		}
+
 		if (!(widget instanceof Control)) {
 			return false;
 		}
@@ -30,6 +34,7 @@ public class CComboSupport {
 		if (ctrl.getParent() != null && ctrl.getParent().equals(combo)) {
 			return true;
 		}
+		/*
 		try {
 			Field field = CCombo.class.getDeclaredField("popup");
 			field.setAccessible(true);
@@ -70,6 +75,7 @@ public class CComboSupport {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+		*/
 		return false;
 	}
 }

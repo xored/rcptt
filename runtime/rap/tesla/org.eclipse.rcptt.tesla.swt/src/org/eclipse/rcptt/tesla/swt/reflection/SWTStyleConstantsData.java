@@ -49,7 +49,7 @@ public class SWTStyleConstantsData {
 	public static class StyleConstant {
 		private final String name;
 		private final int value;
-		private final List<Class<?>> applyedTo = new ArrayList<>();
+		private final List<Class<?>> applyedTo = new ArrayList<Class<?>>();
 
 		StyleConstant(String name, int value) {
 			this.name = name;
@@ -69,7 +69,7 @@ public class SWTStyleConstantsData {
 		}
 	}
 
-	public static List<StyleConstant> styleConstants = new ArrayList<>();
+	public static List<StyleConstant> styleConstants = new ArrayList<StyleConstant>();
 
 	static {
 		StyleConstant styleConst = new StyleConstant("BAR", 1 << 1);

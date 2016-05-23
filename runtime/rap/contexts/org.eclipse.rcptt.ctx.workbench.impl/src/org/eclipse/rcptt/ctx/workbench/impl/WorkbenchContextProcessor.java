@@ -31,6 +31,7 @@ import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
 import org.eclipse.rcptt.tesla.ecl.impl.Utils;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
@@ -38,7 +39,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.intro.IIntroPart;
 import org.osgi.framework.Bundle;
@@ -85,7 +85,8 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	private UIRunnable<Object> closeIntro = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
-			IIntroManager manager = PlatformUI.getWorkbench().getIntroManager();
+			IWorkbench wb = RWTUtils.getWorkbench();
+			IIntroManager manager = wb == null ? null : wb.getIntroManager();
 			if (manager != null) {
 				IIntroPart intro = manager.getIntro();
 				if (intro != null) {
@@ -98,7 +99,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	private UIRunnable<Object> clearClipboard = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
-			// Clipboard clipboard = new Clipboard(PlatformUI.getWorkbench().getDisplay());
+			// Clipboard clipboard = new Clipboard(RWTUtils.findDisplay());
 			// // First put something into clipboard, to force our
 			// // clipboard became owner of system clipboard
 			// clipboard.setContents(new Object[] { " " }, new Transfer[] { TextTransfer.getInstance() });
@@ -111,18 +112,22 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	};
 
 	public void apply(final Context context) throws CoreException {
+		if (context != null) {
+			return;
+		}
+
 		final WorkbenchContext ctx = (WorkbenchContext) context;
 		final UIJobCollector collector = new UIJobCollector();
 		Job.getJobManager().addJobChangeListener(collector);
 		try {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			RWTUtils.findDisplay().asyncExec(new Runnable() {
 				public void run() {
 					collector.enable();
 				}
 			});
 			if (ctx.isNoModalDialogs()) {
-				PlatformUI.getWorkbench().getDisplay().asyncExec(closeModalDialogsAsync);
-				PlatformUI.getWorkbench().getDisplay().asyncExec(closeModalDialogsAsync);
+				RWTUtils.findDisplay().asyncExec(closeModalDialogsAsync);
+				RWTUtils.findDisplay().asyncExec(closeModalDialogsAsync);
 				IStatus status = UIRunnable.exec(closeModalDialogs);
 				if (!status.isOK())
 					throw new CoreException(status);
@@ -173,7 +178,10 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	}
 
 	private void updateSelection(WorkbenchContext ctx) {
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (workbench == null)
+			return;
+		IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
 		for (IWorkbenchWindow win : windows) {
 			IWorkbenchPage[] pages = win.getPages();
 			for (IWorkbenchPage page0 : pages) {
@@ -212,11 +220,13 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 		return new UIRunnable<Object>() {
 			@Override
 			public Object run() throws CoreException {
-				showPerspective(ctx);
+				if (page != null) {
+					showPerspective(ctx);
+				}
 				if (page != null && page.getSortedPerspectives().length == 0) {
-					String defaultPerspectiveId = PlatformUI.getWorkbench().getPerspectiveRegistry()
+					String defaultPerspectiveId = RWTUtils.getWorkbench().getPerspectiveRegistry()
 							.getDefaultPerspective();
-					IPerspectiveDescriptor perspectiveDesc = PlatformUI.getWorkbench().getPerspectiveRegistry()
+					IPerspectiveDescriptor perspectiveDesc = RWTUtils.getWorkbench().getPerspectiveRegistry()
 							.findPerspectiveWithId(defaultPerspectiveId);
 					page.setPerspective(perspectiveDesc);
 				}
@@ -274,12 +284,17 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 		return new UIRunnable<IWorkbenchPage>() {
 			@Override
 			public IWorkbenchPage run() throws CoreException {
-				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-				IWorkbenchPage lpage = window.getActivePage();
-				if (lpage == null) {
-					lpage = showPerspective(ctx);
+				IWorkbench workbench = RWTUtils.getWorkbench();
+				if (workbench != null) {
+					IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+					IWorkbenchPage lpage = window.getActivePage();
+					if (lpage == null) {
+						lpage = showPerspective(ctx);
+					}
+					return lpage;
 				}
-				return lpage;
+
+				return null;
 			}
 		};
 	}
@@ -320,13 +335,16 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 
 	private IWorkbenchPage showPerspective(WorkbenchContext context) throws CoreException {
 		// open perspective
-		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbench workbench = RWTUtils.getWorkbench();
 		String perspective = getPerspectiveId(context);
 		IWorkbenchWindow window = getWindow();
 		if (perspective != null && perspective.length() > 0) {
 			return workbench.showPerspective(perspective, window);
 		}
 		if (window == null) {
+			if (workbench == null)
+				return null;
+
 			window = workbench.getWorkbenchWindows()[0];
 		}
 		IWorkbenchPage activePage = window.getActivePage();
@@ -340,7 +358,11 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	}
 
 	private void openParts(WorkbenchContext context) throws CoreException {
-		final IWorkbench workbench = PlatformUI.getWorkbench();
+		final IWorkbench workbench = RWTUtils.getWorkbench();
+
+		if (workbench == null) {
+			return;
+		}
 
 		final IWorkbenchPage page = UIRunnable.exec(new UIRunnable<IWorkbenchPage>() {
 			@Override
@@ -467,7 +489,10 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	}
 
 	private IWorkbenchWindow getWindow() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (workbench == null)
+			return null;
+		return workbench.getActiveWorkbenchWindow();
 	}
 
 	private String getPerspectiveId(Context context) {

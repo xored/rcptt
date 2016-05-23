@@ -29,6 +29,7 @@ import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaBrowserListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaBrowserManager;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class BrowserManager implements ITeslaBrowserListener {
 	private static final long TIMEOUT = 20 * 1000; // 10 seconds for browser to
@@ -84,22 +85,22 @@ public class BrowserManager implements ITeslaBrowserListener {
 		if (br.isDisposed()) {
 			return;
 		}
-		if (Display.getCurrent() == br.getDisplay()) {
-			br.addProgressListener(progressListener);
-			br.addLocationListener(locationListener);
-			br.addDisposeListener(disposeListener);
-		} else {
-			br.getDisplay().asyncExec(new Runnable() {
-				public void run() {
-					if (br.isDisposed()) {
-						return;
-					}
-					br.addProgressListener(progressListener);
-					br.addLocationListener(locationListener);
-					br.addDisposeListener(disposeListener);
+		// if (RWTUtils.findDisplay() == br.getDisplay()) {
+		// br.addProgressListener(progressListener);
+		// br.addLocationListener(locationListener);
+		// br.addDisposeListener(disposeListener);
+		// } else {
+		br.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				if (br.isDisposed()) {
+					return;
 				}
-			});
-		}
+				br.addProgressListener(progressListener);
+				br.addLocationListener(locationListener);
+				br.addDisposeListener(disposeListener);
+			}
+		});
+		// }
 	}
 
 	public synchronized boolean isExecutionAllowed(Q7WaitInfoRoot info) {
@@ -112,7 +113,7 @@ public class BrowserManager implements ITeslaBrowserListener {
 					if (currentTimeMillis > (t.longValue() + TIMEOUT)) {
 						continue;// Skip browser
 					}
-					Q7WaitUtils.updateInfo("browser", ""+ browser.getUrl(), info);
+					Q7WaitUtils.updateInfo("browser", "" + browser.getUrl(), info);
 					result.add(browser);
 				}
 			}

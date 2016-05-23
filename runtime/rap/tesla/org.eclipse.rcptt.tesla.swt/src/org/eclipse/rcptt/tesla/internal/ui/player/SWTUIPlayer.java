@@ -51,6 +51,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.Q7WaitUtils;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
@@ -73,6 +74,7 @@ import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager.TimerInfo;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IViewerItem;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.util.swt.Bounds;
 import org.eclipse.rcptt.util.swt.Events;
 import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
@@ -134,12 +136,12 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.decorators.DecorationScheduler;
@@ -162,12 +164,12 @@ public final class SWTUIPlayer {
 
 	private static SWTKeyboard keyboard = new SWTKeyboard();
 
-	private final Map<Context, List<Runnable>> runnables = new HashMap<>();
-	private static Map<Display, SWTUIPlayer> players = new HashMap<>();
+	private final Map<Context, List<Runnable>> runnables = new HashMap<Context, List<Runnable>>();
+	private static Map<Display, SWTUIPlayer> players = new HashMap<Display, SWTUIPlayer>();
 
-	protected static Map<Class<?>, ElementKind> elementKinds = new LinkedHashMap<>();
+	protected static Map<Class<?>, ElementKind> elementKinds = new LinkedHashMap<Class<?>, ElementKind>();
 	private final ITimerExecHelper timerListener;
-	private static List<ISWTUIPlayerExtension> extensions = new ArrayList<>();
+	private static List<ISWTUIPlayerExtension> extensions = new ArrayList<ISWTUIPlayerExtension>();
 	static {
 		elementKinds.put(Shell.class, ElementKind.Window);
 		elementKinds.put(CBanner.class, ElementKind.CBanner);
@@ -514,7 +516,7 @@ public final class SWTUIPlayer {
 	}
 
 	public static TreeItem[] getExpandedTreeItems(Tree tree) {
-		List<TreeItem> items = new ArrayList<>();
+		List<TreeItem> items = new ArrayList<TreeItem>();
 		for (int i = 0; i < tree.getItemCount(); i++) {
 			TreeItem currentItem = tree.getItem(i);
 			if (currentItem.isDisposed()) {
@@ -529,7 +531,7 @@ public final class SWTUIPlayer {
 	}
 
 	private static List<TreeItem> getExpandedTreeItems(TreeItem item) {
-		List<TreeItem> items = new ArrayList<>();
+		List<TreeItem> items = new ArrayList<TreeItem>();
 		for (int i = 0; i < item.getItemCount(); i++) {
 			TreeItem currentItem = item.getItem(i);
 			items.add(currentItem);
@@ -547,7 +549,12 @@ public final class SWTUIPlayer {
 	}
 
 	private SWTUIElement selectEclipseWindow(Integer index) {
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (workbench == null) {
+			return new FakeEclipseWindowUIElement(this);
+		}
+
+		IWorkbenchWindow[] windows = workbench
 				.getWorkbenchWindows();
 		if (index == null) {
 			return wrap(windows[0].getShell());
@@ -560,8 +567,8 @@ public final class SWTUIPlayer {
 	// private IScreenCapturer screenCapturer = null;
 	private Context context;
 	private final UIJobCollector collector;
-	private final Map<Widget, Point> widgetToMouseForMenus = new HashMap<>();
-	private static Set<WeakReference<Menu>> shownMenus = new HashSet<>();
+	private final Map<Widget, Point> widgetToMouseForMenus = new HashMap<Widget, Point>();
+	private static Set<WeakReference<Menu>> shownMenus = new HashSet<WeakReference<Menu>>();
 
 	public void makeScreenShot() {
 		// Disable making of screenshots
@@ -616,7 +623,7 @@ public final class SWTUIPlayer {
 
 		// filter the children by kind
 		if (kind != null) {
-			List<SWTUIElement> filteredByKind = new ArrayList<>();
+			List<SWTUIElement> filteredByKind = new ArrayList<SWTUIElement>();
 			for (SWTUIElement element : children) {
 				if (element.isSuitableForKind(kind)) {
 					filteredByKind.add(element);
@@ -663,7 +670,7 @@ public final class SWTUIPlayer {
 
 		if (checkText) {
 			int cur = 0;
-			Map<SWTUIElement, String> wtMap = new HashMap<>();
+			Map<SWTUIElement, String> wtMap = new HashMap<SWTUIElement, String>();
 			if (f.pattern != null) {
 				for (SWTUIElement widget : children) {
 					String text = getText(widget);
@@ -705,7 +712,7 @@ public final class SWTUIPlayer {
 
 	// stable view is a view that do not change its title, so
 	// we can skip it while gathering actual titles of views
-	private static final Set<String> stableViews = new HashSet<>();
+	private static final Set<String> stableViews = new HashSet<String>();
 	static {
 		stableViews.add("org.eclipse.ui.views.PropertySheet");
 		stableViews.add("org.eclipse.ui.views.ProblemView");
@@ -715,9 +722,10 @@ public final class SWTUIPlayer {
 	public SWTUIElement selectView(PlayerSelectionFilter f) {
 		final String pattern = f.pattern;
 
-		// IViewDescriptor[] views =
-		// PlatformUI.getWorkbench().getViewRegistry().getViews();
-		IViewReference[] views = PlatformUI.getWorkbench()
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (workbench == null)
+			return null;
+		IViewReference[] views = workbench
 				.getActiveWorkbenchWindow().getActivePage().getViewReferences();
 		int currIdx = 0;
 		for (IViewReference iViewRef : views) {
@@ -784,7 +792,7 @@ public final class SWTUIPlayer {
 
 		//
 
-		IEditorReference[] refs = PlatformUI.getWorkbench()
+		IEditorReference[] refs = RWTUtils.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
 				.getEditorReferences();
 
@@ -805,7 +813,7 @@ public final class SWTUIPlayer {
 
 		String id = null;
 		if (type != null)
-			for (IEditorDescriptor desc : ((EditorRegistry) PlatformUI
+			for (IEditorDescriptor desc : ((EditorRegistry) RWTUtils
 					.getWorkbench().getEditorRegistry())
 							.getSortedEditorsFromPlugins())
 				if (matches(desc.getLabel(), type))
@@ -827,7 +835,7 @@ public final class SWTUIPlayer {
 	/*
 	 * public void setTextOffset(final StyledText styledText, final int offset, final int line) {
 	 * exec("Set text offset", new Runnable() {
-	 * 
+	 *
 	 * @Override
 	 * public void run() {
 	 * // styledText.setFocus();// forced focus (see QS-910)
@@ -941,6 +949,10 @@ public final class SWTUIPlayer {
 						if (arrow) {
 							event.detail = SWT.ARROW;
 						}
+						if(widget instanceof Button && (widget.getStyle() & SWT.TOGGLE) != 0) {
+							((Button) widget).setSelection(!((Button) widget).getSelection());
+						}
+
 						event.type = isDefault ? SWT.DefaultSelection
 								: SWT.Selection;
 						events.sendEvent(w, event);
@@ -1103,16 +1115,19 @@ public final class SWTUIPlayer {
 	}
 
 	private IWorkbenchPage getTargetPage() {
-		IWorkbenchPage page = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
-		if (page == null) {
-			IWorkbenchWindow window = PlatformUI.getWorkbench()
-					.getWorkbenchWindows()[0];
-			page = window.getActivePage();
+		IWorkbench wb = RWTUtils.getWorkbench();
+		IWorkbenchPage page = null;
+		if (wb != null) {
+			page = wb.getActiveWorkbenchWindow().getActivePage();
 			if (page == null) {
-				page = window.getPages()[0];
+				IWorkbenchWindow window = wb.getWorkbenchWindows()[0];
+				page = window.getActivePage();
+				if (page == null) {
+					page = window.getPages()[0];
+				}
 			}
 		}
+
 		return page;
 	}
 
@@ -1148,10 +1163,12 @@ public final class SWTUIPlayer {
 	}
 
 	private void clickEditor(final SWTUIElement w, IWorkbenchPage page) {
-		IEditorReference editor = (IEditorReference) (((WorkbenchUIElement) w).reference);
-		IWorkbenchPart editorPart = editor.getPart(true);
-		page.bringToTop(editorPart);
-		page.activate(editorPart);
+		if (page != null) {
+			IEditorReference editor = (IEditorReference) (((WorkbenchUIElement) w).reference);
+			IWorkbenchPart editorPart = editor.getPart(true);
+			page.bringToTop(editorPart);
+			page.activate(editorPart);
+		}
 	}
 
 	private void clickTabItem(final SWTUIElement w, final boolean isDefault) {
@@ -1286,7 +1303,7 @@ public final class SWTUIPlayer {
 	 * <p>
 	 * The functionality of this method can be extended by {@link ISWTUIPlayerExtension#wrap(Object, SWTUIPlayer)}
 	 * method.
-	 * 
+	 *
 	 * @see SWTUIElement
 	 */
 	public SWTUIElement wrap(Object s) {
@@ -1328,7 +1345,7 @@ public final class SWTUIPlayer {
 				// System.out.println("Site is null");
 			}
 			// Obtain using initialization
-			IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
+			IWorkbenchWindow[] windows = RWTUtils.getWorkbench()
 					.getWorkbenchWindows();
 			for (IWorkbenchWindow win : windows) {
 				IWorkbenchPage[] pages = win.getPages();
@@ -1671,7 +1688,7 @@ public final class SWTUIPlayer {
 		}
 
 		if ((menu.getStyle() & SWT.BAR) == 0) { // Not a menu bar
-			shownMenus.add(new WeakReference<>(menu));
+			shownMenus.add(new WeakReference<Menu>(menu));
 		}
 
 		events.sendEvent(uiElement, SWT.Show, pos.x, pos.y, 0);
@@ -1798,9 +1815,9 @@ public final class SWTUIPlayer {
 
 	public List<File> getScreenshots() {
 		if (screenshotsDuringSession != null) {
-			return new ArrayList<>(screenshotsDuringSession);
+			return new ArrayList<File>(screenshotsDuringSession);
 		}
-		return new ArrayList<>();
+		return new ArrayList<File>();
 	}
 
 	/**
@@ -1819,7 +1836,7 @@ public final class SWTUIPlayer {
 			synchronized (runnables) {
 				List<Runnable> runs = runnables.get(context);
 				if (runs == null) {
-					runs = new ArrayList<>();
+					runs = new ArrayList<Runnable>();
 					runnables.put(context, runs);
 				}
 				runs.add(myr);
@@ -1832,14 +1849,14 @@ public final class SWTUIPlayer {
 
 	public boolean canProceed(Context context, Q7WaitInfoRoot info) {
 		boolean result = true;
-		if (!display.equals(Display.getCurrent())) {
+		if (!display.equals(RWTUtils.findDisplay())) {
 			// Q7WaitUtils.updateInfo("display", "non current", info);
 			result = false;
 		}
 		// Return false if we have SWT observable in timers
-		if (hasTimers(display, info)) {
-			result = false;
-		}
+		// if (hasTimers(display, info)) {
+		// result = false;
+		// }
 		// Check for asyncs in synchronizer
 		if (!TeslaEventManager.getManager().isNoWaitForJob()
 				&& hasRunnables(display)) {
@@ -1907,7 +1924,7 @@ public final class SWTUIPlayer {
 		List<TimerInfo> map = TeslaTimerExecManager
 				.getManager().getTimers();
 
-		List<TimerInfo> waitFor = new ArrayList<>();
+		List<TimerInfo> waitFor = new ArrayList<TimerInfo>();
 		for (Runnable runnable : timers) {
 			if (runnable instanceof SherlockTimerRunnable) {
 				runnable = ((SherlockTimerRunnable) runnable).getRunnable();
@@ -2298,7 +2315,7 @@ public final class SWTUIPlayer {
 			@Override
 			public void run() {
 				@SuppressWarnings("cast") // IServiceLocator.getService was not generic in Eclipse 4.4 and older.
-				IHandlerService handlerService = PlatformUI
+				IHandlerService handlerService = RWTUtils
 						.getWorkbench().getService(IHandlerService.class);
 				try {
 					handlerService.executeCommand(actionId, null);
@@ -2365,7 +2382,7 @@ public final class SWTUIPlayer {
 
 	public static List<Widget> collectParents(Widget widget,
 			Map<Control, SWTUIElement> references, Widget... stopAt) {
-		List<Widget> parents = new ArrayList<>();
+		List<Widget> parents = new ArrayList<Widget>();
 		if (widget == null || widget.isDisposed()) {
 			return parents;
 		}
@@ -2536,9 +2553,10 @@ public final class SWTUIPlayer {
 	public List<SWTUIElement> getParentsList(SWTUIElement swtuiElement) {
 		Map<Control, SWTUIElement> references = EclipseWorkbenchProvider
 				.getProvider().getWorkbenchReference(this);
+
 		List<Widget> parents = collectParents(
 				unwrapWidget(swtuiElement), references);
-		List<SWTUIElement> elements = new ArrayList<>();
+		List<SWTUIElement> elements = new ArrayList<SWTUIElement>();
 		for (Widget widget : parents) {
 			SWTUIElement e = null;
 			if (references.containsKey(widget)) {
@@ -2669,7 +2687,7 @@ public final class SWTUIPlayer {
 
 	public static Image prepateImageForOCR(byte[] image, int x, int y,
 			int width, int height) {
-		Display display = PlatformUI.getWorkbench().getDisplay();
+		Display display = RWTUtils.findDisplay();
 		Image img = new Image(display, new ByteArrayInputStream(image));
 		ScreenshotSupport.saveImage(img.getImageData(), "ocr");
 		Image scaled = prepareImageForOCR(x, y, width, height, img);
@@ -2712,7 +2730,7 @@ public final class SWTUIPlayer {
 	}
 
 	public synchronized static SWTUIPlayer getPlayer() {
-		return SWTUIPlayer.getPlayer(PlatformUI.getWorkbench().getDisplay());
+		return SWTUIPlayer.getPlayer(RWTUtils.findDisplay());
 	}
 
 	public synchronized static void shutdown(SWTUIPlayer internalPlayer) {
@@ -2791,10 +2809,10 @@ public final class SWTUIPlayer {
 		exec("setPerspective", new Runnable() {
 			@Override
 			public void run() {
-				IPerspectiveDescriptor persectiveDescriptor = PlatformUI
+				IPerspectiveDescriptor persectiveDescriptor = RWTUtils
 						.getWorkbench().getPerspectiveRegistry()
 						.findPerspectiveWithId(perspectiveId);
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+				RWTUtils.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage().setPerspective(persectiveDescriptor);
 			}
 		});
@@ -2862,9 +2880,11 @@ public final class SWTUIPlayer {
 
 	private static NotifyUINullRunnable notifyUINullRunnable;
 
-	public static void notifyUI(Display display) {
-		display.wake();
-		display.asyncExec(notifyUINullRunnable);
+	public static void notifyUI(final Display display) {
+		wake();
+	}
+
+	private static void wake() {
 	}
 
 	public static synchronized void addExtension(ISWTUIPlayerExtension extension) {
@@ -2876,13 +2896,13 @@ public final class SWTUIPlayer {
 	}
 
 	public static synchronized List<ISWTUIPlayerExtension> getExtensions() {
-		return new ArrayList<>(extensions);
+		return new ArrayList<ISWTUIPlayerExtension>(extensions);
 	}
 
 	public boolean cleanMenus(final Q7WaitInfoRoot info) {
 		final boolean result[] = { false };
 
-		Display curDisplay = PlatformUI.getWorkbench().getDisplay();
+		Display curDisplay = RWTUtils.findDisplay();
 		if (curDisplay == null || curDisplay.isDisposed()) {
 			return false;
 		}

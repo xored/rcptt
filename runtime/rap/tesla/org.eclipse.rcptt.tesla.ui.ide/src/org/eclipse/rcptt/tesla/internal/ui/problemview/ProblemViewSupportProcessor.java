@@ -44,7 +44,7 @@ public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 
 	private AbstractTeslaClient client;
 	// private String id;
-	private Set<String> elements = new HashSet<>();
+	private Set<String> elements = new HashSet<String>();
 
 	public ProblemViewSupportProcessor() {
 	}

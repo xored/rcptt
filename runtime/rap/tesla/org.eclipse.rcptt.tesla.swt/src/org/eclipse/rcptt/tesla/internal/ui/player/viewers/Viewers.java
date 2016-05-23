@@ -468,10 +468,10 @@ public class Viewers {
 				if (tableOrTree.isDisposed()) {
 					return;
 				}
-				player.sendEvent(tableOrTree, SWT.MouseMove);
-				if (!tableOrTree.isDisposed()) {
-					player.sendEvent(tableOrTree, SWT.MouseExit);
-				}
+				// player.sendEvent(tableOrTree, SWT.MouseMove);
+				// if (!tableOrTree.isDisposed()) {
+				// player.sendEvent(tableOrTree, SWT.MouseExit);
+				// }
 				parent.getPlayer().exec("Update selection", new Runnable() {
 					public void run() {
 						EclipseWorkbenchProvider.getProvider()
@@ -485,7 +485,7 @@ public class Viewers {
 
 	/**
 	 * Selects item described by UI element
-	 * 
+	 *
 	 * @param item
 	 * @return
 	 */
@@ -570,8 +570,7 @@ public class Viewers {
 				}
 				list.deselectAll();
 				list.select(sels);
-			}
-			else {
+			} else {
 				list.deselectAll();
 				list.select(index);
 				list.setSelection(index);
@@ -579,14 +578,14 @@ public class Viewers {
 			SWTEvents player = parent.getPlayer().getEvents();
 
 			player.sendFocus(list);
-			player.sendEvent(list, SWT.MouseEnter);
-			player.sendEvent(list, SWT.MouseMove);
+			// player.sendEvent(list, SWT.MouseEnter);
+			// player.sendEvent(list, SWT.MouseMove);
 			player.sendEvent(list, SWT.MouseDown);
 			player.sendEvent(list, SWT.Selection);
 			player.sendEvent(list, SWT.MouseUp, 0, 0, 1);
-			if (!list.isDisposed()) { // In case of quick access dialog
-				player.sendEvent(list, SWT.MouseExit);
-			}
+			// if (!list.isDisposed()) { // In case of quick access dialog
+			// player.sendEvent(list, SWT.MouseExit);
+			// }
 			return true;
 		}
 		return false;
@@ -1000,8 +999,7 @@ public class Viewers {
 		String[][] items = sels.toArray(new String[sels.size()][]);
 		if (widget instanceof Tree || widget instanceof Table) {
 			return selectItem(element, items, selectAll);
-		}
-		else if (widget instanceof org.eclipse.swt.widgets.List) {
+		} else if (widget instanceof org.eclipse.swt.widgets.List) {
 			org.eclipse.swt.widgets.List l = (org.eclipse.swt.widgets.List) widget;
 			Set<String> toSelect = new HashSet<String>();
 			for (String[] ss : items) {

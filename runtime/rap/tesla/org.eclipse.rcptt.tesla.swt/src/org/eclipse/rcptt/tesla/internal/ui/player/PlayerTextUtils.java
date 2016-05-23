@@ -257,7 +257,7 @@ public class PlayerTextUtils {
 		return null;
 	}
 
-	private static Map<String, Pattern> matchersCache = new HashMap<>();
+	private static Map<String, Pattern> matchersCache = new HashMap<String, Pattern>();
 	private static final int MATCHERS_CACHE_SIZE = 500;
 	private static final boolean DEBUG = false;
 
@@ -318,7 +318,7 @@ public class PlayerTextUtils {
 	 * StyleRangeEntry rangeEntry = SWTModelMapper.makeStyleRangeEntry(
 	 * r, r.start - totalDelta, r.length - delta);
 	 * rangeEntry.setStartPos(SWTModelMapper.offsetToPosition(widget, r.start));
-	 * 
+	 *
 	 * result.add(rangeEntry);
 	 * totalDelta += delta;
 	 * }

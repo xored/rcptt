@@ -16,9 +16,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.client.service.JavaScriptExecutor;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
+import org.eclipse.swt.widgets.Display;
 
 public class ShutdownAutService implements ICommandService {
 
@@ -26,8 +30,8 @@ public class ShutdownAutService implements ICommandService {
 			throws InterruptedException, CoreException {
 		try {
 			tryTerminateLaunches();
+			closeClient();
 			// shutdown AUT itself
-			Runtime.getRuntime().exit(IStatus.OK);
 		} catch (Throwable e) {
 			// ignore
 		}
@@ -37,13 +41,28 @@ public class ShutdownAutService implements ICommandService {
 	public static void tryTerminateLaunches() {
 		try {
 			// shutdown all launch configurations
-			ILaunchManager manager = DebugPlugin.getDefault()
-					.getLaunchManager();
-			for (ILaunch launch : manager.getLaunches()) {
-				launch.terminate();
-			}
+//			ILaunchManager manager = DebugPlugin.getDefault()
+//					.getLaunchManager();
+//			for (ILaunch launch : manager.getLaunches()) {
+//				launch.terminate();
+//			}
 		} catch (Throwable e) {
 			// do nothing
 		}
 	}
+
+	private void closeClient() {
+		Display display = RWTUtils.findDisplay();
+		if (display != null) {
+			display.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					JavaScriptExecutor executor = RWT.getClient().getService( JavaScriptExecutor.class );
+					executor.execute("window.open('', '_self', ''); window.close()");
+				}
+			});
+		}
+
+	}
+
 }

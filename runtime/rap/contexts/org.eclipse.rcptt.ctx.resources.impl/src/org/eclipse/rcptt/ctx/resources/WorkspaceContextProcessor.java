@@ -56,6 +56,7 @@ import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.rcptt.util.resources.ResourcesUtil;
 import org.eclipse.rcptt.workspace.WSFile;
@@ -90,8 +91,7 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 
 			try {
 				root.refreshLocal(IResource.DEPTH_INFINITE, null);
-			}
-			catch (CoreException e) {
+			} catch (CoreException e) {
 				RcpttPlugin.log("Failed to refresh workspace on first time cause: + " + e.getMessage(), e);
 				root.refreshLocal(IResource.DEPTH_INFINITE, null);
 			}
@@ -113,7 +113,7 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 
 		try {
 			final IWorkspace ws = ResourcesPlugin.getWorkspace();
-			final Display display = PlatformUI.getWorkbench().getDisplay();
+			final Display display = RWTUtils.findDisplay();
 
 			disableMessageDialogsAndEnableCollector(collector);
 
@@ -157,7 +157,8 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 		} catch (Exception e) {
 			CoreException ee = new CoreException(RcpttPlugin.createStatus(
 					"Failed to execute context: " + wc.getName() + " Cause: "
-							+ e.getMessage(), e));
+							+ e.getMessage(),
+					e));
 			RcpttPlugin.log(e);
 			throw ee;
 		} finally {
@@ -331,10 +332,10 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 				appendFileToList(file, message);
 			}
 			message.append(String.format("%nExclusion patterns:"));
-			if(ignoredPatterns == null || ignoredPatterns.length == 0) {
+			if (ignoredPatterns == null || ignoredPatterns.length == 0) {
 				message.append(String.format("%n\t<none>"));
 			} else {
-				for(String pattern : ignoredPatterns) {
+				for (String pattern : ignoredPatterns) {
 					message.append(String.format("%n\t'%s'", pattern));
 				}
 			}
@@ -648,7 +649,8 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 							null);
 				}
 			} catch (SecurityException e) {
-				RcpttPlugin.log(String.format("Failed to set executable permission to file: %s", jFile.getAbsolutePath()),
+				RcpttPlugin.log(
+						String.format("Failed to set executable permission to file: %s", jFile.getAbsolutePath()),
 						e);
 			}
 		}
@@ -728,7 +730,7 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 	private static UIRunnable<Object> closeEditorsWithResources = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
-			IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench()
+			IWorkbenchWindow[] workbenchWindows = RWTUtils.getWorkbench()
 					.getWorkbenchWindows();
 			for (IWorkbenchWindow win : workbenchWindows) {
 				IWorkbenchPage[] pages = win.getPages();

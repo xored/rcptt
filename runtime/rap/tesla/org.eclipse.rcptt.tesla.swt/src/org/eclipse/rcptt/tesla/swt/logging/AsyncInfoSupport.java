@@ -30,8 +30,8 @@ final class AsyncInfoSupport implements IAsyncEventListener {
 	private JobsInfoProvider provider;
 	private boolean collectTimerExecs = true;
 
-	private List<SherlockTimerRunnable> runnables = new ArrayList<>();
-	private List<Runnable> sync = new ArrayList<>();
+	private List<SherlockTimerRunnable> runnables = new ArrayList<SherlockTimerRunnable>();
+	private List<Runnable> sync = new ArrayList<Runnable>();
 
 	public AsyncInfoSupport(JobsInfoProvider jobsEventProvider) {
 		this.provider = jobsEventProvider;

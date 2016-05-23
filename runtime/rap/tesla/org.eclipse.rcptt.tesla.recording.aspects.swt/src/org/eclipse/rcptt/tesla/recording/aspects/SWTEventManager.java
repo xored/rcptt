@@ -69,6 +69,17 @@ public final class SWTEventManager {
 		return result;
 	}
 
+	public static boolean needProceedEvents() {
+		Set<IExtendedSWTEventListener> set = getListeners(IExtendedSWTEventListener.class);
+		for (IExtendedSWTEventListener l : set) {
+			if( l.needProceedEvent()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 	public static void setCurrentEvent(Event event) {
 		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
 			listener.setCurrentEvent(event);

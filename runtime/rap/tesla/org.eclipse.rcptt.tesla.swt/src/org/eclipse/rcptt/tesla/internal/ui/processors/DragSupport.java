@@ -542,7 +542,7 @@ public class DragSupport {
 				.stateMask(states[MASK]).detail(states[DETAIL]).doit(true);
 		if (currentSource != null) {
 			Transfer[] transfer = currentSource.getTransfer();
-			List<TransferData> resultDatas = new ArrayList<>();
+			List<TransferData> resultDatas = new ArrayList<TransferData>();
 			for (Transfer transfer2 : transfer) {
 				resultDatas
 						.addAll(Arrays.asList(transfer2.getSupportedTypes()));

@@ -51,6 +51,7 @@ import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEn
 import org.eclipse.rcptt.tesla.swt.util.GetWindowUtil;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -88,10 +89,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.PartSite;
 import org.eclipse.ui.internal.PerspectiveBarContributionItem;
 import org.eclipse.ui.internal.WorkbenchPage;
@@ -821,26 +822,29 @@ public final class SWTWidgetLocator {
 	}
 
 	private boolean checkForViewEditor(Control control, Shell shell, SWTUIElement lowerParent) {
-		IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-		if (lowerParent instanceof WorkbenchUIElement) {
-			IWorkbenchPage lowerParentPage = ((WorkbenchUIElement) lowerParent).getReference().getPage();
-			for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
-				Shell wshell = iWorkbenchWindow.getShell();
-				if (wshell == shell) {
-					WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
-					if (page.equals(lowerParentPage)) {
-						IViewReference[] views = page.getViewReferences();
-						for (IViewReference iViewPart : views) {
-							Control composite = ((WorkbenchPartReference) iViewPart).getPane().getControl();
-							if (control.equals(composite)) {
-								return true;
+		IWorkbench wb = RWTUtils.getWorkbench();
+		if (wb != null) {
+			IWorkbenchWindow[] workbenchWindows = wb.getWorkbenchWindows();
+			if (lowerParent instanceof WorkbenchUIElement) {
+				IWorkbenchPage lowerParentPage = ((WorkbenchUIElement) lowerParent).getReference().getPage();
+				for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
+					Shell wshell = iWorkbenchWindow.getShell();
+					if (wshell == shell) {
+						WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
+						if (page.equals(lowerParentPage)) {
+							IViewReference[] views = page.getViewReferences();
+							for (IViewReference iViewPart : views) {
+								Control composite = ((WorkbenchPartReference) iViewPart).getPane().getControl();
+								if (control.equals(composite)) {
+									return true;
+								}
 							}
-						}
-						IEditorReference[] editors = page.getEditorReferences();
-						for (IEditorReference iEditorPart : editors) {
-							Control composite = ((WorkbenchPartReference) iEditorPart).getPane().getControl();
-							if (control.equals(composite)) {
-								return true;
+							IEditorReference[] editors = page.getEditorReferences();
+							for (IEditorReference iEditorPart : editors) {
+								Control composite = ((WorkbenchPartReference) iEditorPart).getPane().getControl();
+								if (control.equals(composite)) {
+									return true;
+								}
 							}
 						}
 					}
@@ -855,7 +859,7 @@ public final class SWTWidgetLocator {
 			// Check for tab folder activation(click) for Workbench.
 			// List<Widget> parents = SWTUIPlayer.collectParents(widget);
 			// Check for workbench internal element click
-			IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
+			IWorkbenchWindow[] workbenchWindows = RWTUtils.getWorkbenchWindows();
 			for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
 				Shell wshell = iWorkbenchWindow.getShell();
 				if (wshell == shell) {
@@ -1064,7 +1068,10 @@ public final class SWTWidgetLocator {
 		window = checkTextFieldChange(wrappedShell, window);
 		if (window == null || alwaysFindLeaf) {
 			// Check this is SDK window and only one window.
-			IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+			IWorkbench wb = RWTUtils.getWorkbench();
+			IWorkbenchWindow[] windows = wb != null ? wb.getWorkbenchWindows()
+					: new IWorkbenchWindow[0];
+
 			int ind = 0;
 			boolean found = false;
 			for (IWorkbenchWindow iWorkbenchWindow : windows) {
@@ -1287,7 +1294,7 @@ public final class SWTWidgetLocator {
 
 		String title = ((WorkbenchPart) part).getPartName();
 		int currIdx = 0;
-		IViewReference[] views = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+		IViewReference[] views = RWTUtils.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.getViewReferences();
 
 		for (IViewReference iViewRef : views) {
@@ -1377,7 +1384,10 @@ public final class SWTWidgetLocator {
 	}
 
 	public static IWorkbenchPart findViewMenuSource(Widget widget) {
-		IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if(workbench == null)
+			return null;
+		IWorkbenchWindow[] workbenchWindows = workbench.getWorkbenchWindows();
 		for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
 			WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
 			IViewReference[] viewReferences = page.getViewReferences();
@@ -1416,7 +1426,7 @@ public final class SWTWidgetLocator {
 	}
 
 	private static boolean isParentEclipseWindow(Menu menu) {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().equals(menu.getParent());
+		return RWTUtils.getWorkbench().getActiveWorkbenchWindow().getShell().equals(menu.getParent());
 	}
 
 	// extensions stuff

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.rcptt.internal.runtime.ui;
 
+
+
+import static org.eclipse.rap.rwt.internal.service.ContextProvider.getApplicationContext;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchManager;
@@ -21,12 +24,17 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.runtime.ui.AutEventManager;
 import org.eclipse.rcptt.runtime.ui.Q7ServerStarter;
+import org.eclipse.rcptt.runtime.ui.RAPPhaseListener;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class Q7RuntimeStartup implements IStartup {
 	public void earlyStartup() {
 		try {
-			Q7ServerStarter.INSTANCE.start();
-			PlatformUI.getWorkbench().addWorkbenchListener(
+
+			getApplicationContext().getLifeCycleFactory().getLifeCycle().addPhaseListener(new RAPPhaseListener());
+
+
+			RWTUtils.getWorkbench().addWorkbenchListener(
 					new IWorkbenchListener() {
 						public boolean preShutdown(IWorkbench workbench,
 								boolean forced) {
@@ -42,6 +50,7 @@ public class Q7RuntimeStartup implements IStartup {
 						}
 					});
 		} finally {
+			Q7ServerStarter.INSTANCE.start();
 			// Send a started object
 			AutEventManager.getInstance().sendStartup();
 		}
@@ -50,11 +59,11 @@ public class Q7RuntimeStartup implements IStartup {
 	private void tryTerminateLaunches() {
 		try {
 			// shutdown all launch configurations
-			ILaunchManager manager = DebugPlugin.getDefault()
-					.getLaunchManager();
-			for (ILaunch launch : manager.getLaunches()) {
-				launch.terminate();
-			}
+//			ILaunchManager manager = DebugPlugin.getDefault()
+//					.getLaunchManager();
+//			for (ILaunch launch : manager.getLaunches()) {
+//				launch.terminate();
+//			}
 		} catch (Throwable e) {
 			// do nothing
 		}

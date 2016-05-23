@@ -24,6 +24,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
@@ -39,11 +40,17 @@ public class Utils {
 	private static IStatus doCloseDialogs() {
 		SWTDialogManager.setCancelMessageBoxesDisplay(true);
 		try {
-			final IWorkbench workbench = PlatformUI.getWorkbench();
-			final Display display = workbench.getDisplay();
+			final Display display = RWTUtils.findDisplay();
 
+			IWorkbench workbench = RWTUtils.getWorkbench();
+			if (workbench == null) {
+				return Status.OK_STATUS;// Do not close dialogs in case there is no
+				// workbench.
+			}
 			// Dummy call for E4, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=440850
-			workbench.getActiveWorkbenchWindow();
+			//workbench.getActiveWorkbenchWindow();
+
+
 
 			IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
 			Set<Shell> windowShells = new HashSet<Shell>();
@@ -54,13 +61,13 @@ public class Utils {
 				}
 			}
 			// Close all shells for non workbench display
-			Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
-			for (Thread t : map.keySet()) {
-				final Display dd = Display.findDisplay(t);
-				if (dd != null && !dd.equals(display)) {
-					t.interrupt();
-				}
-			}
+//			Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
+//			for (Thread t : map.keySet()) {
+//				final Display dd = Display.findDisplay(t);
+//				if (dd != null && !dd.equals(display)) {
+//					t.interrupt();
+//				}
+//			}
 
 			MultiStatus status = new MultiStatus(PLUGIN_ID, 0, "Failed to close dialogs", null);
 			Shell[] shells = display.getShells();

@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 
 import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
@@ -29,6 +28,7 @@ import org.eclipse.rcptt.tesla.recording.aspects.WorkbenchEventManager;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class WorkbenchRecordingProcessor implements IRecordingProcessor,
 		IWorkbenchEventListener {
@@ -36,7 +36,7 @@ public class WorkbenchRecordingProcessor implements IRecordingProcessor,
 
 	public WorkbenchRecordingProcessor() {
 		WorkbenchEventManager.addListener(this);
-		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+		RWTUtils.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
 			public boolean preShutdown(IWorkbench workbench, boolean forced) {
 				return true;
 			}
@@ -48,7 +48,7 @@ public class WorkbenchRecordingProcessor implements IRecordingProcessor,
 	}
 
 	public void closeEditors(IEditorReference[] refArray) {
-		Display display = PlatformUI.getWorkbench().getDisplay();
+		Display display = RWTUtils.findDisplay();
 		Shell[] shells = display.getShells();
 		for (Shell shell : shells) {
 			if (SWTEventRecorder.isModal(shell)) {

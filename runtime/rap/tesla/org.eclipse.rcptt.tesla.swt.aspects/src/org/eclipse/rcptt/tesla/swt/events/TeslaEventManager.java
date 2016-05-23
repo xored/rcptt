@@ -20,6 +20,8 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
+import org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle;
 import org.eclipse.rcptt.tesla.core.am.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
@@ -30,6 +32,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+
+import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
+import org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle;
 
 public class TeslaEventManager {
 	private static TeslaEventManager manager = new TeslaEventManager();
@@ -46,6 +51,9 @@ public class TeslaEventManager {
 	private Map<Shell, String> shellMethodsMap = new WeakHashMap<Shell, String>();
 	private boolean statusDialogModeAllowed = false;
 	private boolean showingAlert = false;
+	private Display lastDisplay;
+	private Object lastWorkbench;
+	private static IUIThreadHolder lastHolder;
 
 	public static enum HasEventKind {
 		async, sync, timer
@@ -111,47 +119,6 @@ public class TeslaEventManager {
 			}
 		}
 		return hasEvent;
-	}
-
-	@SuppressWarnings("unused")
-	private boolean hasTimerProces() {
-		Class<? extends Display> class1 = Display.getCurrent().getClass();
-		try {
-			Field field = class1.getDeclaredField("timerList");
-			field.setAccessible(true);
-			Runnable[] runnables = (Runnable[]) field.get(Display.getCurrent());
-
-			Field timerIds = class1.getDeclaredField("timerIds");
-			timerIds.setAccessible(true);
-			int[] timers = (int[]) timerIds.get(Display.getCurrent());
-
-			if (runnables != null && runnables.length > 0) {
-				// Check if all less timeout
-				for (int i = 0; i < runnables.length; ++i) {
-					if (runnables[i] != null) {
-						if (timers[i] <= 200) {
-							System.out.println("Wait for timer proc:"
-									+ runnables[i].getClass().getName());
-							return true;
-						}
-					}
-				}
-				return false;
-			}
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
 	}
 
 	private List<ITeslaEventListener> getListeners() {
@@ -229,8 +196,8 @@ public class TeslaEventManager {
 	}
 
 	public synchronized void syncExecEnd(Context ctx) {
-		for( int i =0; i< syncExecs.size(); i++) {
-			if( syncExecs.get(i) == ctx) {
+		for (int i = 0; i < syncExecs.size(); i++) {
+			if (syncExecs.get(i) == ctx) {
 				syncExecs.remove(i);
 				return;
 			}
@@ -270,7 +237,7 @@ public class TeslaEventManager {
 				&& !RecordingModeFeature.isRecordingModeActive()
 				&& !isUnfreeze();
 	}
-	
+
 	public Control getForceFocusControl() {
 		Control ctrl = forceFocusControl == null ? null : forceFocusControl.get();
 		if (ctrl != null && ctrl.isDisposed()) {
@@ -278,6 +245,7 @@ public class TeslaEventManager {
 		}
 		return ctrl;
 	}
+
 	public boolean setForceFocusControl(Control focusControl) {
 		if (this.forceFocusControl == null || focusControl != this.forceFocusControl.get()) {
 			this.forceFocusControl = new WeakReference<Control>(focusControl);
@@ -286,8 +254,6 @@ public class TeslaEventManager {
 		}
 		return false;
 	}
-
-
 
 	public void ignoreMenuShow(boolean b) {
 		this.ignoreMenuShow = b;
@@ -337,4 +303,65 @@ public class TeslaEventManager {
 			IUnhandledNativeDialogHandler unhandledNativeDialogHandler) {
 		this.unhandledNativeDialogHandler = unhandledNativeDialogHandler;
 	}
+
+	public Object getWorkbench() {
+		return lastWorkbench;
+	}
+
+	public Display getDisplay() {
+		return lastDisplay;
+	}
+
+	public void setLastDisplay(Display lastDisplay) {
+		this.lastDisplay = lastDisplay;
+	}
+
+	public void setLastWorkbench(Object lastWorkbench) {
+		this.lastWorkbench = lastWorkbench;
+	}
+
+	public static void setActiveUIThreadHolder(IUIThreadHolder holder) {
+		lastHolder = holder;
+	}
+
+	public static IUIThreadHolder getLastHolder() {
+		return lastHolder;
+	}
+
+	public void initCallback(final Display display) {
+//		UICallBack.activate(callbackName(display));
+//		RcpttMouseEvents.reset();
+//		Thread bgThread = new Thread(new Runnable() {
+//			public void run() {
+//				while (true) {
+//					Display display = getManager().getDisplay();
+//					if (display != null && !display.isDisposed()) {
+//						display.asyncExec(new Runnable() {
+//							public void run() {
+//								RcpttMouseEvents.updateWidgetUnderMouse();
+//							}
+//						});
+//					}
+//					try {
+//						Thread.sleep(50);
+//					} catch (Throwable e) {
+//						// ignore
+//					}
+//				}
+//			}
+//		}, display.toString() + "Q7 UI callback thread");
+//		bgThread.setDaemon(true);
+//		bgThread.start();
+	}
+
+	@SuppressWarnings("deprecation")
+	public void disposeCallback(final Display display) {
+		//UICallBack.deactivate(callbackName(display));
+	}
+
+	private String callbackName(Display display) {
+		return display.toString() + "q7_ui_callback";
+	}
+
+
 }

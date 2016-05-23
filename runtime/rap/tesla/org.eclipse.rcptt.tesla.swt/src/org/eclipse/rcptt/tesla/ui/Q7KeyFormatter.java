@@ -56,7 +56,9 @@ public class Q7KeyFormatter extends AbstractKeyFormatter {
 
 	public static void installQ7Formatter() {
 		KeyFormatterFactory.setDefault(new Q7KeyFormatter());
-		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if(workbench == null)
+			return;
 		for (IWorkbenchWindow w : workbench.getWorkbenchWindows()) {
 			if (!(w instanceof WorkbenchWindow))
 				continue;

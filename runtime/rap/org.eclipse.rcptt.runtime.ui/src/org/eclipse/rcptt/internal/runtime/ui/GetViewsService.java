@@ -19,6 +19,7 @@ import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IPipe;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -41,7 +42,7 @@ public class GetViewsService implements ICommandService {
 		IPipe output = context.getOutput();
 		ViewList list = Q7CoreFactory.eINSTANCE.createViewList();
 
-		IViewCategory[] categories = PlatformUI.getWorkbench()
+		IViewCategory[] categories = RWTUtils.getWorkbench()
 				.getViewRegistry().getCategories();
 		for (IViewCategory desc : categories) {
 			ViewInfo info = Q7CoreFactory.eINSTANCE.createViewInfo();

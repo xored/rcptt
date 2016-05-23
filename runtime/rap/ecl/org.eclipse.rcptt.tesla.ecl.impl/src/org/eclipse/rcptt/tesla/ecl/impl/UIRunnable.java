@@ -30,6 +30,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
@@ -44,28 +45,20 @@ public abstract class UIRunnable<T> {
 		final AtomicReference processed = new AtomicReference(RunningState.Starting);
 		final Throwable[] exception = new Throwable[] { null };
 		final UIJobCollector collector = new UIJobCollector();
-		final Display display = PlatformUI.getWorkbench().getDisplay();
+		final Display display = RWTUtils.findDisplay();
 		Job.getJobManager().addJobChangeListener(collector);
 		collector.enable();
 		ITeslaEventListener listener = null;
-		final IStatus[] dialogCloseStatus = new IStatus[1];  
+		final IStatus[] dialogCloseStatus = new IStatus[1];
 		try {
 			listener = new ITeslaEventListener() {
 				public synchronized boolean doProcessing(
 						org.eclipse.rcptt.tesla.core.context.ContextManagement.Context currentContext) {
 					boolean tick = processed.get().equals(RunningState.Starting) || processed.get().equals(RunningState.Execution);
 					Q7WaitInfoRoot info = TeslaBridge.getCurrentWaitInfo(tick);
-					
+
 					boolean resultValue = true;
-					
-					if (!PlatformUI.getWorkbench().getDisplay()
-							.equals(Display.getCurrent())) {
-						resultValue = false;
-					}
-					// Return false if we have SWT observable in timers
-					if (SWTUIPlayer.hasTimers(display, info)) {
-						resultValue = false;
-					}
+
 					// Check for asyncs in synchronizer
 					if (SWTUIPlayer.hasRunnables(display)) {
 						//Q7WaitUtils.updateInfo("display", "runnables", info);

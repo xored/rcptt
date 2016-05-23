@@ -22,6 +22,7 @@ import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.InfoFactory;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.internal.core.info.GeneralInformationCollector;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.ui.PlatformUI;
 
 public class AdvancedInfoService implements ICommandService {
@@ -36,7 +37,7 @@ public class AdvancedInfoService implements ICommandService {
 			final CoreException error[] = { null };
 			Thread askForInfoThread = new Thread(new Runnable() {
 				public void run() {
-					PlatformUI.getWorkbench().getDisplay()
+					RWTUtils.findDisplay()
 							.syncExec(new Runnable() {
 
 								public void run() {

@@ -15,7 +15,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-
+import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
+import org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
@@ -25,6 +26,7 @@ import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
 import org.eclipse.rcptt.tesla.swt.profiling.ProfilingEventManager;
+
 
 public aspect DisplayAspect {
 	private static final String WEH = "org.eclipse.rap.ui.statushandlers.WorkbenchErrorHandler";
@@ -37,6 +39,24 @@ public aspect DisplayAspect {
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
+	after(Display display):
+		execution(org.eclipse.swt.widgets.Display.new()) && target(display) {
+		TeslaEventManager.getManager().setLastDisplay(display);
+		TeslaEventManager.getManager().initCallback(display);
+	}
+
+	@SuppressAjWarnings("adviceDidNotMatch")
+	Object around(Display display): execution(boolean Display.close()) &&
+	 target(display) {
+		TeslaEventManager.getManager().disposeCallback(display);
+		TeslaEventManager.getManager().setLastDisplay(null);
+		return proceed(display);
+	}
+
+
+	boolean initialized = false;
+
+	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(Display display): execution(boolean Display.sleep()) &&
 	 target(display) {
 		if (TeslaEventManager.getManager().hasListeners()) {
@@ -45,7 +65,11 @@ public aspect DisplayAspect {
 			if (current == null) {
 				return proceed(display);
 			}
+
 			try {
+				IUIThreadHolder holder = RWTLifeCycle.getUIThreadHolder();
+				TeslaEventManager.setActiveUIThreadHolder(holder);
+
 				ContextManagement.enterContext();
 				Context currentContext = ContextManagement.peekContext();
 
@@ -76,8 +100,9 @@ public aspect DisplayAspect {
 						&& !currentContext
 								.contains(
 										"org.eclipse.rap.ui.dialogs.ElementTreeSelectionDialog",
-										"create") && !currentContext.contains(
-						WIN_CL, "create"));
+										"create")
+						&& !currentContext.contains(
+								WIN_CL, "create"));
 
 				if (nonModalContext
 						|| TeslaEventManager.getManager().isNoWaitForJob()) {
@@ -86,6 +111,7 @@ public aspect DisplayAspect {
 					if (!result) {
 						try {
 							Thread.sleep(10);
+							// return proceed(display);
 						} catch (InterruptedException e) {
 						}
 					}
@@ -104,65 +130,65 @@ public aspect DisplayAspect {
 		return proceed(display);
 	}
 
-	//TODO RAP-FIX
+	// TODO RAP-FIX
 	/*
-	@SuppressAjWarnings("adviceDidNotMatch")
-	String around(FileDialog dialog): execution(String FileDialog.open()) && target(dialog) {
-		if (TeslaEventManager.getManager().hasListeners()) {
-			if (SWTDialogManager.hasFileDialogInfo()) {
-				try {
-					String dialogResult = null;
-					dialogResult = SWTDialogManager.getFileDialogResult();
-					String filterPath = SWTDialogManager
-							.getFileDialogFilterPath();
-					Field filterPathField = FileDialog.class
-							.getDeclaredField("filterPath");
-					filterPathField.setAccessible(true);
-					filterPathField.set(dialog, filterPath);
-
-					String[] files = SWTDialogManager
-							.getFileDialogFilesList(filterPath);
-					Field fileNamesField = FileDialog.class
-							.getDeclaredField("fileNames");
-					fileNamesField.setAccessible(true);
-					fileNamesField.set(dialog, files);
-
-					if (files.length > 0) {
-						Field fileNameField = FileDialog.class
-								.getDeclaredField("fileName");
-						fileNameField.setAccessible(true);
-						fileNameField.set(dialog, files[0]);
-					}
-
-					return dialogResult;
-				} catch (Throwable e) {
-					SWTAspectActivator.log(e);
-				}
-
-				TeslaEventManager.getManager().unhandledNativeDialog(
-						FileDialog.class, dialog.getText());
-				return "Unrecorded file dialog result";
-			}
-		}
-		return proceed(dialog);
-	}
-
-	@SuppressAjWarnings("adviceDidNotMatch")
-	String around(DirectoryDialog dialog): execution(String DirectoryDialog.open()) && target(dialog) {
-		if (TeslaEventManager.getManager().hasListeners()) {
-			try {
-				if (SWTDialogManager.hasFolderDialogInfo()) {
-					return SWTDialogManager.getFolderDialogResult();
-				}
-				TeslaEventManager.getManager().unhandledNativeDialog(
-						DirectoryDialog.class, dialog.getText());
-				return "Unrecorded directory dialog result";
-			} catch (Throwable e) {
-				SWTAspectActivator.log(e);
-			}
-		}
-		return proceed(dialog);
-	}
+	 * @SuppressAjWarnings("adviceDidNotMatch")
+	 * String around(FileDialog dialog): execution(String FileDialog.open()) && target(dialog) {
+	 * if (TeslaEventManager.getManager().hasListeners()) {
+	 * if (SWTDialogManager.hasFileDialogInfo()) {
+	 * try {
+	 * String dialogResult = null;
+	 * dialogResult = SWTDialogManager.getFileDialogResult();
+	 * String filterPath = SWTDialogManager
+	 * .getFileDialogFilterPath();
+	 * Field filterPathField = FileDialog.class
+	 * .getDeclaredField("filterPath");
+	 * filterPathField.setAccessible(true);
+	 * filterPathField.set(dialog, filterPath);
+	 *
+	 * String[] files = SWTDialogManager
+	 * .getFileDialogFilesList(filterPath);
+	 * Field fileNamesField = FileDialog.class
+	 * .getDeclaredField("fileNames");
+	 * fileNamesField.setAccessible(true);
+	 * fileNamesField.set(dialog, files);
+	 *
+	 * if (files.length > 0) {
+	 * Field fileNameField = FileDialog.class
+	 * .getDeclaredField("fileName");
+	 * fileNameField.setAccessible(true);
+	 * fileNameField.set(dialog, files[0]);
+	 * }
+	 *
+	 * return dialogResult;
+	 * } catch (Throwable e) {
+	 * SWTAspectActivator.log(e);
+	 * }
+	 *
+	 * TeslaEventManager.getManager().unhandledNativeDialog(
+	 * FileDialog.class, dialog.getText());
+	 * return "Unrecorded file dialog result";
+	 * }
+	 * }
+	 * return proceed(dialog);
+	 * }
+	 *
+	 * @SuppressAjWarnings("adviceDidNotMatch")
+	 * String around(DirectoryDialog dialog): execution(String DirectoryDialog.open()) && target(dialog) {
+	 * if (TeslaEventManager.getManager().hasListeners()) {
+	 * try {
+	 * if (SWTDialogManager.hasFolderDialogInfo()) {
+	 * return SWTDialogManager.getFolderDialogResult();
+	 * }
+	 * TeslaEventManager.getManager().unhandledNativeDialog(
+	 * DirectoryDialog.class, dialog.getText());
+	 * return "Unrecorded directory dialog result";
+	 * } catch (Throwable e) {
+	 * SWTAspectActivator.log(e);
+	 * }
+	 * }
+	 * return proceed(dialog);
+	 * }
 	 */
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(MessageBox dialog): execution(int MessageBox.open()) && target(dialog) {

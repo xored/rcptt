@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.PageBook.PageBookLayout;
 import org.eclipse.ui.statushandlers.StatusAdapter;
@@ -20,6 +21,15 @@ public aspect WorkbenchAspect {
 	public WorkbenchAspect() {
 		AspectManager.activateAspect(WorkbenchAspectActivator.PLUGIN_ID, this
 				.getClass().getName());
+	}
+
+	before(Workbench wb):
+		execution(int org.eclipse.ui.internal.Workbench.runUI()) && target(wb) {
+		TeslaEventManager.getManager().setLastWorkbench(wb);
+
+		if (wb != null) {
+			TeslaEventManager.getManager().setLastDisplay(wb.getDisplay());
+		}
 	}
 
 	Object around(WorkbenchStatusDialogManager mgr, StatusAdapter adapter,

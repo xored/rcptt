@@ -44,7 +44,7 @@ public class ChildrenCollector {
 		}
 		Class<?>[] arg = null;
 		SWTUIElement[] widgets = collectFor(w, null, goIntoComposites, arg);
-		List<SWTUIElement> results = new ArrayList<>();
+		List<SWTUIElement> results = new ArrayList<SWTUIElement>();
 		List<SWTUIElement> list = Arrays.asList(widgets);
 		int i = list.indexOf(after);
 		// int j = list.indexOf(widgets1[3]);

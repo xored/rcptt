@@ -60,7 +60,8 @@ public class Q7Utils {
 		if (resource.getURI() == null) {
 			return null;
 		}
-		return WorkspaceSynchronizer.getFile(resource);
+		//return WorkspaceSynchronizer.getFile(resource);
+		return null;
 	}
 
 	public static String serializeToString(EObject eObject) throws IOException {

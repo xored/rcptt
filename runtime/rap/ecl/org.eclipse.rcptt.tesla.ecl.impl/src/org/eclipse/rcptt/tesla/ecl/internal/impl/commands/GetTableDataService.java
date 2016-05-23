@@ -36,84 +36,85 @@ public class GetTableDataService extends AbstractActionService {
 
 	@Override
 	protected Object exec(final Command command) throws CoreException {
-		final GetTableData gtd = (GetTableData) command;
-		ControlHandler control = gtd.getControl();
-		Element tableElement = TeslaBridge.find(control);
-		final Widget table = (Widget) TeslaBridge.getClient()
-				.getProcessor(SWTUIProcessor.class).getMapper()
-				.get(tableElement).widget;
-
-		if (!(table instanceof Tree) && !(table instanceof Table)) {
-			throw new CoreException(
-					err("'get-table-data' can be used only on table or tree"));
-		}
-
-		final org.eclipse.rcptt.ecl.data.objects.Table data = ObjectsFactory.eINSTANCE
-				.createTable();
-
-		table.getDisplay().syncExec(new Runnable() {
-			public void run() {
-				getTableData(data, table, gtd.isIncludeChecked(),
-						gtd.isExcludeHidden());
-			}
-		});
-
-		return data;
+//		final GetTableData gtd = (GetTableData) command;
+//		ControlHandler control = gtd.getControl();
+//		Element tableElement = TeslaBridge.find(control);
+//		final Widget table = (Widget) TeslaBridge.getClient()
+//				.getProcessor(SWTUIProcessor.class).getMapper()
+//				.get(tableElement).widget;
+//
+//		if (!(table instanceof Tree) && !(table instanceof Table)) {
+//			throw new CoreException(
+//					err("'get-table-data' can be used only on table or tree"));
+//		}
+//
+//		final org.eclipse.rcptt.ecl.data.objects.Table data = ObjectsFactory.eINSTANCE
+//				.createTable();
+//
+//		table.getDisplay().syncExec(new Runnable() {
+//			public void run() {
+//				getTableData(data, table, gtd.isIncludeChecked(),
+//						gtd.isExcludeHidden());
+//			}
+//		});
+//
+//		return data;
+		return null;
 	}
 
-	private static void getTableData(org.eclipse.rcptt.ecl.data.objects.Table table,
-			Widget widget, boolean includeChecked, boolean excludeHidden) {
-		List<String> columnNames = new ArrayList<String>();
-		List<Integer> columnIndices = new ArrayList<Integer>();
-
-		if (includeChecked) {
-			columnNames.add(CHECKED_COLUMN);
-		}
-
-		Widget[] columns = TableTreeUtil.getColumns(widget);
-
-		if (columns.length == 0) {
-			columnNames.add(DEFAULT_COLUMN);
-		} else {
-			for (int i = 0; i < columns.length; i++) {
-				Widget column = columns[i];
-				if (excludeHidden && TableTreeUtil.getColumnWidth(column) == 0) {
-					continue;
-				}
-				columnNames.add(TableTreeUtil.getName(column));
-				columnIndices.add(i);
-			}
-		}
-
-		table.getColumns().addAll(columnNames);
-
-		for (Item item : TableTreeUtil.getItems(widget)) {
-			table.getRows().add(toRow(item, includeChecked, columnIndices));
-		}
-	}
-
-	private static Row toRow(Item item, boolean includeChecked,
-			List<Integer> columnIndices) {
-		Row result = ObjectsFactory.eINSTANCE.createRow();
-		if (includeChecked) {
-			result.getValues().add(
-					Boolean.toString(TableTreeUtil.isChecked(item)));
-		}
-
-		if (columnIndices.isEmpty()) {
-			result.getValues().add(TableTreeUtil.getValue(item));
-		} else {
-			for (int index : columnIndices) {
-				result.getValues().add(TableTreeUtil.getValue(item, index));
-			}
-		}
-
-		for (Item child : TableTreeUtil.getChildren(item)) {
-			result.getChildren().add(
-					toRow(child, includeChecked, columnIndices));
-		}
-		return result;
-	}
+//	private static void getTableData(org.eclipse.rcptt.ecl.data.objects.Table table,
+//			Widget widget, boolean includeChecked, boolean excludeHidden) {
+//		List<String> columnNames = new ArrayList<String>();
+//		List<Integer> columnIndices = new ArrayList<Integer>();
+//
+//		if (includeChecked) {
+//			columnNames.add(CHECKED_COLUMN);
+//		}
+//
+//		Widget[] columns = TableTreeUtil.getColumns(widget);
+//
+//		if (columns.length == 0) {
+//			columnNames.add(DEFAULT_COLUMN);
+//		} else {
+//			for (int i = 0; i < columns.length; i++) {
+//				Widget column = columns[i];
+//				if (excludeHidden && TableTreeUtil.getColumnWidth(column) == 0) {
+//					continue;
+//				}
+//				columnNames.add(TableTreeUtil.getName(column));
+//				columnIndices.add(i);
+//			}
+//		}
+//
+//		table.getColumns().addAll(columnNames);
+//
+//		for (Item item : TableTreeUtil.getItems(widget)) {
+//			table.getRows().add(toRow(item, includeChecked, columnIndices));
+//		}
+//	}
+//
+//	private static Row toRow(Item item, boolean includeChecked,
+//			List<Integer> columnIndices) {
+//		Row result = ObjectsFactory.eINSTANCE.createRow();
+//		if (includeChecked) {
+//			result.getValues().add(
+//					Boolean.toString(TableTreeUtil.isChecked(item)));
+//		}
+//
+//		if (columnIndices.isEmpty()) {
+//			result.getValues().add(TableTreeUtil.getValue(item));
+//		} else {
+//			for (int index : columnIndices) {
+//				result.getValues().add(TableTreeUtil.getValue(item, index));
+//			}
+//		}
+//
+//		for (Item child : TableTreeUtil.getChildren(item)) {
+//			result.getChildren().add(
+//					toRow(child, includeChecked, columnIndices));
+//		}
+//		return result;
+//	}
 
 	private static final String DEFAULT_COLUMN = "text";
 	private static final String CHECKED_COLUMN = "checked";

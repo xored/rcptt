@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class WidgetDescriber implements IWidgetDescriber {
 
@@ -106,9 +107,9 @@ public class WidgetDescriber implements IWidgetDescriber {
 		if (widget instanceof Shell) {
 			return new Point(bounds.x, bounds.y);
 		}
-		if (display == null) {
-			display = PlatformUI.getWorkbench().getDisplay();
-		}
+//		if (display == null) {
+//			display = RWTUtils.findDisplay();
+//		}
 		// for menu item bounds can be null
 		if (bounds != null) {
 			return display.map(parent, null, bounds.x, bounds.y);

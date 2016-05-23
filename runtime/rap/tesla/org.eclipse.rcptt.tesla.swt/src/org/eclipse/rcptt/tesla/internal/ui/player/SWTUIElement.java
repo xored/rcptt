@@ -24,6 +24,7 @@ import org.eclipse.rcptt.tesla.internal.ui.IBasicMappingNode;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.jface.ControlDecoratorRecordingHolder;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -35,7 +36,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.IWorkbench;
 
 /**
  * Instances of this class are used mainly as convenience wraps for SWT widgets
@@ -44,7 +45,7 @@ import org.eclipse.ui.PlatformUI;
  * <p>
  * The wrapping layer also serves as an unification of various kinds of UI
  * elements.
- * 
+ *
  * @see SWTUIPlayer#wrap(Object)
  */
 public class SWTUIElement implements IBasicMappingNode {
@@ -79,10 +80,10 @@ public class SWTUIElement implements IBasicMappingNode {
 	}
 
 	public boolean isSuitableForKind(GenericElementKind kind) {
-		
+
 		if (getKind().is(ElementKind.PropertyTab) && kind.is(ElementKind.Canvas))
 			return true;
-					
+
 		return getKind().is(kind);
 	}
 
@@ -265,8 +266,9 @@ public class SWTUIElement implements IBasicMappingNode {
 	}
 
 	public boolean isWorkbenchWindow() {
-		if (getKind().is(ElementKind.Window)) {
-			return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (getKind().is(ElementKind.Window) && workbench != null) {
+			return workbench.getActiveWorkbenchWindow()
 					.getShell().equals(widget);
 		}
 		return false;

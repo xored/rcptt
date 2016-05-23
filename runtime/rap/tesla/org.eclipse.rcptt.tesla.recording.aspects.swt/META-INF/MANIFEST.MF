@@ -9,7 +9,8 @@ Require-Bundle: org.aspectj.runtime;visibility:=reexport,
  org.eclipse.rap.rwt,
  org.eclipse.rcptt.tesla.core.am;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.tesla.core;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.rcptt.tesla.swt;bundle-version="[2.1.0,3.0.0)"
+ org.eclipse.rcptt.tesla.swt;bundle-version="[2.1.0,3.0.0)",
+ org.eclipse.rap.rwt.osgi
 onEnvironment: JavaSE-1.6
 Import-Package: org.osgi.framework
 Eclipse-SupplementBundle: org.eclipse.rap.rwt, org.eclipse.rap.ui.views

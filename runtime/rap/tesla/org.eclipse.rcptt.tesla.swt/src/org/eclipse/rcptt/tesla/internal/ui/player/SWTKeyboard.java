@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 public class SWTKeyboard {
-	private static final Set<Integer> specialKeys = new HashSet<>();
+	private static final Set<Integer> specialKeys = new HashSet<Integer>();
 
 	static {
 		/* function keys */
@@ -157,7 +157,7 @@ public class SWTKeyboard {
 	}
 
 	private KeyStroke[] reverse(KeyStroke... keys) {
-		ArrayList<KeyStroke> copy = new ArrayList<>(Arrays.asList(keys));
+		ArrayList<KeyStroke> copy = new ArrayList<KeyStroke>(Arrays.asList(keys));
 		Collections.reverse(copy);
 		return copy.toArray(new KeyStroke[0]);
 	}
@@ -191,7 +191,7 @@ public class SWTKeyboard {
 	 */
 	public List<KeyStroke> splitToKeys(KeyStroke keyStroke) {
 		int modificationKeys = keyStroke.getModifierKeys();
-		List<KeyStroke> keys = new ArrayList<>();
+		List<KeyStroke> keys = new ArrayList<KeyStroke>();
 		if (modificationKeys != 0) {
 			int[] sortModifierKeys = sortModifierKeys(modificationKeys);
 			for (int modifierKey : sortModifierKeys) {

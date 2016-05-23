@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rcptt.logging.Q7LoggingManager;
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Node;
@@ -41,11 +42,11 @@ import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.ui.IJobCollector;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -539,7 +540,7 @@ public class UIJobCollector implements IJobChangeListener {
 								if (jobThread != null && jobContext != null) {
 									if (jobContext.contains("org.eclipse.ui.internal.UISynchronizer", "syncExec")
 											&& jobContext.contains("org.eclipse.ui.internal.Semaphore", "acquire")) {
-										if (!SWTUIPlayer.hasRunnables(PlatformUI.getWorkbench().getDisplay())) {
+										if (!SWTUIPlayer.hasRunnables(RWTUtils.findDisplay())) {
 											// also check what sync exec are on
 											// current stack trace
 											List<Context> execs = TeslaEventManager.getManager().getSyncExecs();
@@ -588,7 +589,7 @@ public class UIJobCollector implements IJobChangeListener {
 				if ((flags & 0xFF) == 0x08) {
 					return logReturnResult(true, realJobs, jobsInUI, info);
 				}
-				final Display display = PlatformUI.getWorkbench().getDisplay();
+				final Display display = RWTUtils.findDisplay();
 				final boolean value[] = { false };
 				display.syncExec(new Runnable() {
 
@@ -719,7 +720,7 @@ public class UIJobCollector implements IJobChangeListener {
 
 	/**
 	 * Wait untill will not be empty for timeout
-	 * 
+	 *
 	 * @param timeout
 	 * @throws InterruptedException
 	 */

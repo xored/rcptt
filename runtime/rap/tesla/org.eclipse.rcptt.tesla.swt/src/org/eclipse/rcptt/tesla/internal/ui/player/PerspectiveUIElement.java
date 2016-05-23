@@ -15,6 +15,7 @@ import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.internal.ui.IBasicMappingNode;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class PerspectiveUIElement implements IBasicMappingNode {
 
@@ -37,7 +38,7 @@ public class PerspectiveUIElement implements IBasicMappingNode {
 	}
 
 	private static IPerspectiveDescriptor findPerspectiveDescriptor(String name) {
-		IPerspectiveDescriptor[] perspectives = PlatformUI.getWorkbench()
+		IPerspectiveDescriptor[] perspectives = RWTUtils.getWorkbench()
 				.getPerspectiveRegistry().getPerspectives();
 		for (IPerspectiveDescriptor persectiveDescr : perspectives) {
 			if (persectiveDescr.getLabel().equals(name)) {

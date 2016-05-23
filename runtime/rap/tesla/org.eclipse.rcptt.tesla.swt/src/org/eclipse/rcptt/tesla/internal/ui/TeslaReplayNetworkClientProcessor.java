@@ -13,8 +13,6 @@ package org.eclipse.rcptt.tesla.internal.ui;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.reporting.core.ReportHelper;
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
@@ -28,6 +26,7 @@ import org.eclipse.rcptt.tesla.internal.core.network.server.TeslaNetworkClientCo
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class TeslaReplayNetworkClientProcessor implements
 		ITeslaNetworkClientProcessor {
@@ -42,7 +41,7 @@ public class TeslaReplayNetworkClientProcessor implements
 		listener = new ITeslaEventListener() {
 			public boolean doProcessing(final Context currentContext) {
 				if (client != null) {
-					Q7WaitInfoRoot  info = ReportHelper.getWaitInfo(ReportManager.getCurrentReportNode());
+					Q7WaitInfoRoot info = ReportHelper.getWaitInfo(ReportManager.getCurrentReportNode());
 					client.processNext(currentContext, info);
 				}
 				return false;
@@ -60,11 +59,11 @@ public class TeslaReplayNetworkClientProcessor implements
 		AspectManager.printInfo();
 		if (command.getMode().equals(TeslaMode.REPLAY)) {
 			// Use async exec to be sure display are wakeup
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			RWTUtils.findDisplay().asyncExec(new Runnable() {
 				public void run() {
 					TeslaEventManager.getManager().addEventListener(listener);
 					// Wait up Display
-					PlatformUI.getWorkbench().getDisplay()
+					RWTUtils.findDisplay()
 							.asyncExec(new Runnable() {
 								public void run() {
 								}

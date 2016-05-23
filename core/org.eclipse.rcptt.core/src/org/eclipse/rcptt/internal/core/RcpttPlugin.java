@@ -45,7 +45,7 @@ public class RcpttPlugin extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
 	 */
@@ -55,17 +55,17 @@ public class RcpttPlugin extends Plugin {
 		plugin = this;
 
 		NetworkUtils.initTimeouts();
-		try {
-			ModelManager.getModelManager().startup();
-		} catch (Throwable e) {
-			// yeah, we're going to ignore even ClassNoDefFound exceptions
-			log("Couldn't start model manager", e);
-		}
+//		try {
+//			ModelManager.getModelManager().startup();
+//		} catch (Throwable e) {
+//			// yeah, we're going to ignore even ClassNoDefFound exceptions
+//			log("Couldn't start model manager", e);
+//		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
 	 */
@@ -84,7 +84,7 @@ public class RcpttPlugin extends Plugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static RcpttPlugin getDefault() {

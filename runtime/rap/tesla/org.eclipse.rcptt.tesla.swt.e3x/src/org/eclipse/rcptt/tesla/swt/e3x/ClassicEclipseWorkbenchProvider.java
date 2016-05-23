@@ -12,6 +12,7 @@ package org.eclipse.rcptt.tesla.swt.e3x;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.swt.workbench.IEclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 @SuppressWarnings("restriction")
 public class ClassicEclipseWorkbenchProvider implements
@@ -116,10 +118,14 @@ public class ClassicEclipseWorkbenchProvider implements
 	}
 
 	public Map<Control, SWTUIElement> getWorkbenchReference(SWTUIPlayer player) {
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
-				.getWorkbenchWindows();
+		if(RWTUtils.getWorkbench() == null) {
+			return Collections.emptyMap();
+		}
+		IWorkbenchWindow[] windows = RWTUtils.getWorkbench().getWorkbenchWindows();
+
+
 		if (!Display.getCurrent()
-				.equals(PlatformUI.getWorkbench().getDisplay())) {
+				.equals(RWTUtils.getWorkbench().getDisplay())) {
 			return new HashMap<Control, SWTUIElement>();
 		}
 		Map<Control, SWTUIElement> references = new HashMap<Control, SWTUIElement>();
@@ -252,7 +258,7 @@ public class ClassicEclipseWorkbenchProvider implements
 		Version version = TeslaCore.getPlatformVersion();
 		int major = version.getMajor();
 		int minor = version.getMinor();
-		return major == 3 && minor > 4 && minor < 9;
+        return major == 3 && minor > 4 && minor < 11;
 	}
 
 	private static final List<String> viewTooltips = Arrays.asList("View Menu",

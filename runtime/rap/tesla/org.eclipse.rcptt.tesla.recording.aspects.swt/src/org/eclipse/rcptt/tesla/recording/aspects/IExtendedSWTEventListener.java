@@ -29,4 +29,6 @@ public interface IExtendedSWTEventListener extends IBasicSWTEventListener {
 	public void recordTabFolderEvent(Control tabControl, int eventId);
 
 	public void setCurrentEvent(Event event);
+
+    public boolean needProceedEvent();
 }

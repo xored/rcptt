@@ -177,6 +177,7 @@ import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.IUnhandledNativeDial
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IImageAssertSupport;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
 import org.eclipse.rcptt.tesla.ui.describers.WidgetDescriber;
@@ -214,7 +215,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.handlers.IHandlerService;
 
@@ -837,7 +837,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		return new Point(x, y);
 	}
 
-	private static final Map<MouseEventKind, Integer> mouseToEventType = new HashMap<>();
+	private static final Map<MouseEventKind, Integer> mouseToEventType = new HashMap<MouseEventKind, Integer>();
 	static {
 		mouseToEventType.put(MouseEventKind.DOUBLE_CLICK, SWT.MouseDoubleClick);
 		mouseToEventType.put(MouseEventKind.DOWN, SWT.MouseDown);
@@ -2359,11 +2359,11 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
-//			if (element.widget instanceof StyledText) {
-//				return failResponse("Trying to close "
-//						+ element.widget.getClass().getName()
-//						+ ". StyledText should not be closed.");
-//			}
+			// if (element.widget instanceof StyledText) {
+			// return failResponse("Trying to close "
+			// + element.widget.getClass().getName()
+			// + ". StyledText should not be closed.");
+			// }
 			getPlayer().close(element);
 			getMapper().remove(command.getElement());
 		} else {
@@ -2392,7 +2392,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 					return response;
 				}
 
-				final List<String[]> sels = new ArrayList<>();
+				final List<String[]> sels = new ArrayList<String[]>();
 				sels.add(asStringArray(command.getPath()));
 				for (final MultiSelectionItem item : items) {
 					sels.add(asStringArray(item.getPath()));
@@ -2433,7 +2433,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		} else if (!command.getPath().isEmpty()
 				|| !command.getAdditionalItems().isEmpty()) {
 
-			List<String[]> items = new ArrayList<>();
+			List<String[]> items = new ArrayList<String[]>();
 			String[] path = asStringArray(command.getPath());
 			if (path != null)
 				items.add(path);
@@ -2558,15 +2558,15 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	protected Response handleClickAboutMenu(ClickAboutMenu command) {
-		//runCommand(ActionFactory.ABOUT);
+		// runCommand(ActionFactory.ABOUT);
 		return RawFactory.eINSTANCE.createResponse();
 	}
 
 	private void runCommand(final ActionFactory action) {
-		Display.getDefault().asyncExec(new Runnable() {
+		RWTUtils.findDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				IWorkbench workbench = PlatformUI.getWorkbench();
+				IWorkbench workbench = RWTUtils.getWorkbench();
 				IHandlerService service = workbench
 						.getService(IHandlerService.class);
 				try {
@@ -2643,8 +2643,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 	public synchronized SWTUIPlayer getPlayer() {
 		if (internalPlayer == null) {
-			internalPlayer = SWTUIPlayer.getPlayer(PlatformUI.getWorkbench()
-					.getDisplay());
+			internalPlayer = SWTUIPlayer.getPlayer(RWTUtils.findDisplay());
 		}
 		return internalPlayer;
 	}
@@ -2711,7 +2710,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	public boolean callMasterProcess(final Context currentContext) {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+		RWTUtils.findDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				client.processNext(currentContext, null);
@@ -2769,13 +2768,15 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		Node root2 = root.child("eclipse.windows");
 
 		// Use all eclipse windows as roots
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
-				.getWorkbenchWindows();
-		for (IWorkbenchWindow win : windows) {
-			Set<SWTUIElement> processed = new HashSet<>();
-			processChildren(win, root2, processed);
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (workbench != null) {
+			IWorkbenchWindow[] windows = workbench
+					.getWorkbenchWindows();
+			for (IWorkbenchWindow win : windows) {
+				Set<SWTUIElement> processed = new HashSet<SWTUIElement>();
+				processChildren(win, root2, processed);
+			}
 		}
-
 		Node player = InfoUtils.newNode("swt.player").add(information);
 		SWTUIPlayer swtuiPlayer = getPlayer();
 		UIJobCollector collector = swtuiPlayer.getCollector();

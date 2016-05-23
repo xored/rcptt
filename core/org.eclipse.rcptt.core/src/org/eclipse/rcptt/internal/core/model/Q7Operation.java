@@ -41,12 +41,12 @@ import org.eclipse.rcptt.internal.core.model.deltas.DeltaProcessor;
 import org.eclipse.rcptt.internal.core.model.deltas.Q7ElementDelta;
 
 @SuppressWarnings("rawtypes")
-public abstract class Q7Operation implements IWorkspaceRunnable,
+public abstract class Q7Operation implements
 		IProgressMonitor {
 	protected interface IPostAction {
 		/*
 		 * Returns the id of this action.
-		 * 
+		 *
 		 * @see ModelOperation#postAction
 		 */
 		String getID();
@@ -59,7 +59,7 @@ public abstract class Q7Operation implements IWorkspaceRunnable,
 
 	/*
 	 * Constants controlling the insertion mode of an action.
-	 * 
+	 *
 	 * @see ModelOperation#postAction
 	 */
 	protected static final int APPEND = 1; // insert at the end
@@ -207,7 +207,7 @@ public abstract class Q7Operation implements IWorkspaceRunnable,
 
 	/**
 	 * Common code used to verify the elements this operation is processing.
-	 * 
+	 *
 	 * @see Q7Operation#verify()
 	 */
 	protected Q7Status commonVerify() {
@@ -667,7 +667,7 @@ public abstract class Q7Operation implements IWorkspaceRunnable,
 
 	/**
 	 * Runs this operation and registers any deltas created.
-	 * 
+	 *
 	 * @see IWorkspaceRunnable
 	 * @exception CoreException
 	 *                if the operation fails
@@ -757,8 +757,8 @@ public abstract class Q7Operation implements IWorkspaceRunnable,
 				// as this operation is modifying the tree (not read-only) and a
 				// CoreException will be thrown anyway.
 				IWorkspace wc = ResourcesPlugin.getWorkspace();
-				wc.run(this, getSchedulingRule(), IWorkspace.AVOID_UPDATE,
-						monitor);
+			//	wc.run(this, getSchedulingRule(), IWorkspace.AVOID_UPDATE,
+				//		monitor);
 			}
 		} catch (CoreException ce) {
 			if (ce instanceof ModelException) {
@@ -804,7 +804,7 @@ public abstract class Q7Operation implements IWorkspaceRunnable,
 
 	/**
 	 * Sets whether this operation is nested or not.
-	 * 
+	 *
 	 * @see CreateElementInCUOperation#checkCanceled
 	 */
 	protected void setNested(boolean nested) {
@@ -826,10 +826,10 @@ public abstract class Q7Operation implements IWorkspaceRunnable,
 	/**
 	 * Returns a status indicating if there is any known reason this operation
 	 * will fail. Operations are verified before they are run.
-	 * 
+	 *
 	 * Subclasses must override if they have any conditions to verify before
 	 * this operation executes.
-	 * 
+	 *
 	 * @see IModelStatus
 	 */
 	protected Q7Status verify() {

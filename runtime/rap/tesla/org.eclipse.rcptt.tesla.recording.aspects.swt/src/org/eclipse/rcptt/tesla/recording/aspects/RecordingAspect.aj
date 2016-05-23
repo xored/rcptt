@@ -16,14 +16,25 @@ import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.utils.TeslaUtils;
 import org.eclipse.rcptt.tesla.swt.logging.SwtEventLog;
+import org.eclipse.rap.rwt.application.ApplicationConfiguration;
+import org.eclipse.rap.rwt.internal.lifecycle.CurrentPhase;
+import org.eclipse.rap.rwt.internal.lifecycle.PhaseId;
 
-public aspect RecordingAspect {
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.TypedEvent;
+import org.eclipse.rap.rwt.osgi.ApplicationLauncher;
+
+privileged public aspect RecordingAspect {
 	private boolean wasSendEvent = false;
 
 	public RecordingAspect() {
@@ -31,88 +42,32 @@ public aspect RecordingAspect {
 				.getClass().getName());
 	}
 
-	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(Widget widget, int type, Event event, boolean send): 
-	 	execution(void Widget.sendEvent (int, Event, boolean)) && target(widget) && args(type, event, send) {
-		SWTEventManager.setCurrentEvent(event);
-		if (SWTEventManager.isShouldProceed(widget, type)) {
-			SwtEventLog.getInstance().logProceed(widget, type, event, send);
-			return proceed(widget, type, event, send);
-		}
-		boolean needProceed = !SWTEventManager.skipEvent(widget, type, event,
-				send);
-		try {
-			if (SWTEventManager.isFreeze(widget, type, event)) {
-				if (!SWTEventManager.handleEventInFreeze(widget, type, event)) {
-					if (event != null && !needProceedEvent(widget, type)) {
-						SwtEventLog.getInstance().logSkip(widget, type, event, send);						
-						event.doit = false;
-					}
-					return null;
-				}
-			}
-			wasSendEvent = true;
-			SwtEventLog.getInstance().logRecord(widget, type, event, send);
-			if (!isMac || (isMac && send) || (isMac && type == SWT.Modify)) {
-				// II: I have changed event processing logic on Mac, see details below
-				// however I did not change handling of Modify event, so left it
-				// as it was in previous version, but probably this is not needed
-				// anymore
-				//
-				// Event sequence for usual push button might look like this:
-				// With listeners:
-				// 1. sendSelectionEvent() <-- captured by aspect below
-				// 2. sendEvent(int, event, false) <-- captured by this aspect,
-				//    will set 'wasSendEvent' to true, so that selection aspect
-				//    won't record it
-				// 3. sendEvent(int, event, true) <-- captured by this aspect, will be recorded
-				// Without listeners:
-				// 1. sendSelectionEvent() <-- that's it, no listeners and event won't go any further
-				// So we need to record it in selection aspect
-				SWTEventManager.recordEvent(widget, type, event);
-			}
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-		if (needProceed) {
-			SwtEventLog.getInstance().logProceed(widget, type, event, send);
-			proceed(widget, type, event, send);
-		} else {
-			if (event != null) {
-				SwtEventLog.getInstance().logSkip(widget, type, event, send);
-				event.doit = false;
-			}
-		}
-		return null;
+
+	private static boolean isEventProcessingPhase() {
+		PhaseId currentPhase = CurrentPhase.get();
+		return PhaseId.PREPARE_UI_ROOT.equals(currentPhase)
+				|| PhaseId.PROCESS_ACTION.equals(currentPhase);
 	}
-	
-	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(Widget widget, Event event): 
-	 	execution(void Widget.sendEvent (Event)) && target(widget) && args(event) {
-		SWTEventManager.setCurrentEvent(event);
-		if (event != null
-				&& SWTEventManager.isShouldProceed(widget, event.type)) {
-			SwtEventLog.getInstance().logProceed(widget, -1, event, true);
-			return proceed(widget, event);
+
+	boolean around(Widget widget, int type):
+		execution(boolean Widget.isListening(int)) && target(widget) && args(type) {
+		if (proceed(widget, type)) {
+			return true;
 		}
-		try {
-			if (event != null
-					&& SWTEventManager.isFreeze(widget, event.type, event)) {
-				if (!SWTEventManager.handleEventInFreeze(widget, event.type,
-						event)) {
-					if (event != null && !needProceedEvent(widget, event.type)) {
-						SwtEventLog.getInstance().logSkip(widget, -1, event, true);						
-						event.doit = false;
-					}
-					return null;
-				}
-			}
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
+		if (widget instanceof ToolItem
+				&& (widget.getStyle() & SWT.SEPARATOR) != 0) {
+			// see rap bug https://bugs.eclipse.org/bugs/show_bug.cgi?id=422104
+			return false;
 		}
-		
-		SwtEventLog.getInstance().logProceed(widget, -1, event, true);
-		return proceed(widget, event);
+
+		return (SWTEventManager.needProceedEvents()
+		 		// all UI changes must be made in Render phase otherwise (in read phase)
+		 		// changes will be not be provided to the client (JS),
+		 		// because server will not find changes (after Read and Render no UI
+		 		// difference, see WidgetLCAUtil.hasChanged).
+				&& CurrentPhase.get() == PhaseId.RENDER);
+
+
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
@@ -233,7 +188,7 @@ public aspect RecordingAspect {
 	 * Prevent in assert mode changing selection state of menu items
 	 */
 	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(MenuItem item, boolean selected): 
+	Object around(MenuItem item, boolean selected):
 		execution(void org.eclipse.swt.widgets.MenuItem.setSelection(boolean)) && target(item) && args(selected) {
 		try {
 			if (SWTEventManager.getFreeze()) {
@@ -246,10 +201,13 @@ public aspect RecordingAspect {
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(Widget widget, int type, Event event, boolean send): 
-		execution(void org.eclipse.swt.widgets.Widget.sendSelectionEvent(int, Event, boolean)) && target(widget) && args(type, event, send) {
-		if (SWTEventManager.isShouldProceed(widget, type)) {
-			return proceed(widget, type, event, send);
+	Object around(Widget widget, Event event):
+	 	execution(void Widget.sendEvent (Event)) && target(widget) && args(event) {
+		boolean send = true;
+		int type = event.type;
+
+		if (SWTEventManager.isShouldProceed(widget, type) || !isEventProcessingPhase()) {
+			return proceed(widget, event);
 		}
 		try {
 			if (SWTEventManager.isFreeze(widget, type, event)) {
@@ -268,7 +226,7 @@ public aspect RecordingAspect {
 				send);
 		Object result = null;
 		if (needProceed) {
-			result = proceed(widget, type, event, send);
+			result = proceed(widget, event);
 		} else {
 			if (event != null) {
 				event.doit = false;
@@ -312,31 +270,31 @@ public aspect RecordingAspect {
 		return proceed(ctrl, type);
 	}
 
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	Object around(FileDialog dialog): execution(String FileDialog.open()) && target(dialog) {
-//		Object dialogResult = proceed(dialog);
-//		try {
-//			String[] result = dialog.getFileNames().clone();
-//			for (int i = 0; i < result.length; i++) {
-//				result[i] = dialog.getFilterPath() + File.separator + result[i];
-//			}
-//			SWTEventManager.recordSWTDialog(dialog, result);
-//		} catch (Throwable e) {
-//			RecordingSWTActivator.log(e);
-//		}
-//		return dialogResult;
-//	}
-//
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	Object around(DirectoryDialog dialog): execution(String DirectoryDialog.open()) && target(dialog) {
-//		Object result = proceed(dialog);
-//		try {
-//			SWTEventManager.recordSWTDialog(dialog, result);
-//		} catch (Throwable e) {
-//			RecordingSWTActivator.log(e);
-//		}
-//		return result;
-//	}
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// Object around(FileDialog dialog): execution(String FileDialog.open()) && target(dialog) {
+	// Object dialogResult = proceed(dialog);
+	// try {
+	// String[] result = dialog.getFileNames().clone();
+	// for (int i = 0; i < result.length; i++) {
+	// result[i] = dialog.getFilterPath() + File.separator + result[i];
+	// }
+	// SWTEventManager.recordSWTDialog(dialog, result);
+	// } catch (Throwable e) {
+	// RecordingSWTActivator.log(e);
+	// }
+	// return dialogResult;
+	// }
+	//
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// Object around(DirectoryDialog dialog): execution(String DirectoryDialog.open()) && target(dialog) {
+	// Object result = proceed(dialog);
+	// try {
+	// SWTEventManager.recordSWTDialog(dialog, result);
+	// } catch (Throwable e) {
+	// RecordingSWTActivator.log(e);
+	// }
+	// return result;
+	// }
 
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(FontDialog dialog): execution(org.eclipse.swt.graphics.FontData FontDialog.open()) && target(dialog) {
@@ -372,7 +330,8 @@ public aspect RecordingAspect {
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
-	after(CCombo combo): execution(void org.eclipse.swt.custom.CCombo.createPopup(String[], int)) && target(combo) {
+	after(CCombo combo, org.eclipse.swt.widgets.Composite composite, int style):
+		execution(org.eclipse.swt.custom.CCombo.new(org.eclipse.swt.widgets.Composite,int)) && target(combo) && args(composite, style){
 		try {
 			SWTEventManager.recordCombo(combo);
 		} catch (Throwable e) {
@@ -380,46 +339,49 @@ public aspect RecordingAspect {
 		}
 	}
 
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	after(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) && target(text) && args(action) {
-//		try {
-//			SWTEventManager.recordStyledTextActionAfter(text, action);
-//		} catch (Throwable e) {
-//			RecordingSWTActivator.log(e);
-//		}
-//	}
-//
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	before(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) && target(text) && args(action) {
-//		try {
-//			SWTEventManager.recordStyledTextActionBefore(text, action);
-//		} catch (Throwable e) {
-//			RecordingSWTActivator.log(e);
-//		}
-//	}
-//
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretOffset(int, int)) && target(text) {
-//		try {
-//			SWTEventManager.recordStyledTextOffset(text);
-//		} catch (Throwable e) {
-//			RecordingSWTActivator.log(e);
-//		}
-//	}
-//
-//	// eclipse 3.4 support:
-//	// setCaretOffset(int, int) - no such method in 3.4
-//	// added after setCaretLocation()
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretLocation()) && target(text) {
-//		try {
-//			if (TeslaUtils.getEclipseVersion().getMajor() <= 3
-//					&& TeslaUtils.getEclipseVersion().getMinor() <= 4)
-//				SWTEventManager.recordStyledTextOffset(text);
-//		} catch (Throwable e) {
-//			RecordingSWTActivator.log(e);
-//		}
-//	}
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// after(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) &&
+	// target(text) && args(action) {
+	// try {
+	// SWTEventManager.recordStyledTextActionAfter(text, action);
+	// } catch (Throwable e) {
+	// RecordingSWTActivator.log(e);
+	// }
+	// }
+	//
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// before(StyledText text, int action): execution(void org.eclipse.swt.custom.StyledText.invokeAction(int)) &&
+	// target(text) && args(action) {
+	// try {
+	// SWTEventManager.recordStyledTextActionBefore(text, action);
+	// } catch (Throwable e) {
+	// RecordingSWTActivator.log(e);
+	// }
+	// }
+	//
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretOffset(int, int)) &&
+	// target(text) {
+	// try {
+	// SWTEventManager.recordStyledTextOffset(text);
+	// } catch (Throwable e) {
+	// RecordingSWTActivator.log(e);
+	// }
+	// }
+	//
+	// // eclipse 3.4 support:
+	// // setCaretOffset(int, int) - no such method in 3.4
+	// // added after setCaretLocation()
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// after(StyledText text): execution(void org.eclipse.swt.custom.StyledText.setCaretLocation()) && target(text) {
+	// try {
+	// if (TeslaUtils.getEclipseVersion().getMajor() <= 3
+	// && TeslaUtils.getEclipseVersion().getMinor() <= 4)
+	// SWTEventManager.recordStyledTextOffset(text);
+	// } catch (Throwable e) {
+	// RecordingSWTActivator.log(e);
+	// }
+	// }
 
 	// Collect menu sources
 	@SuppressAjWarnings("adviceDidNotMatch")
@@ -461,92 +423,92 @@ public aspect RecordingAspect {
 	// target(control) && args(menu) {
 	// SWTEventManager.processMenuCreation(menu, control);
 	// }
-	
-// -- THE CODE BELLOW USED FOR CUSTOM BUILDS
-	
-//	before(org.eclipse.rap.ui.views.properties.PropertySheet sheet):
-//		call (* *.*(..)) && this(sheet) {
-//		SwtEventLog.getInstance().logMethodCallFrom(thisJoinPoint);
-//	}
-//	
-//	before(org.eclipse.rap.ui.views.properties.PropertySheet sheet):
-//		execution (* *.*(..)) && target(sheet) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	private DisposeListener disposeListener = new DisposeListener() {
-//		public void widgetDisposed(DisposeEvent e) {
-//			SwtEventLog.getInstance().logTypedEvent(e);
-//			e.widget.removeDisposeListener(this);
-//		}
-//	};
-//	
-//	after(Tree tree) returning: this(tree) && execution (Tree.new(..)) {
-//		tree.addDisposeListener(disposeListener);
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-	
-//	before(Widget widget):
-//		execution (public void Widget.dispose()) && target(widget) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-	
-//	before(Combo combo):
-//	execution (public void setItems(String[])) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(Combo combo):
-//	execution (public void setItem(int, String)) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(Combo combo):
-//	execution (public void add(String)) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(Combo combo):
-//	execution (public void add(String, int)) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(CCombo combo):
-//	execution (public void setItems(String[])) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(CCombo combo):
-//	execution (public void setItem(int, String)) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(CCombo combo):
-//	execution (public void add(String)) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(CCombo combo):
-//	execution (public void add(String, int)) && target(combo) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-	
-//	after(Shell shell) returning: this(shell) && initialization(Shell.new(..)) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//    }	
-//	
-//	before(Shell shell):
-//	execution (public void open()) && target(shell) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(Shell shell):
-//	execution (public void close()) && target(shell) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
-//	
-//	before(Shell shell):
-//	execution (public void dispose()) && target(shell) {
-//		SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
-//	}
+
+	// -- THE CODE BELLOW USED FOR CUSTOM BUILDS
+
+	// before(org.eclipse.rap.ui.views.properties.PropertySheet sheet):
+	// call (* *.*(..)) && this(sheet) {
+	// SwtEventLog.getInstance().logMethodCallFrom(thisJoinPoint);
+	// }
+	//
+	// before(org.eclipse.rap.ui.views.properties.PropertySheet sheet):
+	// execution (* *.*(..)) && target(sheet) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// private DisposeListener disposeListener = new DisposeListener() {
+	// public void widgetDisposed(DisposeEvent e) {
+	// SwtEventLog.getInstance().logTypedEvent(e);
+	// e.widget.removeDisposeListener(this);
+	// }
+	// };
+	//
+	// after(Tree tree) returning: this(tree) && execution (Tree.new(..)) {
+	// tree.addDisposeListener(disposeListener);
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+
+	// before(Widget widget):
+	// execution (public void Widget.dispose()) && target(widget) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+
+	// before(Combo combo):
+	// execution (public void setItems(String[])) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(Combo combo):
+	// execution (public void setItem(int, String)) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(Combo combo):
+	// execution (public void add(String)) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(Combo combo):
+	// execution (public void add(String, int)) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(CCombo combo):
+	// execution (public void setItems(String[])) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(CCombo combo):
+	// execution (public void setItem(int, String)) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(CCombo combo):
+	// execution (public void add(String)) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(CCombo combo):
+	// execution (public void add(String, int)) && target(combo) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+
+	// after(Shell shell) returning: this(shell) && initialization(Shell.new(..)) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(Shell shell):
+	// execution (public void open()) && target(shell) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(Shell shell):
+	// execution (public void close()) && target(shell) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
+	//
+	// before(Shell shell):
+	// execution (public void dispose()) && target(shell) {
+	// SwtEventLog.getInstance().logMethodCallTo(thisJoinPoint);
+	// }
 }

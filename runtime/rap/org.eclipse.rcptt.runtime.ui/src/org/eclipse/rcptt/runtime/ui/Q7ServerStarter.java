@@ -141,7 +141,7 @@ public enum Q7ServerStarter {
 	}
 
 	private static int getProperty(String var) {
-		String port = System.getProperty(var);
+		String port = Activator.getDefault().getBundle().getBundleContext().getProperty(var);
 		if (port != null && !port.isEmpty()) {
 			try {
 				return Integer.valueOf(port);

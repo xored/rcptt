@@ -27,6 +27,7 @@ import org.eclipse.rcptt.tesla.core.info.InfoFactory;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.internal.core.TeslaProcessorManager;
 import org.eclipse.rcptt.tesla.internal.core.info.GeneralInformationCollector;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.widgets.Display;
 
 public class TeslaInfoProvider extends AbstractEventProvider {
@@ -45,7 +46,7 @@ public class TeslaInfoProvider extends AbstractEventProvider {
 						return information;
 					}
 				});
-		Display.getDefault().asyncExec(displayExec);
+		RWTUtils.findDisplay().asyncExec(displayExec);
 		try {
 			return displayExec.get(15, TimeUnit.SECONDS);
 		} catch (ExecutionException e1) {

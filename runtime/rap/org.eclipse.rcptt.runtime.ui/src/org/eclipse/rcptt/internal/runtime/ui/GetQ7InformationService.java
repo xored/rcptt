@@ -22,10 +22,13 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 public class GetQ7InformationService implements ICommandService {
+
+	private static final int TIMEOUT = 1000;
 
 	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
 		IPipe output = context.getOutput();
@@ -56,7 +59,32 @@ public class GetQ7InformationService implements ICommandService {
 			}
 		}
 
+		checkActiveClient(info);
 		output.write(info);
 		return result;
 	}
+
+	private void checkActiveClient(final Q7Information info) {
+		final Display display = RWTUtils.findDisplay();
+		if (display == null) {
+			return;
+		}
+		display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				info.setClientActive(true);
+				synchronized (info) {
+					info.notifyAll();
+				}
+			}
+		});
+		synchronized (info) {
+			try {
+				info.wait(TIMEOUT);
+			} catch (InterruptedException e) {
+				return;
+			}
+		}
+	}
+
 }

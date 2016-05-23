@@ -25,6 +25,7 @@ import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IPipe;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -33,22 +34,18 @@ import org.eclipse.swt.graphics.ImageLoader;
 public class GetPerspectivesService implements ICommandService {
 
 	@Override
-	public IStatus service(Command command, IProcess context)
-			throws InterruptedException, CoreException {
+	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
 		IPipe output = context.getOutput();
-		PerspectivesList list = Q7CoreFactory.eINSTANCE
-				.createPerspectivesList();
+		PerspectivesList list = Q7CoreFactory.eINSTANCE.createPerspectivesList();
 
-		IPerspectiveDescriptor[] perspectives = PlatformUI.getWorkbench()
-				.getPerspectiveRegistry().getPerspectives();
+		IPerspectiveDescriptor[] perspectives = RWTUtils
+				.getWorkbench().getPerspectiveRegistry().getPerspectives();
 		for (IPerspectiveDescriptor desc : perspectives) {
 			try {
-				if (desc.getLabel().contains("<")
-						&& desc.getLabel().contains(">")) {
+				if (desc.getLabel().contains("<") && desc.getLabel().contains(">")) {
 					continue;
 				}
-				PerspectiveInfo info = Q7CoreFactory.eINSTANCE
-						.createPerspectiveInfo();
+				PerspectiveInfo info = Q7CoreFactory.eINSTANCE.createPerspectiveInfo();
 				info.setId(desc.getId());
 				info.setLabel(desc.getLabel());
 				info.setDescription(desc.getDescription());
