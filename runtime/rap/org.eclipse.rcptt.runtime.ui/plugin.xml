@@ -49,7 +49,7 @@
       <scriptlet
             class="org.eclipse.rcptt.runtime.ui.TerminateAutService"
             name="TerminateAut"
-            namespace="http://xored.com/q7/core/model.ecore">
+            namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
 
    </extension>

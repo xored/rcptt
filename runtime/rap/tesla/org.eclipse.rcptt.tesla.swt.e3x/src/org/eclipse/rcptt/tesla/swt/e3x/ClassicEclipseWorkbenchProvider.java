@@ -258,7 +258,7 @@ public class ClassicEclipseWorkbenchProvider implements
 		Version version = TeslaCore.getPlatformVersion();
 		int major = version.getMajor();
 		int minor = version.getMinor();
-        return major == 3 && minor > 4 && minor < 11;
+        return major == 3 && minor > 4 && minor < 12;
 	}
 
 	private static final List<String> viewTooltips = Arrays.asList("View Menu",

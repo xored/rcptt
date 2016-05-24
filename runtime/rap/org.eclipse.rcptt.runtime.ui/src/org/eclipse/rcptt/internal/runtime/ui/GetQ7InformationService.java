@@ -24,6 +24,7 @@ import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 public class GetQ7InformationService implements ICommandService {
@@ -42,23 +43,26 @@ public class GetQ7InformationService implements ICommandService {
 		if (info.isTeslaActive()) {
 			info.setTeslaPort(TeslaServerManager.getServer().getPort());
 		}
-		info.setWindowCount(PlatformUI.getWorkbench().getWorkbenchWindowCount());
-		if (info.getWindowCount() == 0) {
-			Display display = PlatformUI.getWorkbench().getDisplay();
-			if (display != null) {
-				display.syncExec(new Runnable() {
-					@Override
-					public void run() {
-						info.setWindowCount(PlatformUI.getWorkbench().getWorkbenchWindowCount());
-						if (info.getWindowCount() == 0
-								&& PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null) {
-							info.setWindowCount(1);
+
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if (workbench != null) {
+			info.setWindowCount(workbench.getWorkbenchWindowCount());
+			if (info.getWindowCount() == 0) {
+				Display display = PlatformUI.getWorkbench().getDisplay();
+				if (display != null) {
+					display.syncExec(new Runnable() {
+						@Override
+						public void run() {
+							info.setWindowCount(PlatformUI.getWorkbench().getWorkbenchWindowCount());
+							if (info.getWindowCount() == 0
+									&& PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null) {
+								info.setWindowCount(1);
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		}
-
 		checkActiveClient(info);
 		output.write(info);
 		return result;

@@ -11,7 +11,6 @@
 package org.eclipse.rcptt.tesla.swt.events;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.WeakHashMap;
 
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
-import org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle;
 import org.eclipse.rcptt.tesla.core.am.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
@@ -32,9 +30,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
-
-import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
-import org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle;
 
 public class TeslaEventManager {
 	private static TeslaEventManager manager = new TeslaEventManager();

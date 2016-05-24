@@ -42,7 +42,6 @@ privileged public aspect RecordingAspect {
 				.getClass().getName());
 	}
 
-
 	private static boolean isEventProcessingPhase() {
 		PhaseId currentPhase = CurrentPhase.get();
 		return PhaseId.PREPARE_UI_ROOT.equals(currentPhase)
@@ -61,12 +60,11 @@ privileged public aspect RecordingAspect {
 		}
 
 		return (SWTEventManager.needProceedEvents()
-		 		// all UI changes must be made in Render phase otherwise (in read phase)
-		 		// changes will be not be provided to the client (JS),
-		 		// because server will not find changes (after Read and Render no UI
-		 		// difference, see WidgetLCAUtil.hasChanged).
+				// all UI changes must be made in Render phase otherwise (in read phase)
+				// changes will be not be provided to the client (JS),
+				// because server will not find changes (after Read and Render no UI
+				// difference, see WidgetLCAUtil.hasChanged).
 				&& CurrentPhase.get() == PhaseId.RENDER);
-
 
 	}
 

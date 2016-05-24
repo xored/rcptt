@@ -159,7 +159,7 @@ privileged public aspect ClipboardAspect {
 	/*
 	@SuppressAjWarnings("adviceDidNotMatch")
 	void around(Clipboard cb, Object[] objs, Transfer[] tr, int type):
-		execution(void org.eclipse.swt.dnd.Clipboard.setContents(Object[], Transfer[], int)) 
+		execution(void org.eclipse.swt.dnd.Clipboard.setContents(Object[], Transfer[], int))
 		&& target(cb)
 		&& args(objs, tr, type) {
 		try {
@@ -529,7 +529,7 @@ privileged public aspect ClipboardAspect {
 				if (!tr.isSupportedType(data)) {
 					return null;
 				}
-				return data.data;
+				return data.storedObject;
 			}
 		} catch (Throwable e) {
 			SWTAspectActivator.log(e);

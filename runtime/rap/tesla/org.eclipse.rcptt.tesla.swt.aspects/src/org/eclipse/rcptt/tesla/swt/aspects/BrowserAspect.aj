@@ -7,9 +7,9 @@ import org.eclipse.rcptt.tesla.swt.events.TeslaBrowserManager;
 
 /**
  * Aspect to support web browser functionality
- * 
+ *
  * @author haiodo
- * 
+ *
  */
 public aspect BrowserAspect {
 	public BrowserAspect() {

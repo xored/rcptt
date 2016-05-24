@@ -33,7 +33,8 @@ public class Q7RuntimeStartup implements IStartup {
 
 			getApplicationContext().getLifeCycleFactory().getLifeCycle().addPhaseListener(new RAPPhaseListener());
 
-
+			if(RWTUtils.getWorkbench()!= null)
+			{
 			RWTUtils.getWorkbench().addWorkbenchListener(
 					new IWorkbenchListener() {
 						public boolean preShutdown(IWorkbench workbench,
@@ -49,6 +50,7 @@ public class Q7RuntimeStartup implements IStartup {
 							tryTerminateLaunches();
 						}
 					});
+			}
 		} finally {
 			Q7ServerStarter.INSTANCE.start();
 			// Send a started object

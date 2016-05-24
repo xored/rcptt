@@ -17,8 +17,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.rcptt.ecl.core.Command;
-import org.eclipse.rcptt.ecl.data.objects.ObjectsFactory;
-import org.eclipse.rcptt.ecl.data.objects.Row;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
