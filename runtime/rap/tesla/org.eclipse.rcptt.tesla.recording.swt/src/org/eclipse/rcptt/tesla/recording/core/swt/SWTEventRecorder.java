@@ -982,8 +982,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		}
 
 		boolean isCheckable = Platform.getOS().equals(Platform.OS_WIN32) && isTreeOrTableOrList;
-		// boolean isMouseOrKeyOps = lastEvents.checkType(widget, SWT.MouseUp, SWT.MouseDown, SWT.Arm, SWT.KeyDown,
-		// SWT.KeyUp, SWT.MouseDoubleClick, SWT.MouseMove);
+
+		boolean isMenuItem = widget instanceof MenuItem;
 
 		boolean isFromFilteredItemsSelectionDialog = ctx.contains("org.eclipse.ui.dialogs.FilteredItemsSelectionDialog",
 				"refresh");
@@ -1025,7 +1025,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 					ControlUIElement e = new ControlUIElement(result.element, getRecorder());
 					e.clickAndWait(type == SWT.DefaultSelection);
 				}
-			} else if ((isWidgetSendSelectionNonWin32 || isRunDefferedEventsOSX || isButtonFocusEvent
+			} else if ((isMenuItem || isWidgetSendSelectionNonWin32 || isRunDefferedEventsOSX || isButtonFocusEvent
 					|| isCheckable) && !(isRadioWidget && !((Button) widget).getSelection())
 					&& !isTabFolder || (type == SWT.DefaultSelection && isTreeOrTableOrList)) {
 				if (widget instanceof MenuItem) {

@@ -220,12 +220,10 @@ privileged public aspect RecordingAspect {
 		} catch (Throwable e) {
 			RecordingSWTActivator.log(e);
 		}
+		Object result = null;
 		boolean needProceed = !SWTEventManager.skipEvent(widget, type, event,
 				send);
-		Object result = null;
-		if (needProceed) {
-			result = proceed(widget, event);
-		} else {
+		if (!needProceed) {
 			if (event != null) {
 				event.doit = false;
 			}
@@ -250,6 +248,9 @@ privileged public aspect RecordingAspect {
 		} catch (Throwable e) {
 			RecordingSWTActivator.log(e);
 		}
+
+		if(needProceed)
+			return proceed(widget, event);
 		return result;
 	}
 
