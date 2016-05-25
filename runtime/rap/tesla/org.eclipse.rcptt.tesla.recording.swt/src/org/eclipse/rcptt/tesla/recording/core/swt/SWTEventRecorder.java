@@ -999,8 +999,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		boolean isButtonFocusEvent = widget instanceof Button
 				&& (lastEvents.checkType(widget, SWT.FocusIn) || ((Button) widget).isFocusControl());
 
-		// boolean isListTreeTableActivate = (widget instanceof Table || widget instanceof Tree
-		// || widget instanceof org.eclipse.swt.widgets.List) && lastEvents.checkType(widget, SWT.Activate);
+		 boolean isListTreeTableActivate = (widget instanceof Table || widget instanceof Tree
+		 || widget instanceof org.eclipse.swt.widgets.List) && lastEvents.checkType(widget, SWT.Activate);
 		if (widget instanceof Sash) {
 			return;
 		}
@@ -1026,7 +1026,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 					e.clickAndWait(type == SWT.DefaultSelection);
 				}
 			} else if ((isMenuItem || isWidgetSendSelectionNonWin32 || isRunDefferedEventsOSX || isButtonFocusEvent
-					|| isCheckable) && !(isRadioWidget && !((Button) widget).getSelection())
+					|| isCheckable || isListTreeTableActivate) && !(isRadioWidget && !((Button) widget).getSelection())
 					&& !isTabFolder || (type == SWT.DefaultSelection && isTreeOrTableOrList)) {
 				if (widget instanceof MenuItem) {
 					MenuItem mi = (MenuItem) widget;
