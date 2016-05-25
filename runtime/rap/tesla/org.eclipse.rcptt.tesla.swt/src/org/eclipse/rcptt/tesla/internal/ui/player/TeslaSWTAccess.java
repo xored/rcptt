@@ -482,9 +482,9 @@ public class TeslaSWTAccess {
 
 	public static boolean getHasLocation(Menu menu) {
 		try {
-			Field locationField = Menu.class.getDeclaredField("hasLocation");
-			locationField.setAccessible(true);
-			return ((Boolean) locationField.get(menu)).booleanValue();
+			//Field locationField = Menu.class.getDeclaredField("hasLocation");
+			//locationField.setAccessible(true);
+			//return ((Boolean) locationField.get(menu)).booleanValue();
 		} catch (Throwable e) {
 			TeslaCore.log(e);
 		}

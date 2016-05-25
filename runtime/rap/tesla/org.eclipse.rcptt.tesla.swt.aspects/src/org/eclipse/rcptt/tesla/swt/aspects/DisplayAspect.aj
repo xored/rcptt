@@ -7,6 +7,7 @@ import java.util.Set;
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
 import org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle;
+import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
@@ -42,13 +43,11 @@ public aspect DisplayAspect {
 	after(Display display):
 		execution(org.eclipse.swt.widgets.Display.new()) && target(display) {
 		TeslaEventManager.getManager().setLastDisplay(display);
-		TeslaEventManager.getManager().initCallback(display);
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(Display display): execution(boolean Display.close()) &&
 	 target(display) {
-		TeslaEventManager.getManager().disposeCallback(display);
 		TeslaEventManager.getManager().setLastDisplay(null);
 		return proceed(display);
 	}
@@ -67,9 +66,6 @@ public aspect DisplayAspect {
 			}
 
 			try {
-				IUIThreadHolder holder = RWTLifeCycle.getUIThreadHolder();
-				TeslaEventManager.setActiveUIThreadHolder(holder);
-
 				ContextManagement.enterContext();
 				Context currentContext = ContextManagement.peekContext();
 
@@ -110,6 +106,7 @@ public aspect DisplayAspect {
 							.doProcessing(currentContext);
 					if (!result) {
 						try {
+
 							Thread.sleep(10);
 							// return proceed(display);
 						} catch (InterruptedException e) {
@@ -127,6 +124,7 @@ public aspect DisplayAspect {
 			}
 			return false;
 		}
+		TeslaEventManager.getManager().sync();
 		return proceed(display);
 	}
 

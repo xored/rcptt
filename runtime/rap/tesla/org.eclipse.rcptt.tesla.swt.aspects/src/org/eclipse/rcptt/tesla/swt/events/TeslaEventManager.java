@@ -17,9 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.internal.lifecycle.CurrentPhase;
 import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
+import org.eclipse.rap.rwt.internal.service.ContextProvider;
+import org.eclipse.rap.rwt.service.ServerPushSession;
+import org.eclipse.rap.rwt.service.UISession;
 import org.eclipse.rcptt.tesla.core.am.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
@@ -81,6 +87,7 @@ public class TeslaEventManager {
 	}
 
 	private TeslaEventManager() {
+		startSynchronizer();
 	}
 
 	public static TeslaEventManager getManager() {
@@ -308,55 +315,70 @@ public class TeslaEventManager {
 	}
 
 	public void setLastDisplay(Display lastDisplay) {
-		this.lastDisplay = lastDisplay;
+		if (this.lastDisplay != lastDisplay) {
+			if (session != null)
+				this.session.stop();
+
+			this.lastDisplay = lastDisplay;
+
+			if (lastDisplay != null)
+				this.session = new ServerPushSession();
+		}
 	}
 
 	public void setLastWorkbench(Object lastWorkbench) {
 		this.lastWorkbench = lastWorkbench;
 	}
 
-	public static void setActiveUIThreadHolder(IUIThreadHolder holder) {
-		lastHolder = holder;
+	public ServerPushSession session;
+	private Boolean needSync = false;
+	private boolean synced = true;
+
+	public void sync() {
+		synchronized (needSync) {
+			if (!needSync) {
+				session.start();
+				needSync = true;
+			}
+		}
 	}
 
-	public static IUIThreadHolder getLastHolder() {
-		return lastHolder;
-	}
+	private void startSynchronizer() {
 
-	public void initCallback(final Display display) {
-//		UICallBack.activate(callbackName(display));
-//		RcpttMouseEvents.reset();
-//		Thread bgThread = new Thread(new Runnable() {
-//			public void run() {
-//				while (true) {
-//					Display display = getManager().getDisplay();
-//					if (display != null && !display.isDisposed()) {
-//						display.asyncExec(new Runnable() {
-//							public void run() {
-//								RcpttMouseEvents.updateWidgetUnderMouse();
-//							}
-//						});
-//					}
-//					try {
-//						Thread.sleep(50);
-//					} catch (Throwable e) {
-//						// ignore
-//					}
-//				}
-//			}
-//		}, display.toString() + "Q7 UI callback thread");
-//		bgThread.setDaemon(true);
-//		bgThread.start();
-	}
+		Runnable bgRunnable = new Runnable() {
+			public void run() {
 
-	@SuppressWarnings("deprecation")
-	public void disposeCallback(final Display display) {
-		//UICallBack.deactivate(callbackName(display));
-	}
+				while (!Thread.currentThread().isInterrupted()) {
+					try {
+						push();
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 
-	private String callbackName(Display display) {
-		return display.toString() + "q7_ui_callback";
-	}
+			private void push() {
+				synchronized (needSync) {
+					if (needSync && lastDisplay != null && synced) {
+						lastDisplay.asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								session.stop();
+								synced = true;
+								needSync = false;
+							}
+						});
+						synced = false;
+					}
+				}
+			}
+		};
 
+		Thread bgThread = new Thread(bgRunnable);
+		bgThread.setDaemon(true);
+		bgThread.start();
+
+	}
 
 }
