@@ -2,5 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="keysExtension" name="keysExtension" schema="schema/keysExtension.exsd"/>
+   <extension-point id="shellUtils" name="shellUtils" schema="schema/shellUtils.exsd"/>
 
 </plugin>
