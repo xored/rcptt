@@ -182,8 +182,8 @@ import org.eclipse.rcptt.tesla.ui.IImageAssertSupport;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
 import org.eclipse.rcptt.tesla.ui.describers.WidgetDescriber;
+import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.util.StringUtils;
-import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
 import org.eclipse.rcptt.util.swt.StringLines;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
@@ -770,7 +770,8 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		if (!isWidgetSupported(widget)) {
 			return failResponse(String.format(
 					"Unsupported widget '%s'. 'mouse' supports only"
-							+ " controls and table/tree items", widget
+							+ " controls and table/tree items",
+					widget
 							.getClass().getName()));
 		}
 
@@ -929,16 +930,16 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 		getPlayer().exec("clickLink", new Runnable() { //$NON-NLS-1$
 
-					public void run() {
-						// TODO Auto-generated method stub
-						SWTEvents events = new SWTEvents(getPlayer()
-								.getDisplay());
-						Event event = new Event();
-						event.type = SWT.Selection;
-						event.text = ref;
-						events.sendEvent(element, event);
-					}
-				});
+			public void run() {
+				// TODO Auto-generated method stub
+				SWTEvents events = new SWTEvents(getPlayer()
+						.getDisplay());
+				Event event = new Event();
+				event.type = SWT.Selection;
+				event.text = ref;
+				events.sendEvent(element, event);
+			}
+		});
 		return okResponse();
 	}
 
@@ -950,37 +951,37 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		}
 		final Control control = (Control) element.widget;
 		getPlayer().exec("setFocus", new Runnable() { //$NON-NLS-1$
-					public void run() {
-						SWTEvents events = new SWTEvents(getPlayer()
-								.getDisplay());
-						if (command.isValue()) {
-							try {
-								ShellUtilsProvider.getShellUtils().forceActive(control.getShell());
-							} catch (CoreException e) {
-								throw new RuntimeException(e);
-							}
-							control.setFocus();
-							control.forceFocus();
-							events.sendEvent(control, SWT.MouseEnter);
-							events.sendEvent(control, SWT.MouseMove);
-							events.sendEvent(control, SWT.Activate);
-							events.sendEvent(control, SWT.FocusIn);
-						} else {
-							if (!control.isDisposed()) {
-								events.sendEvent(control, SWT.FocusOut);
-							}
-							if (!control.isDisposed()) {
-								events.sendEvent(control, SWT.Deactivate);
-							}
-							if (!control.isDisposed()) {
-								events.sendEvent(control, SWT.MouseMove);
-							}
-							if (!control.isDisposed()) {
-								events.sendEvent(control, SWT.MouseExit);
-							}
-						}
+			public void run() {
+				SWTEvents events = new SWTEvents(getPlayer()
+						.getDisplay());
+				if (command.isValue()) {
+					try {
+						ShellUtilsProvider.getShellUtils().forceActive(control.getShell());
+					} catch (CoreException e) {
+						throw new RuntimeException(e);
 					}
-				});
+					control.setFocus();
+					control.forceFocus();
+					events.sendEvent(control, SWT.MouseEnter);
+					events.sendEvent(control, SWT.MouseMove);
+					events.sendEvent(control, SWT.Activate);
+					events.sendEvent(control, SWT.FocusIn);
+				} else {
+					if (!control.isDisposed()) {
+						events.sendEvent(control, SWT.FocusOut);
+					}
+					if (!control.isDisposed()) {
+						events.sendEvent(control, SWT.Deactivate);
+					}
+					if (!control.isDisposed()) {
+						events.sendEvent(control, SWT.MouseMove);
+					}
+					if (!control.isDisposed()) {
+						events.sendEvent(control, SWT.MouseExit);
+					}
+				}
+			}
+		});
 		return okResponse();
 	}
 
@@ -1000,12 +1001,12 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				start = lines.calcOffset(command.getStart());
 				end = ((command.getEnd() != null && command.getEnd().trim()
 						.length() > 0) ? lines.calcOffset(command.getEnd())
-						: start);
+								: start);
 			} else { // single line case
 				start = StringLines.parseSingleLineCoord(command.getStart());
 				end = ((command.getEnd() != null && command.getEnd().trim()
 						.length() > 0) ? StringLines
-						.parseSingleLineCoord(command.getEnd()) : start);
+								.parseSingleLineCoord(command.getEnd()) : start);
 			}
 		} else {
 			Point selection = control.getSelection();
@@ -1022,27 +1023,27 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		}
 
 		getPlayer().exec("clickText", new Runnable() { //$NON-NLS-1$
-					public void run() {
-						SWTEvents events = new SWTEvents(getPlayer()
-								.getDisplay());
-						try {
-							ShellUtilsProvider.getShellUtils().forceActive(control.getShell());
-						} catch (CoreException e) {
-							throw new RuntimeException(e);
-						}
-						events.sendFocus(control);
-						control.setSelection(start, end);
-						// Do a mouse Down/Up for a selected position
-						int button = TeslaUtils.buttonNameToInt(command
-								.getButton());
-						Point size = control.getSize();
-						events.sendEvent(control, SWT.MouseDown, size.x/2, size.y/2, button);
-						events.sendEvent(control, SWT.MouseUp, size.x/2, size.y/2, button);
-						// Do a selection set one more time.
-						control.setSelection(start, end);
-					}
+			public void run() {
+				SWTEvents events = new SWTEvents(getPlayer()
+						.getDisplay());
+				try {
+					ShellUtilsProvider.getShellUtils().forceActive(control.getShell());
+				} catch (CoreException e) {
+					throw new RuntimeException(e);
+				}
+				events.sendFocus(control);
+				control.setSelection(start, end);
+				// Do a mouse Down/Up for a selected position
+				int button = TeslaUtils.buttonNameToInt(command
+						.getButton());
+				Point size = control.getSize();
+				events.sendEvent(control, SWT.MouseDown, size.x / 2, size.y / 2, button);
+				events.sendEvent(control, SWT.MouseUp, size.x / 2, size.y / 2, button);
+				// Do a selection set one more time.
+				control.setSelection(start, end);
+			}
 
-				});
+		});
 		return okResponse();
 	}
 
@@ -1059,7 +1060,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			boolean multi = (control.getStyle() & SWT.MULTI) != 0;
 			pos = multi ? new StringLines(control.getText())
 					.calcOffset(lineCol) : StringLines
-					.parseSingleLineCoord(lineCol);
+							.parseSingleLineCoord(lineCol);
 		} else
 			pos = -1;
 
@@ -1090,31 +1091,31 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final int finalEnd = Math.min(text.length(), end);
 
 		getPlayer().exec("double-click-text", new Runnable() { //$NON-NLS-1$
-					public void run() {
-						SWTEvents events = new SWTEvents(getPlayer()
-								.getDisplay());
-						try {
-							ShellUtilsProvider.getShellUtils().forceActive(control.getShell());
-						} catch (CoreException e) {
-							throw new RuntimeException(e);
-						}
-						events.sendFocus(control);
-						control.setSelection(finalStart, finalEnd);
+			public void run() {
+				SWTEvents events = new SWTEvents(getPlayer()
+						.getDisplay());
+				try {
+					ShellUtilsProvider.getShellUtils().forceActive(control.getShell());
+				} catch (CoreException e) {
+					throw new RuntimeException(e);
+				}
+				events.sendFocus(control);
+				control.setSelection(finalStart, finalEnd);
 
-						int button = TeslaUtils.buttonNameToInt(command
-								.getButton());
-						Point size = control.getSize();
-						events.sendEvent(control, SWT.MouseDown, size.x/2, size.y/2, button);
-						events.sendEvent(control, SWT.MouseUp, size.x/2, size.y/2, button);
-						events.sendEvent(control, SWT.MouseDown, size.x/2, size.y/2, button);
-						events.sendEvent(control, SWT.MouseUp, size.x/2, size.y/2, button);
+				int button = TeslaUtils.buttonNameToInt(command
+						.getButton());
+				Point size = control.getSize();
+				events.sendEvent(control, SWT.MouseDown, size.x / 2, size.y / 2, button);
+				events.sendEvent(control, SWT.MouseUp, size.x / 2, size.y / 2, button);
+				events.sendEvent(control, SWT.MouseDown, size.x / 2, size.y / 2, button);
+				events.sendEvent(control, SWT.MouseUp, size.x / 2, size.y / 2, button);
 
-						control.setSelection(finalStart, finalEnd);
-						events.sendEvent(control, SWT.MouseDoubleClick, size.x/2, size.y/2,
-								button);
-					}
+				control.setSelection(finalStart, finalEnd);
+				events.sendEvent(control, SWT.MouseDoubleClick, size.x / 2, size.y / 2,
+						button);
+			}
 
-				});
+		});
 		return okResponse();
 	}
 
@@ -1483,7 +1484,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 					if (!org.eclipse.jface.util.Util.isLinux()) {
 						getPlayer().getEvents().sendEvent(shell, SWT.Activate);
 					}
-					
+
 				}
 			});
 			return false;
@@ -1565,7 +1566,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 						break;
 					}
 				}
-	
+
 				if (!fileProcessSuccess) {
 					SWTDialogManager.resetFileDialogInfo();
 					final BooleanResponse response = factory
@@ -1624,7 +1625,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	/**
 	 * If path starts with platform: resolves it, otherwise returns it as is. If
 	 * path == null or resolution fails, returns null
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -1694,11 +1695,12 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		try {
 			return (allowRawValues) ? SWTModelMapper.getRawPropertyValue(
 					element, property) : SWTModelMapper.getPropertyValue(
-					element, property);
+							element, property);
 		} catch (Exception e) {
 			throw new CoreException(new Status(IStatus.ERROR,
 					SWTTeslaActivator.PLUGIN_ID, String.format(
-							"Failed to get property '%s'", property), e));
+							"Failed to get property '%s'", property),
+					e));
 		}
 	}
 
@@ -2837,7 +2839,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 	/**
 	 * Added because of QS-2489: CommonNavigator#isDirty() was throwing a NPE
-	 * 
+	 *
 	 * @return boolean or error message
 	 */
 	private static Object isViewDirty(IViewReference ref) {

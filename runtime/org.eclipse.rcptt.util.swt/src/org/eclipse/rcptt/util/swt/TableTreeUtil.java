@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.jface.util.Policy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -293,17 +294,17 @@ public class TableTreeUtil {
 		return getExpandedItems(widget)[row];
 	}
 
-//	public static StyleRange[] getStyleRanges(Item item) {
-//		return getStyleRanges(item, 0);
-//	}
+	public static StyleRange[] getStyleRanges(Item item) {
+		return getStyleRanges(item, 0);
+	}
 
 	public static String getRangeDataKey(int column) {
 		return String.format("%sstyled_label_key_%d", Policy.JFACE, column);
 	}
 
-//	public static StyleRange[] getStyleRanges(Item item, int column) {
-//		return (StyleRange[]) item.getData(getRangeDataKey(column));
-//	}
+	public static StyleRange[] getStyleRanges(Item item, int column) {
+		return (StyleRange[]) item.getData(getRangeDataKey(column));
+	}
 
 	public static Item[] getAllChildren(Item item) {
 		if (item instanceof TableItem) {
