@@ -39,3 +39,4 @@ Export-Package: org.eclipse.rcptt.tesla.internal.ui,
  org.eclipse.rcptt.tesla.swt.workbench,
  org.eclipse.rcptt.tesla.ui,
  org.eclipse.rcptt.tesla.ui.describers
+Import-Package: org.eclipse.rcptt.util.swt

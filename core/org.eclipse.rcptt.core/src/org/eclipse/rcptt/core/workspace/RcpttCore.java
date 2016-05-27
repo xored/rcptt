@@ -254,9 +254,9 @@ public class RcpttCore {
 	public void copy(final IQ7NamedElement[] elements,
 			final Map<IQ7NamedElement, IFile> destinations,
 			final Map<IQ7NamedElement, String> newNames) throws CoreException {
-	//	ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
-	//		@Override
-	//		public void run(IProgressMonitor monitor) throws CoreException {
+		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
 				Map<String, String> updatedIds = new HashMap<String, String>();
 				List<ITestCase> scenarios = new ArrayList<ITestCase>();
 				List<IContext> groups = new ArrayList<IContext>();
@@ -359,8 +359,8 @@ public class RcpttCore {
 					copyScenario((ITestCase) scenario, updatedIds, destinations.get(scenario),
 							newNames.get(scenario));
 				}
-	//		};
-	//	}, new NullProgressMonitor());
+			};
+		}, new NullProgressMonitor());
 	}
 
 	public IVerification[] getVerifications(IQ7NamedElement element, List<String> verificationIds,
@@ -696,7 +696,7 @@ public class RcpttCore {
 				if (version.endsWith(".jar")) {
 					version = version.substring(0, version.length() - 4);
 					String shot = "-SNAPSHOT";
-					if( version.endsWith(shot)) {
+					if (version.endsWith(shot)) {
 						version = version.substring(0, version.length() - shot.length());
 					}
 					runtimeVersion = version;

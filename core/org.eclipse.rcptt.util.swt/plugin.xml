@@ -2,4 +2,10 @@
 <?eclipse version="3.4"?>
 <plugin>
     <extension-point id="shellUtils" name="shellUtils" schema="schema/shellUtils.exsd"/>
+    <extension
+          point="org.eclipse.rcptt.util.keysExtension">
+       <keysExtension
+             class="org.eclipse.rcptt.util.swt.KeysAndButtons.KeysAndButtonExtension">
+       </keysExtension>
+    </extension>
 </plugin>

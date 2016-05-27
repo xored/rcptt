@@ -67,6 +67,12 @@
             class="org.eclipse.rcptt.internal.runtime.ui.Q7RuntimeStartup">
       </startup>
    </extension>
+   <extension
+         point="org.eclipse.rcptt.tesla.recording.core.ecl.keyStrokeExtension">
+      <keyStrokeExtension
+            class="org.eclipse.rcptt.runtime.ui.KeyStrokeManagerExtension">
+      </keyStrokeExtension>
+   </extension>
 
 
 </plugin>

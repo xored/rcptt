@@ -41,7 +41,7 @@ import org.eclipse.rcptt.internal.core.model.deltas.DeltaProcessor;
 import org.eclipse.rcptt.internal.core.model.deltas.Q7ElementDelta;
 
 @SuppressWarnings("rawtypes")
-public abstract class Q7Operation implements
+public abstract class Q7Operation implements IWorkspaceRunnable,
 		IProgressMonitor {
 	protected interface IPostAction {
 		/*
@@ -579,7 +579,8 @@ public abstract class Q7Operation implements
 	protected void postAction(IPostAction action, int insertionMode) {
 		if (POST_ACTION_VERBOSE) {
 			System.out
-					.print("(" + Thread.currentThread() + ") [ModelOperation.postAction(IPostAction, int)] Posting action " + action.getID()); //$NON-NLS-1$ //$NON-NLS-2$
+					.print("(" + Thread.currentThread() //$NON-NLS-1$
+							+ ") [ModelOperation.postAction(IPostAction, int)] Posting action " + action.getID()); //$NON-NLS-1$
 			switch (insertionMode) {
 			case REMOVEALL_APPEND:
 				System.out.println(" (REMOVEALL_APPEND)"); //$NON-NLS-1$
@@ -641,7 +642,8 @@ public abstract class Q7Operation implements
 	protected void removeAllPostAction(String actionID) {
 		if (POST_ACTION_VERBOSE) {
 			System.out
-					.println("(" + Thread.currentThread() + ") [ModelOperation.removeAllPostAction(String)] Removing actions " + actionID); //$NON-NLS-1$ //$NON-NLS-2$
+					.println("(" + Thread.currentThread() //$NON-NLS-1$
+							+ ") [ModelOperation.removeAllPostAction(String)] Removing actions " + actionID); //$NON-NLS-1$
 		}
 		Q7Operation topLevelOp = (Q7Operation) getCurrentOperationStack()
 				.get(0);
@@ -757,8 +759,8 @@ public abstract class Q7Operation implements
 				// as this operation is modifying the tree (not read-only) and a
 				// CoreException will be thrown anyway.
 				IWorkspace wc = ResourcesPlugin.getWorkspace();
-			//	wc.run(this, getSchedulingRule(), IWorkspace.AVOID_UPDATE,
-				//		monitor);
+				wc.run(this, getSchedulingRule(), IWorkspace.AVOID_UPDATE,
+						monitor);
 			}
 		} catch (CoreException ce) {
 			if (ce instanceof ModelException) {
@@ -780,7 +782,8 @@ public abstract class Q7Operation implements
 			IPostAction postAction = this.actions[this.actionsStart++];
 			if (POST_ACTION_VERBOSE) {
 				System.out
-						.println("(" + Thread.currentThread() + ") [ModelOperation.runPostActions()] Running action " + postAction.getID()); //$NON-NLS-1$ //$NON-NLS-2$
+						.println("(" + Thread.currentThread() + ") [ModelOperation.runPostActions()] Running action " //$NON-NLS-1$ //$NON-NLS-2$
+								+ postAction.getID());
 			}
 			postAction.run();
 		}

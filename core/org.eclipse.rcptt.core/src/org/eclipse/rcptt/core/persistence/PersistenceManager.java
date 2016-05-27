@@ -91,9 +91,8 @@ public class PersistenceManager implements IPlainConstants {
 	}
 
 	public IPersistenceModel getModel(Resource element) {
-		//IFile file = WorkspaceSynchronizer.getFile(element);
-		//return getModel(detectFormatProxy(file), element);
-		return null;
+		IFile file = WorkspaceSynchronizer.getFile(element);
+		return getModel(detectFormatProxy(file), element);
 	}
 
 	public synchronized IPersistenceModel getModel(

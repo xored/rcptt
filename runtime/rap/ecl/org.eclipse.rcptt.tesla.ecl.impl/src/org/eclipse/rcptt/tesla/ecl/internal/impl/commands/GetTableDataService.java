@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 
-import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.ecl.impl.AbstractActionService;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;

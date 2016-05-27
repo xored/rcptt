@@ -13,6 +13,7 @@ package org.eclipse.rcptt.util.swt;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.rcptt.util.KeysAndButtons;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Event;
@@ -63,7 +64,7 @@ public class Events {
 		int currentMask = stateMask;
 		List<Event> result = new ArrayList<Event>();
 		stateMask = SWT.MODIFIER_MASK & stateMask;
-		for (int modifier : KeysAndButtons.REVERSE_MODIFIERS) {
+		for (int modifier : KeysAndButtons.getReverseModifiers()) {
 			if ((stateMask & modifier) == 0) {
 				continue;
 			}
@@ -82,7 +83,7 @@ public class Events {
 		stateMask = SWT.MODIFIER_MASK & stateMask;
 
 		int currentMask = 0;
-		for (int modifier : KeysAndButtons.ORDERED_MODIFIERS) {
+		for (int modifier : KeysAndButtons.getOrderedModifiers()) {
 			if ((stateMask & modifier) == 0) {
 				continue;
 			}

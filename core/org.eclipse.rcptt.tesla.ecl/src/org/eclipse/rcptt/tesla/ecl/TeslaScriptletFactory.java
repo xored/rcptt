@@ -17,7 +17,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.core.util.ScriptletFactory;
 
-import org.eclipse.rcptt.util.swt.KeysAndButtons;
 import org.eclipse.rcptt.tesla.ecl.model.ActivateCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.ApplyCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Button;
@@ -126,6 +125,7 @@ import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseHover;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseMove;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MousePress;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseRelease;
+import org.eclipse.rcptt.util.KeysAndButtons;
 
 public class TeslaScriptletFactory extends ScriptletFactory {
 

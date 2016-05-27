@@ -13,7 +13,7 @@ package org.eclipse.rcptt.tesla.ecl.internal.impl.commands;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.rcptt.ecl.core.Command;
 
-import org.eclipse.rcptt.util.swt.KeysAndButtons;
+import org.eclipse.rcptt.util.KeysAndButtons;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
