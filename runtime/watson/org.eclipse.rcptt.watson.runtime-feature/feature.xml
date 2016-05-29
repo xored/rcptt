@@ -35,8 +35,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-<<<<<<< HEAD:watson/org.eclipse.rcptt.watson.runtime-feature/feature.xml
-=======
    <plugin
          id="org.eclipse.rcptt.watson.aspects.swt"
          download-size="0"
@@ -44,7 +42,4 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-   
-
->>>>>>> 92b5895... rap-3.1 * Fix build.sh:runtime/watson/org.eclipse.rcptt.watson.runtime-feature/feature.xml
 </feature>

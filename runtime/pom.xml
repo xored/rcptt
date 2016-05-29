@@ -52,9 +52,13 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>org.eclipse.rcptt.runtime.ui</module>
+    <module>org.eclipse.rcptt.forms.impl</module>
+    <module>org.eclipse.rcptt.util.swt</module>
+    <module>watson</module>
+    
     <module>tesla</module>
     <module>ecl</module>
-    <module>org.eclipse.rcptt.runtime.ui</module>
     <module>org.eclipse.rcptt.core.ecl.debug</module>
     <module>contexts</module>
     <module>verifications</module>
@@ -62,8 +66,27 @@
     <module>org.eclipse.rcptt.runtime-updatesite</module>
     <module>updates</module>
     <module>org.eclipse.rcptt.expandbar.runtime</module>
-    <module>org.eclipse.rcptt.forms.impl</module>
     <module>tests</module>
   </modules>
+
+    <profiles>
+    <profile>
+      <id>runtime3x</id>
+      <modules>
+      </modules>
+    </profile>
+    <profile>
+      <id>runtime4x</id>
+      <modules>
+
+      </modules>
+    </profile>
+     <profile>
+      <id>runtimeRap</id>
+      <modules>
+         <module>../runtime_rap</module>
+      </modules>
+    </profile>
+  </profiles>
 
 </project>

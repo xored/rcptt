@@ -6,13 +6,15 @@
     <groupId>org.eclipse.rcptt</groupId>
     <version>2.1.0-SNAPSHOT</version>
   </parent>
-  <modules>
-    <!-- WATSON PLUGINS -->
-    <module>org.eclipse.rcptt.watson.aspects.swt</module>
-    <module>org.eclipse.rcptt.watson.jface</module>
-  </modules>
   <groupId>org.eclipse.rcptt</groupId>
   <version>2.1.0-SNAPSHOT</version>
   <artifactId>rcptt.runtime.watson</artifactId>
   <packaging>pom</packaging>
+    <modules>
+    <!-- WATSON PLUGINS -->
+    <module>org.eclipse.rcptt.watson.aspects.swt</module>
+    <module>org.eclipse.rcptt.watson.aspects.jobs</module>
+    <module>org.eclipse.rcptt.watson.jface</module>
+    <module>org.eclipse.rcptt.watson.runtime-feature</module>
+  </modules>
 </project>

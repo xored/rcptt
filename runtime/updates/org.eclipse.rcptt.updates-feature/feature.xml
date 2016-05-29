@@ -44,7 +44,7 @@
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
-   
+
    <plugin
          id="org.eclipse.rcptt.updates.kepler"
          download-size="0"

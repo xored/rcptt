@@ -321,8 +321,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-<<<<<<< HEAD
-=======
    <plugin
          id="org.eclipse.rcptt.util.swt"
          download-size="0"
@@ -330,5 +328,4 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
->>>>>>> 92b5895... rap-3.1 * Fix build.sh
 </feature>
