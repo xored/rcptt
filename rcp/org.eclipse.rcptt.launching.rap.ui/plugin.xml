@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+        point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+     <launchConfigurationTypeImage
+           configTypeID="org.eclipse.rcptt.launching.rap"
+           icon="images/launcher.gif"
+           id="org.eclipse.rcptt.launching.launchConfigurationTabGroup.rap">
+     </launchConfigurationTypeImage>
+  </extension>
+
+  <extension
+        point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+     <launchConfigurationTabGroup
+           class="org.eclipse.rcptt.internal.launching.rap.ui.RcpttRapTabGroup"
+           id="org.eclipse.rcptt.launching.launchConfigurationTabGroup.rap"
+           type="org.eclipse.rcptt.launching.rap">
+     </launchConfigurationTabGroup>
+  </extension>
+
+<!--
+  <extension
+        point="org.eclipse.ui.startup">
+     <startup
+           class="org.eclipse.rcptt.internal.launching.ext.ui.CleanBundlePoolStartup">
+     </startup>
+  </extension>
+  -->
+
+</plugin>

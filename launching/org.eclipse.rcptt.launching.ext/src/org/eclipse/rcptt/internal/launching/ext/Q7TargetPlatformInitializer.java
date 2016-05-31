@@ -12,6 +12,8 @@ package org.eclipse.rcptt.internal.launching.ext;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.eclipse.rcptt.internal.launching.ext.Q7ExtLaunchingPlugin.PLUGIN_ID;
+import static org.eclipse.rcptt.internal.launching.ext.Q7UpdateSiteExtensions.Q7RuntimeInfo.RAP_PLATFORM;
+import static org.eclipse.rcptt.internal.launching.ext.Q7UpdateSiteExtensions.Q7RuntimeInfo.SWT_PLATFORM;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class Q7TargetPlatformInitializer {
 		public final URI aspectj;
 		public final URI deps;
 		public final List<URI> extra;
+
 		public Q7Info(URI q7, URI aspectj, URI deps, List<URI> extra) {
 			checkArgument(q7 != null);
 			checkArgument(aspectj != null);
@@ -111,7 +114,8 @@ public class Q7TargetPlatformInitializer {
 
 			InjectionConfiguration injectionConfiguration = createInjectionConfiguration(
 					new NullProgressMonitor(), q7Info, map);
-			MultiStatus rv = new MultiStatus(PLUGIN_ID, 0, "Runtime injection failed for target platform " + target, null);
+			MultiStatus rv = new MultiStatus(PLUGIN_ID, 0, "Runtime injection failed for target platform " + target,
+					null);
 			if (injectionConfiguration != null) {
 				rv.add(target.applyInjection(injectionConfiguration, new SubProgressMonitor(
 						monitor, 60)));
@@ -143,7 +147,7 @@ public class Q7TargetPlatformInitializer {
 		UpdateSite q7Site = InjectionFactory.eINSTANCE.createUpdateSite();
 		q7Site.setUri(q7Info.q7.toString());
 		injectionConfiguration.getEntries().add(q7Site);
-		
+
 		// Add aspectj plugins
 		UpdateSite aspectsSite = InjectionFactory.eINSTANCE.createUpdateSite();
 		aspectsSite.setUri(q7Info.aspectj.toString());
@@ -219,13 +223,18 @@ public class Q7TargetPlatformInitializer {
 	}
 
 	public static void logError(TargetPlatformHelper info) {
-		Q7ExtLaunchingPlugin.log(new MultiStatus(PLUGIN_ID, 0, new IStatus[]{info.getStatus()}, "Target platform initialization error", null));
+		Q7ExtLaunchingPlugin.log(new MultiStatus(PLUGIN_ID, 0, new IStatus[] { info.getStatus() },
+				"Target platform initialization error", null));
 	}
-	
+
 	public static Q7Info getInfo(ITargetPlatformHelper target, Map<String, Version> versions) throws CoreException {
 		Map<String, Version> map = versions;
-		MultiStatus status = new MultiStatus(PLUGIN_ID, 0, "Invalid eclipse target platform: " + target.toString(), null);
+		MultiStatus status = new MultiStatus(PLUGIN_ID, 0, "Invalid eclipse target platform: " + target.toString(),
+				null);
+
 		Version platform = map.get(AUTInformation.VERSION);
+		String platformName = map.get(AUTInformation.RAP) == null ? SWT_PLATFORM : RAP_PLATFORM;
+
 		Version osgi = map.get(AUTInformation.OSGI);
 		if (platform == null)
 			status.add(createError("Failed to detect platform version"));
@@ -233,29 +242,34 @@ public class Q7TargetPlatformInitializer {
 			status.add(createError("Failed to detect OSGI version"));
 		if (!status.isOK())
 			throw new CoreException(status);
-		return collectQ7Information(platform, osgi);
+		return collectQ7Information(platform, osgi, platformName);
 	}
 
-	public static Q7Info collectQ7Information(Version platform, Version osgi) {
+	public static Q7Info collectQ7Information(Version platform, Version osgi, String platformName) {
 		Collection<Q7RuntimeInfo> updates = Q7UpdateSiteExtensions.getDefault().getRuntimes();
 		URI q7 = null, aspectj = null, deps = null;
 		Builder<URI> extra = ImmutableList.builder();
-
 		// Initialize updates
 		for (Q7RuntimeInfo q7RuntimeInfo : updates) {
 			boolean platformValid = q7RuntimeInfo.version.isIncluded(platform);
 			boolean osgiValid = q7RuntimeInfo.version.isIncluded(osgi);
 			if (platformValid) {
-				if ("runtime".equals(q7RuntimeInfo.kind)) {
-					if (q7 != null)
-						throw new IllegalStateException("Multiple runtime providers for platform " + platform);
-					q7 = q7RuntimeInfo.path;
-				} else if ("dependency".equals(q7RuntimeInfo.kind)) {
-					if (deps != null)
-						throw new IllegalStateException("Multiple dependencies providers for platform " + platform);
+				switch (q7RuntimeInfo.kind) {
+				case "runtime":
+					checkRuntimeInfo(platform, q7, "runtimes"); //$NON-NLS-1$
+					if (q7RuntimeInfo.platform.equals(platformName)) {
+						q7 = q7RuntimeInfo.path;
+					}
+					break;
+				case "dependency":
+					checkRuntimeInfo(platform, deps, "dependencies"); //$NON-NLS-1$
 					deps = q7RuntimeInfo.path;
-				} else if ("extra".equals(q7RuntimeInfo.kind)) {
+					break;
+				case "extra":
 					extra.add(q7RuntimeInfo.path);
+					break;
+				default:
+					break;
 				}
 			}
 			if (osgiValid) {
@@ -271,6 +285,11 @@ public class Q7TargetPlatformInitializer {
 		if (aspectj == null)
 			throw new NullPointerException("Can't find aspectj for osgi " + osgi);
 		return new Q7Info(q7, aspectj, deps, extra.build());
+	}
+
+	private static void checkRuntimeInfo(Version platform, URI q7, String name) {
+		if (q7 != null)
+			throw new IllegalStateException("Multiple " + name + " providers for platform " + platform);
 	}
 
 	public static boolean hasProperty(IInstallableUnit unit, String prop,

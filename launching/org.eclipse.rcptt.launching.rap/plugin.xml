@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="browserLaunchDelegate" name="Browser Launcher Delegate" schema="schema/browserLaunchDelegate.exsd"/>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="org.eclipse.rcptt.launching.rap.RcpttRapLaunchDelegate"
+            delegateDescription="RAP Application Under Test (RCPTT) Launcher"
+            delegateName="RAP Application Under Test (RCPTT) Launcher"
+            id="org.eclipse.rcptt.launching.rap"
+            modes="run"
+            name="RAP Application Under Test (RCPTT)">
+      </launchConfigurationType>
+   </extension>
+
+</plugin>
