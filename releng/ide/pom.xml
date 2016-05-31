@@ -20,6 +20,7 @@
     <module>../../runtime/updates/org.eclipse.rcptt.updates.galileo</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.kepler</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates-feature</module>
+    <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap</module>
     <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap-feature</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e3x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e38x</module>

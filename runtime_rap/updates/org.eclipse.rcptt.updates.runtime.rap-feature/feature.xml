@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.rcptt.updates.rap.feature"
+      id="org.eclipse.rcptt.updates.runtime.rap"
       label="RCPTT Runtime Sites"
       version="2.1.0.qualifier"
       provider-name="%proiderName">
 
    <description>
-    des
+      Prepared update sites with RCP Runtime and RCP Runtime prerequsites for ganymede..indigo
    </description>
 
    <copyright url="%copyrightURL">
@@ -18,18 +18,10 @@
    </license>
 
    <plugin
-         id="org.eclipse.rcptt.updates.rap"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/>
-         
-   <plugin
          id="org.eclipse.rcptt.updates.runtime.rap"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
-
 
 </feature>

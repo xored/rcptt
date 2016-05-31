@@ -254,23 +254,19 @@ public class Q7TargetPlatformInitializer {
 			boolean platformValid = q7RuntimeInfo.version.isIncluded(platform);
 			boolean osgiValid = q7RuntimeInfo.version.isIncluded(osgi);
 			if (platformValid) {
-				switch (q7RuntimeInfo.kind) {
-				case "runtime":
+				final String kind = q7RuntimeInfo.kind;
+				if ("runtime".equals(kind)) {
 					checkRuntimeInfo(platform, q7, "runtimes"); //$NON-NLS-1$
 					if (q7RuntimeInfo.platform.equals(platformName)) {
 						q7 = q7RuntimeInfo.path;
 					}
-					break;
-				case "dependency":
+				} else if ("dependency".equals(kind)) {
 					checkRuntimeInfo(platform, deps, "dependencies"); //$NON-NLS-1$
 					deps = q7RuntimeInfo.path;
-					break;
-				case "extra":
+				} else if ("extra".equals(kind)) {
 					extra.add(q7RuntimeInfo.path);
-					break;
-				default:
-					break;
 				}
+
 			}
 			if (osgiValid) {
 				if ("aspectj".equals(q7RuntimeInfo.kind)) {
@@ -285,6 +281,7 @@ public class Q7TargetPlatformInitializer {
 		if (aspectj == null)
 			throw new NullPointerException("Can't find aspectj for osgi " + osgi);
 		return new Q7Info(q7, aspectj, deps, extra.build());
+
 	}
 
 	private static void checkRuntimeInfo(Version platform, URI q7, String name) {

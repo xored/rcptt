@@ -11,7 +11,14 @@
       <id>runtimeRap</id>
       <modules>
 	       <module>org.eclipse.rcptt.updates.runtime.rap</module>
-	       <module>org.eclipse.rcptt.updates.rap-feature</module>
+         <module>org.eclipse.rcptt.updates.runtime.rap-feature</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>full</id>
+      <modules>
+	      <module>org.eclipse.rcptt.updates.rap-feature</module>
+        <module>org.eclipse.rcptt.updates.rap</module>
       </modules>
     </profile>
   </profiles>

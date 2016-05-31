@@ -10,21 +10,15 @@
     <profile>
       <id>runtime3x</id>
       <modules>
-	<module>org.eclipse.rcptt.updates.runtime</module>
-	<module>org.eclipse.rcptt.updates.e3x-feature</module>
+	      <module>org.eclipse.rcptt.updates.runtime</module>
+	      <module>org.eclipse.rcptt.updates.e3x-feature</module>
       </modules>
     </profile>
     <profile>
       <id>runtime4x</id>
       <modules>
-	<module>org.eclipse.rcptt.updates.runtime.e4x</module>
-	<module>org.eclipse.rcptt.updates.e4x-feature</module>
-      </modules>
-    </profile>
-     <profile>
-      <id>runtimeRap</id>
-      <modules>
-        
+	      <module>org.eclipse.rcptt.updates.runtime.e4x</module>
+	      <module>org.eclipse.rcptt.updates.e4x-feature</module>
       </modules>
     </profile>
     <profile>
