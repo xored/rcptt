@@ -239,7 +239,7 @@ public class KeysAndButtons {
 	private static IKeysAndButtonExtension getExtension() {
 		if (extension == null) {
 			IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(POINT_ID);
-			if (elements.length != 1) {
+			if (elements.length < 1) {
 				return null;
 			}
 			try {

@@ -18,15 +18,18 @@ import org.eclipse.core.runtime.Status;
 
 public class ShellUtilsProvider {
 	private static ShellUtils utils = null;
+
 	synchronized public static ShellUtils getShellUtils() throws CoreException {
 		if (utils == null) {
 			IConfigurationElement[] elements = Platform.getExtensionRegistry()
 					.getConfigurationElementsFor(
 							UtilPlugin.PLUGIN_ID + ".shellUtils");
 			if (elements.length == 0)
-				throw new CoreException(new Status(IStatus.ERROR, UtilPlugin.PLUGIN_ID, "None  implementations of " + ShellUtils.class.getName()));
-			else if (elements.length > 1)
-				throw new CoreException(new Status(IStatus.ERROR, UtilPlugin.PLUGIN_ID, "Too many implementations of " + ShellUtils.class.getName()));
+				throw new CoreException(new Status(IStatus.ERROR, UtilPlugin.PLUGIN_ID,
+						"None  implementations of " + ShellUtils.class.getName()));
+			// else if (elements.length > 1)
+			// throw new CoreException(new Status(IStatus.ERROR, UtilPlugin.PLUGIN_ID, "Too many implementations of " +
+			// ShellUtils.class.getName()));
 			else
 				utils = (ShellUtils) elements[0].createExecutableExtension("class");
 		}
