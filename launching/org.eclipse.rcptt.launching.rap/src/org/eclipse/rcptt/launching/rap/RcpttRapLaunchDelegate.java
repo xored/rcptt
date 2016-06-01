@@ -52,6 +52,7 @@ import org.eclipse.jdt.launching.IVMInstallType;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.build.IPDEBuildConstants;
+import org.eclipse.pde.internal.launching.PDEMessages;
 import org.eclipse.pde.internal.launching.launcher.LaunchArgumentsHelper;
 import org.eclipse.pde.internal.launching.launcher.LauncherUtils;
 import org.eclipse.pde.internal.launching.launcher.VMHelper;
@@ -703,8 +704,13 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 	@Override
 	public String[] getClasspath(ILaunchConfiguration configuration) throws CoreException {
+		String[] classpath = constructClasspath(configuration);
+		if (classpath == null) {
+			String message = PDEMessages.WorkbenchLauncherConfigurationDelegate_noStartup;
+			throw new CoreException(LauncherUtils.createErrorStatus(message));
+		}
 
-		return super.getClasspath(configuration);
+		return classpath;
 
 	}
 

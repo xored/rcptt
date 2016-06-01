@@ -13,4 +13,10 @@
              class="org.eclipse.rcptt.util.swt.internal.ui.DefaultShellUtils">
        </shellUtils>
     </extension>
+    <extension
+          point="org.eclipse.rcptt.util.displayUtils">
+       <displayUtils
+             class="org.eclipse.rcptt.util.swt.internal.ui.DefaultDisplayUtils">
+       </displayUtils>
+    </extension>
 </plugin>

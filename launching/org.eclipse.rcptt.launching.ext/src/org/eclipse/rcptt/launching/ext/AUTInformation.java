@@ -114,9 +114,9 @@ public class AUTInformation {
 		} else {
 			bundleInfo = resolvedBundles.get(RAP_PLUGIN);
 			putRwtVersion(values, create(bundleInfo.getVersion()));
+			values.putPluginVersion(RAP, bundleInfo);
 		}
 
-		values.putPluginVersion(RAP, bundleInfo);
 		values.putPluginVersion(GEF, resolvedBundles.get(GEF_PLUGIN));
 		values.putPluginVersion(GMF, resolvedBundles.get(GMF_PLUGIN));
 		values.putPluginVersion(OSGI, resolvedBundles.get(OSGI_PLUGIN));

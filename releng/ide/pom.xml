@@ -12,7 +12,7 @@
     <relativePath>../core/pom.xml</relativePath>
   </parent>
   <modules>
-    <module>../../modules/nebula</module>
+    <!-- <module>../../modules/nebula</module> -->
     <module>../../launching</module>
     <module>../../rcp</module>
     <module>../../testing</module>
@@ -20,8 +20,8 @@
     <module>../../runtime/updates/org.eclipse.rcptt.updates.galileo</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.kepler</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates-feature</module>
-    <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap</module>
     <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap-feature</module>
+    <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e3x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e38x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e44x</module>
@@ -32,6 +32,7 @@
     <rcpttRuntimeRepo>${buildUrl}/runtime/org.eclipse.rcptt.runtime-updatesite/target/repository/</rcpttRuntimeRepo>
     <e3xRepository>${buildUrl}/repository/e3x/target/repository</e3xRepository>
     <e4xRepository>${buildUrl}/repository/e4x/target/repository</e4xRepository>
+    <rapRepository>${buildUrl}/repository/rap/target/repository</rapRepository>
     <coreRepository>${buildUrl}/repository/core/target/repository</coreRepository>
   </properties>
   <repositories>
@@ -57,6 +58,14 @@
       <id>e3x-ide</id>
       <layout>p2</layout>
       <url>${e3xRepository}</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <id>rap-ide</id>
+      <layout>p2</layout>
+      <url>${rapRepository}</url>
     </repository>
     <repository>
       <snapshots>

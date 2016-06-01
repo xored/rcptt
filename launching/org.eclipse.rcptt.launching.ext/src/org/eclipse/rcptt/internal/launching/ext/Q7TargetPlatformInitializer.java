@@ -52,6 +52,7 @@ public class Q7TargetPlatformInitializer {
 	private static final String DRAW2D = "draw2d";
 	private static final String GEF = "gef";
 	private static final String EMF_FEATURE_GROUP = "org.eclipse.emf.feature.group";
+	private static final String EQUINOX_EXECUTABLE_FEATURE_GROUP = "org.eclipse.equinox.executable.feature.group";
 	private static final String EMF_VALIDATION_FEATURE_GROUP = "org.eclipse.emf.validation.feature.group";
 	private static final String EMF_TRANSACTION_FEATURE_GROUP = "org.eclipse.emf.transaction.feature.group";
 	public static final String P2_GROUP_FEATURE = "org.eclipse.equinox.p2.type.group";
@@ -138,8 +139,8 @@ public class Q7TargetPlatformInitializer {
 				.containsKey(AUTInformation.EMF_TRANSACTION);
 		boolean hasEMFValidation = map
 				.containsKey(AUTInformation.EMF_VALIDATION);
-		map.containsKey(AUTInformation.GMF);
-		// boolean hasPDE = map.containsKey(AUTInformation.PDE);
+		boolean hasRAP = map.containsKey(AUTInformation.RAP);
+
 		InjectionConfiguration injectionConfiguration = InjectionFactory.eINSTANCE
 				.createInjectionConfiguration();
 
@@ -155,21 +156,28 @@ public class Q7TargetPlatformInitializer {
 
 		UpdateSite q7Deps = InjectionFactory.eINSTANCE.createUpdateSite();
 		q7Deps.setUri(q7Info.deps.toString());
-		if (!hasEMF || !hasEMFWorkspace || !hasEMFTransaction
-				|| !hasEMFValidation) {
-			if (!hasEMFTransaction) {
-				q7Deps.getUnits().add(EMF_TRANSACTION_FEATURE_GROUP);
-			}
-			if (!hasEMFValidation) {
-				q7Deps.getUnits().add(EMF_VALIDATION_FEATURE_GROUP);
-			}
-			if (!hasEMF) {
-				q7Deps.getUnits().add(EMF_FEATURE_GROUP);
-			}
-			// if (!hasPDE) {
-			// q7Deps.getUnits().add(PDE_FEATURE_GROUP);
-			// }
+
+		if (!hasEMFTransaction) {
+			q7Deps.getUnits().add(EMF_TRANSACTION_FEATURE_GROUP);
 		}
+		if (!hasEMFValidation) {
+			q7Deps.getUnits().add(EMF_VALIDATION_FEATURE_GROUP);
+		}
+		if (!hasEMF) {
+			q7Deps.getUnits().add(EMF_FEATURE_GROUP);
+		}
+		if (hasRAP) {
+			q7Deps.getUnits().add(EQUINOX_EXECUTABLE_FEATURE_GROUP);
+			q7Deps.getUnits().add("org.eclipse.rap.equinox.target.feature.feature.group");
+			q7Deps.getUnits().add("org.eclipse.rap.feature.feature.group");
+			q7Deps.getUnits().add("org.eclipse.core.filesystem");
+			q7Deps.getUnits().add("org.eclipse.core.filebuffers");
+			q7Deps.getUnits().add("org.eclipse.core.resources");
+			q7Deps.getUnits().add("org.eclipse.core.variables");
+			q7Deps.getUnits().add("org.eclipse.debug.core");
+			q7Deps.getUnits().add("org.eclipse.equinox.security");
+		}
+
 		injectionConfiguration.getEntries().add(q7Deps);
 		// Add all from extra
 		for (URI extraURI : q7Info.extra) {
@@ -253,13 +261,11 @@ public class Q7TargetPlatformInitializer {
 		for (Q7RuntimeInfo q7RuntimeInfo : updates) {
 			boolean platformValid = q7RuntimeInfo.version.isIncluded(platform);
 			boolean osgiValid = q7RuntimeInfo.version.isIncluded(osgi);
-			if (platformValid) {
+			if (platformValid && q7RuntimeInfo.platform.equals(platformName)) {
 				final String kind = q7RuntimeInfo.kind;
 				if ("runtime".equals(kind)) {
 					checkRuntimeInfo(platform, q7, "runtimes"); //$NON-NLS-1$
-					if (q7RuntimeInfo.platform.equals(platformName)) {
-						q7 = q7RuntimeInfo.path;
-					}
+					q7 = q7RuntimeInfo.path;
 				} else if ("dependency".equals(kind)) {
 					checkRuntimeInfo(platform, deps, "dependencies"); //$NON-NLS-1$
 					deps = q7RuntimeInfo.path;

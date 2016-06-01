@@ -47,8 +47,8 @@
         	<configuration>
         	  <source>
         	    <repository>
-                <id>neon</id>
-        	      <url>http://download.eclipse.org/releases/neon</url>
+                <id>kepler</id>
+        	      <url>http://download.eclipse.org/releases/kepler</url>
         	      <layout>p2</layout>
         	    </repository>
                <repository>
@@ -68,11 +68,11 @@
         	  <append>false</append>
         	  <includePacked>false</includePacked>
         	  <ius>
-  	          <iu><id>org.eclipse.emf.codegen.ecore.ui.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.codegen.ecore.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.codegen.ui.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.codegen.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.common.ui.feature.group</id></iu>
+  	          <!-- <iu><id>org.eclipse.emf.codegen.ecore.ui.feature.group</id></iu> -->
+              <!-- <iu><id>org.eclipse.emf.codegen.ecore.feature.group</id></iu> -->
+              <!-- <iu><id>org.eclipse.emf.codegen.ui.feature.group</id></iu> -->
+              <!-- <iu><id>org.eclipse.emf.codegen.feature.group</id></iu> -->
+              <!-- <iu><id>org.eclipse.emf.common.ui.feature.group</id></iu> -->
               <iu><id>org.eclipse.emf.common.feature.group</id></iu>
               <iu><id>org.eclipse.emf.converter.feature.group</id></iu>
               <iu><id>org.eclipse.emf.databinding.edit.feature.group</id></iu>
@@ -80,20 +80,22 @@
               <iu><id>org.eclipse.emf.ecore.edit.feature.group</id></iu>
               <iu><id>org.eclipse.emf.ecore.editor.feature.group</id></iu>
               <iu><id>org.eclipse.emf.ecore.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.edit.ui.feature.group</id></iu>
+              <!-- <iu><id>org.eclipse.emf.edit.ui.feature.group</id></iu> -->
               <iu><id>org.eclipse.emf.edit.feature.group</id></iu>
               <iu><id>org.eclipse.emf.mapping.ecore.editor.feature.group</id></iu>
               <iu><id>org.eclipse.emf.mapping.ecore.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.mapping.ui.feature.group</id></iu>
+              <!-- <iu><id>org.eclipse.emf.mapping.ui.feature.group</id></iu> -->
               <iu><id>org.eclipse.emf.mapping.feature.group</id></iu>
               <iu><id>org.eclipse.emf.query.feature.group</id></iu>
               <iu><id>org.eclipse.emf.transaction.feature.group</id></iu>
               <iu><id>org.eclipse.emf.validation.feature.group</id></iu>
               <iu><id>org.eclipse.emf.feature.group</id></iu>
+              
               <iu><id>org.eclipse.rap.equinox.target.feature.feature.group</id></iu>
               <iu><id>org.eclipse.rap.feature.feature.group</id></iu>
               <iu><id>org.eclipse.equinox.executable.feature.group</id></iu>
               <!-- bundles -->
+              <iu><id>org.eclipse.text</id></iu>
               <iu><id>org.eclipse.core.filesystem</id></iu>
               <iu><id>org.eclipse.core.filebuffers</id></iu>
               <iu><id>org.eclipse.core.resources</id></iu>

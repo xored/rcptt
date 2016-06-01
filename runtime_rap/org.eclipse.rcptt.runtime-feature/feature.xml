@@ -90,12 +90,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-<!--    <plugin
-         id="org.eclipse.rcptt.ctx.debug.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.ctx.group"
@@ -104,12 +98,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
- <!--   <plugin
-         id="org.eclipse.rcptt.ctx.group.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.ctx.preferences"
@@ -216,12 +204,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-  <!--  <plugin
-         id="org.eclipse.rcptt.ctx.parameters.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.ctx.filesystem"
@@ -229,13 +211,6 @@
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
-<!-- 
-   <plugin
-         id="org.eclipse.rcptt.ctx.filesystem.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.verifications.time"
@@ -244,12 +219,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-   <!-- <plugin
-         id="org.eclipse.rcptt.verifications.time.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.verifications.text"
@@ -258,12 +227,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-<!--    <plugin
-         id="org.eclipse.rcptt.verifications.text.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.verifications"
@@ -286,33 +249,6 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
- <!--   <plugin
-         id="org.eclipse.rcptt.verifications.log.impl"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
-
-<!--    <plugin
-         id="org.eclipse.rcptt.verifications.log"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
-
- <!--   <plugin
-         id="org.eclipse.rcptt.expandbar.runtime"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.rcptt.expandbar"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/> -->
 
    <plugin
          id="org.eclipse.rcptt.forms.impl"
