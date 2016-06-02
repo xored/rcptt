@@ -316,8 +316,6 @@ public class TeslaEventManager {
 
 	public void setLastDisplay(Display lastDisplay) {
 		if (this.lastDisplay != lastDisplay) {
-			if (session != null)
-				this.session.stop();
 
 			this.lastDisplay = lastDisplay;
 
