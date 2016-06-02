@@ -1,6 +1,5 @@
 package org.eclipse.rcptt.launching.rap;
 
-import static org.eclipse.pde.internal.launching.launcher.LaunchConfigurationHelper.getBundleURL;
 import static org.eclipse.rcptt.internal.launching.ext.AJConstants.OSGI_FRAMEWORK_EXTENSIONS;
 import static org.eclipse.rcptt.launching.rap.Activator.PLUGIN_ID;
 
@@ -8,6 +7,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -18,7 +18,10 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -51,10 +54,17 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMInstallType;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.pde.core.plugin.IFragmentModel;
+import org.eclipse.pde.core.plugin.IPluginBase;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.ModelEntry;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 import org.eclipse.pde.internal.build.IPDEBuildConstants;
 import org.eclipse.pde.internal.launching.PDEMessages;
+import org.eclipse.pde.internal.launching.launcher.BundleLauncherHelper;
 import org.eclipse.pde.internal.launching.launcher.LaunchArgumentsHelper;
+import org.eclipse.pde.internal.launching.launcher.LaunchConfigurationHelper;
 import org.eclipse.pde.internal.launching.launcher.LauncherUtils;
 import org.eclipse.pde.internal.launching.launcher.VMHelper;
 import org.eclipse.pde.launching.EquinoxLaunchConfiguration;
@@ -65,12 +75,14 @@ import org.eclipse.rcptt.internal.launching.ext.AJConstants;
 import org.eclipse.rcptt.internal.launching.ext.IBundlePoolConstansts;
 import org.eclipse.rcptt.internal.launching.ext.JDTUtils;
 import org.eclipse.rcptt.internal.launching.ext.OSArchitecture;
+import org.eclipse.rcptt.internal.launching.ext.Q7ExtLaunchMonitor;
 import org.eclipse.rcptt.internal.launching.ext.Q7ExtLaunchingPlugin;
 import org.eclipse.rcptt.internal.launching.ext.Q7TargetPlatformManager;
 import org.eclipse.rcptt.internal.launching.ext.UpdateVMArgs;
 import org.eclipse.rcptt.launching.IQ7Launch;
 import org.eclipse.rcptt.launching.common.Q7LaunchingCommon;
 import org.eclipse.rcptt.launching.events.AutEventManager;
+import org.eclipse.rcptt.launching.ext.BundleStart;
 import org.eclipse.rcptt.launching.ext.OriginalOrderProperties;
 import org.eclipse.rcptt.launching.ext.Q7ExternalLaunchDelegate;
 import org.eclipse.rcptt.launching.ext.Q7ExternalLaunchDelegate.BundlesToLaunch;
@@ -78,6 +90,7 @@ import org.eclipse.rcptt.launching.ext.Q7LaunchDelegateUtils;
 import org.eclipse.rcptt.launching.internal.target.TargetPlatformHelper;
 import org.eclipse.rcptt.launching.target.ITargetPlatformHelper;
 import org.eclipse.rcptt.launching.target.TargetPlatformManager;
+import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.util.FileUtil;
 
 import com.google.common.base.Joiner;
@@ -86,12 +99,12 @@ import com.google.common.collect.Iterables;
 
 @SuppressWarnings("restriction")
 public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
+	private static final String OSGI_BUNDLES = "osgi.bundles"; //$NON-NLS-1$
 	// VM argument contants
 	private static final String VMARG_PORT = "-Dorg.osgi.service.http.port="; //$NON-NLS-1$
 	private static final String VMARG_DEVELOPMENT_MODE = "-Dorg.eclipse.rap.rwt.developmentMode="; //$NON-NLS-1$
 	private static final String VMARG_SESSION_TIMEOUT = "-Dorg.eclipse.equinox.http.jetty.context.sessioninactiveinterval="; //$NON-NLS-1$
 	private static final String VMARG_CONTEXT_PATH = "-Dorg.eclipse.equinox.http.jetty.context.path="; //$NON-NLS-1$
-
 	private static final int CONNECT_TIMEOUT = 20000; // 20 Seconds
 	static final String SLASH = "/"; //$NON-NLS-1$
 
@@ -106,13 +119,33 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 	}
 
 	@Override
-	public void launch(ILaunchConfiguration config,
+	public void launch(ILaunchConfiguration configuration,
 			String mode,
 			ILaunch launch,
 			IProgressMonitor monitor)
 			throws CoreException {
-		SubMonitor subMonitor = doPreLaunch(config, launch, monitor);
-		super.launch(config, mode, launch, subMonitor);
+		SubMonitor subMonitor = doPreLaunch(configuration, launch, monitor);
+		SubMonitor subm = SubMonitor.convert(subMonitor, 2000);
+		Q7ExtLaunchMonitor waiter = new Q7ExtLaunchMonitor(launch);
+
+		try {
+			super.launch(configuration, mode, launch, subm.newChild(1000));
+			waiter.wait(subm.newChild(1000), TeslaLimits.getAUTStartupTimeout() / 1000);
+		} catch (CoreException e) {
+			// log
+			waiter.handle(e);
+			// no need to throw exception in case of cancel
+			if (!e.getStatus().matches(IStatus.CANCEL)) {
+				throw e;
+			}
+		} catch (RuntimeException e) {
+			// log
+			waiter.handle(e);
+			throw e;
+		} finally {
+			waiter.dispose();
+		}
+		monitor.done();
 	}
 
 	@Override
@@ -120,9 +153,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 		// remove base PDE laucher
 	}
 
-	public SubMonitor doPreLaunch(ILaunchConfiguration config,
-			ILaunch launch,
-			IProgressMonitor monitor)
+	public SubMonitor doPreLaunch(ILaunchConfiguration config, ILaunch launch, IProgressMonitor monitor)
 			throws CoreException {
 		this.launch = launch;
 		this.browser = new BrowserLauncher();
@@ -130,7 +161,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		SubMonitor subMonitor;
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
-		// terminateIfRunning(subMonitor);
+		terminateIfRunning(subMonitor);
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
 		warnIfPortBusy(subMonitor);
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
@@ -204,7 +235,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 	public static void setDelegateFields(
 			EquinoxLaunchConfiguration delegate,
-			Map<IPluginModelBase, String> models, Map<String, Object> allBundles) throws CoreException {
+			Map<IPluginModelBase, String> models, Map<String, IPluginModelBase> allBundles) throws CoreException {
 		try {
 			Field field = EquinoxLaunchConfiguration.class
 					.getDeclaredField("fModels");
@@ -227,7 +258,6 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 	@Override
 	public boolean preLaunchCheck(ILaunchConfiguration configuration, String mode, IProgressMonitor monitor)
 			throws CoreException {
-
 		if (monitor.isCanceled()) {
 			return false;
 		}
@@ -371,22 +401,13 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 		args = UpdateVMArgs.addHook(args, hook, properties.getProperty(OSGI_FRAMEWORK_EXTENSIONS));
 
 		args.add("-Declipse.vmargs=" + Joiner.on("\n").join(args) + "\n");
-
 		info.vmArgs = args.toArray(new String[args.size()]);
 		return info.vmArgs;
 	}
 
-	private static String getEntry(IPluginModelBase bundle, String startLevel) {
-		StringBuilder result = new StringBuilder();
-		result.append(getBundleURL(bundle, false));
-		result.append(startLevel);
-		return result.toString();
-	}
-
+	@SuppressWarnings("unused")
 	@Override
 	public String[] getProgramArguments(ILaunchConfiguration configuration) throws CoreException {
-		if (true)
-			return super.getProgramArguments(configuration);
 
 		CachedInfo info = LaunchInfoCache.getInfo(configuration);
 		final ITargetPlatformHelper target = (ITargetPlatformHelper) info.target;
@@ -394,43 +415,38 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 			return info.programArgs;
 		}
 
-		List<String> programArguments = new ArrayList<String>();
+		final List<String> programArguments = new ArrayList<String>();
 		programArguments.addAll(Arrays.asList(super.getProgramArguments(configuration)));
 		String dataLocationResolved = getResolvedDataLoacation();
 		if (dataLocationResolved.length() > 0) {
 			programArguments.addAll(Arrays.asList("-data", dataLocationResolved));
 		}
-
 		try {
 			// Correct osgi.install.area property key
 			File config = new File(getConfigDir(configuration), "config.ini");
-			Properties props = new Properties();
-
-			BufferedInputStream in = new BufferedInputStream(
-					new FileInputStream(config));
-			props.load(in);
-			in.close();
+			final Properties props = readProperty(config);
 
 			File location = target.getQ7Target().getInstallLocation();
 			if (location != null) {
-				props.setProperty("osgi.install.area",
-						location.getAbsolutePath());
+				props.setProperty("osgi.install.area", location.getAbsolutePath()); //$NON-NLS-1$
 			}
 
-			props.setProperty(
-					"osgi.bundles",
-					Q7LaunchDelegateUtils
-							.computeOSGiBundles(getBundlesToLaunch(info).latestVersionsOnly));
+			String baseconfig = configuration.getAttribute(IQ7Launch.AUT_LOCATION, "") + "/configuration/config.ini"; //$NON-NLS-1$
+			File file = new File(baseconfig);
+			Properties base = readProperty(file);
+
 			// Append all other properties from original config file
-			OriginalOrderProperties properties = target.getConfigIniProperties();
+			final OriginalOrderProperties properties = target.getConfigIniProperties();
+			final String defaultBundles = base.getProperty(OSGI_BUNDLES);
+			final String property = properties.getProperty(OSGI_BUNDLES);
+
+			final boolean autostart = configuration.getAttribute(IPDELauncherConstants.DEFAULT_AUTO_START, true);
+			props.setProperty(OSGI_BUNDLES, computeOSGiBundles(info, autostart, defaultBundles)); // $NON-NLS-1$
 
 			properties.setBeginAdd(true);
 			properties.putAll(props);
 
-			BufferedOutputStream out = new BufferedOutputStream(
-					new FileOutputStream(config));
-			properties.store(out, "Configuration File");
-			out.close();
+			writeProperty(config, properties);
 		} catch (IOException e) {
 			throw new CoreException(Q7ExtLaunchingPlugin.status(e));
 		}
@@ -451,6 +467,151 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		return info.programArgs;
 
+	}
+
+	public static Map<IPluginModelBase, String> getTargetBundleMap(String bundles)
+			throws CoreException {
+		Map<IPluginModelBase, String> map = new HashMap<IPluginModelBase, String>();
+		StringTokenizer tok = new StringTokenizer(bundles, ","); //$NON-NLS-1$
+		while (tok.hasMoreTokens()) {
+			String token = tok.nextToken();
+			int index = token.indexOf('@');
+			if (index < 0) { // if no start levels, assume default
+				token = token.concat("@default:default"); //$NON-NLS-1$
+				index = token.indexOf('@');
+			}
+			String idVersion = token.substring(0, index);
+			int versionIndex = idVersion.indexOf(BundleLauncherHelper.VERSION_SEPARATOR);
+			String id = (versionIndex > 0) ? idVersion.substring(0, versionIndex) : idVersion;
+			String version = (versionIndex > 0) ? idVersion.substring(versionIndex + 1) : null;
+			ModelEntry entry = PluginRegistry.findEntry(id);
+			if (entry != null) {
+				IPluginModelBase[] models = entry.getExternalModels();
+				for (IPluginModelBase model : models) {
+					if (model.isEnabled()) {
+						IPluginBase base = model.getPluginBase();
+						// match only if...
+						// a) if we have the same version
+						// b) no version
+						// c) all else fails, if there's just one bundle available, use it
+						if (base.getVersion().equals(version) || version == null || models.length == 1)
+							addBundleToMap(map, model, token.substring(index + 1));
+					}
+				}
+			}
+		}
+		return map;
+	}
+
+	private static void addBundleToMap(Map<IPluginModelBase, String> map, IPluginModelBase bundle, String sl) {
+		BundleDescription desc = bundle.getBundleDescription();
+		boolean defaultsl = (sl == null || sl.equals("default:default")); //$NON-NLS-1$
+		if (desc != null && defaultsl) {
+			String runLevelText = BundleLauncherHelper.resolveSystemRunLevelText(bundle);
+			String autoText = BundleLauncherHelper.resolveSystemAutoText(bundle);
+			if (runLevelText != null && autoText != null) {
+				map.put(bundle, runLevelText + ":" + autoText); //$NON-NLS-1$
+			} else {
+				map.put(bundle, sl);
+			}
+		} else {
+			map.put(bundle, sl);
+		}
+
+	}
+
+	private static String computeOSGiBundles(CachedInfo info, boolean autostart, String defaultBundles)
+			throws CoreException {
+		final Map<IPluginModelBase, BundleStart> lastversion = getBundlesToLaunch(info).latestVersionsOnly;
+		final Map<String, IPluginModelBase> bundles = new LinkedHashMap<String, IPluginModelBase>(lastversion.size());
+		final Set<IPluginModelBase> models = lastversion.keySet();
+		for (IPluginModelBase model : models) {
+			bundles.put(model.getPluginBase().getId(), model);
+		}
+
+		if (bundles.containsKey(IPDEBuildConstants.BUNDLE_SIMPLE_CONFIGURATOR)) {
+			return Q7LaunchDelegateUtils.computeOSGiBundles(lastversion);
+		} else {
+			final StringBuffer buffer = new StringBuffer();
+			final Iterator<IPluginModelBase> iter = models.iterator();
+
+			Map<IPluginModelBase, String> defaultModels = getTargetBundleMap(defaultBundles);
+			while (iter.hasNext()) {
+				IPluginModelBase model = iter.next();
+				String id = model.getPluginBase().getId();
+				if (!IPDEBuildConstants.BUNDLE_OSGI.equals(id)) {
+					if (buffer.length() > 0)
+						buffer.append(","); //$NON-NLS-1$
+					buffer.append(LaunchConfigurationHelper.getBundleURL(model, true));
+
+					// fragments must not be started or have a start level
+					if (model instanceof IFragmentModel)
+						continue;
+
+					String startData = getStartData(model, defaultModels);
+					if (startData != null)
+						appendStartData(buffer, startData, autostart);
+				}
+			}
+			return buffer.toString();
+		}
+	}
+
+	private static final String ASPECTJ_BUNDLE = "org.eclipse.equinox.weaving.aspectj";
+	private static final String SERVLETBRIDGE = "org.eclipse.equinox.servletbridge.extensionbundle";
+
+	private static String getStartData(IPluginModelBase model, Map<IPluginModelBase, String> defaultModels) {
+		final String id = model.getBundleDescription().getName();
+		if (SERVLETBRIDGE.equals(id)) {
+			return null;
+		}
+		if ("org.eclipse.equinox.ds".equals(id)) {
+			return "1:true";
+		}
+		if (ASPECTJ_BUNDLE.equals(id)) {
+			return "1:true";
+		}
+
+		if (defaultModels.containsKey(model)) {
+			return defaultModels.get(model);
+		}
+
+		return "default:default";
+	}
+
+	private static void appendStartData(StringBuffer buffer, String startData, boolean defaultAuto) {
+		int index = startData.indexOf(':');
+		String level = index > 0 ? startData.substring(0, index) : "default"; //$NON-NLS-1$
+		String auto = index > 0 && index < startData.length() - 1 ? startData.substring(index + 1) : "default"; //$NON-NLS-1$
+		if ("default".equals(auto)) //$NON-NLS-1$
+			auto = Boolean.toString(defaultAuto);
+		if (!level.equals("default") || "true".equals(auto)) //$NON-NLS-1$ //$NON-NLS-2$
+			buffer.append("@"); //$NON-NLS-1$
+
+		if (!level.equals("default")) { //$NON-NLS-1$
+			buffer.append(level);
+			if ("true".equals(auto)) //$NON-NLS-1$
+				buffer.append(":"); //$NON-NLS-1$
+		}
+		if ("true".equals(auto)) { //$NON-NLS-1$
+			buffer.append("start"); //$NON-NLS-1$
+		}
+	}
+
+	private void writeProperty(File config, OriginalOrderProperties properties)
+			throws FileNotFoundException, IOException {
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(config));
+		properties.store(out, "Configuration File");
+		out.close();
+	}
+
+	private Properties readProperty(File config) throws FileNotFoundException, IOException {
+		Properties props = new Properties();
+
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(config));
+		props.load(in);
+		in.close();
+		return props;
 	}
 
 	private static final String SECURE_STORAGE_FILE_NAME = "secure_storage";
@@ -490,12 +651,6 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 			arguments.add(VMARG_CONTEXT_PATH + contextPath);
 		}
 		return arguments;
-	}
-
-	private static String[] toStringArray(List<String> list) {
-		String[] result = new String[list.size()];
-		list.toArray(result);
-		return result;
 	}
 
 	static final IStatus STATUS = new Status(IStatus.INFO, PLUGIN_ID, 601, "", null); //$NON-NLS-1$
@@ -774,7 +929,6 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 				.getAttribute(IQ7Launch.ATTR_HEADLESS_LAUNCH, false);
 	}
 
-	@SuppressWarnings("restriction")
 	private void clearDataLocation(ILaunchConfiguration configuration, IProgressMonitor monitor)
 			throws CoreException {
 		String resolvedDataLocation = getResolvedDataLoacation();

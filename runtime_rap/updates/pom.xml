@@ -14,13 +14,6 @@
          <module>org.eclipse.rcptt.updates.runtime.rap-feature</module>
       </modules>
     </profile>
-    <profile>
-      <id>full</id>
-      <modules>
-	      <module>org.eclipse.rcptt.updates.rap-feature</module>
-        <module>org.eclipse.rcptt.updates.rap</module>
-      </modules>
-    </profile>
   </profiles>
   <groupId>org.eclipse.rcptt</groupId>
   <version>2.1.0-SNAPSHOT</version>

@@ -72,8 +72,6 @@ public class PersistenceManager implements IPlainConstants {
 	public static final String TESLA_CONTENT_ENTRY = ".content.raw";
 
 	private static PersistenceManager persistenceManager;
-	// private Map<IFile, IPersistenceModel> models = new HashMap<IFile,
-	// IPersistenceModel>();
 	private Map<Resource, IPersistenceModel> resourceOnlyModels = Collections
 			.synchronizedMap(new HashMap<Resource, IPersistenceModel>());
 

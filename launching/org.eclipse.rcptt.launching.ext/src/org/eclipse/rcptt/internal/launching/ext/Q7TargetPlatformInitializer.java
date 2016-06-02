@@ -178,14 +178,14 @@ public class Q7TargetPlatformInitializer {
 			q7Deps.getUnits().add("org.eclipse.emf.ecore.edit");
 			// q7Deps.getUnits().add("org.eclipse.emf.codegen");
 			// q7Deps.getUnits().add("org.eclipse.emf.codegen.ecore");
-			q7Deps.getUnits().add("org.eclipse.emf.converter");
+			// q7Deps.getUnits().add("org.eclipse.emf.converter");
 			q7Deps.getUnits().add("org.eclipse.emf.databinding");
 			q7Deps.getUnits().add("org.eclipse.emf.mapping");
 			q7Deps.getUnits().add("org.eclipse.emf.mapping.ecore");
 			q7Deps.getUnits().add("org.eclipse.emf.databinding.edit");
 			q7Deps.getUnits().add("org.eclipse.emf");
-			q7Deps.getUnits().add("org.eclipse.emf.validation");
-			q7Deps.getUnits().add("org.eclipse.emf.transaction");
+			// q7Deps.getUnits().add("org.eclipse.emf.validation");
+			// q7Deps.getUnits().add("org.eclipse.emf.transaction");
 			q7Deps.getUnits().add("org.eclipse.emf.ecore.change");
 			q7Deps.getUnits().add("org.eclipse.emf.ecore.xmi");
 

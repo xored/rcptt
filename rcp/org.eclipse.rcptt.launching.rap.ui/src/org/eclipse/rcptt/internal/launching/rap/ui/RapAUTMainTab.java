@@ -69,7 +69,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 
 	private final ModifyListener modifyListener;
 	private AUTLocationBlock fLocationBlock;
-	private AUTProgramBlock fAUTProgramBlock;
 	private ITargetPlatformHelper currentTargetPlatform;
 
 	private Button developmentModeCheckBox;
@@ -137,9 +136,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 		createRAPSettingsSection(composite);
 		createDataLocationSection(composite);
 
-		// fAUTProgramBlock.createControl(composite);
-		// fJreBlock.createControl(composite);
-
 		// Add listener for each control to recalculate scroll bar when it is
 		// entered.
 		// This results in scrollbar scrolling when user tabs to a control that
@@ -206,7 +202,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 	public void initializeFrom(ILaunchConfiguration config) {
 		try {
 			fLocationBlock.initializeFrom(config);
-			// fAUTProgramBlock.initializeFrom(config);
 
 			RAPLaunchConfig rapConfig = new RAPLaunchConfig(config);
 			servletPathTextField.setText(rapConfig.getServletPath());
@@ -270,7 +265,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 	public void performApply(ILaunchConfigurationWorkingCopy config) {
 		try {
 			fLocationBlock.performApply(config);
-			// fAUTProgramBlock.performApply(config);
 
 			RAPLaunchConfig rapConfig = new RAPLaunchConfig(config);
 			rapConfig.setServletPath(servletPathTextField.getText());

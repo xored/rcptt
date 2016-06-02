@@ -836,7 +836,7 @@ public class Q7ExternalLaunchDelegate extends
 						}
 					});
 
-			fAllBundles = new HashMap<String, Object>(latestVersions);
+			fAllBundles = new HashMap<String, IPluginModelBase>(latestVersions);
 			fModels = new HashMap<IPluginModelBase, String>(Maps.transformValues(
 					resolvedBundles, new Function<BundleStart, String>() {
 						public String apply(BundleStart input) {
@@ -848,7 +848,7 @@ public class Q7ExternalLaunchDelegate extends
 		public final Map<IPluginModelBase, BundleStart> resolvedBundles;
 		public final Map<IPluginModelBase, BundleStart> latestVersionsOnly;
 		public final Map<IPluginModelBase, String> fModels;
-		public final Map<String, Object> fAllBundles;
+		public final Map<String, IPluginModelBase> fAllBundles;
 	}
 
 	private static final String KEY_BUNDLES_TO_LAUNCH = "bundlesToLaunch";
