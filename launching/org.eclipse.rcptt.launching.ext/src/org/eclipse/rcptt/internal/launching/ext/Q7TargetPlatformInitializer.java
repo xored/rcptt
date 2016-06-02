@@ -157,25 +157,44 @@ public class Q7TargetPlatformInitializer {
 		UpdateSite q7Deps = InjectionFactory.eINSTANCE.createUpdateSite();
 		q7Deps.setUri(q7Info.deps.toString());
 
-		if (!hasEMFTransaction) {
-			q7Deps.getUnits().add(EMF_TRANSACTION_FEATURE_GROUP);
-		}
-		if (!hasEMFValidation) {
-			q7Deps.getUnits().add(EMF_VALIDATION_FEATURE_GROUP);
-		}
-		if (!hasEMF) {
-			q7Deps.getUnits().add(EMF_FEATURE_GROUP);
+		if (!hasRAP) {
+			if (!hasEMFTransaction) {
+				q7Deps.getUnits().add(EMF_TRANSACTION_FEATURE_GROUP);
+			}
+			if (!hasEMFValidation) {
+				q7Deps.getUnits().add(EMF_VALIDATION_FEATURE_GROUP);
+			}
+			if (!hasEMF) {
+				q7Deps.getUnits().add(EMF_FEATURE_GROUP);
+			}
 		}
 		if (hasRAP) {
 			q7Deps.getUnits().add(EQUINOX_EXECUTABLE_FEATURE_GROUP);
 			q7Deps.getUnits().add("org.eclipse.rap.equinox.target.feature.feature.group");
 			q7Deps.getUnits().add("org.eclipse.rap.feature.feature.group");
-			q7Deps.getUnits().add("org.eclipse.core.filesystem");
-			q7Deps.getUnits().add("org.eclipse.core.filebuffers");
-			q7Deps.getUnits().add("org.eclipse.core.resources");
-			q7Deps.getUnits().add("org.eclipse.core.variables");
-			q7Deps.getUnits().add("org.eclipse.debug.core");
-			q7Deps.getUnits().add("org.eclipse.equinox.security");
+			q7Deps.getUnits().add("org.eclipse.emf.common");
+			q7Deps.getUnits().add("org.eclipse.emf.ecore");
+			q7Deps.getUnits().add("org.eclipse.emf.edit");
+			q7Deps.getUnits().add("org.eclipse.emf.ecore.edit");
+			// q7Deps.getUnits().add("org.eclipse.emf.codegen");
+			// q7Deps.getUnits().add("org.eclipse.emf.codegen.ecore");
+			q7Deps.getUnits().add("org.eclipse.emf.converter");
+			q7Deps.getUnits().add("org.eclipse.emf.databinding");
+			q7Deps.getUnits().add("org.eclipse.emf.mapping");
+			q7Deps.getUnits().add("org.eclipse.emf.mapping.ecore");
+			q7Deps.getUnits().add("org.eclipse.emf.databinding.edit");
+			q7Deps.getUnits().add("org.eclipse.emf");
+			q7Deps.getUnits().add("org.eclipse.emf.validation");
+			q7Deps.getUnits().add("org.eclipse.emf.transaction");
+			q7Deps.getUnits().add("org.eclipse.emf.ecore.change");
+			q7Deps.getUnits().add("org.eclipse.emf.ecore.xmi");
+
+			// q7Deps.getUnits().add("org.eclipse.core.filesystem");
+			// q7Deps.getUnits().add("org.eclipse.core.filebuffers");
+			// q7Deps.getUnits().add("org.eclipse.core.resources");
+			// q7Deps.getUnits().add("org.eclipse.core.variables");
+			// q7Deps.getUnits().add("org.eclipse.debug.core");
+			// q7Deps.getUnits().add("org.eclipse.equinox.security");
 		}
 
 		injectionConfiguration.getEntries().add(q7Deps);

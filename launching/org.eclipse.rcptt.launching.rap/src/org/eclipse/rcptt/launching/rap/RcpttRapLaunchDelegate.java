@@ -1,5 +1,6 @@
 package org.eclipse.rcptt.launching.rap;
 
+import static org.eclipse.pde.internal.launching.launcher.LaunchConfigurationHelper.getBundleURL;
 import static org.eclipse.rcptt.internal.launching.ext.AJConstants.OSGI_FRAMEWORK_EXTENSIONS;
 import static org.eclipse.rcptt.launching.rap.Activator.PLUGIN_ID;
 
@@ -83,6 +84,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+@SuppressWarnings("restriction")
 public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 	// VM argument contants
 	private static final String VMARG_PORT = "-Dorg.osgi.service.http.port="; //$NON-NLS-1$
@@ -128,7 +130,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		SubMonitor subMonitor;
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
-		terminateIfRunning(subMonitor);
+		// terminateIfRunning(subMonitor);
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
 		warnIfPortBusy(subMonitor);
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
@@ -374,8 +376,18 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 		return info.vmArgs;
 	}
 
+	private static String getEntry(IPluginModelBase bundle, String startLevel) {
+		StringBuilder result = new StringBuilder();
+		result.append(getBundleURL(bundle, false));
+		result.append(startLevel);
+		return result.toString();
+	}
+
 	@Override
 	public String[] getProgramArguments(ILaunchConfiguration configuration) throws CoreException {
+		if (true)
+			return super.getProgramArguments(configuration);
+
 		CachedInfo info = LaunchInfoCache.getInfo(configuration);
 		final ITargetPlatformHelper target = (ITargetPlatformHelper) info.target;
 		if (info.programArgs != null) {
@@ -404,6 +416,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 				props.setProperty("osgi.install.area",
 						location.getAbsolutePath());
 			}
+
 			props.setProperty(
 					"osgi.bundles",
 					Q7LaunchDelegateUtils
@@ -813,7 +826,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 			URL url = null;
 			try {
 				url = getUrl();
-				browser.launch(url);
+				browser.launch(url, config);
 			} catch (CoreException e) {
 				String msg = MessageFormat.format("Failed to open browser for URL ''{0}''.", new Object[] { url });
 				Activator.getDefault().errorLog(msg, e);
@@ -822,61 +835,6 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 			subMonitor.done();
 		}
 	}
-	//
-	// private IWebBrowser getBrowser() throws CoreException {
-	// final IWebBrowser[] result = { null };
-	// final CoreException[] exception = { null };
-	// Display.getDefault().syncExec(new Runnable() {
-	// public void run() {
-	// try {
-	// IWorkbench workbench = PlatformUI.getWorkbench();
-	// IWorkbenchBrowserSupport support = workbench.getBrowserSupport();
-	// int style = IWorkbenchBrowserSupport.LOCATION_BAR
-	// | IWorkbenchBrowserSupport.NAVIGATION_BAR
-	// | IWorkbenchBrowserSupport.STATUS;
-	// if (BrowserMode.EXTERNAL.equals(config.getBrowserMode())) {
-	// style |= IWorkbenchBrowserSupport.AS_EXTERNAL;
-	// } else {
-	// style |= IWorkbenchBrowserSupport.AS_EDITOR;
-	// }
-	// // Starting the same launch first with the external, then with the
-	// // internal browser without restarting the workbench will still open
-	// // an external browser.
-	// // The fix is to append the browserMode to the id
-	// String id = config.getName() + config.getBrowserMode();
-	// String name = config.getName();
-	// String toolTip = config.getName();
-	// result[0] = support.createBrowser(style, id, name, toolTip);
-	// } catch (CoreException e) {
-	// exception[0] = e;
-	// }
-	// }
-	// });
-	// if (exception[0] != null) {
-	// throw exception[0];
-	// }
-	// return result[0];
-	// }
-	//
-	// private static void openUrl(final IWebBrowser browser, final URL url) throws PartInitException {
-	// final PartInitException[] exception = { null };
-	// Display.getDefault().asyncExec(new Runnable() {
-	// public void run() {
-	// try {
-	// browser.openURL(url);
-	// } catch (PartInitException e) {
-	// String text = "Failed to open URL ''{0}'' in browser.";
-	// String msg = MessageFormat.format(text, new Object[] { url });
-	// String pluginId = PLUGIN_ID;
-	// Status status = new Status(IStatus.ERROR, pluginId, msg, e);
-	// exception[0] = new PartInitException(status);
-	// }
-	// }
-	// });
-	// if (exception[0] != null) {
-	// throw exception[0];
-	// }
-	// }
 
 	private static boolean updateJVM(ILaunchConfiguration configuration,
 			OSArchitecture architecture, ITargetPlatformHelper target) throws CoreException {

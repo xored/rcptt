@@ -74,22 +74,23 @@
               <!-- <iu><id>org.eclipse.emf.codegen.feature.group</id></iu> -->
               <!-- <iu><id>org.eclipse.emf.common.ui.feature.group</id></iu> -->
               <iu><id>org.eclipse.emf.common.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.converter.feature.group</id></iu>
+              <!-- <iu><id>org.eclipse.emf.converter.feature.group</id></iu> -->
               <iu><id>org.eclipse.emf.databinding.edit.feature.group</id></iu>
               <iu><id>org.eclipse.emf.databinding.feature.group</id></iu>
               <iu><id>org.eclipse.emf.ecore.edit.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.ecore.editor.feature.group</id></iu>
+              <!-- <iu><id>org.eclipse.emf.ecore.editor.feature.group</id></iu> -->
               <iu><id>org.eclipse.emf.ecore.feature.group</id></iu>
               <!-- <iu><id>org.eclipse.emf.edit.ui.feature.group</id></iu> -->
-              <iu><id>org.eclipse.emf.edit.feature.group</id></iu>
+             <!--  <iu><id>org.eclipse.emf.edit.feature.group</id></iu>
               <iu><id>org.eclipse.emf.mapping.ecore.editor.feature.group</id></iu>
               <iu><id>org.eclipse.emf.mapping.ecore.feature.group</id></iu>
-              <!-- <iu><id>org.eclipse.emf.mapping.ui.feature.group</id></iu> -->
+              <iu><id>org.eclipse.emf.mapping.ui.feature.group</id></iu>
               <iu><id>org.eclipse.emf.mapping.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.query.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.transaction.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.validation.feature.group</id></iu>
-              <iu><id>org.eclipse.emf.feature.group</id></iu>
+              <iu><id>org.eclipse.emf.query.f::eature.group</id></iu>
+              --> 
+              <!-- <iu><id>org.eclipse.emf.transaction.feature.group</id></iu> -->
+              <!-- <iu><id>org.eclipse.emf.validation.feature.group</id></iu> -->
+              <!-- <iu><id>org.eclipse.emf.feature.group</id></iu> -->
               
               <iu><id>org.eclipse.rap.equinox.target.feature.feature.group</id></iu>
               <iu><id>org.eclipse.rap.feature.feature.group</id></iu>
@@ -102,6 +103,23 @@
               <iu><id>org.eclipse.core.variables</id></iu>
               <iu><id>org.eclipse.debug.core</id></iu>
               <iu><id>org.eclipse.equinox.security</id></iu>
+              <iu><id>org.eclipse.emf.common</id></iu>
+              <iu><id>org.eclipse.emf.ecore</id></iu>
+              <iu><id>org.eclipse.emf.edit</id></iu>
+              <iu><id>org.eclipse.emf.ecore.edit</id></iu>
+              <iu><id>org.eclipse.emf.codegen</id></iu>
+              <iu><id>org.eclipse.emf.codegen.ecore</id></iu>
+              <iu><id>org.eclipse.emf.converter</id></iu>
+              <iu><id>org.eclipse.emf.databinding</id></iu>
+              <iu><id>org.eclipse.emf.mapping</id></iu>
+              <iu><id>org.eclipse.emf.mapping.ecore</id></iu>
+              <iu><id>org.eclipse.emf.databinding.edit</id></iu>
+              <iu><id>org.eclipse.emf</id></iu>
+              <iu><id>org.eclipse.emf.validation</id></iu>
+              <iu><id>org.eclipse.emf.transaction</id></iu>
+              <iu><id>org.eclipse.emf.ecore.change</id></iu>
+
+
 	          </ius>
 	        </configuration>
       </plugin>

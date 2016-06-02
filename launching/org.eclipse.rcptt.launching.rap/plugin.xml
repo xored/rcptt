@@ -13,5 +13,12 @@
             name="RAP Application Under Test (RCPTT)">
       </launchConfigurationType>
    </extension>
+   <extension
+         point="org.eclipse.rcptt.launching.executors">
+      <executor
+            class="org.eclipse.rcptt.launching.rap.RapLaunchExecutor"
+            type="org.eclipse.rcptt.launching.rap">
+      </executor>
+   </extension>
 
 </plugin>

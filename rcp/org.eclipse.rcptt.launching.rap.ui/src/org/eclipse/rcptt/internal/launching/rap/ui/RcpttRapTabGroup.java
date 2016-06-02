@@ -10,31 +10,35 @@
  *******************************************************************************/
 package org.eclipse.rcptt.internal.launching.rap.ui;
 
+import static org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
-import org.eclipse.pde.ui.launcher.EclipseLauncherTabGroup;
+import org.eclipse.pde.ui.launcher.OSGiLauncherTabGroup;
 import org.eclipse.rcptt.internal.launching.ext.UpdateVMArgs;
 import org.eclipse.rcptt.launching.target.ITargetPlatformHelper;
 
-public class RcpttRapTabGroup extends EclipseLauncherTabGroup {
+public class RcpttRapTabGroup extends OSGiLauncherTabGroup {
+
+	private static final String NEW_LINE = "\n"; //$NON-NLS-1$
+	private static final String JETTY_LOG_LEVEL = "-Dorg.eclipse.equinox.http.jetty.log.stderr.threshold=info"; //$NON-NLS-1$
 
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
-		ILaunchConfigurationTab[] tabs = null;
-		tabs = new ILaunchConfigurationTab[] {
-				new RapAUTMainTab(this),
+		super.createTabs(dialog, mode);
 
-				// new AUTArgumentsTab(), new ConfigurationTab(),
-				// new TracingTab(), new EnvironmentTab(), new AUTCommonTab()
-		};
+		final ILaunchConfigurationTab[] tabs = insertTab(getTabs(), 0, new RapAUTMainTab(this));
 		setTabs(tabs);
 	}
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		super.setDefaults(configuration);
-
 		UpdateVMArgs.updateVMArgs(configuration);
+		updateRapVmArgument(configuration);
+		// configuration.setAttribute(IDebugUIConstants.ATTR_CAPTURE_IN_CONSOLE, false);
+		// configuration.setAttribute(DebugPlugin.ATTR_CAPTURE_OUTPUT, false);
 	}
 
 	public void doUpdate(ITargetPlatformHelper info) {
@@ -44,5 +48,41 @@ public class RcpttRapTabGroup extends EclipseLauncherTabGroup {
 				((IAUTListener) tab).update(info);
 			}
 		}
+	}
+
+	private static ILaunchConfigurationTab[] insertTab(ILaunchConfigurationTab[] tabs,
+			int position,
+			ILaunchConfigurationTab newTab) {
+		ILaunchConfigurationTab[] result = new ILaunchConfigurationTab[tabs.length + 1];
+		int offset = 0;
+		for (int i = 0; i < result.length; i++) {
+			if (i == position) {
+				result[i] = newTab;
+				offset = -1;
+			} else {
+				result[i] = tabs[i + offset];
+			}
+		}
+		return result;
+	}
+
+	private static void updateRapVmArgument(ILaunchConfigurationWorkingCopy config) {
+		String vmArguments = ""; //$NON-NLS-1$
+		try {
+			vmArguments = config.getAttribute(ATTR_VM_ARGUMENTS, ""); //$NON-NLS-1$
+		} catch (CoreException e) {
+			Activator.getDefault().getLog().log(e.getStatus());
+		}
+		vmArguments = appendJettyLogLevel(vmArguments);
+		config.setAttribute(ATTR_VM_ARGUMENTS, vmArguments);
+	}
+
+	private static String appendJettyLogLevel(String vmArguments) {
+		String result = vmArguments;
+		if (result.length() > 0) {
+			result += NEW_LINE;
+		}
+		result += JETTY_LOG_LEVEL;
+		return result;
 	}
 }

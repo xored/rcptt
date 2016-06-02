@@ -14,9 +14,9 @@ public class BrowserLauncher {
 	private final static String POINT_ID = PLUGIN_ID + ".browserLaunchDelegate"; //$NON-NLS-1$
 	private IBrowserLaunchDelegate[] delegates = null;
 
-	public void launch(URL uri) throws CoreException {
+	public void launch(URL uri, RAPLaunchConfig config) throws CoreException {
 		for (IBrowserLaunchDelegate delegate : getLaunchers()) {
-			delegate.launch(uri);
+			delegate.launch(uri, config);
 		}
 	}
 

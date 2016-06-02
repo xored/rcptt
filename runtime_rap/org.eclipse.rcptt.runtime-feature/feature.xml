@@ -16,7 +16,7 @@
    <license url="%licenseURL">
       %license
    </license>
-
+   
    <requires>
       <import feature="org.eclipse.rcptt.tesla" version="2.1.0.qualifier"/>
       <import feature="org.eclipse.rcptt.tesla.runtime" version="2.1.0.qualifier"/>
@@ -25,6 +25,10 @@
       <import feature="org.eclipse.rcptt.ecl.server" version="2.1.0.qualifier"/>
       <import feature="org.eclipse.rcptt.watson" version="2.1.0.qualifier"/>
       <import feature="org.eclipse.rcptt.watson.runtime" version="2.1.0.qualifier"/>
+
+      <!-- FOR NORMAL WORKING RAP  -->
+      <import feature="org.eclipse.rap.equinox.target.feature" version="3.1.0.qualifier"/>
+      <import feature="org.eclipse.rap.feature" version="3.1.0.qualifier"/>
    </requires>
 
    <plugin
@@ -263,5 +267,54 @@
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
+
+   <!--  FOR NORMAL WORKING RAP -->
+    <plugin
+         id="org.eclipse.equinox.security"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.debug.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.variables"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.resources"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.filebuffers"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    <plugin
+         id="org.eclipse.core.filesystem"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    <plugin
+         id="org.eclipse.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    <!-- END -->
 
 </feature>

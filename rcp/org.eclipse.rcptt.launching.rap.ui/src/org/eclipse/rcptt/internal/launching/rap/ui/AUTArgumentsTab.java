@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 @SuppressWarnings("restriction")
+@Deprecated
 public class AUTArgumentsTab extends JavaArgumentsTab implements IAUTListener {
 	Text vmArguments;
 	Button secureStorage;
@@ -99,7 +100,8 @@ public class AUTArgumentsTab extends JavaArgumentsTab implements IAUTListener {
 		secureStorage
 				.setText("Override '-eclipse.keyring' with 'launch shortcut folder/secure_storage'.");
 		new Label(securityBlock, SWT.NONE)
-				.setText("Please be aware. If unset, global secure storage could be cleared by Preferences context apply.");
+				.setText(
+						"Please be aware. If unset, global secure storage could be cleared by Preferences context apply.");
 		secureStorage
 				.setToolTipText("Use launch shortcut folder for secure storage");
 		secureStorage.addSelectionListener(new SelectionAdapter() {
