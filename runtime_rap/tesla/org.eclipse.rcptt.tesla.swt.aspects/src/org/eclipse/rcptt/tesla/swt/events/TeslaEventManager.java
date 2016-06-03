@@ -362,7 +362,11 @@ public class TeslaEventManager {
 
 						lastDisplay.asyncExec(new Runnable() {
 							public void run() {
-								session.stop();
+								if(RWT.getUISession() != null)
+								{
+									session.stop();
+									System.out.println("push to server");
+								}
 								synced = true;
 								needSync = false;
 							}

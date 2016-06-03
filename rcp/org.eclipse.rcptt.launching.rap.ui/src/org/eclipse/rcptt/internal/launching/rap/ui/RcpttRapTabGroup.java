@@ -18,7 +18,6 @@ import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.pde.ui.launcher.OSGiLauncherTabGroup;
 import org.eclipse.rcptt.internal.launching.ext.UpdateVMArgs;
-import org.eclipse.rcptt.launching.target.ITargetPlatformHelper;
 
 public class RcpttRapTabGroup extends OSGiLauncherTabGroup {
 
@@ -28,7 +27,8 @@ public class RcpttRapTabGroup extends OSGiLauncherTabGroup {
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
 		super.createTabs(dialog, mode);
 
-		final ILaunchConfigurationTab[] tabs = insertTab(getTabs(), 0, new RapAUTMainTab(this));
+		ILaunchConfigurationTab[] tabs = insertTab(getTabs(), 0, new RapAUTMainTab(this));
+		tabs = removeTab(tabs, 1); // remove bundles tab
 		setTabs(tabs);
 	}
 
@@ -41,17 +41,7 @@ public class RcpttRapTabGroup extends OSGiLauncherTabGroup {
 		// configuration.setAttribute(DebugPlugin.ATTR_CAPTURE_OUTPUT, false);
 	}
 
-	public void doUpdate(ITargetPlatformHelper info) {
-		ILaunchConfigurationTab[] tabs = getTabs();
-		for (ILaunchConfigurationTab tab : tabs) {
-			if (tab instanceof IAUTListener) {
-				((IAUTListener) tab).update(info);
-			}
-		}
-	}
-
-	private static ILaunchConfigurationTab[] insertTab(ILaunchConfigurationTab[] tabs,
-			int position,
+	private static ILaunchConfigurationTab[] insertTab(ILaunchConfigurationTab[] tabs, int position,
 			ILaunchConfigurationTab newTab) {
 		ILaunchConfigurationTab[] result = new ILaunchConfigurationTab[tabs.length + 1];
 		int offset = 0;
@@ -62,6 +52,19 @@ public class RcpttRapTabGroup extends OSGiLauncherTabGroup {
 			} else {
 				result[i] = tabs[i + offset];
 			}
+		}
+		return result;
+	}
+
+	private static ILaunchConfigurationTab[] removeTab(ILaunchConfigurationTab[] tabs, int position) {
+		ILaunchConfigurationTab[] result = new ILaunchConfigurationTab[tabs.length - 1];
+		for (int i = 0; i < tabs.length; i++) {
+			if (i < position) {
+				result[i] = tabs[i];
+			} else if (i > position) {
+				result[i - 1] = tabs[i];
+			} else
+				tabs[i].dispose();
 		}
 		return result;
 	}

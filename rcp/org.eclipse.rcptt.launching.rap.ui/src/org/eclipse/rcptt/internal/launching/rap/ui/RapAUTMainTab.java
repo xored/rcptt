@@ -86,10 +86,7 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 	private DataLocationBlock dataLocationBlock;
 	private ILaunchConfigurationListener launchConfigListener;
 
-	private RcpttRapTabGroup group;
-
 	public RapAUTMainTab(RcpttRapTabGroup group) {
-		this.group = group;
 		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		fillHorizontal = GridDataFactory.createFrom(gridData);
 		selectionListener = createDialogSelectionListener();
@@ -324,7 +321,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 
 	public void setCurrentTargetPlatform(ITargetPlatformHelper info) {
 		this.currentTargetPlatform = info;
-		// fAUTProgramBlock.updateInfo(currentTargetPlatform);
 	}
 
 	public ITargetPlatformHelper getTarget() {
@@ -333,11 +329,7 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy config) {
-		// fAUTProgramBlock.setDefaults(config);
-	}
-
-	public void doUpdate(ITargetPlatformHelper info) {
-		group.doUpdate(info);
+		RAPLaunchConfig.setDefaults(config);
 	}
 
 	@Override

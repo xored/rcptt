@@ -36,7 +36,6 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
@@ -119,33 +118,34 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 	}
 
 	@Override
-	public void launch(ILaunchConfiguration configuration,
-			String mode,
-			ILaunch launch,
-			IProgressMonitor monitor)
+	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
 			throws CoreException {
-		SubMonitor subMonitor = doPreLaunch(configuration, launch, monitor);
-		SubMonitor subm = SubMonitor.convert(subMonitor, 2000);
+
+		SubMonitor submonitor = doPreLaunch(configuration, launch, monitor);
+		submonitor = SubMonitor.convert(submonitor, 2000);
 		Q7ExtLaunchMonitor waiter = new Q7ExtLaunchMonitor(launch);
 
 		try {
-			super.launch(configuration, mode, launch, subm.newChild(1000));
-			waiter.wait(subm.newChild(1000), TeslaLimits.getAUTStartupTimeout() / 1000);
+			super.launch(configuration, mode, launch, submonitor.newChild(1000));
+			waiter.wait(submonitor.newChild(1000), TeslaLimits.getAUTStartupTimeout() / 1000);
 		} catch (CoreException e) {
-			// log
+			Activator.getDefault().errorLog("RCPTT: Failed to launch RAP AUT: " + configuration.getName(), e); //$NON-NLS-1$
 			waiter.handle(e);
 			// no need to throw exception in case of cancel
 			if (!e.getStatus().matches(IStatus.CANCEL)) {
 				throw e;
 			}
 		} catch (RuntimeException e) {
-			// log
+			Activator.getDefault().errorLog("RCPTT: Failed to launch RAP AUT: " + configuration.getName(), e); //$NON-NLS-1$
 			waiter.handle(e);
 			throw e;
 		} finally {
+
+			System.out.println("donedddddddd");
 			waiter.dispose();
+			submonitor.done();
+			monitor.done();
 		}
-		monitor.done();
 	}
 
 	@Override
@@ -236,6 +236,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 	public static void setDelegateFields(
 			EquinoxLaunchConfiguration delegate,
 			Map<IPluginModelBase, String> models, Map<String, IPluginModelBase> allBundles) throws CoreException {
+		Throwable ex;
 		try {
 			Field field = EquinoxLaunchConfiguration.class
 					.getDeclaredField("fModels");
@@ -246,13 +247,20 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 					.getDeclaredField("fAllBundles");
 			field.setAccessible(true);
 			field.set(delegate, allBundles);
+
+			return;
 		} catch (IllegalAccessException e) {
-			// throw new CoreException(RcpttPlugin.createStatus("Failed to inject bundles", e));
+			ex = e;
 		} catch (SecurityException e) {
-			// throw new CoreException(RcpttPlugin.createStatus("Failed to inject bundles", e));
+			ex = e;
 		} catch (NoSuchFieldException e) {
-			// throw new CoreException(RcpttPlugin.createStatus("Failed to inject bundles", e));
+			ex = e;
 		}
+		throw new CoreException(createStatus("Failed to inject bundles", ex)); //$NON-NLS-1$
+	}
+
+	private static Status createStatus(String message, Throwable ex) {
+		return new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, ex);
 	}
 
 	@Override
@@ -282,9 +290,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		info.target = target;
 		final MultiStatus error = new MultiStatus(Q7ExtLaunchingPlugin.PLUGIN_ID, 0,
-				"Target platform initialization failed  for "
-						+ configuration.getName(),
-				null);
+				"Target platform initialization failed  for " + configuration.getName(), null); //$NON-NLS-1$
 		error.add(target.getStatus());
 
 		if (!error.isOK()) {
@@ -309,45 +315,37 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		OSArchitecture jvmArch = JDTUtils.detect(install);
 
-		boolean canRun32bit = false;
 		if (jvmArch.equals(architecture)
-				|| (jvmArch.equals(OSArchitecture.x86_64) && (canRun32bit = JDTUtils
-						.canRun32bit(install)))) {
+				|| (jvmArch.equals(OSArchitecture.x86_64) && (JDTUtils.canRun32bit(install)))) {
 			haveAUT = true;
 		}
 
-		if (!haveAUT
-				&& architecture != OSArchitecture.Unknown
+		if (!haveAUT && architecture != OSArchitecture.Unknown
 				&& target.detectArchitecture(false, new StringBuilder()) == OSArchitecture.Unknown) {
 			haveAUT = true;
 		}
 
 		if (!haveAUT) {
 			// Let's search for configuration and update JVM if possible.
-			haveAUT = updateJVM(configuration, architecture,
-					((ITargetPlatformHelper) info.target));
+			haveAUT = updateJVM(configuration, architecture, ((ITargetPlatformHelper) info.target));
 
 			if (!haveAUT) {
 				// try to register current JVM, it may help
 				JDTUtils.registerCurrentJVM();
-				haveAUT = updateJVM(configuration, architecture,
-						((ITargetPlatformHelper) info.target));
+				haveAUT = updateJVM(configuration, architecture, ((ITargetPlatformHelper) info.target));
 			}
 
 		}
 		if (!haveAUT) {
 			removeTargetPlatform(configuration);
-			throw new CoreException(new Status(IStatus.ERROR,
-					Activator.PLUGIN_ID, "", null));
+			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "", null));
 		}
 		return true;
 	}
 
 	private void waitForClearBundlePool(IProgressMonitor monitor) {
 		try {
-			Job.getJobManager().join(
-					IBundlePoolConstansts.CLEAN_BUNDLE_POOL_JOB,
-					new SubProgressMonitor(monitor, 1));
+			Job.getJobManager().join(IBundlePoolConstansts.CLEAN_BUNDLE_POOL_JOB, SubMonitor.convert(monitor, 1));
 		} catch (Exception e1) {
 		}
 	}
@@ -391,8 +389,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		IPluginModelBase hook = target.getWeavingHook();
 		if (hook == null) {
-			throw new CoreException(Q7ExtLaunchingPlugin.status("No "
-					+ AJConstants.HOOK + " plugin"));
+			throw new CoreException(Q7ExtLaunchingPlugin.status("No " + AJConstants.HOOK + " plugin")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		// Append all other properties from original config file
@@ -405,7 +402,6 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 		return info.vmArgs;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public String[] getProgramArguments(ILaunchConfiguration configuration) throws CoreException {
 
@@ -431,17 +427,12 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 				props.setProperty("osgi.install.area", location.getAbsolutePath()); //$NON-NLS-1$
 			}
 
-			String baseconfig = configuration.getAttribute(IQ7Launch.AUT_LOCATION, "") + "/configuration/config.ini"; //$NON-NLS-1$
-			File file = new File(baseconfig);
-			Properties base = readProperty(file);
-
 			// Append all other properties from original config file
 			final OriginalOrderProperties properties = target.getConfigIniProperties();
-			final String defaultBundles = base.getProperty(OSGI_BUNDLES);
 			final String property = properties.getProperty(OSGI_BUNDLES);
 
 			final boolean autostart = configuration.getAttribute(IPDELauncherConstants.DEFAULT_AUTO_START, true);
-			props.setProperty(OSGI_BUNDLES, computeOSGiBundles(info, autostart, defaultBundles)); // $NON-NLS-1$
+			props.setProperty(OSGI_BUNDLES, computeOSGiBundles(info, autostart, property)); // $NON-NLS-1$
 
 			properties.setBeginAdd(true);
 			properties.putAll(props);
@@ -966,7 +957,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 								return Status.OK_STATUS;
 							}
 						};
-						job.schedule();
+						job.schedule(2000);
 					}
 				}
 			}

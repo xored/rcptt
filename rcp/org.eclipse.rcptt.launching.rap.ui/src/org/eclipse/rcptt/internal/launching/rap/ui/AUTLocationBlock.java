@@ -110,9 +110,6 @@ public class AUTLocationBlock {
 				}
 			});
 		}
-		if (info != null) {
-			fTab.doUpdate(info);
-		}
 		fTab.setCurrentTargetPlatform(info);
 		fTab.scheduleUpdateJob();
 	}

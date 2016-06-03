@@ -730,8 +730,7 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 	private static UIRunnable<Object> closeEditorsWithResources = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
-			IWorkbenchWindow[] workbenchWindows = RWTUtils.getWorkbench()
-					.getWorkbenchWindows();
+			IWorkbenchWindow[] workbenchWindows = RWTUtils.getWorkbenchWindows();
 			for (IWorkbenchWindow win : workbenchWindows) {
 				IWorkbenchPage[] pages = win.getPages();
 				for (IWorkbenchPage page : pages) {
