@@ -17,19 +17,19 @@
       %license
    </license>
 
- <plugin
-         id="org.eclipse.rcptt.updates.runtime.rap"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/>
-
    <plugin
          id="org.eclipse.rcptt.updates.rap"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
+ <plugin
+         id="org.eclipse.rcptt.updates.runtime.e3x.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
          
 
 </feature>

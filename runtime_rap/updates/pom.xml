@@ -10,8 +10,8 @@
     <profile>
       <id>runtimeRap</id>
       <modules>
-	       <module>org.eclipse.rcptt.updates.runtime.rap</module>
-         <module>org.eclipse.rcptt.updates.runtime.rap-feature</module>
+	       <module>org.eclipse.rcptt.updates.runtime.e3x.rap</module>
+         <module>org.eclipse.rcptt.updates.runtime.e3x.rap-feature</module>
       </modules>
     </profile>
   </profiles>

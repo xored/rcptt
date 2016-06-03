@@ -8,9 +8,8 @@
   </parent>
   <modules>
     
-    <module>org.eclipse.rcptt.tesla.ecl.impl</module>
-    <!-- Original  -->
-    <module>../../runtime/ecl/org.eclipse.rcptt.tesla.ecl.runtime-feature</module>
+    <module>org.eclipse.rcptt.tesla.ecl.impl.rap</module>
+    <module>org.eclipse.rcptt.tesla.ecl.runtime-feature.rap</module>
   </modules>
   <groupId>org.eclipse.rcptt.tesla.ecl</groupId>
   <version>2.1.0-SNAPSHOT</version>

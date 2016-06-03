@@ -12,10 +12,10 @@
   <packaging>pom</packaging>
     <modules>
     <!-- WATSON PLUGINS -->
-    <module>org.eclipse.rcptt.watson.aspects.swt</module>
-    <module>org.eclipse.rcptt.watson.jface</module>
+    <module>org.eclipse.rcptt.watson.aspects.swt.rap</module>
+    <module>org.eclipse.rcptt.watson.jface.rap</module>
     
-    <module>../../runtime/watson/org.eclipse.rcptt.watson.aspects.jobs</module>
-    <module>../../runtime/watson/org.eclipse.rcptt.watson.runtime-feature</module>
+    <module>org.eclipse.rcptt.watson.aspects.jobs.rap</module>
+    <module>org.eclipse.rcptt.watson.runtime-feature.rap</module>
   </modules>
 </project>

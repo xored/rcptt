@@ -8,18 +8,12 @@
   </parent>
   <modules>
     <!-- CONTEXT PLUGINS -->
-    <!-- <module>org.eclipse.rcptt.ctx.debug.impl</module> -->
-    <module>org.eclipse.rcptt.ctx.preferences.aspects</module>
-    <module>org.eclipse.rcptt.ctx.preferences.impl</module>
-    <module>org.eclipse.rcptt.ctx.resources.impl</module>
-    <module>org.eclipse.rcptt.ctx.script.impl</module>
-    <module>org.eclipse.rcptt.ctx.workbench.impl</module>
-    <module>org.eclipse.rcptt.ctx.workbench.aspect</module>
-    
-    <!-- <module>org.eclipse.rcptt.ctx.filesystem.impl</module>
-    <module>org.eclipse.rcptt.ctx.parameters.impl</module>
-    <module>org.eclipse.rcptt.ctx.group.impl</module>
-     -->
+    <module>org.eclipse.rcptt.ctx.preferences.aspects.rap</module>
+    <module>org.eclipse.rcptt.ctx.preferences.impl.rap</module>
+    <module>org.eclipse.rcptt.ctx.resources.impl.rap</module>
+    <module>org.eclipse.rcptt.ctx.script.impl.rap</module>
+    <module>org.eclipse.rcptt.ctx.workbench.impl.rap</module>
+    <module>org.eclipse.rcptt.ctx.workbench.aspect.rap</module>
   </modules>
   <groupId>org.eclipse.rcptt</groupId>
   <version>2.1.0-SNAPSHOT</version>

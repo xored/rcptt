@@ -308,7 +308,7 @@ Apache Software Foundation http://www.apache.org/
       <feature id="org.eclipse.rcptt.launching"/>
       <feature id="org.eclipse.emf.edit.ui"/>
       <feature id="org.eclipse.jdt"/>
-      <!--<feature id="org.eclipse.rcptt.ecl.platform.ui"/> -->
+      <feature id="org.eclipse.rcptt.ecl.platform.ui"/>
       <feature id="org.eclipse.rcptt.watson"/>
       <feature id="org.eclipse.rcptt.tesla"/>
       <feature id="org.eclipse.rcptt.ecl.server"/>

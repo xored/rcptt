@@ -8,7 +8,7 @@
   </parent>
   <modules>
     <!-- VERIFICATION PLUGINS -->
-    <module>org.eclipse.rcptt.verifications.tree.impl</module>
+    <module>org.eclipse.rcptt.verifications.tree.impl.rap</module>
 
     
  <!--    <module>org.eclipse.rcptt.verifications.time.impl</module>

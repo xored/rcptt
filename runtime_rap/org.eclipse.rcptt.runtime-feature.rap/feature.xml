@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.rcptt.runtime.rap"
+      label="RCPTT Runtime Core"
+      version="2.1.0.qualifier"
+      provider-name="%providerName">
+
+   <description>
+      Runtime bundles for RCPTT record/replay functionality
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+   
+   <requires>
+      <import feature="org.eclipse.rcptt.tesla" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.tesla.runtime.rap" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.tesla.ecl" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.tesla.ecl.runtime.rap" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.ecl.server" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.watson" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.watson.runtime.rap" version="2.1.0.qualifier"/>
+
+      <!-- FOR NORMAL WORKING RAP  -->
+      <import feature="org.eclipse.rap.equinox.target.feature" version="3.1.0.qualifier"/>
+      <import feature="org.eclipse.rap.feature" version="3.1.0.qualifier"/>
+   </requires>:
+
+   <plugin
+         id="org.eclipse.rcptt.core"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.core.ecl.core"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.runtime.ui.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.core.ecl.debug.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.tesla.ecl"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.tesla.ecl.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.core.scenario"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.core.launching"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>         
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.debug"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.group"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.preferences"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.preferences.aspects.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.preferences.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.resources"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.resources.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.script"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.script.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.workbench"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.workbench.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.workbench.aspect.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.reporting"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.util.resources"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.util"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.util.swt.rap"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.parameters"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.rcptt.ctx.filesystem"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.verifications.time"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.rcptt.verifications.text"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.rcptt.verifications"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.verifications.tree"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.verifications.tree.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.eclipse.rcptt.forms.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+
+   <!--  FOR NORMAL WORKING RAP -->
+    <plugin
+         id="org.eclipse.equinox.security"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.debug.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.variables"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.resources"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.filebuffers"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    <plugin
+         id="org.eclipse.core.filesystem"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    <plugin
+         id="org.eclipse.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    <!-- END -->
+
+</feature>

@@ -2,5 +2,5 @@
 <site>
 	<!-- Runtime feature -->
 	<feature 
-		id="org.eclipse.rcptt.updates.runtime.rap" />
+		id="org.eclipse.rcptt.updates.runtime.e3x.rap.feature"/>
 </site>

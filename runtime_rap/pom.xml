@@ -17,13 +17,13 @@
   <modules>
     <module>contexts</module>
     <module>ecl</module>
-    <module>org.eclipse.rcptt.core.ecl.debug</module>
-    <module>org.eclipse.rcptt.forms.impl</module>
-    <module>org.eclipse.rcptt.runtime.ui</module>
-    <module>org.eclipse.rcptt.util.swt</module>
+    <module>org.eclipse.rcptt.core.ecl.debug.rap</module>
+    <module>org.eclipse.rcptt.forms.impl.rap</module>
+    <module>org.eclipse.rcptt.runtime.ui.rap</module>
+    <module>org.eclipse.rcptt.util.swt.rap</module>
     <module>tesla</module>
-    <module>org.eclipse.rcptt.runtime-feature</module>
-    <module>org.eclipse.rcptt.runtime-updatesite</module>
+    <module>org.eclipse.rcptt.runtime-feature.rap</module>
+    <module>org.eclipse.rcptt.runtime-updatesite.rap</module>
     <module>verifications</module>
     <module>watson</module>
     <module>updates</module>

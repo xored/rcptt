@@ -9,32 +9,32 @@
   </parent>
 
   <modules>
-    <module>org.eclipse.rcptt.tesla.jface.aspects</module>
-    <module>org.eclipse.rcptt.tesla.canvas</module>
-    <module>org.eclipse.rcptt.tesla.jface.databinding.aspects</module>
-    <module>org.eclipse.rcptt.tesla.jface.fragment</module>
-    <module>org.eclipse.rcptt.tesla.recording.aspects.forms</module>
-    <module>org.eclipse.rcptt.tesla.recording.aspects.jface</module>
-    <module>org.eclipse.rcptt.tesla.recording.aspects.swt</module>
-    <module>org.eclipse.rcptt.tesla.recording.aspects.workbench</module>
-    <module>org.eclipse.rcptt.tesla.recording.canvas</module>
-    <module>org.eclipse.rcptt.tesla.recording.swt</module>
-    <module>org.eclipse.rcptt.tesla.swt</module>
-    <module>org.eclipse.rcptt.tesla.swt.aspects</module>
-    <module>org.eclipse.rcptt.tesla.swt.e3x</module>
-    <module>org.eclipse.rcptt.tesla.swt.fragment</module>
-    <module>org.eclipse.rcptt.tesla.ui.ide</module>
-    <module>org.eclipse.rcptt.tesla.ui.ide.aspects</module>
-    <module>org.eclipse.rcptt.tesla.workbench.aspects</module>
+    <module>org.eclipse.rcptt.tesla.jface.aspects.rap</module>
+    <module>org.eclipse.rcptt.tesla.canvas.rap</module>
+    <module>org.eclipse.rcptt.tesla.jface.databinding.aspects.rap</module>
+    <module>org.eclipse.rcptt.tesla.jface.fragment.rap</module>
+    <module>org.eclipse.rcptt.tesla.recording.aspects.forms.rap</module>
+    <module>org.eclipse.rcptt.tesla.recording.aspects.jface.rap</module>
+    <module>org.eclipse.rcptt.tesla.recording.aspects.swt.rap</module>
+    <module>org.eclipse.rcptt.tesla.recording.aspects.workbench.rap</module>
+    <module>org.eclipse.rcptt.tesla.recording.canvas.rap</module>
+    <module>org.eclipse.rcptt.tesla.recording.swt.rap</module>
+    <module>org.eclipse.rcptt.tesla.swt.rap</module>
+    <module>org.eclipse.rcptt.tesla.swt.aspects.rap</module>
+    <module>org.eclipse.rcptt.tesla.swt.e3x.rap</module>
+    <module>org.eclipse.rcptt.tesla.swt.fragment.rap</module>
+    <module>org.eclipse.rcptt.tesla.ui.ide.rap</module>
+    <module>org.eclipse.rcptt.tesla.ui.ide.aspects.rap</module>
+    <module>org.eclipse.rcptt.tesla.workbench.aspects.rap</module>
 
     
-    <module>../../runtime/tesla/org.eclipse.rcptt.tesla.jface.databinding</module>
-    <module>../../runtime/tesla/org.eclipse.rcptt.tesla.jface.databinding.observable.aspects</module>
-    <module>../../runtime/tesla/org.eclipse.rcptt.tesla.variables</module>
-    <module>../../runtime/tesla/org.eclipse.rcptt.tesla.core.am</module>
-    <module>../../runtime/tesla/org.eclipse.rcptt.tesla.jobs.aspects</module>
+    <module>org.eclipse.rcptt.tesla.jface.databinding.rap</module>
+    <module>org.eclipse.rcptt.tesla.jface.databinding.observable.aspects.rap</module>
+    <module>org.eclipse.rcptt.tesla.variables.rap</module>
+    <module>org.eclipse.rcptt.tesla.core.am.rap</module>
+    <module>org.eclipse.rcptt.tesla.jobs.aspects.rap</module>
 
-    <module>org.eclipse.rcptt.tesla.runtime-feature</module>
+    <module>org.eclipse.rcptt.tesla.runtime-feature.rap</module>
     <!--
     <module>org.eclipse.rcptt.tesla.gef</module>
     <module>org.eclipse.rcptt.tesla.gef.aspects</module>
