@@ -182,8 +182,8 @@ import org.eclipse.rcptt.tesla.ui.IImageAssertSupport;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
 import org.eclipse.rcptt.tesla.ui.describers.WidgetDescriber;
-import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.util.StringUtils;
+import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
 import org.eclipse.rcptt.util.swt.StringLines;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
@@ -321,6 +321,12 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		}
 	}
 
+	@Override
+	public int getPriority() {
+		return 100;
+	}
+
+	@Override
 	public PreExecuteStatus preExecute(final Command command,
 			final PreExecuteStatus previousStatus, Q7WaitInfoRoot info) {
 		if (command instanceof ElementCommand) {
@@ -770,8 +776,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		if (!isWidgetSupported(widget)) {
 			return failResponse(String.format(
 					"Unsupported widget '%s'. 'mouse' supports only"
-							+ " controls and table/tree items",
-					widget
+							+ " controls and table/tree items", widget
 							.getClass().getName()));
 		}
 
@@ -930,16 +935,16 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 		getPlayer().exec("clickLink", new Runnable() { //$NON-NLS-1$
 
-			public void run() {
-				// TODO Auto-generated method stub
-				SWTEvents events = new SWTEvents(getPlayer()
-						.getDisplay());
-				Event event = new Event();
-				event.type = SWT.Selection;
-				event.text = ref;
-				events.sendEvent(element, event);
-			}
-		});
+					public void run() {
+						// TODO Auto-generated method stub
+						SWTEvents events = new SWTEvents(getPlayer()
+								.getDisplay());
+						Event event = new Event();
+						event.type = SWT.Selection;
+						event.text = ref;
+						events.sendEvent(element, event);
+					}
+				});
 		return okResponse();
 	}
 
@@ -1726,8 +1731,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		if (attrValue == null) {
 			attrValue = "";
 		}
-		final org.eclipse.rcptt.tesla.core.ui.Widget model = SWTModelMapper
-				.map(uiElement);
+		final org.eclipse.rcptt.tesla.core.ui.Widget model = uiElement.getModel();
 		Object value = getAttrValue(model, assertCmd.getAttribute(),
 				assertCmd.getIndex());
 		if (value == null) {

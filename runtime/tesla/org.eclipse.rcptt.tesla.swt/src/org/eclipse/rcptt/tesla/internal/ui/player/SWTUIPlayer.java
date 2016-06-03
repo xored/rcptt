@@ -2902,4 +2902,20 @@ public final class SWTUIPlayer {
 		cleanMenus(null);
 		error = null;
 	}
+
+	public boolean isCollectable(SWTUIElement element, Class<?>[] classes) {
+		if (element == null)
+			return false;
+
+		if (classes == null)
+			return true;
+
+		for (ISWTUIPlayerExtension extension : getExtensions()) {
+			if (extension.isCollectable(element, classes)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
