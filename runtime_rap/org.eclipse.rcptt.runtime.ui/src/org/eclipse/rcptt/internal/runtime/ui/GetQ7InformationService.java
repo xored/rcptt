@@ -44,18 +44,18 @@ public class GetQ7InformationService implements ICommandService {
 			info.setTeslaPort(TeslaServerManager.getServer().getPort());
 		}
 
-		IWorkbench workbench = RWTUtils.getWorkbench();
+		final IWorkbench workbench = RWTUtils.getWorkbench();
 		if (workbench != null) {
 			info.setWindowCount(workbench.getWorkbenchWindowCount());
 			if (info.getWindowCount() == 0) {
-				Display display = PlatformUI.getWorkbench().getDisplay();
+				Display display = RWTUtils.findDisplay();
 				if (display != null) {
 					display.syncExec(new Runnable() {
 						@Override
 						public void run() {
-							info.setWindowCount(PlatformUI.getWorkbench().getWorkbenchWindowCount());
+							info.setWindowCount(workbench.getWorkbenchWindowCount());
 							if (info.getWindowCount() == 0
-									&& PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null) {
+									&& workbench.getActiveWorkbenchWindow() != null) {
 								info.setWindowCount(1);
 							}
 						}

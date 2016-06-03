@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.rcptt</groupId>
@@ -21,7 +21,7 @@
     <module>../../runtime/updates/org.eclipse.rcptt.updates.kepler</module> -->
     <module>../../runtime/updates/org.eclipse.rcptt.updates-feature</module>
     <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap-feature</module>
-    <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap</module>
+    <!-- <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap</module> -->
 <!--     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e3x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e38x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e44x</module> -->

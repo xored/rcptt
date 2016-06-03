@@ -358,7 +358,7 @@ public class TeslaEventManager {
 
 			private void push() {
 				synchronized (needSync) {
-					if (needSync && lastDisplay != null && synced) {
+					if (needSync && lastDisplay != null && !lastDisplay.isDisposed() && synced) {
 
 						lastDisplay.asyncExec(new Runnable() {
 							public void run() {
