@@ -21,7 +21,7 @@
       <import plugin="com.google.guava"/>
       <import feature="org.eclipse.rcptt.ecl.platform" version="2.1.0.qualifier"/>
       <import feature="org.eclipse.rcptt.updates" version="2.1.0.qualifier"/>
-      <import feature="org.eclipse.rcptt.updates.rap" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.updates.rap.feature" version="2.1.0.qualifier"/>
       <import feature="org.eclipse.rcptt.ecl.server" version="2.1.0.qualifier"/>
    </requires>
 

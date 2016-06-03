@@ -30,6 +30,7 @@
   <properties>
     <buildUrl>file:/${user.dir}</buildUrl>
     <rcpttRuntimeRepo>${buildUrl}/runtime/org.eclipse.rcptt.runtime-updatesite/target/repository/</rcpttRuntimeRepo>
+    <rapRuntimeRepo>${buildUrl}/runtime_rap/org.eclipse.rcptt.runtime-updatesite/target/repository/</rapRuntimeRepo>
     <e3xRepository>${buildUrl}/repository/e3x/target/repository</e3xRepository>
     <e4xRepository>${buildUrl}/repository/e4x/target/repository</e4xRepository>
     <rapRepository>${buildUrl}/repository/rap/target/repository</rapRepository>

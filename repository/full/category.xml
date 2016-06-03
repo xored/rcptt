@@ -12,7 +12,7 @@
   <feature id="org.eclipse.rcptt.updates">
     <category name="rcptt"/>
   </feature>
-  <feature id="org.eclipse.rcptt.updates.rap">
+  <feature id="org.eclipse.rcptt.updates.rap.feature">
     <category name="rcptt"/>
   </feature>
   <feature id="org.eclipse.rcptt.ecl.server">
