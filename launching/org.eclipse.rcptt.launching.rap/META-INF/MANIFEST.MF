@@ -21,5 +21,6 @@ Require-Bundle: org.eclipse.debug.core,
  com.google.guava,
  org.eclipse.equinox.frameworkadmin,
  org.eclipse.rcptt.util,
- org.eclipse.rcptt.tesla.core
+ org.eclipse.rcptt.tesla.core,
+ org.eclipse.rcptt.core.launching
 Export-Package: org.eclipse.rcptt.launching.rap

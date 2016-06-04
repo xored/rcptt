@@ -74,7 +74,6 @@ import org.eclipse.rcptt.internal.launching.ext.AJConstants;
 import org.eclipse.rcptt.internal.launching.ext.IBundlePoolConstansts;
 import org.eclipse.rcptt.internal.launching.ext.JDTUtils;
 import org.eclipse.rcptt.internal.launching.ext.OSArchitecture;
-import org.eclipse.rcptt.internal.launching.ext.Q7ExtLaunchMonitor;
 import org.eclipse.rcptt.internal.launching.ext.Q7ExtLaunchingPlugin;
 import org.eclipse.rcptt.internal.launching.ext.Q7TargetPlatformManager;
 import org.eclipse.rcptt.internal.launching.ext.UpdateVMArgs;
@@ -123,11 +122,22 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 
 		SubMonitor submonitor = doPreLaunch(configuration, launch, monitor);
 		submonitor = SubMonitor.convert(submonitor, 2000);
-		Q7ExtLaunchMonitor waiter = new Q7ExtLaunchMonitor(launch);
+		Q7RapLaunchMonitor waiter = new Q7RapLaunchMonitor(launch);
 
 		try {
 			super.launch(configuration, mode, launch, submonitor.newChild(1000));
-			waiter.wait(submonitor.newChild(1000), TeslaLimits.getAUTStartupTimeout() / 1000);
+			waiter.wait(submonitor.newChild(1000), TeslaLimits.getAUTStartupTimeout() / 1000, new Runnable() {
+				@Override
+				public void run() {
+					try {
+						if (config.getOpenBrowser()) {
+							registerBrowserOpener();
+						}
+					} catch (CoreException e) {
+						throw new RuntimeException("Browser not open"); //$NON-NLS-1$
+					}
+				}
+			});
 		} catch (CoreException e) {
 			Activator.getDefault().errorLog("RCPTT: Failed to launch RAP AUT: " + configuration.getName(), e); //$NON-NLS-1$
 			waiter.handle(e);
@@ -166,9 +176,7 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 		warnIfPortBusy(subMonitor);
 		subMonitor = SubMonitor.convert(monitor, IProgressMonitor.UNKNOWN);
 		port = determinePort(subMonitor);
-		if (this.config.getOpenBrowser()) {
-			registerBrowserOpener();
-		}
+
 		return subMonitor;
 	}
 
@@ -930,38 +938,25 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 	}
 
 	private void registerBrowserOpener() {
-		DebugPlugin debugPlugin = DebugPlugin.getDefault();
-		debugPlugin.addDebugEventListener(new IDebugEventSetListener() {
-			public void handleDebugEvents(DebugEvent[] events) {
-				for (DebugEvent event : events) {
-					if (isCreateEventFor(event, launch)) {
-						DebugPlugin.getDefault().removeDebugEventListener(this);
-						// Start a separate job to wait for the http service and launch the
-						// browser. Otherwise we would block the application on whose
-						// service we are waiting for
-						final String jobTaskName = "Starting client application";
-						Job job = new Job(jobTaskName) {
-							@Override
-							protected IStatus run(IProgressMonitor monitor) {
-								String taskName = jobTaskName;
-								monitor.beginTask(taskName, 2);
-								try {
-									waitForHttpService(monitor);
-									monitor.worked(1);
-									if (!launch.isTerminated()) {
-										openBrowser(monitor);
-									}
-								} finally {
-									monitor.done();
-								}
-								return Status.OK_STATUS;
-							}
-						};
-						job.schedule(2000);
+		final String jobTaskName = "Starting client application";
+		Job job = new Job(jobTaskName) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				String taskName = jobTaskName;
+				monitor.beginTask(taskName, 2);
+				try {
+					waitForHttpService(monitor);
+					monitor.worked(1);
+					if (!launch.isTerminated()) {
+						openBrowser(monitor);
 					}
+				} finally {
+					monitor.done();
 				}
+				return Status.OK_STATUS;
 			}
-		});
+		};
+		job.schedule();
 	}
 
 	private void openBrowser(IProgressMonitor monitor) {
