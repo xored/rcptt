@@ -151,7 +151,6 @@ public class RcpttRapLaunchDelegate extends EquinoxLaunchConfiguration {
 			throw e;
 		} finally {
 
-			System.out.println("donedddddddd");
 			waiter.dispose();
 			submonitor.done();
 			monitor.done();
