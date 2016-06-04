@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.PageBook.PageBookLayout;
 import org.eclipse.ui.presentations.IStackPresentationSite;
@@ -30,6 +31,16 @@ public aspect WorkbenchAspect {
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
+	before(Workbench wb):
+		execution(int org.eclipse.ui.internal.Workbench.runUI()) && target(wb) {
+		TeslaEventManager.getManager().setLastWorkbench(wb);
+		if (wb != null) {
+			TeslaEventManager.getManager().setLastDisplay(wb.getDisplay());
+		}
+	}
+
+
+	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(WorkbenchStatusDialogManager mgr, StatusAdapter adapter,
 			boolean modal):
 		execution(void org.eclipse.ui.statushandlers.WorkbenchStatusDialogManager.addStatusAdapter(StatusAdapter, boolean))
@@ -43,6 +54,7 @@ public aspect WorkbenchAspect {
 		return null;
 	}
 
+	/*
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(PageBookLayout layout, Composite ctrl, boolean flushCache):
 		execution(void org.eclipse.ui.part.PageBook.PageBookLayout.layout(Composite, boolean)) && target(layout) && args(ctrl,flushCache) {
@@ -61,6 +73,7 @@ public aspect WorkbenchAspect {
 
 		return proceed(layout, ctrl, flushCache);
 	}
+	*/
 
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(org.eclipse.ui.internal.PageLayout layout, String partId):

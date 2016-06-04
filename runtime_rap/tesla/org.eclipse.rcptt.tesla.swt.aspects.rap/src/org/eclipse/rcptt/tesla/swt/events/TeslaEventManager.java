@@ -365,7 +365,6 @@ public class TeslaEventManager {
 								if(RWT.getUISession() != null)
 								{
 									session.stop();
-									System.out.println("push to server");
 								}
 								synced = true;
 								needSync = false;

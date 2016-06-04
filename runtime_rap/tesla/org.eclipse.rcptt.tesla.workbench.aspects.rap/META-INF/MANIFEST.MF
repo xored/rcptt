@@ -15,7 +15,7 @@ Require-Bundle: org.aspectj.runtime;visibility:=reexport,
  org.eclipse.rcptt.tesla.recording.aspects.swt.rap;bundle-version="[2.1.0,3.0.0)"
 onEnvironment: JavaSE-1.6
 Import-Package: org.osgi.framework
-Eclipse-SupplementBundle: org.eclipse.ui.workbench
+Eclipse-SupplementBundle: org.eclipse.rap.ui.workbench
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.rcptt.tesla.workbench.aspects.rap
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
