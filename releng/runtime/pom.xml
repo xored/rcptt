@@ -63,8 +63,6 @@
       <id>runtimeRap</id>
       <modules>
         <module>../../runtime_rap</module>
-        <module>../../ecl/plugins/org.eclipse.rcptt.ecl.platform.ui.rap</module>
-        <module>../../ecl/features/org.eclipse.rcptt.ecl.platform.ui-feature.rap</module>
         <module>../../repository/rap/</module>
       </modules>
       <repositories>

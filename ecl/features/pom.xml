@@ -16,6 +16,7 @@
     <module>org.eclipse.rcptt.ecl.shell-feature</module>
     <module>org.eclipse.rcptt.ecl.platform-feature</module>
     <module>org.eclipse.rcptt.ecl.platform.ui-feature</module>
+    <module>org.eclipse.rcptt.ecl.platform.ui-feature.rap</module>
     <module>org.eclipse.rcptt.ecl.server-feature</module>
     <module>org.eclipse.rcptt.ecl.server.ui-feature</module>
   </modules>

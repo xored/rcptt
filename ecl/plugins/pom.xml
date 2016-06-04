@@ -24,6 +24,7 @@
     <module>org.eclipse.rcptt.ecl.perf</module>
     <module>org.eclipse.rcptt.ecl.platform</module>
     <module>org.eclipse.rcptt.ecl.platform.ui</module>
+    <module>org.eclipse.rcptt.ecl.platform.ui.rap</module>
     <module>org.eclipse.rcptt.ecl.server.tcp</module>
     <module>org.eclipse.rcptt.ecl.server.tcp.ui</module>
     <module>org.eclipse.rcptt.ecl.shell</module>

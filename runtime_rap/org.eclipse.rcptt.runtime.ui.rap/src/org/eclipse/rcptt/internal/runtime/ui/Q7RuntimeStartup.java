@@ -12,26 +12,17 @@ package org.eclipse.rcptt.internal.runtime.ui;
 
 
 
-import static org.eclipse.rap.rwt.internal.service.ContextProvider.getApplicationContext;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunch;
-import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.ui.IStartup;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchListener;
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.runtime.ui.AutEventManager;
 import org.eclipse.rcptt.runtime.ui.Q7ServerStarter;
-import org.eclipse.rcptt.runtime.ui.RAPPhaseListener;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
+import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchListener;
 
 public class Q7RuntimeStartup implements IStartup {
 	public void earlyStartup() {
 		try {
-
-			getApplicationContext().getLifeCycleFactory().getLifeCycle().addPhaseListener(new RAPPhaseListener());
 
 			if(RWTUtils.getWorkbench()!= null)
 			{
@@ -46,15 +37,15 @@ public class Q7RuntimeStartup implements IStartup {
 						}
 
 						public void postShutdown(IWorkbench workbench) {
-							ReportManager.storeState();
+						//	ReportManager.storeState();
 							tryTerminateLaunches();
 						}
 					});
 			}
 		} finally {
-			Q7ServerStarter.INSTANCE.start();
-			// Send a started object
-			AutEventManager.getInstance().sendStartup();
+//			Q7ServerStarter.INSTANCE.start();
+//			// Send a started object
+//			AutEventManager.getInstance().sendStartup();
 		}
 	}
 

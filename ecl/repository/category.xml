@@ -18,6 +18,9 @@
    <feature id="org.eclipse.rcptt.ecl.platform.ui">
       <category name="ecl"/>
    </feature>
+    <feature id="org.eclipse.rcptt.ecl.platform.ui.rap">
+      <category name="ecl"/>
+   </feature>
    <feature id="org.eclipse.rcptt.ecl.ide">
       <category name="ecl"/>
    </feature>
