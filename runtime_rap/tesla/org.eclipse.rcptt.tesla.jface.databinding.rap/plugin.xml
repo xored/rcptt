@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
-            class="org.eclipse.rcptt.tesla.jface.databinding.DatabindingProcessor">
+            class="org.eclipse.rcptt.tesla.jface.databinding.rap.DatabindingProcessor">
       </provider>
    </extension>
 

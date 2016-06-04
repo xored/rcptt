@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.watson.core.eventProvider">
       <provider
-            class="org.eclipse.rcptt.sherlock.jface.JfacePolicyEventProvider"
+            class="org.eclipse.rcptt.sherlock.jface.rap.JfacePolicyEventProvider"
             id="org.eclipse.rcptt.sherlock.core.jface.log.provider">
       </provider>
    </extension>

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Debug
 Bundle-SymbolicName: org.eclipse.rcptt.core.ecl.debug.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.core.ecl.debug.Q7EclDebugPlugin
+Bundle-Activator: org.eclipse.rcptt.core.ecl.debug.rap.Q7EclDebugPlugin
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.ecl.debug.runtime;bundle-version="[2.1.0,3.0.0)",

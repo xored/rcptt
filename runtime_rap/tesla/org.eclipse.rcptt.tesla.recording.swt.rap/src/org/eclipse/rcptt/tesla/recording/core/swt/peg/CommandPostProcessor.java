@@ -37,7 +37,6 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.ITeslaRecordingListener;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
-import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.CollapseApplyDeactivate;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.CollapseClickText;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.CollapseSelectAfterCellEdit;
@@ -53,6 +52,7 @@ import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.RemoveMouseMoveAndMo
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.RemoveMousePressBeforeDragStart;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.SelectAfterMouseDownInTable;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.rules.SetTextAfterSetFocus;
+import org.eclipse.rcptt.tesla.recording.core.swt.rap.BasicRecordingHelper;
 
 @SuppressWarnings("unused")
 public class CommandPostProcessor implements ITeslaRecordingListener {

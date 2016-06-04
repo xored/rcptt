@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.eclipse.rcptt.tesla.core.protocol.Type;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
-import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.ApplicationResult;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.ProcessingRule;
+import org.eclipse.rcptt.tesla.recording.core.swt.rap.SWTEventRecorder;
 
 public class CollapseTraverse extends ProcessingRule {
 

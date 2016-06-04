@@ -20,12 +20,11 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.rcptt.tesla.swt.aspects.rap.SWTAspectActivator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
-
-import org.eclipse.rcptt.tesla.swt.aspects.SWTAspectActivator;
 
 public class LocalClipboard {
 	private static final Integer SELECTION_CLIPBOARD = Integer.valueOf(2);

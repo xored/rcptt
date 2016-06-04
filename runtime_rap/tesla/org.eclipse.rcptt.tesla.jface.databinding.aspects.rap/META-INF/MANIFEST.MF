@@ -13,7 +13,7 @@ Require-Bundle: org.aspectj.runtime;visibility:=reexport,
  org.eclipse.rcptt.tesla.core.context;bundle-version="[2.1.0,3.0.0)"
 Import-Package: org.osgi.framework
 Eclipse-SupplementBundle: org.eclipse.jface.databinding
-Export-Package: org.eclipse.rcptt.tesla.jface
+Export-Package: org.eclipse.rcptt.tesla.jface.databinding.aspects.rap
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipse.rcptt.tesla.jface.DataBindingAspectActivator
+Bundle-Activator: org.eclipse.rcptt.tesla.jface.databinding.aspects.rap.DataBindingAspectActivator

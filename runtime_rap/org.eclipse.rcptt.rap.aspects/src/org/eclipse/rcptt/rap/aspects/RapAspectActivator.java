@@ -12,9 +12,8 @@ package org.eclipse.rcptt.rap.aspects;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.rcptt.tesla.core.am.rap.AspectManager;
 import org.osgi.framework.BundleContext;
-
-import org.eclipse.rcptt.tesla.core.am.AspectManager;
 
 /**
  * The activator class controls the plug-in life cycle

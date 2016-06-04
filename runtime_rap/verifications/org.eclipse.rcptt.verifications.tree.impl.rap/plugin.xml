@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.core.verificationProcessors">
       <processor
-            class="org.eclipse.rcptt.verifications.tree.impl.TreeVerificationProcessor"
+            class="org.eclipse.rcptt.verifications.tree.impl.rap.TreeVerificationProcessor"
             type="org.eclipse.rcptt.verifications.tree">
       </processor>
    </extension>

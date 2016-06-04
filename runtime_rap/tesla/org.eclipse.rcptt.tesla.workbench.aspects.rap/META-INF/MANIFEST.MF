@@ -17,7 +17,7 @@ onEnvironment: JavaSE-1.6
 Import-Package: org.osgi.framework
 Eclipse-SupplementBundle: org.eclipse.ui.workbench
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.rcptt.tesla.workbench.aspects
+Export-Package: org.eclipse.rcptt.tesla.workbench.aspects.rap
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Activator: org.eclipse.rcptt.tesla.workbench.aspects.WorkbenchAspectActivator
+Bundle-Activator: org.eclipse.rcptt.tesla.workbench.aspects.rap.WorkbenchAspectActivator
 

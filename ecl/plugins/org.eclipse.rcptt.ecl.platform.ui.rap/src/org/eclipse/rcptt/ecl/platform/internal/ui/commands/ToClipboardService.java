@@ -1,6 +1,6 @@
 package org.eclipse.rcptt.ecl.platform.internal.ui.commands;
 
-import static org.eclipse.rcptt.ecl.platform.ui.PlatformUIPlugin.createError;
+import static org.eclipse.rcptt.ecl.platform.ui.rap.PlatformUIPlugin.createError;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;

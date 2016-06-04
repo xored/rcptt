@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Sherlock Jface Policy Event Provider
 Bundle-SymbolicName: org.eclipse.rcptt.watson.jface.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.sherlock.jface.Activator
+Bundle-Activator: org.eclipse.rcptt.sherlock.jface.rap.Activator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rap.jface,

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.rcptt.util.TableTreeItemPathUtil;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
-import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;
 import org.eclipse.rcptt.tesla.ecl.model.Wrapper;

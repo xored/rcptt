@@ -13,9 +13,8 @@ package org.eclipse.rcptt.tesla.ecl.internal.impl.commands;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.swt.widgets.Widget;
-
-import org.eclipse.rcptt.tesla.ecl.impl.AbstractActionService;
-import org.eclipse.rcptt.tesla.ecl.impl.BoundControlHandleRuntime;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.AbstractActionService;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.BoundControlHandleRuntime;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
 import org.eclipse.rcptt.tesla.ecl.model.BoundControlHandle;
 import org.eclipse.rcptt.tesla.ecl.model.TeslaFactory;

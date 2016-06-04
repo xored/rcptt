@@ -17,10 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.browser.Browser;
-
+import org.eclipse.rcptt.tesla.swt.aspects.rap.SWTAspectActivator;
 import org.eclipse.rcptt.util.ListUtil;
 import org.eclipse.rcptt.util.Predicate;
-import org.eclipse.rcptt.tesla.swt.aspects.SWTAspectActivator;
 
 public class TeslaBrowserManager {
 	private static TeslaBrowserManager manager = new TeslaBrowserManager();

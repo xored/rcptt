@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class JobsActivator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.sherlock.aspects.jobs";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.sherlock.aspects.jobs.rap";
 
 	// The shared instance
 	private static JobsActivator plugin;
@@ -33,7 +33,7 @@ public class JobsActivator extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
@@ -45,7 +45,7 @@ public class JobsActivator extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
@@ -57,7 +57,7 @@ public class JobsActivator extends Plugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static JobsActivator getDefault() {

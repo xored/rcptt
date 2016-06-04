@@ -6,7 +6,7 @@
       <variable
             description="Name of the current test case executed by RCPTT"
             name="q7.current_test"
-            resolver="org.eclipse.rcptt.tesla.variables.TeslaVariablesResolver"
+            resolver="org.eclipse.rcptt.tesla.variables.rap.TeslaVariablesResolver"
             supportsArgument="false">
       </variable>
    </extension>

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.ecl.debug.runtime.eclDebugExtension">
       <eclDebug
-            class="org.eclipse.rcptt.core.ecl.debug.Q7EclDebug"
+            class="org.eclipse.rcptt.core.ecl.debug.rap.Q7EclDebug"
             id="org.eclipse.rcptt.core.ecl.debug"
             priority="50">
       </eclDebug>

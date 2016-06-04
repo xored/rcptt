@@ -23,7 +23,7 @@ import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 
 import org.eclipse.rcptt.tesla.core.protocol.AssertKind;
-import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.ServiceUtil;
 import org.eclipse.rcptt.tesla.ecl.model.Equals;
 import org.eclipse.rcptt.tesla.ecl.model.VerifyHandler;

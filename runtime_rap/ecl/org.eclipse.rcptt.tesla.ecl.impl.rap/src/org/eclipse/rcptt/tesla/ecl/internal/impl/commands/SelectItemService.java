@@ -16,9 +16,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TreeItem;
-
-import org.eclipse.rcptt.tesla.ecl.impl.AbstractActionService;
-import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.AbstractActionService;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.SelectItem;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;

@@ -22,7 +22,7 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 
 import org.eclipse.rcptt.tesla.core.protocol.BasicUIElement;
 import org.eclipse.rcptt.tesla.ecl.TeslaErrorStatus;
-import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
 import org.eclipse.rcptt.tesla.ecl.model.VerifyHandler;
 import org.eclipse.rcptt.tesla.ecl.model.VerifyTrue;

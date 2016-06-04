@@ -19,11 +19,11 @@ import org.osgi.framework.BundleContext;
 public class SwtUtilPlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.util.swt"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.util.swt.rap"; //$NON-NLS-1$
 
 	// The shared instance
 	private static SwtUtilPlugin plugin;
-	
+
 	/**
 	 * The constructor
 	 */

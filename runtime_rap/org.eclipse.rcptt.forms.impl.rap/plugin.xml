@@ -4,13 +4,13 @@
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
-            class="org.eclipse.rcptt.forms.impl.EclipseFormsProcessor">
+            class="org.eclipse.rcptt.forms.impl.rap.EclipseFormsProcessor">
       </provider>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.recording.core.recorder">
       <recorder
-            class="org.eclipse.rcptt.forms.impl.EclipseFormsRecordingProcessor">
+            class="org.eclipse.rcptt.forms.impl.rap.EclipseFormsRecordingProcessor">
       </recorder>
    </extension>
 

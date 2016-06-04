@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.ecl.core.Command;
-import org.eclipse.rcptt.ecl.platform.ui.PlatformUIPlugin;
+import org.eclipse.rcptt.ecl.platform.ui.rap.PlatformUIPlugin;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.ui.IViewPart;

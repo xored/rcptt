@@ -13,5 +13,5 @@ Eclipse-SupplementBundle: org.eclipse.core.jobs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.rcptt.sherlock.aspects.jobs.internal.JobsActivator
-Export-Package: org.eclipse.rcptt.sherlock.aspects.jobs,
- org.eclipse.rcptt.sherlock.aspects.jobs.internal
+Export-Package: org.eclipse.rcptt.sherlock.aspects.jobs.internal,
+ org.eclipse.rcptt.sherlock.aspects.jobs.rap

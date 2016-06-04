@@ -5,22 +5,22 @@
    <extension
          point="org.eclipse.rcptt.tesla.recording.core.recorder">
       <recorder
-            class="org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder">
+            class="org.eclipse.rcptt.tesla.recording.core.swt.rap.SWTEventRecorder">
       </recorder>
       <recorder
-            class="org.eclipse.rcptt.tesla.recording.core.swt.SWTAssertManager">
+            class="org.eclipse.rcptt.tesla.recording.core.swt.rap.SWTAssertManager">
       </recorder>
       <recorder
-            class="org.eclipse.rcptt.tesla.recording.core.swt.WorkbenchRecordingProcessor">
+            class="org.eclipse.rcptt.tesla.recording.core.swt.rap.WorkbenchRecordingProcessor">
       </recorder>
       <recorder
-            class="org.eclipse.rcptt.tesla.recording.core.swt.JFaceRecordingProcessor">
+            class="org.eclipse.rcptt.tesla.recording.core.swt.rap.JFaceRecordingProcessor">
       </recorder>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.recording.swt.rap.describerExtensions">
          <describerExtension
-               class="org.eclipse.rcptt.tesla.recording.core.swt.SWTDescriberExtension">
+               class="org.eclipse.rcptt.tesla.recording.core.swt.rap.SWTDescriberExtension">
          </describerExtension>
    </extension>
 

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
-            class="org.eclipse.rcptt.tesla.canvas.CanvasProcessor">
+            class="org.eclipse.rcptt.tesla.canvas.rap.CanvasProcessor">
       </provider>
    </extension>
 

@@ -15,8 +15,8 @@ import org.eclipse.rcptt.ecl.core.Command;
 
 import org.eclipse.rcptt.tesla.core.protocol.ColumnUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
-import org.eclipse.rcptt.tesla.ecl.impl.AbstractActionService;
-import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.AbstractActionService;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.ecl.model.SetPosition;
 

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.tesla.core.networkProcessor">
       <provider
-            class="org.eclipse.rcptt.internal.runtime.ui.Q7NetworkClientProcessor">
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.Q7NetworkClientProcessor">
       </provider>
    </extension>
 
@@ -12,42 +12,42 @@
    <extension
          point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.PrepareEnvironmentService"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.PrepareEnvironmentService"
             name="PrepareEnvironment"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.GetQ7InformationService"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.GetQ7InformationService"
             name="GetQ7Information"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.SetQ7FeaturesService"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.SetQ7FeaturesService"
             name="SetQ7Features"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.GetPerspectivesService"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.GetPerspectivesService"
             name="GetPerspectives"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.GetViewsService"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.GetViewsService"
             name="GetViews"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.SetQ7OptionService"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.SetQ7OptionService"
             name="SetQ7Option"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.runtime.ui.AutReconnectService"
+            class="org.eclipse.rcptt.runtime.ui.rap.AutReconnectService"
             name="AutReconnect"
             namespace="http://eclipse.org/rcptt/core/launching.ecore">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.runtime.ui.TerminateAutService"
+            class="org.eclipse.rcptt.runtime.ui.rap.TerminateAutService"
             name="TerminateAut"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
@@ -56,7 +56,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.eclipse.rcptt.internal.runtime.ui.Q7RuntimePreferencePage"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.Q7RuntimePreferencePage"
             id="org.eclipse.rcptt.ui.preferences.runtime"
             name="RCPTT Runtime">
       </page>
@@ -64,13 +64,13 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="org.eclipse.rcptt.internal.runtime.ui.Q7RuntimeStartup">
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.Q7RuntimeStartup">
       </startup>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.recording.core.ecl.keyStrokeExtension">
       <keyStrokeExtension
-            class="org.eclipse.rcptt.runtime.ui.KeyStrokeManagerExtension">
+            class="org.eclipse.rcptt.runtime.ui.rap.KeyStrokeManagerExtension">
       </keyStrokeExtension>
    </extension>
 

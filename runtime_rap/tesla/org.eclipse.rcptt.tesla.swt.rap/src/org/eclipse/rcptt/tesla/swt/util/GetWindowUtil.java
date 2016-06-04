@@ -20,7 +20,7 @@ import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapW
 import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
-import org.eclipse.rcptt.tesla.jface.TeslaWindowManager;
+import org.eclipse.rcptt.tesla.jface.rap.TeslaWindowManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil.Criterion;
 

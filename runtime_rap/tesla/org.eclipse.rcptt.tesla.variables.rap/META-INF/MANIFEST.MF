@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RCPTT Variables
 Bundle-SymbolicName: org.eclipse.rcptt.tesla.variables.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.tesla.variables.TeslaVariablesPlugin
+Bundle-Activator: org.eclipse.rcptt.tesla.variables.rap.TeslaVariablesPlugin
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.variables,

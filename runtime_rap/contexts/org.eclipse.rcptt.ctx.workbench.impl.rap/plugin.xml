@@ -4,7 +4,7 @@
     <extension
          point="org.eclipse.rcptt.core.contextProcessors">
       <processor
-            class="org.eclipse.rcptt.ctx.workbench.impl.WorkbenchContextProcessor"
+            class="org.eclipse.rcptt.ctx.workbench.impl.rap.WorkbenchContextProcessor"
             type="org.eclipse.rcptt.ctx.workbench">
       </processor>
    </extension>

@@ -14,12 +14,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.TeslaBridge;
 import org.osgi.framework.BundleContext;
 
-import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
-
 public class TeslaImplPlugin extends Plugin {
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ecl.impl";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ecl.impl.rap";
 	private static TeslaImplPlugin plugin;
 
 	/**
@@ -30,7 +29,7 @@ public class TeslaImplPlugin extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
 	 */
@@ -42,7 +41,7 @@ public class TeslaImplPlugin extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
 	 */
@@ -55,7 +54,7 @@ public class TeslaImplPlugin extends Plugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static TeslaImplPlugin getDefault() {

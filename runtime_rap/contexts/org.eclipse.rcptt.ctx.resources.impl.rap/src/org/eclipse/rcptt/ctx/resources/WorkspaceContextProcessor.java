@@ -53,7 +53,7 @@ import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.ctx.impl.internal.resources.Activator;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
-import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.UIRunnable;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RCPTT Workbench Context Runtime
 Bundle-SymbolicName: org.eclipse.rcptt.ctx.workbench.impl.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.ctx.workbench.impl.Activator
+Bundle-Activator: org.eclipse.rcptt.ctx.workbench.impl.rap.Activator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,

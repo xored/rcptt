@@ -4,7 +4,6 @@ Bundle-Name: RCPTT Runtime SWT Support Fragment
 Bundle-SymbolicName: org.eclipse.rcptt.tesla.swt.fragment.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
 Bundle-Vendor: Eclipse RCP Testing Tool Project
-Bundle-Localization: plugin
 Fragment-Host: org.eclipse.rap.rwt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.swt.dnd

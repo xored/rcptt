@@ -26,7 +26,7 @@ import org.osgi.framework.ServiceReference;
 public class SWTTeslaActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.swt";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.swt.rap";
 
 	// The shared instance
 	private static SWTTeslaActivator plugin;
@@ -41,7 +41,7 @@ public class SWTTeslaActivator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
@@ -69,7 +69,7 @@ public class SWTTeslaActivator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
@@ -81,7 +81,7 @@ public class SWTTeslaActivator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static SWTTeslaActivator getDefault() {

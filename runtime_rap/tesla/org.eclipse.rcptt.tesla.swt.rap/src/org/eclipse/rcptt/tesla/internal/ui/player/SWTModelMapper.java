@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
-import static org.eclipse.rcptt.util.swt.TableTreeUtil.getColumn;
-import static org.eclipse.rcptt.util.swt.TableTreeUtil.getColumnCount;
-import static org.eclipse.rcptt.util.swt.TableTreeUtil.getParent;
+import static org.eclipse.rcptt.util.swt.rap.TableTreeUtil.getColumn;
+import static org.eclipse.rcptt.util.swt.rap.TableTreeUtil.getColumnCount;
+import static org.eclipse.rcptt.util.swt.rap.TableTreeUtil.getParent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -50,13 +50,13 @@ import org.eclipse.rcptt.tesla.core.ui.Widget;
 import org.eclipse.rcptt.tesla.core.ui.Window;
 import org.eclipse.rcptt.tesla.core.ui.WithImage;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
-import org.eclipse.rcptt.tesla.jface.ControlDecoratorRecordingHolder;
-import org.eclipse.rcptt.tesla.jface.ImageSources;
-import org.eclipse.rcptt.tesla.jface.ImageSources.CompositeSource;
-import org.eclipse.rcptt.tesla.jface.ImageSources.ImageSource;
-import org.eclipse.rcptt.tesla.jface.ImageSources.ResourceSource;
+import org.eclipse.rcptt.tesla.jface.rap.ControlDecoratorRecordingHolder;
+import org.eclipse.rcptt.tesla.jface.rap.ImageSources;
+import org.eclipse.rcptt.tesla.jface.rap.ImageSources.CompositeSource;
+import org.eclipse.rcptt.tesla.jface.rap.ImageSources.ImageSource;
+import org.eclipse.rcptt.tesla.jface.rap.ImageSources.ResourceSource;
 import org.eclipse.rcptt.tesla.swt.reflection.JavaMembersHelper;
-import org.eclipse.rcptt.util.swt.TableTreeUtil;
+import org.eclipse.rcptt.util.swt.rap.TableTreeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CCombo;

@@ -4,7 +4,7 @@
 <extension
          point="org.eclipse.rcptt.core.contextProcessors">
       <processor
-            class="org.eclipse.rcptt.ctx.preferences.impl.PreferencesContextProcessor"
+            class="org.eclipse.rcptt.ctx.preferences.impl.rap.PreferencesContextProcessor"
             type="org.eclipse.rcptt.ctx.preferences">
       </processor>
    </extension>

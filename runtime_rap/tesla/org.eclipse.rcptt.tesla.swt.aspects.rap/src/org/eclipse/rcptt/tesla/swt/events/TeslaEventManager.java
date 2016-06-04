@@ -26,7 +26,7 @@ import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
 import org.eclipse.rap.rwt.internal.service.ContextProvider;
 import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.rap.rwt.service.UISession;
-import org.eclipse.rcptt.tesla.core.am.RecordingModeFeature;
+import org.eclipse.rcptt.tesla.core.am.rap.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.swt.SWT;
@@ -54,7 +54,7 @@ public class TeslaEventManager {
 	private boolean showingAlert = false;
 	private Display lastDisplay;
 	private Object lastWorkbench;
-	private static IUIThreadHolder lastHolder;
+//	private static IUIThreadHolder lastHolder;
 
 	public static enum HasEventKind {
 		async, sync, timer

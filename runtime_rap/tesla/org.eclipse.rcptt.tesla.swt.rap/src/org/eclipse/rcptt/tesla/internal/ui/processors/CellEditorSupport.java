@@ -37,7 +37,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
-import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
+import org.eclipse.rcptt.tesla.jface.rap.TeslaCellEditorManager;
 
 public class CellEditorSupport {
 

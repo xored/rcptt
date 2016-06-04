@@ -12,9 +12,8 @@ package org.eclipse.rcptt.tesla.jobs;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.rcptt.tesla.core.am.rap.AspectManager;
 import org.osgi.framework.BundleContext;
-
-import org.eclipse.rcptt.tesla.core.am.AspectManager;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -22,7 +21,7 @@ import org.eclipse.rcptt.tesla.core.am.AspectManager;
 public class JobsActivator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.jobs.aspects";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.jobs.aspects.rap";
 
 	// The shared instance
 	private static JobsActivator plugin;
@@ -35,7 +34,7 @@ public class JobsActivator extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
@@ -48,7 +47,7 @@ public class JobsActivator extends Plugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
@@ -61,7 +60,7 @@ public class JobsActivator extends Plugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static JobsActivator getDefault() {

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.core.contextProcessors">
       <processor
-            class="org.eclipse.rcptt.debug.runtime.DebugContextProcessor"
+            class="org.eclipse.rcptt.debug.runtime.rap.DebugContextProcessor"
             type="org.eclipse.rcptt.ctx.debug">
       </processor>
    </extension>

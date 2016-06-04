@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
+import org.eclipse.rcptt.util.swt.rap.TableTreeUtil;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-
-import org.eclipse.rcptt.util.swt.TableTreeUtil;
 
 public class ItemUIElement extends SWTUIElement {
 	private int column = -1;

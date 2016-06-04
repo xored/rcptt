@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.rcptt.core.contextProcessors">
       <processor
-            class="org.eclipse.rcptt.ctx.script.impl.EclContextProcessor"
+            class="org.eclipse.rcptt.ctx.script.impl.rap.EclContextProcessor"
             type="org.eclipse.rcptt.ctx.ecl">
       </processor>
    </extension>

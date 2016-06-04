@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
-import org.eclipse.rcptt.util.swt.TableTreeUtil;
+import org.eclipse.rcptt.util.swt.rap.TableTreeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;

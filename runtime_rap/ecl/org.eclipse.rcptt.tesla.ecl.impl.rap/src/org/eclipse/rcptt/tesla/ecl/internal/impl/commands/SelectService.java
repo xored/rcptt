@@ -24,7 +24,7 @@ import org.eclipse.rcptt.ecl.dispatch.ServiceDispatchingUtils;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
-import org.eclipse.rcptt.tesla.ecl.impl.AbstractActionService;
+import org.eclipse.rcptt.tesla.ecl.impl.rap.AbstractActionService;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.ServiceUtil;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;

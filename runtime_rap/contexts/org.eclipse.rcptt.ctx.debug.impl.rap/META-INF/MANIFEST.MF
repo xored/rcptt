@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RCPTT Debug Context Runtime
 Bundle-SymbolicName: org.eclipse.rcptt.ctx.debug.impl.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.debug.runtime.Q7DebugRuntime
+Bundle-Activator: org.eclipse.rcptt.debug.runtime.rap.Q7DebugRuntime
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.core;bundle-version="[2.1.0,3.0.0)",

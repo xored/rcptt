@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aspectj>
 	<aspects>
-		<aspect name="org.eclipse.rcptt.tesla.jface.CellEditorAspect" />
-		<aspect name="org.eclipse.rcptt.tesla.jface.ImageDescriptorAspect" />
-		<aspect name="org.eclipse.rcptt.tesla.jface.WindowAspect" />
+		<aspect name="org.eclipse.rcptt.tesla.jface.rap.CellEditorAspect" />
+		<aspect name="org.eclipse.rcptt.tesla.jface.rap.ImageDescriptorAspect" />
+		<aspect name="org.eclipse.rcptt.tesla.jface.rap.WindowAspect" />
 	</aspects>
 	<weaver options="-verbose -Xset:typeDemotion=true" />
 </aspectj>

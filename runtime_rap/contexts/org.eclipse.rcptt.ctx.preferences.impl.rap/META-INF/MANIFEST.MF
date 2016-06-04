@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RCPTT Preferences Context Runtime
 Bundle-SymbolicName: org.eclipse.rcptt.ctx.preferences.impl.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.ctx.preferences.impl.Activator
+Bundle-Activator: org.eclipse.rcptt.ctx.preferences.impl.rap.Activator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.rap.ui,
  org.eclipse.core.runtime,
@@ -18,4 +18,4 @@ Require-Bundle: org.eclipse.rap.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.rcptt.runtime.ui.preferences,
- org.eclipse.rcptt.runtime.ui.preferences.aspects
+ org.eclipse.rcptt.runtime.ui.preferences.aspects.rap

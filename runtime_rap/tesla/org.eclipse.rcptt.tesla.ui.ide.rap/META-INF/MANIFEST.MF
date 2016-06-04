@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: RCPTT Runtime UI IDE Support
 Bundle-SymbolicName: org.eclipse.rcptt.tesla.ui.ide.rap;singleton:=true
 Bundle-Version: 2.1.0.qualifier
-Bundle-Activator: org.eclipse.rcptt.tesla.ide.Activator
+Bundle-Activator: org.eclipse.rcptt.tesla.ide.rap.Activator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
 Require-Bundle: org.eclipse.rap.ui,
  org.eclipse.core.runtime,
