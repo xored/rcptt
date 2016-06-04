@@ -6,7 +6,7 @@
       <q7runtime
             kind="runtime"
             platform="rap"
-            path="platform:///plugin/org.eclipse.rcptt.updates.runtime.rap/q7/"
+            path="platform:///plugin/org.eclipse.rcptt.updates.runtime.e3x.rap/q7/"
             version="[4.0,4.6)">
       </q7runtime>
    </extension>
