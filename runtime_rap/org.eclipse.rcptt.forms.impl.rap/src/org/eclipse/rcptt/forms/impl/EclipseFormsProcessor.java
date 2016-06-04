@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.forms.impl;
 
-import static org.eclipse.rcptt.forms.impl.internal.Plugin.UTILS;
 
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
@@ -175,6 +174,11 @@ public class EclipseFormsProcessor implements ITeslaCommandProcessor, ISWTModelM
 
 	private static String unify(String value) {
 		return PlayerTextUtils.unifyMultilines(value);
+	}
+
+	@Override
+	public int getPriority() {
+		return 300;
 	}
 
 }

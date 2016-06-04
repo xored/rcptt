@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.rcptt.tesla.swt.workbenchProvider">
+         point="org.eclipse.rcptt.tesla.swt.rap.workbenchProvider">
       <workbenchProvider
             class="org.eclipse.rcptt.tesla.swt.e3x.ClassicEclipseWorkbenchProvider">
       </workbenchProvider>

@@ -301,7 +301,10 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	private SWTUIPlayer internalPlayer;
 	private String failNextCommandBecauseOf = null;
 
-	// private Set<Job> times = new HashSet<Job>();
+	@Override
+	public int getPriority() {
+		return 100;
+	}
 
 	private static class ExpandSelectionStatus extends PreExecuteStatus {
 		public ExpandSelectionStatus(final boolean canExecute) {

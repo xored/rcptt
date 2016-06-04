@@ -41,6 +41,11 @@ public class CanvasProcessor implements ITeslaCommandProcessor {
 	public CanvasProcessor() {
 	}
 
+	@Override
+	public int getPriority() {
+		return 275;
+	}
+
 	public String getFeatureID() {
 		return "canvas";
 	}
@@ -98,26 +103,10 @@ public class CanvasProcessor implements ITeslaCommandProcessor {
 					e.type = SWT.MouseDown;
 					events.sendEvent(element, e);
 					break;
-				// case ENTER:
-				// e.type = SWT.MouseEnter;
-				// events.sendEvent(element, e);
-				// break;
-				// case EXIT:
-				// e.type = SWT.MouseExit;
-				// events.sendEvent(element, e);
-				// break;
-				// case HOVER:
-				// e.type = SWT.MouseHover;
-				// events.sendEvent(element, e);
-				// break;
 				case UP:
 					e.type = SWT.MouseUp;
 					events.sendEvent(element, e);
 					break;
-				// case MOVE:
-				// e.type = SWT.MouseMove;
-				// events.sendEvent(element, e);
-				// break;
 				case DOUBLE_CLICK:
 					e.type = SWT.MouseDoubleClick;
 					e.count = 2;

@@ -49,6 +49,11 @@ public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 	public ProblemViewSupportProcessor() {
 	}
 
+	@Override
+	public int getPriority() {
+		return 50;
+	}
+
 	public boolean callMasterProcess(Context currentContext) {
 		return false;
 	}

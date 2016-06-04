@@ -12,13 +12,13 @@
       </recorder>
       <recorder
             class="org.eclipse.rcptt.tesla.recording.core.swt.WorkbenchRecordingProcessor">
-      </recorder> 
+      </recorder>
       <recorder
             class="org.eclipse.rcptt.tesla.recording.core.swt.JFaceRecordingProcessor">
       </recorder>
    </extension>
    <extension
-         point="org.eclipse.rcptt.tesla.recording.swt.describerExtensions">
+         point="org.eclipse.rcptt.tesla.recording.swt.rap.describerExtensions">
          <describerExtension
                class="org.eclipse.rcptt.tesla.recording.core.swt.SWTDescriberExtension">
          </describerExtension>

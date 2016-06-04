@@ -43,6 +43,12 @@ public class DatabindingProcessor implements ITeslaCommandProcessor,
 	public DatabindingProcessor() {
 	}
 
+	@Override
+	public int getPriority() {
+		return 175;
+	}
+
+
 	public String getFeatureID() {
 		return "databinding";
 	}

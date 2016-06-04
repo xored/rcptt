@@ -43,8 +43,6 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.IProcess;
-import org.eclipse.debug.ui.DebugUITools;
-import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil.EqualityHelper;
@@ -185,8 +183,8 @@ public class DebugContextProcessor implements IContextProcessor {
 			LaunchType etype = DebugFactory.eINSTANCE.createLaunchType();
 			etype.setId(type.getIdentifier());
 			etype.setName(type.getName());
-			Image image = DebugUITools.getImage(type.getIdentifier());
-			etype.setImage(captureImage(image));
+		//	Image image = DebugUITools.getImage(type.getIdentifier());
+		//	etype.setImage(captureImage(image));
 			types.put(etype.getId(), etype);
 			return etype;
 		}
@@ -228,7 +226,6 @@ public class DebugContextProcessor implements IContextProcessor {
 		Job.getJobManager().addJobChangeListener(collector);
 		try {
 			UIRunnable.exec(new UIRunnable<Object>() {
-				@Override
 				public Object run() throws CoreException {
 					collector.enable();
 					return null;
@@ -332,7 +329,7 @@ public class DebugContextProcessor implements IContextProcessor {
 	}
 
 	static class Patterns {
-		ArrayList<Pattern> payload = new ArrayList<>();
+		ArrayList<Pattern> payload = new ArrayList<Pattern>();
 
 		static public Pattern compile(String simplePattern) {
 			return Pattern.compile(simplePattern.replace('\\', '/').replace("*", ".*").trim());
@@ -582,12 +579,12 @@ public class DebugContextProcessor implements IContextProcessor {
 		}
 		IWorkingSetManager mgr = PlatformUI.getWorkbench().getWorkingSetManager();
 		IWorkingSet[] sets = mgr.getWorkingSets();
-		for (int i = 0; i < sets.length; i++) {
-			if (IDebugUIConstants.BREAKPOINT_WORKINGSET_ID.equals(sets[i].getId())
-					&& containsBreakpoint(sets[i], breakpoint)) {
-				rv.getWorkingSets().add(sets[i].getName());
-			}
-		}
+//		for (int i = 0; i < sets.length; i++) {
+//			if (IDebugUIConstants.BREAKPOINT_WORKINGSET_ID.equals(sets[i].getId())
+//					&& containsBreakpoint(sets[i], breakpoint)) {
+//				rv.getWorkingSets().add(sets[i].getName());
+//			}
+//		}
 		return rv;
 	}
 
@@ -596,7 +593,7 @@ public class DebugContextProcessor implements IContextProcessor {
 		org.eclipse.debug.internal.core.BreakpointManager manager = (org.eclipse.debug.internal.core.BreakpointManager) DebugPlugin
 				.getDefault().getBreakpointManager();
 		IWorkspaceRoot workspace = ResourcesPlugin.getWorkspace().getRoot();
-		HashSet<String> pathSet = new HashSet<>();
+		HashSet<String> pathSet = new HashSet<String>();
 		for (BreakpointResource modelResource : list) {
 			pathSet.add(modelResource.getPath());
 		}
@@ -613,7 +610,7 @@ public class DebugContextProcessor implements IContextProcessor {
 				if (eobject.getType() == null)
 					throw new NullPointerException("Breakpoint has null marker type");
 				IMarker marker = resource.createMarker(eobject.getType());
-				Map<String, Object> attributes = new HashMap<>();
+				Map<String, Object> attributes = new HashMap<String, Object>();
 				for (NamedElement e : eobject.getAttributes()) {
 					marker.setAttribute(e.getName(), unbox(e));
 				}
@@ -628,15 +625,6 @@ public class DebugContextProcessor implements IContextProcessor {
 		}
 	}
 
-	private boolean containsBreakpoint(IWorkingSet set, IBreakpoint breakpoint) {
-		IAdaptable[] elements = set.getElements();
-		for (int i = 0; i < elements.length; i++) {
-			if (elements[i].equals(breakpoint)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	private DebugContext doCreate() throws CoreException {
 		DebugContext context = DebugFactory.eINSTANCE.createDebugContext();

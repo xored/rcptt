@@ -11,7 +11,7 @@
       </provider>
    </extension>
    <extension
-   		point="org.eclipse.rcptt.tesla.swt.describerExtensions">
+   		point="org.eclipse.rcptt.tesla.swt.rap.describerExtensions">
         <describerExtension
                class="org.eclipse.rcptt.tesla.ui.describers.SWTDescriberExtension" priority="100">
         </describerExtension>

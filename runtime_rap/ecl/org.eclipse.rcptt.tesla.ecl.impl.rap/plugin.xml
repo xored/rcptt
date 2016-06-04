@@ -228,7 +228,7 @@
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectorService"
             name="GetCell"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet> 
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectorService"
             name="GetDiagram"
@@ -238,7 +238,7 @@
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectorService"
             name="GetPalette"
             namespace="http://eclipse.org/rcptt/tesla/ecl/diagram">
-      </scriptlet> 
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="GetText"
@@ -254,7 +254,7 @@
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="IsDisposed"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>     
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="Click"
@@ -374,12 +374,12 @@
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="HoverRuler"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>                             
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="OpenDeclaration"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>               
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectService"
             name="Select"
@@ -579,7 +579,7 @@
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectorService"
             name="GetPropertyTab"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>      
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="SetValue"
@@ -594,12 +594,12 @@
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="Maximize"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>   
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="Restore"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>   
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
             name="ShowTabList"
@@ -767,7 +767,7 @@
   		</scriptlet>
    </extension>
     <extension
-          point="org.eclipse.rcptt.tesla.swt.jobCollector">
+          point="org.eclipse.rcptt.tesla.swt.rap.jobCollector">
        <collector
              class="org.eclipse.rcptt.tesla.ecl.internal.impl.EclJobCollector">
        </collector>
@@ -789,5 +789,5 @@
           </adapter>
        </factory>
        </extension>
-    
+
 </plugin>
