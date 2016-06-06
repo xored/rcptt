@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.rap.ui.internal.preferences.SessionScope;
 import org.osgi.framework.Bundle;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
@@ -52,8 +53,9 @@ public class PreferencesContextProcessor implements IContextProcessor {
 	private static final String DIALOG_SETTINGS_NODE_NAME = "settings";
 	private static final String SECURE_PREFERENCES_NODE_NAME = "secureStorage";
 
+	@SuppressWarnings("restriction")
 	private static final String[] EXCLUDE_SCOPE_LIST = new String[] {
-			DefaultScope.SCOPE, ConfigurationScope.SCOPE };
+			DefaultScope.SCOPE, ConfigurationScope.SCOPE, SessionScope.SCOPE };
 
 	public void apply(final Context contextToApply) throws CoreException {
 		final UIJobCollector collector = new UIJobCollector();
@@ -79,7 +81,8 @@ public class PreferencesContextProcessor implements IContextProcessor {
 		} catch (Exception e) {
 			CoreException ee = new CoreException(RcpttPlugin.createStatus(
 					"Failed to execute context: " + contextToApply.getName()
-							+ " Cause: " + e.getMessage(), e));
+							+ " Cause: " + e.getMessage(),
+					e));
 			RcpttPlugin.log(e);
 			throw ee;
 		} finally {
@@ -165,7 +168,8 @@ public class PreferencesContextProcessor implements IContextProcessor {
 					throw new CoreException(Activator.createStatus(
 							"Error during preferences apply for node: \""
 									+ nodeName + "\" caused by: ("
-									+ e.getMessage() + ")", e));
+									+ e.getMessage() + ")",
+							e));
 					// try recover preferences node
 				}
 			}
@@ -337,8 +341,8 @@ public class PreferencesContextProcessor implements IContextProcessor {
 				if (ideBundle != null
 						&& (ideBundle.getHeaders().get("Bundle-Version")
 								.toString().startsWith("3.5") || ideBundle
-								.getHeaders().get("Bundle-Version").toString()
-								.startsWith("3.4"))) {
+										.getHeaders().get("Bundle-Version").toString()
+										.startsWith("3.4"))) {
 					continue;
 				}
 			}

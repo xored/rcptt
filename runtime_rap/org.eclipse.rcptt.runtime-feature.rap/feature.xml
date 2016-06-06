@@ -29,6 +29,7 @@
       <!-- FOR NORMAL WORKING RAP  -->
       <import feature="org.eclipse.rap.equinox.target.feature" version="3.1.0.qualifier"/>
       <import feature="org.eclipse.rap.feature" version="3.1.0.qualifier"/>
+      <import plugin="com.google.guava"/>
    </requires>:
 
    <plugin
@@ -350,6 +351,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
     <plugin
          id="org.eclipse.text"
          download-size="0"
