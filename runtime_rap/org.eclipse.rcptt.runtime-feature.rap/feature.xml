@@ -235,6 +235,15 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
+
+
+   <plugin
+         id="org.eclipse.rcptt.verifications"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
    <plugin
          id="org.eclipse.rcptt.verifications.text"
          download-size="0"
@@ -242,9 +251,8 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
-
    <plugin
-         id="org.eclipse.rcptt.verifications"
+         id="org.eclipse.rcptt.verifications.text.impl.rap"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
