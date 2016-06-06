@@ -250,6 +250,20 @@
          version="2.1.0.qualifier"
          unpack="false"/>
 
+  <plugin
+         id="org.eclipse.rcptt.verifications.log"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.verifications.log.impl.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
    <plugin
          id="org.eclipse.rcptt.verifications.tree"
          download-size="0"
