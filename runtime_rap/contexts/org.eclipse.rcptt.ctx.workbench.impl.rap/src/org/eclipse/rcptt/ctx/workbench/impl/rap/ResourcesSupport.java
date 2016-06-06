@@ -59,15 +59,15 @@ public class ResourcesSupport {
 			WorkbenchContext context) {
 		boolean closeOtherEditors = true;
 		IEditorReference[] editors = page.getEditorReferences();
-		// TODO RAP-FIX
-		// for (IEditorReference editor : editors) {
-		// FileEditor fileEditor = createEditor(editor);
-		// if (fileEditor != null) {
-		// context.getEditors().add(fileEditor);
-		// } else {
-		// closeOtherEditors = false;
-		// }
-		// }
+		 for (IEditorReference editor : editors) {
+
+		 FileEditor fileEditor = createEditor(editor);
+		 if (fileEditor != null) {
+		 context.getEditors().add(fileEditor);
+		 } else {
+		 closeOtherEditors = false;
+		 }
+		}
 		context.setCloseEditors(closeOtherEditors);
 	}
 

@@ -112,10 +112,6 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	};
 
 	public void apply(final Context context) throws CoreException {
-		if (context != null) {
-			return;
-		}
-
 		final WorkbenchContext ctx = (WorkbenchContext) context;
 		final UIJobCollector collector = new UIJobCollector();
 		Job.getJobManager().addJobChangeListener(collector);
