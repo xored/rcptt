@@ -70,16 +70,13 @@ public class CleanBundlePoolStartup implements IStartup {
 											String platform = Q7TargetPlatformManager.getTargetPlatformName(cfg);
 											LaunchInfoCache.remove(cfg);
 											if (platform.length() > 0) {
-												TargetPlatformManager
-														.deleteTargetPlatform(platform);
-												Q7LaunchUtils
-														.deleteConfigFiles(cfg);
+												TargetPlatformManager.deleteTargetPlatform(platform);
+												Q7LaunchUtils.deleteConfigFiles(cfg);
 												Q7TargetPlatformManager.clear();
 											}
 										}
 
-										Q7LaunchingUtil
-												.cleanBundlePool(monitor);
+										Q7LaunchingUtil.cleanBundlePool(monitor);
 									}
 								}, monitor);
 					} catch (CoreException e) {

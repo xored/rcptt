@@ -25,6 +25,12 @@
            class="org.eclipse.rcptt.internal.launching.rap.ui.BrowserLaucherDelegate">
      </browserDelegate>
   </extension>
+  <extension
+        point="org.eclipse.ui.startup">
+     <startup
+           class="org.eclipse.rcptt.internal.launching.rap.ui.CleanBundlePoolStartup">
+     </startup>
+  </extension>
 
 <!--
   <extension

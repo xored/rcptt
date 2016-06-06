@@ -22,6 +22,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.pde.internal.ui.IHelpContextIds;
+import org.eclipse.pde.internal.ui.PDEPluginImages;
 import org.eclipse.pde.ui.launcher.AbstractLauncherTab;
 import org.eclipse.rcptt.launching.rap.RAPLaunchConfig;
 import org.eclipse.rcptt.launching.rap.RAPLaunchConfig.BrowserMode;
@@ -34,6 +35,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -47,6 +49,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -66,13 +69,12 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 
 	private final SelectionListener selectionListener;
 	private final GridDataFactory fillHorizontal;
+	private final Image fImage;
 
 	private final ModifyListener modifyListener;
 	private AUTLocationBlock fLocationBlock;
 	private ITargetPlatformHelper currentTargetPlatform;
 
-	private Button developmentModeCheckBox;
-	private Button openBrowserCheckBox;
 	private Button internalBrowserRadioButton;
 	private Button externalBrowserRadioButton;
 	private Text servletPathTextField;
@@ -91,9 +93,15 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 		fillHorizontal = GridDataFactory.createFrom(gridData);
 		selectionListener = createDialogSelectionListener();
 		modifyListener = createDialogModifyListener();
+		fImage = PDEPluginImages.DESC_MAIN_TAB.createImage();
 		createLocationBlock();
 
 		addLaunchConfigListener();
+	}
+
+	@Override
+	public Image getImage() {
+		return fImage;
 	}
 
 	private ModifyListener createDialogModifyListener() {
@@ -130,7 +138,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 
 		createBrowserModeSection(composite);
 		createRuntimeSettingsSection(composite);
-		createRAPSettingsSection(composite);
 		createDataLocationSection(composite);
 
 		// Add listener for each control to recalculate scroll bar when it is
@@ -168,33 +175,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 				.setHelp(composite, IHelpContextIds.LAUNCHER_BASIC);
 	}
 
-	private void createRAPSettingsSection(Composite parent) {
-		Group group = new Group(parent, SWT.NONE);
-		group.setLayoutData(fillHorizontal.create());
-		group.setText("RAP Settings");
-		group.setLayout(new GridLayout(2, true));
-		Composite leftPart = new Composite(group, SWT.NONE);
-		leftPart.setLayout(createGridLayoutWithoutMargin(1));
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(leftPart);
-		createRAPSettingsLeftPart(leftPart);
-		Composite rightPart = new Composite(group, SWT.NONE);
-		rightPart.setLayout(createGridLayoutWithoutMargin(2));
-		GridDataFactory.fillDefaults().grab(true, false).indent(15, 0).applyTo(rightPart);
-	}
-
-	private void createRAPSettingsLeftPart(Composite leftPartComposite) {
-		developmentModeCheckBox = new Button(leftPartComposite, SWT.CHECK);
-		developmentModeCheckBox.setText("Start in &development mode");
-		developmentModeCheckBox.addSelectionListener(selectionListener);
-	}
-
-	private GridLayout createGridLayoutWithoutMargin(int numColumns) {
-		GridLayout result = new GridLayout(numColumns, false);
-		result.marginHeight = 0;
-		result.marginWidth = 0;
-		return result;
-	}
-
 	@Override
 	public void initializeFrom(ILaunchConfiguration config) {
 		try {
@@ -207,7 +187,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 			contextPathCheckBox.setSelection(rapConfig.getUseManualContextPath());
 			contextPathTextField.setText(rapConfig.getContextPath());
 			boolean openBrowser = rapConfig.getOpenBrowser();
-			openBrowserCheckBox.setSelection(openBrowser);
 			internalBrowserRadioButton.setEnabled(openBrowser);
 			externalBrowserRadioButton.setEnabled(openBrowser);
 			if (org.eclipse.rcptt.launching.rap.RAPLaunchConfig.BrowserMode.EXTERNAL
@@ -220,7 +199,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 			}
 			useSessionTimeoutCheckBox.setSelection(rapConfig.getUseSessionTimeout());
 			sessionTimeoutSpinner.setSelection(rapConfig.getSessionTimeout());
-			developmentModeCheckBox.setSelection(rapConfig.getDevelopmentMode());
 			dataLocationBlock.initializeFrom(rapConfig);
 
 		} catch (CoreException e) {
@@ -232,22 +210,26 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 		if (!status.isOK() && !status.matches(IStatus.CANCEL)) {
 			log(status);
 		}
-		getShell().getDisplay().syncExec(new Runnable() {
+		Shell shell = getShell();
+		if (shell == null)
+			return;
+		if (shell.getDisplay() != null)
+			shell.getDisplay().syncExec(new Runnable() {
 
-			@Override
-			public void run() {
-				if (status.isOK()) {
-					setErrorMessage(null);
-					setMessage(null);
-				} else if (status.matches(IStatus.ERROR)) {
-					setMessage(null);
-					setErrorMessage(status.getMessage());
-				} else {
-					setMessage(status.getMessage());
-					setErrorMessage(null);
+				@Override
+				public void run() {
+					if (status.isOK()) {
+						setErrorMessage(null);
+						setMessage(null);
+					} else if (status.matches(IStatus.ERROR)) {
+						setMessage(null);
+						setErrorMessage(status.getMessage());
+					} else {
+						setMessage(status.getMessage());
+						setErrorMessage(null);
+					}
 				}
-			}
-		});
+			});
 
 	}
 
@@ -265,7 +247,7 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 
 			RAPLaunchConfig rapConfig = new RAPLaunchConfig(config);
 			rapConfig.setServletPath(servletPathTextField.getText());
-			rapConfig.setOpenBrowser(openBrowserCheckBox.getSelection());
+			rapConfig.setOpenBrowser(true);
 			rapConfig.setBrowserMode(getBrowserMode());
 			portSpinner.setEnabled(useFixedPortCheckBox.getSelection());
 			rapConfig.setUseManualPort(useFixedPortCheckBox.getSelection());
@@ -276,13 +258,12 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 			sessionTimeoutSpinner.setEnabled(useSessionTimeoutCheckBox.getSelection());
 			rapConfig.setUseSessionTimeout(useSessionTimeoutCheckBox.getSelection());
 			rapConfig.setSessionTimeout(sessionTimeoutSpinner.getSelection());
-			rapConfig.setDevelopmentMode(developmentModeCheckBox.getSelection());
 			rapConfig.setDataLocation(dataLocationBlock.getLocation());
 			boolean useDefaultDataLocation = dataLocationBlock.getUseDefaultDataLocation();
 			rapConfig.setUseDefaultDataLocation(useDefaultDataLocation);
 			rapConfig.setDoClearDataLocation(dataLocationBlock.getDoClearDataLocation());
 			rapConfig.setAskClearDataLocation(false);
-			validate(rapConfig);
+			// validate(rapConfig);
 			setDirty(true);
 
 		} catch (CoreException e) {
@@ -291,6 +272,11 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 	}
 
 	private void validate(RAPLaunchConfig config) {
+		IStatus locationStatus = fLocationBlock.getStatus();
+		if (!locationStatus.isOK()) {
+			setStatus(locationStatus);
+			return;
+		}
 		RAPLaunchConfigValidator validator = new RAPLaunchConfigValidator(config);
 		IStatus[] states = validator.validate();
 		String infoMessage = findMessage(states, IStatus.INFO);
@@ -353,14 +339,10 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 		layout.horizontalSpacing = 10;
 		layout.verticalSpacing = 0;
 		composite.setLayout(layout);
-		openBrowserCheckBox = new Button(composite, SWT.CHECK);
-		openBrowserCheckBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		openBrowserCheckBox.setText("&Open application in");
 		Link browserPrefsLink = createBrowserPrefsLink(composite);
 		browserPrefsLink.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
 		Composite modePart = createBrowserModePart(composite);
 		modePart.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).indent(17, 0).create());
-		addSelectionListeners();
 	}
 
 	private Link createBrowserPrefsLink(Composite composite) {
@@ -410,19 +392,6 @@ public class RapAUTMainTab extends AbstractLauncherTab {
 		applicationUrlTextField = new Text(composite, SWT.SINGLE | SWT.READ_ONLY);
 		applicationUrlTextField.setBackground(applicationUrlTextField.getParent().getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(applicationUrlTextField);
-	}
-
-	private void addSelectionListeners() {
-		openBrowserCheckBox.addSelectionListener(selectionListener);
-		openBrowserCheckBox.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				boolean openBrowser = openBrowserCheckBox.getSelection();
-				internalBrowserRadioButton.setEnabled(openBrowser);
-				externalBrowserRadioButton.setEnabled(openBrowser);
-				servletPathTextField.setEnabled(openBrowser);
-			}
-		});
 	}
 
 	private SelectionAdapter createDialogSelectionListener() {

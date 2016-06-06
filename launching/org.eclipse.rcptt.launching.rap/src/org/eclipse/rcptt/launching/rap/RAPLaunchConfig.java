@@ -30,15 +30,14 @@ public final class RAPLaunchConfig {
 	public static final String DATA_LOCATION = PREFIX + "dataLocation"; //$NON-NLS-1$
 
 	// Default values for launch configuration attribute names
-	private static final String DEFAULT_SERVLET_PATH = "/rap"; //$NON-NLS-1$
-	private static final BrowserMode DEFAULT_BROWSER_MODE = BrowserMode.INTERNAL;
+	private static final String DEFAULT_SERVLET_PATH = "/"; //$NON-NLS-1$
+	private static final BrowserMode DEFAULT_BROWSER_MODE = BrowserMode.EXTERNAL;
 	private static final int DEFAULT_PORT = 10080;
-	private static final boolean DEFAULT_USE_MANUAL_PORT = false;
+	private static final boolean DEFAULT_USE_MANUAL_PORT = true;
 	private static final String DEFAULT_CONTEXTPATH = "/";
 	private static final boolean DEFAULT_USE_MANUAL_CONTEXTPATH = false;
 	private static final int DEFAULT_SESSION_TIMEOUT = MIN_SESSION_TIMEOUT;
 	private static final boolean DEFAULT_USE_SESSION_TIMEOUT = false;
-	private static final boolean DEFAULT_DEVELOPMENT_MODE = true;
 	private static final String DEFAULT_DATA_LOCATION = "${workspace_loc}/.metadata/.plugins/"; //$NON-NLS-1$
 
 	public static void setDefaults(ILaunchConfigurationWorkingCopy config) {
@@ -50,7 +49,7 @@ public final class RAPLaunchConfig {
 		config.setAttribute(USE_MANUAL_CONTEXTPATH, DEFAULT_USE_MANUAL_CONTEXTPATH);
 		config.setAttribute(SESSION_TIMEOUT, DEFAULT_SESSION_TIMEOUT);
 		config.setAttribute(USE_SESSION_TIMEOUT, DEFAULT_USE_SESSION_TIMEOUT);
-		config.setAttribute(DEVELOPMENT_MODE, DEFAULT_DEVELOPMENT_MODE);
+		config.setAttribute(DEVELOPMENT_MODE, false);
 		config.setAttribute(USE_DEFAULT_DATA_LOCATION, true);
 		config.setAttribute(IPDELauncherConstants.DOCLEAR, false);
 		config.setAttribute(IPDELauncherConstants.ASKCLEAR, false);
@@ -216,7 +215,7 @@ public final class RAPLaunchConfig {
 	}
 
 	public boolean getDevelopmentMode() throws CoreException {
-		return config.getAttribute(DEVELOPMENT_MODE, DEFAULT_DEVELOPMENT_MODE);
+		return config.getAttribute(DEVELOPMENT_MODE, false);
 	}
 
 	public void setDevelopmentMode(boolean developmentMode) {

@@ -90,13 +90,12 @@ public class AUTLocationBlock {
 	public void updateInfo() {
 		// errorInfo = null;
 		final String location = getLocation();
-		boolean valid = PDELocationUtils.validateProductLocation(location).isOK();
-		if (!valid) {
-			// errorInfo =
-			// "AUT location should point to existing directory";
+		IStatus status = PDELocationUtils.validateProductLocation(location);
+		if (!status.isOK()) {
+			setStatus(status);
 		}
 
-		if (needUpdate && valid) {
+		if (needUpdate && status.isOK()) {
 			info = null;
 			runInDialog(new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
@@ -104,6 +103,7 @@ public class AUTLocationBlock {
 					try {
 						info = Q7TargetPlatformManager.createTargetPlatform(location, monitor);
 						assert info.getStatus().isOK();
+						setStatus(info.getStatus());
 					} catch (CoreException e) {
 						setStatus(e.getStatus());
 					}
@@ -169,9 +169,13 @@ public class AUTLocationBlock {
 	}
 
 	public IStatus getStatus() {
-		if (locationField.getText().trim().length() == 0) {
+		if (locationField != null && locationField.getText().trim().length() == 0) {
 			return createError("Please specify Application installation directory...");
 		}
+
+		if (!status.getValue().isOK())
+			return status.getValue();
+
 		if (info == null) {
 			return createError("Please specify correct Application installation directory...");
 		} else {
