@@ -63,6 +63,10 @@ public class GetQ7InformationService implements ICommandService {
 				}
 			}
 		}
+		else if(RWTUtils.findDisplay() != null)
+		{
+			info.setWindowCount(1);
+		}
 		checkActiveClient(info);
 		output.write(info);
 		return result;
