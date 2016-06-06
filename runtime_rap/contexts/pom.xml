@@ -15,6 +15,7 @@
     <module>org.eclipse.rcptt.ctx.workbench.impl.rap</module>
     <module>org.eclipse.rcptt.ctx.workbench.aspect.rap</module>
     <module>org.eclipse.rcptt.ctx.parameters.impl.rap</module>
+    <module>org.eclipse.rcptt.ctx.filesystem.impl.rap</module>
   </modules>
   <groupId>org.eclipse.rcptt</groupId>
   <version>2.1.0-SNAPSHOT</version>
