@@ -219,9 +219,9 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			boolean hashMouseUp = false;
 			Context context = ContextManagement.currentContext();
 
-			if (!context.contains("org.eclipse.swt.internal.custom.ctabfolderkit.CTabFolderLCA$1", "run")) {
-				hashMouseUp = true;
-			}
+//			if (!context.contains("org.eclipse.swt.internal.custom.ctabfolderkit.CTabFolderLCA$1", "run")) {
+//				hashMouseUp = true;
+//			}
 			if (!hashMouseUp) {
 				StackTraceElement[] stack = context.getStackTrace();
 				for (StackTraceElement e : stack) {
@@ -657,9 +657,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 				lastTraverseDetail = event.detail;
 			}
 		} else if (type == SWT.MouseDoubleClick) {
-			// Listener[] listeners = widget.getListeners(SWT.MouseDoubleClick);
-			if (/* listeners.length != 0 && */ !(widget instanceof ViewForm) && !(widget instanceof Sash)
-					&& !lastEvents.checkType(widget, SWT.MouseUp)) {
+			 Listener[] listeners = widget.getListeners(SWT.MouseDoubleClick);
+			if (listeners.length != 0 && !(widget instanceof ViewForm) && !(widget instanceof Sash)) {
 				FindResult result = getLocator().findElement(widget, true, false, false);
 
 				// System.out.println("RESULT is:" + result);
@@ -1029,7 +1028,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 				}
 			} else if ((isMenuItem || isWidgetSendSelectionNonWin32 || isRunDefferedEventsOSX || isButtonFocusEvent
 					|| isCheckable || isListTreeTableActivate || isToolItem ) && !(isRadioWidget && !((Button) widget).getSelection())
-					&& !isTabFolder || (type == SWT.DefaultSelection && isTreeOrTableOrList)) {
+					&& !isTabFolder || (type == SWT.Selection || (type == SWT.DefaultSelection) && isTreeOrTableOrList)) {
 				if (widget instanceof MenuItem) {
 					MenuItem mi = (MenuItem) widget;
 					Object data = mi.getData();
