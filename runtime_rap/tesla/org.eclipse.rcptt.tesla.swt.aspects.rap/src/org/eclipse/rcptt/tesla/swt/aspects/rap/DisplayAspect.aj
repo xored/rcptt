@@ -41,12 +41,14 @@ public aspect DisplayAspect {
 	after(Display display):
 		execution(org.eclipse.swt.widgets.Display.new()) && target(display) {
 		TeslaEventManager.getManager().setLastDisplay(display);
+		TeslaEventManager.getManager().setLastWorkbench(null);
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(Display display): execution(boolean Display.close()) &&
 	 target(display) {
 		TeslaEventManager.getManager().setLastDisplay(null);
+		TeslaEventManager.getManager().setLastWorkbench(null);
 		return proceed(display);
 	}
 

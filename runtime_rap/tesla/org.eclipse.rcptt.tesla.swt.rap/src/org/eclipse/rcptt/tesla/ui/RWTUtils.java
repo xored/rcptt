@@ -1,5 +1,7 @@
 package org.eclipse.rcptt.tesla.ui;
 
+import org.eclipse.core.commands.contexts.ContextManager;
+import org.eclipse.rap.rwt.internal.service.ContextProvider;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
@@ -14,7 +16,7 @@ public class RWTUtils {
 
 	public static IWorkbench getWorkbench() {
 		IWorkbench workbench = (IWorkbench) TeslaEventManager.getManager().getWorkbench();
-		return workbench == null || workbench.isClosing() ? null : workbench;
+		return workbench == null || !ContextProvider.hasContext() || workbench.isClosing() ? null : workbench;
 	}
 
 	public static IWorkbenchWindow[] getWorkbenchWindows() {

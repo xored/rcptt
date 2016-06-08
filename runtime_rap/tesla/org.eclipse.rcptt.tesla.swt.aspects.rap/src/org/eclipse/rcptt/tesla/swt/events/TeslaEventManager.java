@@ -12,6 +12,7 @@ package org.eclipse.rcptt.tesla.swt.events;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class TeslaEventManager {
 	private boolean showingAlert = false;
 	private Display lastDisplay;
 	private Object lastWorkbench;
-//	private static IUIThreadHolder lastHolder;
+	// private static IUIThreadHolder lastHolder;
 
 	public static enum HasEventKind {
 		async, sync, timer
@@ -314,13 +315,21 @@ public class TeslaEventManager {
 		return lastDisplay;
 	}
 
+	Map<Display, Boolean> synced = new HashMap<Display, Boolean>();
+
 	public void setLastDisplay(Display lastDisplay) {
 		if (this.lastDisplay != lastDisplay) {
 
+			Display old = this.lastDisplay;
 			this.lastDisplay = lastDisplay;
 
+			synced.remove(old);
+
 			if (lastDisplay != null)
+			{
 				this.session = new ServerPushSession();
+				synced.put(lastDisplay, true);
+			}
 		}
 	}
 
@@ -330,7 +339,6 @@ public class TeslaEventManager {
 
 	public ServerPushSession session;
 	private Boolean needSync = false;
-	private boolean synced = true;
 
 	public void sync() {
 		synchronized (needSync) {
@@ -358,19 +366,26 @@ public class TeslaEventManager {
 
 			private void push() {
 				synchronized (needSync) {
-					if (needSync && lastDisplay != null && !lastDisplay.isDisposed() && synced) {
+					if (needSync && lastDisplay != null && !lastDisplay.isDisposed() && Boolean.TRUE.equals(synced.get(lastDisplay))) {
 
-						lastDisplay.asyncExec(new Runnable() {
+						final Display executor = lastDisplay;
+						executor.asyncExec(new Runnable() {
 							public void run() {
-								if(RWT.getUISession() != null)
-								{
-									session.stop();
+
+								try {
+									if (RWT.getUISession() != null) {
+										session.stop();
+									}
+								} finally {
+									if(synced.containsKey(executor))
+									{
+										synced.put(executor, true);
+									}
+									needSync = false;
 								}
-								synced = true;
-								needSync = false;
 							}
 						});
-						synced = false;
+						synced.put(executor, false);
 					}
 				}
 			}

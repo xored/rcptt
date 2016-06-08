@@ -42,8 +42,8 @@ public class Utils {
 		try {
 			final Display display = RWTUtils.findDisplay();
 
-			IWorkbench workbench = RWTUtils.getWorkbench();
-			if (workbench == null) {
+			IWorkbenchWindow[] windows = RWTUtils.getWorkbenchWindows();
+			if (windows.length == 0) {
 				return Status.OK_STATUS;// Do not close dialogs in case there is no
 				// workbench.
 			}
@@ -52,7 +52,6 @@ public class Utils {
 
 
 
-			IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
 			Set<Shell> windowShells = new HashSet<Shell>();
 			for (IWorkbenchWindow window : windows) {
 				Shell shell = window.getShell();

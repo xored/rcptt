@@ -2772,7 +2772,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 		// Use all eclipse windows as roots
 		IWorkbench workbench = RWTUtils.getWorkbench();
-		if (workbench != null) {
+		if (workbench != null ) {
 			IWorkbenchWindow[] windows = workbench
 					.getWorkbenchWindows();
 			for (IWorkbenchWindow win : windows) {

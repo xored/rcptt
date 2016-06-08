@@ -39,7 +39,6 @@ public aspect WorkbenchAspect {
 		}
 	}
 
-
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(WorkbenchStatusDialogManager mgr, StatusAdapter adapter,
 			boolean modal):
