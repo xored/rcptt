@@ -3,6 +3,9 @@ package org.eclipse.rcptt.tesla.recording.aspects.swt.rap;
 import static org.eclipse.rcptt.tesla.core.utils.TeslaUtils.isMac;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.eclipse.swt.SWT;
@@ -197,60 +200,68 @@ privileged public aspect RecordingAspect {
 		return proceed(item, selected);
 	}
 
+	private List<Event> current = new ArrayList<Event>();
+
 	@SuppressAjWarnings("adviceDidNotMatch")
 	Object around(Widget widget, Event event):
 	 	execution(void Widget.sendEvent (Event)) && target(widget) && args(event) {
 		boolean send = true;
 		int type = event.type;
 
-		if (SWTEventManager.isShouldProceed(widget, type) || !isEventProcessingPhase()) {
+		if (current.contains(event) || SWTEventManager.isShouldProceed(widget, type) || !isEventProcessingPhase()) {
 			return proceed(widget, event);
-		}
-		try {
-			if (SWTEventManager.isFreeze(widget, type, event)) {
-				if (!SWTEventManager.handleEventInFreeze(widget, type, event)) {
-					if (event != null && !needProceedEvent(widget, type)) {
-						event.doit = false;
-					}
-					return null;
-				}
-			}
-			wasSendEvent = false;
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
-		}
-		Object result = null;
-		boolean needProceed = !SWTEventManager.skipEvent(widget, type, event,
-				send);
-		if (!needProceed) {
-			if (event != null) {
-				event.doit = false;
-			}
-		}
-		try {
-			// Ivan Inozemtsev, July, 5, 2013:
-			// Previously there was a condition that event is being recorded
-			// only when send == true, or OS is not Mac
-			// However in this case if there are no selection listeners
-			// (and for instance for TabFolders there's no need for
-			// selection listeners)
-			// event will not be recorded on Mac OS X
-			//
-			// wasSendEvent flag might be set to 'true' if 'sendSelectionEvent'
-			// invokes 'sendEvent(int,event,boolean)'. In this case, aspect
-			// above will capture this invocation and record event by
-			// itself (and set 'wasSendEvent' to true
-			//
-			if (!wasSendEvent) {
-				SWTEventManager.recordEvent(widget, type, event);
-			}
-		} catch (Throwable e) {
-			RecordingSWTActivator.log(e);
 		}
 
-		if(needProceed)
-			return proceed(widget, event);
-		return result;
+		try {
+			current.add(event);
+			try {
+				if (SWTEventManager.isFreeze(widget, type, event)) {
+					if (!SWTEventManager.handleEventInFreeze(widget, type, event)) {
+						if (event != null && !needProceedEvent(widget, type)) {
+							event.doit = false;
+						}
+						return null;
+					}
+				}
+				wasSendEvent = false;
+			} catch (Throwable e) {
+				RecordingSWTActivator.log(e);
+			}
+			Object result = null;
+			boolean needProceed = !SWTEventManager.skipEvent(widget, type, event,
+					send);
+			if (!needProceed) {
+				if (event != null) {
+					event.doit = false;
+				}
+			}
+			try {
+				// Ivan Inozemtsev, July, 5, 2013:
+				// Previously there was a condition that event is being recorded
+				// only when send == true, or OS is not Mac
+				// However in this case if there are no selection listeners
+				// (and for instance for TabFolders there's no need for
+				// selection listeners)
+				// event will not be recorded on Mac OS X
+				//
+				// wasSendEvent flag might be set to 'true' if 'sendSelectionEvent'
+				// invokes 'sendEvent(int,event,boolean)'. In this case, aspect
+				// above will capture this invocation and record event by
+				// itself (and set 'wasSendEvent' to true
+				//
+				if (!wasSendEvent) {
+					SWTEventManager.recordEvent(widget, type, event);
+				}
+			} catch (Throwable e) {
+				RecordingSWTActivator.log(e);
+			}
+
+			if (needProceed)
+				return proceed(widget, event);
+			return result;
+		} finally {
+			current.remove(event);
+		}
 	}
 
 	@SuppressAjWarnings("adviceDidNotMatch")
