@@ -36,7 +36,9 @@ public class WorkbenchRecordingProcessor implements IRecordingProcessor,
 
 	public WorkbenchRecordingProcessor() {
 		WorkbenchEventManager.addListener(this);
-		RWTUtils.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+		IWorkbench workbench = RWTUtils.getWorkbench();
+		if(workbench != null)
+		workbench.addWorkbenchListener(new IWorkbenchListener() {
 			public boolean preShutdown(IWorkbench workbench, boolean forced) {
 				return true;
 			}
