@@ -59,7 +59,7 @@ public aspect DisplayAspect {
 		if (TeslaEventManager.getManager().hasListeners()) {
 			// Try to skip BusyIndicator context.
 			Display current = Display.getCurrent();
-			if (current == null) {
+			if (current == null || current.isDisposed()) {
 				return proceed(display);
 			}
 

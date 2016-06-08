@@ -281,7 +281,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 			@Override
 			public IWorkbenchPage run() throws CoreException {
 				IWorkbench workbench = RWTUtils.getWorkbench();
-				if (workbench != null) {
+				if (workbench != null && !workbench.isClosing()) {
 					IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 					IWorkbenchPage lpage = window.getActivePage();
 					if (lpage == null) {
@@ -356,7 +356,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	private void openParts(WorkbenchContext context) throws CoreException {
 		final IWorkbench workbench = RWTUtils.getWorkbench();
 
-		if (workbench == null) {
+		if (workbench == null || workbench.isClosing()) {
 			return;
 		}
 

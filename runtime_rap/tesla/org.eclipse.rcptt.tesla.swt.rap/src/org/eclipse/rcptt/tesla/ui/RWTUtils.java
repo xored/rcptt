@@ -7,15 +7,16 @@ import org.eclipse.ui.IWorkbenchWindow;
 
 public class RWTUtils {
 
-	public static Display findDisplay()
-	{
-		return TeslaEventManager.getManager().getDisplay();
+	public static Display findDisplay() {
+		Display display = TeslaEventManager.getManager().getDisplay();
+		return display == null || display.isDisposed() ? null : display;
 	}
 
-	public static IWorkbench getWorkbench()
-	{
-		return (IWorkbench)TeslaEventManager.getManager().getWorkbench();
+	public static IWorkbench getWorkbench() {
+		IWorkbench workbench = (IWorkbench) TeslaEventManager.getManager().getWorkbench();
+		return workbench == null || workbench.isClosing() ? null : workbench;
 	}
+
 	public static IWorkbenchWindow[] getWorkbenchWindows() {
 		return getWorkbench() == null ? new IWorkbenchWindow[0] : getWorkbench().getWorkbenchWindows();
 	}

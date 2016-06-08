@@ -45,7 +45,7 @@ public class GetQ7InformationService implements ICommandService {
 		}
 
 		final IWorkbench workbench = RWTUtils.getWorkbench();
-		if (workbench != null) {
+		if (workbench != null && !workbench.isClosing()) {
 			info.setWindowCount(workbench.getWorkbenchWindowCount());
 			if (info.getWindowCount() == 0) {
 				Display display = RWTUtils.findDisplay();
