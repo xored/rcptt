@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-
 public aspect DisplayAspect {
 	private static final String WEH = "org.eclipse.rap.ui.statushandlers.WorkbenchErrorHandler";
 	private static final String WIN_CL = "org.eclipse.rap.jface.window.Window";
@@ -51,7 +50,6 @@ public aspect DisplayAspect {
 		TeslaEventManager.getManager().setLastWorkbench(null);
 		return proceed(display);
 	}
-
 
 	boolean initialized = false;
 
@@ -93,28 +91,22 @@ public aspect DisplayAspect {
 					}
 				}
 				boolean nonModalContext = (!inModalContext
-						&& !currentContext
-								.contains(
-										"org.eclipse.rap.ui.dialogs.ElementTreeSelectionDialog",
-										"create")
-						&& !currentContext.contains(
-								WIN_CL, "create"));
+						&& !currentContext.contains("org.eclipse.rap.ui.dialogs.ElementTreeSelectionDialog", "create")
+						&& !currentContext.contains(WIN_CL, "create"));
 
-				if (nonModalContext
-						|| TeslaEventManager.getManager().isNoWaitForJob()) {
-					boolean result = TeslaEventManager.getManager()
-							.doProcessing(currentContext);
+				if (nonModalContext || TeslaEventManager.getManager().isNoWaitForJob()) {
+					boolean result = TeslaEventManager.getManager().doProcessing(currentContext);
 					if (!result) {
 						try {
-
 							Thread.sleep(10);
-							// return proceed(display);
+
+							TeslaEventManager.getManager().sync();
+							return proceed(display);
 						} catch (InterruptedException e) {
 						}
 					}
 				}
 
-				return false;
 			} catch (Throwable e) {
 				if (!(e instanceof InterruptedException)) {
 					SWTAspectActivator.log(e);
@@ -265,51 +257,51 @@ public aspect DisplayAspect {
 	}
 
 	// Active shell tweak
-	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(Display display): execution(org.eclipse.swt.widgets.Shell Display.getActiveShell()) && target(display) {
-		Shell activeShell = (Shell) proceed(display);
-		if (TeslaEventManager.getManager().hasListeners()) {
-			try {
-				if (activeShell == null) {
-					Shell activeShell2 = TeslaEventManager.getActiveShell();
-					if (activeShell2 != null && !activeShell2.isDisposed()) {
-						return activeShell2;
-					}
-					if (activeShell2 != null && activeShell2.isDisposed()) {
-						TeslaEventManager.setActiveShell(null);
-					}
-					// Check for first SDK window or any visible window with
-					// title.
-					Shell[] shells = display.getShells();
-					for (Shell shell : shells) {
-						String pattern = shell.getText();
-						int sdkIndex = pattern.indexOf("- Eclipse SDK");
-						if (!shell.isDisposed() && sdkIndex != -1
-								&& shell.isVisible()) {
-							return shell;
-						}
-					}
-					for (Shell shell : shells) {
-						String pattern = shell.getText();
-						if (!shell.isDisposed() && shell.isVisible()
-								&& pattern.trim().length() > 0) {
-							return shell;
-						}
-					}
-				}
-
-				activeShell = fixInvisibleShell(activeShell);
-
-				if (activeShell != null && !activeShell.isDisposed()) {
-					return activeShell;
-				}
-				return null;
-			} catch (Throwable e) {
-				SWTAspectActivator.log(e);
-			}
-		}
-		return activeShell;
-	}
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	Object around(Display display): execution(org.eclipse.swt.widgets.Shell Display.getActiveShell()) && target(display) {
+//		Shell activeShell = (Shell) proceed(display);
+//		if (TeslaEventManager.getManager().hasListeners()) {
+//			try {
+//				if (activeShell == null) {
+//					Shell activeShell2 = TeslaEventManager.getActiveShell();
+//					if (activeShell2 != null && !activeShell2.isDisposed() && activeShell2.getDisplay().equals(TeslaEventManager.getManager().getDisplay())) {
+//						return activeShell2;
+//					}
+//					if (activeShell2 != null && (activeShell2.isDisposed() || !activeShell2.getDisplay().equals(TeslaEventManager.getManager().getDisplay()))) {
+//						TeslaEventManager.setActiveShell(null);
+//					}
+//					// Check for first SDK window or any visible window with
+//					// title.
+//					Shell[] shells = display.getShells();
+//					for (Shell shell : shells) {
+//						String pattern = shell.getText();
+//						int sdkIndex = pattern.indexOf("- Eclipse SDK");
+//						if (!shell.isDisposed() && sdkIndex != -1
+//								&& shell.isVisible()) {
+//							return shell;
+//						}
+//					}
+//					for (Shell shell : shells) {
+//						String pattern = shell.getText();
+//						if (!shell.isDisposed() && shell.isVisible()
+//								&& pattern.trim().length() > 0) {
+//							return shell;
+//						}
+//					}
+//				}
+//
+//				activeShell = fixInvisibleShell(activeShell);
+//
+//				if (activeShell != null && !activeShell.isDisposed()) {
+//					return activeShell;
+//				}
+//				return null;
+//			} catch (Throwable e) {
+//				SWTAspectActivator.log(e);
+//			}
+//		}
+//		return activeShell;
+//	}
 
 	private static Set<String> shellsToFix = new HashSet<String>();
 	static {

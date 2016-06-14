@@ -16,7 +16,7 @@ import org.eclipse.rcptt.tesla.core.TeslaMessages;
 
 public class TeslaSWTMessages extends TeslaMessages {
 
-	private static final String BUNDLE_NAME = "org.eclipse.rcptt.tesla.swt.TeslaSWTMessages";//$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.rcptt.tesla.swt.rap.TeslaSWTMessages";//$NON-NLS-1$
 
 	private TeslaSWTMessages() {
 		// Do not instantiate

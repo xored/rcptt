@@ -44,6 +44,7 @@ import org.eclipse.rcptt.tesla.ecl.model.BoundControlHandle;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.internal.core.queue.TeslaQClient;
 import org.eclipse.rcptt.tesla.internal.core.queue.TeslaQPlayer;
+import org.eclipse.rcptt.tesla.internal.ui.player.FakeEclipseWindowUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
@@ -51,16 +52,21 @@ import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
+import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.IRwtWorkbenchListener;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.util.Base64;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IWindowListener;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 public class TeslaBridge {
 	private static TeslaQPlayer player;
 	private static TeslaQClient client;
 	private static ITeslaEventListener listener;
+	private static IRwtWorkbenchListener workbenchListener;
 	private static AdvancedInformation lastInfo;
 
 	public synchronized static void setup() {
@@ -95,6 +101,12 @@ public class TeslaBridge {
 		if (listener != null) {
 			TeslaEventManager.getManager().removeEventListener(listener);
 		}
+
+		if(workbenchListener != null)
+		{
+			TeslaEventManager.getManager().removeWorkbenchListener(workbenchListener);
+		}
+
 		listener = new ITeslaEventListener() {
 			public boolean doProcessing(Context context) {
 				Q7WaitInfoRoot info = getCurrentWaitInfo(true);
@@ -113,6 +125,14 @@ public class TeslaBridge {
 			}
 		};
 		TeslaEventManager.getManager().addEventListener(listener);
+
+		workbenchListener = new IRwtWorkbenchListener() {
+			@Override
+			public void workbenchChnage(Object oldWorkbench, Object newWorkbench) {
+				eclipseWindow = null;
+			}
+		};
+		TeslaEventManager.getManager().addWorkbenchListener(workbenchListener);
 	}
 
 	public static Q7WaitInfoRoot getCurrentWaitInfo(final boolean tick) {
@@ -149,9 +169,14 @@ public class TeslaBridge {
 		if (listener != null) {
 			TeslaEventManager.getManager().removeEventListener(listener);
 		}
+		if(workbenchListener != null){
+			TeslaEventManager.getManager().removeWorkbenchListener(workbenchListener);
+		}
+
 		player = null;
 		client = null;
 		listener = null;
+		workbenchListener = null;
 		eclipseWindow = null;
 		lastControlUIElement = null;
 	}

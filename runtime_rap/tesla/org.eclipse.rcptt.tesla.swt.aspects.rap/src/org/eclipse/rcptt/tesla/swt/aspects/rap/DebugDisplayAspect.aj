@@ -13,12 +13,12 @@ public aspect DebugDisplayAspect {
 				.getClass().getName());
 		logStackTrace("DebugDisplayAspect activated");
 	}
-	
+
 	public static void logStackTrace(String message) {
 		Exception e = new RuntimeException(message);
 		SWTAspectActivator.getDefault().getLog().log(new Status(IStatus.INFO, SWTAspectActivator.PLUGIN_ID, message, e));
 	}
-	
+
 	@SuppressAjWarnings("adviceDidNotMatch")
 	before(Display display): execution(void Display.register(Display)) && args(display) {
 		// Runnable called
@@ -38,7 +38,7 @@ public aspect DebugDisplayAspect {
 			SWTAspectActivator.log(e);
 		}
 	}
-	
+
 	@SuppressAjWarnings("adviceDidNotMatch")
 	before(Display display): execution(void Display.deregister(Display)) && args(display) {
 		// Runnable called
@@ -48,13 +48,13 @@ public aspect DebugDisplayAspect {
 			SWTAspectActivator.log(e);
 		}
 	}
-	
-	@SuppressAjWarnings("adviceDidNotMatch")
-	before(Device device): execution(void Device.dispose()) && this(device) {
-		try {
-		logStackTrace("Device is disposed. This is not an error.");
-		} catch (Throwable e) {
-			SWTAspectActivator.log(e);
-		}
-	}
+
+//	@SuppressAjWarnings("adviceDidNotMatch")
+//	before(Device device): execution(void Device.dispose()) && this(device) {
+//		try {
+//		logStackTrace("Device is disposed. This is not an error.");
+//		} catch (Throwable e) {
+//			SWTAspectActivator.log(e);
+//		}
+//	}
 }

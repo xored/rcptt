@@ -4,6 +4,7 @@ import org.eclipse.core.commands.contexts.ContextManager;
 import org.eclipse.rap.rwt.internal.service.ContextProvider;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 
@@ -21,6 +22,11 @@ public class RWTUtils {
 
 	public static IWorkbenchWindow[] getWorkbenchWindows() {
 		return getWorkbench() == null ? new IWorkbenchWindow[0] : getWorkbench().getWorkbenchWindows();
+	}
+
+	public static boolean isValidThread(Widget widget)
+	{
+		return widget != null && widget.getDisplay().getThread() == Thread.currentThread();
 	}
 
 }

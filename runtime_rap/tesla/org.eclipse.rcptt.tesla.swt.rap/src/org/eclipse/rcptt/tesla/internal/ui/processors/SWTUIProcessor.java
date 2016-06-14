@@ -298,7 +298,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	private String id;
 	private DragSupport dragSupport = new DragSupport();
 	protected CellEditorSupport cellEditSupport = null;
-	private SWTUIPlayer internalPlayer;
 	private String failNextCommandBecauseOf = null;
 
 	@Override
@@ -2645,10 +2644,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	public synchronized SWTUIPlayer getPlayer() {
-		if (internalPlayer == null) {
-			internalPlayer = SWTUIPlayer.getPlayer(RWTUtils.findDisplay());
-		}
-		return internalPlayer;
+		return  SWTUIPlayer.getPlayer(RWTUtils.findDisplay());
 	}
 
 	@Override
@@ -2702,10 +2698,9 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	public void terminate() {
 		SWTModelMapper.initializeExtensions(null);
 		SWTElementMapper.remove(getId());
-		if (internalPlayer != null) {
-			SWTUIPlayer.shutdown(internalPlayer);
+		if (getPlayer() != null) {
+			SWTUIPlayer.shutdown(getPlayer());
 		}
-		internalPlayer = null;
 		dragSupport = null;
 		getCellEditorSupport().clear();
 		client = null;

@@ -51,6 +51,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.Q7WaitUtils;
@@ -1849,10 +1850,16 @@ public final class SWTUIPlayer {
 
 	public boolean canProceed(Context context, Q7WaitInfoRoot info) {
 		boolean result = true;
-		if (!display.equals(RWTUtils.findDisplay())) {
+
+		if(display == null)
+			return false;
+
+		if (display != null && !display.equals(RWTUtils.findDisplay())) {
 			// Q7WaitUtils.updateInfo("display", "non current", info);
 			result = false;
 		}
+
+
 		// Return false if we have SWT observable in timers
 		// if (hasTimers(display, info)) {
 		// result = false;
@@ -2914,7 +2921,7 @@ public final class SWTUIPlayer {
 					if (menu == null) {
 						continue;
 					}
-					if (!menu.isDisposed()) {
+					if (!menu.isDisposed() && RWTUtils.isValidThread(menu)) {
 						events.sendEvent(menu, SWT.Hide);
 					}
 					Q7WaitUtils.updateInfo("menu", "hide", info);
@@ -2922,7 +2929,6 @@ public final class SWTUIPlayer {
 				}
 				result[0] = !shownMenus.isEmpty();
 				shownMenus.clear();
-				// TODO Auto-generated method stub
 			}
 		});
 		return result[0];

@@ -27,6 +27,8 @@ import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
 import org.eclipse.rap.rwt.internal.service.ContextProvider;
 import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.eclipse.rap.rwt.service.UISession;
+import org.eclipse.rap.rwt.service.UISessionEvent;
+import org.eclipse.rap.rwt.service.UISessionListener;
 import org.eclipse.rcptt.tesla.core.am.rap.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
@@ -42,6 +44,7 @@ public class TeslaEventManager {
 	private static TeslaEventManager manager = new TeslaEventManager();
 	private static Shell activeShell;
 	private Set<ITeslaEventListener> listeners = new HashSet<ITeslaEventListener>();
+	private Set<IRwtWorkbenchListener> workbenchListeners = new HashSet<IRwtWorkbenchListener>();
 	private List<WeakReference<Menu>> popupMenus = new ArrayList<WeakReference<Menu>>();
 	private Map<Menu, Control> popupMenuParents = new WeakHashMap<Menu, Control>();
 	private Widget lastWidget;
@@ -55,7 +58,6 @@ public class TeslaEventManager {
 	private boolean showingAlert = false;
 	private Display lastDisplay;
 	private Object lastWorkbench;
-	// private static IUIThreadHolder lastHolder;
 
 	public static enum HasEventKind {
 		async, sync, timer
@@ -128,6 +130,14 @@ public class TeslaEventManager {
 		List<ITeslaEventListener> copy = null;
 		synchronized (listeners) {
 			copy = new ArrayList<ITeslaEventListener>(listeners);
+		}
+		return copy;
+	}
+
+	private List<IRwtWorkbenchListener> getWorkbenchListeners() {
+		List<IRwtWorkbenchListener> copy = null;
+		synchronized (listeners) {
+			copy = new ArrayList<IRwtWorkbenchListener>(workbenchListeners);
 		}
 		return copy;
 	}
@@ -325,26 +335,43 @@ public class TeslaEventManager {
 
 			synced.remove(old);
 
-			if (lastDisplay != null)
-			{
+			if (lastDisplay != null) {
+
+				RWT.getUISession().addUISessionListener(new UISessionListener() {
+
+					@Override
+					public void beforeDestroy(UISessionEvent event) {
+						synchronized (needSync) {
+							session = null;
+						}
+					}
+				});
 				this.session = new ServerPushSession();
+				this.session.start();
 				synced.put(lastDisplay, true);
 			}
 		}
 	}
 
 	public void setLastWorkbench(Object lastWorkbench) {
+		Object old = this.lastWorkbench;
 		this.lastWorkbench = lastWorkbench;
+
+		for (IRwtWorkbenchListener listener : getWorkbenchListeners()) {
+			listener.workbenchChnage(old, lastWorkbench);
+		}
 	}
 
-	public ServerPushSession session;
+	private ServerPushSession session;
 	private Boolean needSync = false;
 
 	public void sync() {
 		synchronized (needSync) {
 			if (!needSync) {
-				session.start();
-				needSync = true;
+				if (session != null) {
+					session.start();
+					needSync = true;
+				}
 			}
 		}
 	}
@@ -366,19 +393,19 @@ public class TeslaEventManager {
 
 			private void push() {
 				synchronized (needSync) {
-					if (needSync && lastDisplay != null && !lastDisplay.isDisposed() && Boolean.TRUE.equals(synced.get(lastDisplay))) {
+					if (needSync && lastDisplay != null && !lastDisplay.isDisposed()
+							&& Boolean.TRUE.equals(synced.get(lastDisplay))) {
 
 						final Display executor = lastDisplay;
 						executor.asyncExec(new Runnable() {
 							public void run() {
 
 								try {
-									if (RWT.getUISession() != null) {
+									if (RWT.getUISession() != null && session != null) {
 										session.stop();
 									}
 								} finally {
-									if(synced.containsKey(executor))
-									{
+									if (synced.containsKey(executor)) {
 										synced.put(executor, true);
 									}
 									needSync = false;
@@ -394,7 +421,32 @@ public class TeslaEventManager {
 		Thread bgThread = new Thread(bgRunnable);
 		bgThread.setDaemon(true);
 		bgThread.start();
+	}
 
+	public void addWorkbenchListener(IRwtWorkbenchListener listener) {
+		synchronized (workbenchListeners) {
+			workbenchListeners.add(listener);
+		}
+	}
+
+	public void removeWorkbenchListener(IRwtWorkbenchListener listener) {
+		synchronized (workbenchListeners) {
+			workbenchListeners.add(listener);
+		}
+	}
+
+	public interface IRwtWorkbenchListener {
+		void workbenchChnage(Object oldWorkbench, Object newWorkbench);
+	}
+
+	public void deactivatePushSession() {
+		synchronized(needSync)
+		{
+			session.stop();
+			this.lastDisplay = null;
+			this.lastWorkbench = null;
+			session = null;
+		}
 	}
 
 }
