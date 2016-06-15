@@ -338,8 +338,6 @@ public class TeslaEventManager {
 			if (lastDisplay != null) {
 
 				RWT.getUISession().addUISessionListener(new UISessionListener() {
-
-					@Override
 					public void beforeDestroy(UISessionEvent event) {
 						synchronized (needSync) {
 							session = null;
