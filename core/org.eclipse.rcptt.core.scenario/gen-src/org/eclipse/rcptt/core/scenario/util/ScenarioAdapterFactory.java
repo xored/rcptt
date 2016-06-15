@@ -140,6 +140,10 @@ public class ScenarioAdapterFactory extends AdapterFactoryImpl {
 				return createWidgetVerificationAdapter();
 			}
 			@Override
+			public Adapter caseCapabilityContext(CapabilityContext object) {
+				return createCapabilityContextAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -380,6 +384,20 @@ public class ScenarioAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWidgetVerificationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.core.scenario.CapabilityContext <em>Capability Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.core.scenario.CapabilityContext
+	 * @generated
+	 */
+	public Adapter createCapabilityContextAdapter() {
 		return null;
 	}
 

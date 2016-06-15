@@ -205,6 +205,14 @@ public class ScenarioSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ScenarioPackage.CAPABILITY_CONTEXT: {
+				CapabilityContext capabilityContext = (CapabilityContext)theEObject;
+				T result = caseCapabilityContext(capabilityContext);
+				if (result == null) result = caseContext(capabilityContext);
+				if (result == null) result = caseNamedElement(capabilityContext);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -446,6 +454,21 @@ public class ScenarioSwitch<T> {
 	 * @generated
 	 */
 	public T caseWidgetVerification(WidgetVerification object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Capability Context</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Capability Context</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCapabilityContext(CapabilityContext object) {
 		return null;
 	}
 

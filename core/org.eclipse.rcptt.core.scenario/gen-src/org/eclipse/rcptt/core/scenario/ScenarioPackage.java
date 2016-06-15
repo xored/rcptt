@@ -1314,6 +1314,80 @@ public interface ScenarioPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.core.scenario.impl.CapabilityContextImpl <em>Capability Context</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.core.scenario.impl.CapabilityContextImpl
+	 * @see org.eclipse.rcptt.core.scenario.impl.ScenarioPackageImpl#getCapabilityContext()
+	 * @generated
+	 */
+	int CAPABILITY_CONTEXT = 16;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__NAME = CONTEXT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__VERSION = CONTEXT__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__ID = CONTEXT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__DESCRIPTION = CONTEXT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Tags</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__TAGS = CONTEXT__TAGS;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__ATTACHMENTS = CONTEXT__ATTACHMENTS;
+
+	/**
+	 * The number of structural features of the '<em>Capability Context</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT_FEATURE_COUNT = CONTEXT_FEATURE_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.scenario.NamedElement <em>Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1903,6 +1977,16 @@ public interface ScenarioPackage extends EPackage {
 	EAttribute getWidgetVerification_Selector();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.scenario.CapabilityContext <em>Capability Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Capability Context</em>'.
+	 * @see org.eclipse.rcptt.core.scenario.CapabilityContext
+	 * @generated
+	 */
+	EClass getCapabilityContext();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2395,6 +2479,16 @@ public interface ScenarioPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute WIDGET_VERIFICATION__SELECTOR = eINSTANCE.getWidgetVerification_Selector();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.core.scenario.impl.CapabilityContextImpl <em>Capability Context</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.core.scenario.impl.CapabilityContextImpl
+		 * @see org.eclipse.rcptt.core.scenario.impl.ScenarioPackageImpl#getCapabilityContext()
+		 * @generated
+		 */
+		EClass CAPABILITY_CONTEXT = eINSTANCE.getCapabilityContext();
 
 	}
 

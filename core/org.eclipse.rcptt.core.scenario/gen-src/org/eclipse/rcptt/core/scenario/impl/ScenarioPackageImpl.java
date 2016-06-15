@@ -11,6 +11,7 @@
 package org.eclipse.rcptt.core.scenario.impl;
 
 import org.eclipse.rcptt.core.scenario.Attachment;
+import org.eclipse.rcptt.core.scenario.CapabilityContext;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.core.scenario.Editor;
 import org.eclipse.rcptt.core.scenario.FileEditor;
@@ -156,6 +157,13 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * @generated
 	 */
 	private EClass widgetVerificationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass capabilityContextEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -721,6 +729,15 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCapabilityContext() {
+		return capabilityContextEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ScenarioFactory getScenarioFactory() {
 		return (ScenarioFactory)getEFactoryInstance();
 	}
@@ -814,6 +831,8 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 
 		widgetVerificationEClass = createEClass(WIDGET_VERIFICATION);
 		createEAttribute(widgetVerificationEClass, WIDGET_VERIFICATION__SELECTOR);
+
+		capabilityContextEClass = createEClass(CAPABILITY_CONTEXT);
 	}
 
 	/**
@@ -856,6 +875,7 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 		verificationEClass.getESuperTypes().add(this.getNamedElement());
 		unresolvedVerificationEClass.getESuperTypes().add(this.getVerification());
 		widgetVerificationEClass.getESuperTypes().add(this.getVerification());
+		capabilityContextEClass.getESuperTypes().add(this.getContext());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -928,6 +948,8 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 
 		initEClass(widgetVerificationEClass, WidgetVerification.class, "WidgetVerification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWidgetVerification_Selector(), ecorePackage.getEString(), "selector", null, 1, 1, WidgetVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(capabilityContextEClass, CapabilityContext.class, "CapabilityContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
