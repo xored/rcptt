@@ -94,5 +94,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="selector" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CapabilityContext" eSuperTypes="#//Context"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CapabilityContext" eSuperTypes="#//Context">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="references" eType="#//StringListToStringListMapEntry"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringListToStringListMapEntry" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral=""/>
+  </eClassifiers>
 </ecore:EPackage>

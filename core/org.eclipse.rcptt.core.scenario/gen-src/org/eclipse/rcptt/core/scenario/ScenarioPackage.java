@@ -1378,13 +1378,60 @@ public interface ScenarioPackage extends EPackage {
 	int CAPABILITY_CONTEXT__ATTACHMENTS = CONTEXT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>References</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_CONTEXT__REFERENCES = CONTEXT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Capability Context</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CAPABILITY_CONTEXT_FEATURE_COUNT = CONTEXT_FEATURE_COUNT + 0;
+	int CAPABILITY_CONTEXT_FEATURE_COUNT = CONTEXT_FEATURE_COUNT + 1;
+
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.core.scenario.impl.StringListToStringListMapEntryImpl <em>String List To String List Map Entry</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.core.scenario.impl.StringListToStringListMapEntryImpl
+	 * @see org.eclipse.rcptt.core.scenario.impl.ScenarioPackageImpl#getStringListToStringListMapEntry()
+	 * @generated
+	 */
+	int STRING_LIST_TO_STRING_LIST_MAP_ENTRY = 17;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LIST_TO_STRING_LIST_MAP_ENTRY__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LIST_TO_STRING_LIST_MAP_ENTRY__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String List To String List Map Entry</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LIST_TO_STRING_LIST_MAP_ENTRY_FEATURE_COUNT = 2;
 
 
 	/**
@@ -1987,6 +2034,51 @@ public interface ScenarioPackage extends EPackage {
 	EClass getCapabilityContext();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.core.scenario.CapabilityContext#getReferences <em>References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>References</em>'.
+	 * @see org.eclipse.rcptt.core.scenario.CapabilityContext#getReferences()
+	 * @see #getCapabilityContext()
+	 * @generated
+	 */
+	EReference getCapabilityContext_References();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String List To String List Map Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String List To String List Map Entry</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString" keyRequired="true" keyMany="true"
+	 *        valueDefault="" valueDataType="org.eclipse.emf.ecore.EString" valueMany="true"
+	 * @generated
+	 */
+	EClass getStringListToStringListMapEntry();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringListToStringListMapEntry()
+	 * @generated
+	 */
+	EAttribute getStringListToStringListMapEntry_Key();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringListToStringListMapEntry()
+	 * @generated
+	 */
+	EAttribute getStringListToStringListMapEntry_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2489,6 +2581,40 @@ public interface ScenarioPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CAPABILITY_CONTEXT = eINSTANCE.getCapabilityContext();
+
+		/**
+		 * The meta object literal for the '<em><b>References</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CAPABILITY_CONTEXT__REFERENCES = eINSTANCE.getCapabilityContext_References();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.core.scenario.impl.StringListToStringListMapEntryImpl <em>String List To String List Map Entry</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.core.scenario.impl.StringListToStringListMapEntryImpl
+		 * @see org.eclipse.rcptt.core.scenario.impl.ScenarioPackageImpl#getStringListToStringListMapEntry()
+		 * @generated
+		 */
+		EClass STRING_LIST_TO_STRING_LIST_MAP_ENTRY = eINSTANCE.getStringListToStringListMapEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_LIST_TO_STRING_LIST_MAP_ENTRY__KEY = eINSTANCE.getStringListToStringListMapEntry_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_LIST_TO_STRING_LIST_MAP_ENTRY__VALUE = eINSTANCE.getStringListToStringListMapEntry_Value();
 
 	}
 
