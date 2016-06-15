@@ -36,8 +36,6 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.ecl.runtime.ISession;
 import org.eclipse.rcptt.internal.runtime.ui.rap.Activator;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.swt.SWT;
 import org.osgi.framework.Bundle;
 
 public class AutEventManager {
@@ -131,12 +129,10 @@ public class AutEventManager {
 
 		if (eclPort != -1 && teslaPort != -1) {
 			startEvent.setState(AutStartState.OK);
-		}
-		else {
+		} else {
 			if (eclPort == -1) {
 				startEvent.setMessage("Failed to start ECL server");
-			}
-			else if (teslaPort == -1) {
+			} else if (teslaPort == -1) {
 				startEvent.setMessage("Failed to start Q7 Runtime server");
 			}
 			startEvent.setState(AutStartState.FAIL);
@@ -213,31 +209,20 @@ public class AutEventManager {
 		}
 	}
 
-	private static org.eclipse.rcptt.core.launching.events.Platform getPlatform()
-	{
-		final String os =  System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH); //$NON-NLS-1$ //$NON-NLS-2$
-		if(os.indexOf("mac") >= 0) //$NON-NLS-1$
+	private static org.eclipse.rcptt.core.launching.events.Platform getPlatform() {
+		final String os = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH); //$NON-NLS-1$ //$NON-NLS-2$
+		if (os.indexOf("mac") >= 0) //$NON-NLS-1$
 			return org.eclipse.rcptt.core.launching.events.Platform.MAC_OS;
-		if(os.indexOf("win") >= 0) //$NON-NLS-1$
+		if (os.indexOf("win") >= 0) //$NON-NLS-1$
 			return org.eclipse.rcptt.core.launching.events.Platform.WINDOWS;
-		if(os.indexOf("nux") >= 0) ////$NON-NLS-1$
+		if (os.indexOf("nux") >= 0) ////$NON-NLS-1$
 			return org.eclipse.rcptt.core.launching.events.Platform.LINUX;
 
 		return org.eclipse.rcptt.core.launching.events.Platform.OTHER;
 
 	}
 
-private static Capability getCapability()
-	{
-		if(SWT.getPlatform().equals("rap")) //$NON-NLS-1$
-		{
-			return Capability.RAP;
-		}
-		if(TeslaCore.isEclipse4())
-		{
-			return Capability.E4;
-		}
-
-		return Capability.E3;
+	private static Capability getCapability() {
+		return Capability.RAP;
 	}
 }

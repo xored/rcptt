@@ -18,6 +18,8 @@ public interface IQ7Launch {
 	public final static int TESLA_DEFAULT_PORT = 7926;
 	public final static int ECL_DEFAULT_PORT = EclTcpClientManager.DEFAULT_PORT;
 	public static final String DEFAULT_HOST = "localhost";
+	public static final String DEFAULT_CAPABILITY = "other";
+	public static final String DEFAULT_PLATFORM = "other";
 	public static final String ATTR_HEADLESS_LAUNCH = "q7.headless.launch";
 	public static final String ATTR_ALLOWED_BUNDLES = "q7.allowed.bunldels";
 
