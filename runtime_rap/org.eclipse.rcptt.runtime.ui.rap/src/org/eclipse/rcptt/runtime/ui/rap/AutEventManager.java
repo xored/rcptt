@@ -11,6 +11,7 @@
 package org.eclipse.rcptt.runtime.ui.rap;
 
 import java.net.InetAddress;
+import java.util.Locale;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IBundleGroup;
@@ -26,6 +27,7 @@ import org.eclipse.rcptt.core.launching.events.AutEventInit;
 import org.eclipse.rcptt.core.launching.events.AutEventStart;
 import org.eclipse.rcptt.core.launching.events.AutSendEvent;
 import org.eclipse.rcptt.core.launching.events.AutStartState;
+import org.eclipse.rcptt.core.launching.events.Capability;
 import org.eclipse.rcptt.core.launching.events.EventsFactory;
 import org.eclipse.rcptt.ecl.client.tcp.EclTcpClientManager;
 import org.eclipse.rcptt.ecl.core.Command;
@@ -34,6 +36,8 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.ecl.runtime.ISession;
 import org.eclipse.rcptt.internal.runtime.ui.rap.Activator;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
+import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.swt.SWT;
 import org.osgi.framework.Bundle;
 
 public class AutEventManager {
@@ -117,12 +121,14 @@ public class AutEventManager {
 	}
 
 	public void sendStartup() {
-		AutEventStart startEvent = EventsFactory.eINSTANCE
-				.createAutEventStart();
+		AutEventStart startEvent = EventsFactory.eINSTANCE.createAutEventStart();
 		int eclPort = Q7ServerStarter.INSTANCE.getEclPort();
 		int teslaPort = Q7ServerStarter.INSTANCE.getTeslaPort();
 		startEvent.setEclPort(eclPort);
 		startEvent.setTeslaPort(teslaPort);
+		startEvent.setPlatform(getPlatform());
+		startEvent.setCapability(getCapability());
+
 		if (eclPort != -1 && teslaPort != -1) {
 			startEvent.setState(AutStartState.OK);
 		}
@@ -145,8 +151,7 @@ public class AutEventManager {
 	}
 
 	public void sendInitialStartupFail(String msg) {
-		AutEventStart startEvent = EventsFactory.eINSTANCE
-				.createAutEventStart();
+		AutEventStart startEvent = EventsFactory.eINSTANCE.createAutEventStart();
 		startEvent.setState(AutStartState.FAIL);
 		startEvent.setMessage(msg);
 		try {
@@ -206,5 +211,33 @@ public class AutEventManager {
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static org.eclipse.rcptt.core.launching.events.Platform getPlatform()
+	{
+		final String os =  System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH); //$NON-NLS-1$ //$NON-NLS-2$
+		if(os.indexOf("mac") >= 0) //$NON-NLS-1$
+			return org.eclipse.rcptt.core.launching.events.Platform.MAC_OS;
+		if(os.indexOf("win") >= 0) //$NON-NLS-1$
+			return org.eclipse.rcptt.core.launching.events.Platform.WINDOWS;
+		if(os.indexOf("nux") >= 0) ////$NON-NLS-1$
+			return org.eclipse.rcptt.core.launching.events.Platform.LINUX;
+
+		return org.eclipse.rcptt.core.launching.events.Platform.OTHER;
+
+	}
+
+private static Capability getCapability()
+	{
+		if(SWT.getPlatform().equals("rap")) //$NON-NLS-1$
+		{
+			return Capability.RAP;
+		}
+		if(TeslaCore.isEclipse4())
+		{
+			return Capability.E4;
+		}
+
+		return Capability.E3;
 	}
 }
