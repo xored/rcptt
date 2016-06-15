@@ -151,7 +151,7 @@ public class DNDEventAdapter {
 	public static DNDEventAdapter createAdapter() {
 		ClassLoader loader = DNDEventAdapter.class.getClassLoader();
 		try {
-			Class<?> class1 = loader.loadClass("org.eclipse.swt.dnd.DNDEvent");
+			Class<?> class1 = loader.loadClass("org.eclipse.swt.internal.dnd.DNDEvent");
 			// Constructor<?>[] constructors = class1.getConstructors();
 			Object instance = class1.newInstance();
 			return new DNDEventAdapter(instance);
