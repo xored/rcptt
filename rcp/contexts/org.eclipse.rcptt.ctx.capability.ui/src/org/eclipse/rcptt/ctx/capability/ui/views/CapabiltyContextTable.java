@@ -191,8 +191,8 @@ public class CapabiltyContextTable extends EObjectTable {
 				handleEditItem();
 			}
 		};
-		editCapability.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(ISharedImages.IMG_ETOOL_PRINT_EDIT));
+
+		editCapability.setImageDescriptor(Images.getImageDescriptor(Images.PANEL_MENU));
 
 		removeCapability = new Action() {
 			@Override

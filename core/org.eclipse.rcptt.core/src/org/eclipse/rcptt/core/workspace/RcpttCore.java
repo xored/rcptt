@@ -203,6 +203,15 @@ public class RcpttCore {
 			} else if (namedElement instanceof SuperContext) {
 				return ((SuperContext) namedElement).getContextReferences();
 			}
+			// else if (namedElement instanceof CapabilityContext) {
+			// final CapabilityContext ccontext = (CapabilityContext) namedElement;
+			// for (CapabilityContextItem item : ccontext.getItems()) {
+			// if (item.getCapability().contains(capability)) {
+			// return item.getContextReferences();
+			// }
+			// }
+			// }
+
 		} catch (ModelException e) {
 			RcpttPlugin.log(e);
 		}

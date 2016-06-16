@@ -1011,4 +1011,9 @@ public class BaseAutLaunch implements AutLaunch, IBaseAutLaunchRetarget {
 		}
 		return null;
 	}
+
+	@Override
+	public String getCapability() {
+		return autStart != null ? autStart.getCapability().getLiteral().toLowerCase() : null;
+	}
 }
