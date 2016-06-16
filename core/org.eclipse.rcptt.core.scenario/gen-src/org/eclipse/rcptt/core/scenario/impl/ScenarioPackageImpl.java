@@ -13,6 +13,7 @@ package org.eclipse.rcptt.core.scenario.impl;
 import java.util.Map;
 import org.eclipse.rcptt.core.scenario.Attachment;
 import org.eclipse.rcptt.core.scenario.CapabilityContext;
+import org.eclipse.rcptt.core.scenario.CapabilityContextItem;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.core.scenario.Editor;
 import org.eclipse.rcptt.core.scenario.FileEditor;
@@ -171,7 +172,7 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass stringListToStringListMapEntryEClass = null;
+	private EClass capabilityContextItemEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -746,7 +747,7 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCapabilityContext_References() {
+	public EReference getCapabilityContext_Items() {
 		return (EReference)capabilityContextEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -755,8 +756,8 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getStringListToStringListMapEntry() {
-		return stringListToStringListMapEntryEClass;
+	public EClass getCapabilityContextItem() {
+		return capabilityContextItemEClass;
 	}
 
 	/**
@@ -764,8 +765,8 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getStringListToStringListMapEntry_Key() {
-		return (EAttribute)stringListToStringListMapEntryEClass.getEStructuralFeatures().get(0);
+	public EAttribute getCapabilityContextItem_Capability() {
+		return (EAttribute)capabilityContextItemEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -773,8 +774,8 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getStringListToStringListMapEntry_Value() {
-		return (EAttribute)stringListToStringListMapEntryEClass.getEStructuralFeatures().get(1);
+	public EAttribute getCapabilityContextItem_ContextReferences() {
+		return (EAttribute)capabilityContextItemEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -877,11 +878,11 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 		createEAttribute(widgetVerificationEClass, WIDGET_VERIFICATION__SELECTOR);
 
 		capabilityContextEClass = createEClass(CAPABILITY_CONTEXT);
-		createEReference(capabilityContextEClass, CAPABILITY_CONTEXT__REFERENCES);
+		createEReference(capabilityContextEClass, CAPABILITY_CONTEXT__ITEMS);
 
-		stringListToStringListMapEntryEClass = createEClass(STRING_LIST_TO_STRING_LIST_MAP_ENTRY);
-		createEAttribute(stringListToStringListMapEntryEClass, STRING_LIST_TO_STRING_LIST_MAP_ENTRY__KEY);
-		createEAttribute(stringListToStringListMapEntryEClass, STRING_LIST_TO_STRING_LIST_MAP_ENTRY__VALUE);
+		capabilityContextItemEClass = createEClass(CAPABILITY_CONTEXT_ITEM);
+		createEAttribute(capabilityContextItemEClass, CAPABILITY_CONTEXT_ITEM__CAPABILITY);
+		createEAttribute(capabilityContextItemEClass, CAPABILITY_CONTEXT_ITEM__CONTEXT_REFERENCES);
 	}
 
 	/**
@@ -999,11 +1000,11 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 		initEAttribute(getWidgetVerification_Selector(), ecorePackage.getEString(), "selector", null, 1, 1, WidgetVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(capabilityContextEClass, CapabilityContext.class, "CapabilityContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCapabilityContext_References(), this.getStringListToStringListMapEntry(), null, "references", null, 0, 1, CapabilityContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCapabilityContext_Items(), this.getCapabilityContextItem(), null, "items", null, 0, -1, CapabilityContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(stringListToStringListMapEntryEClass, Map.Entry.class, "StringListToStringListMapEntry", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringListToStringListMapEntry_Key(), ecorePackage.getEString(), "key", null, 1, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringListToStringListMapEntry_Value(), ecorePackage.getEString(), "value", "", 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(capabilityContextItemEClass, CapabilityContextItem.class, "CapabilityContextItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCapabilityContextItem_Capability(), ecorePackage.getEString(), "Capability", null, 1, -1, CapabilityContextItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCapabilityContextItem_ContextReferences(), ecorePackage.getEString(), "contextReferences", null, 0, -1, CapabilityContextItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

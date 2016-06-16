@@ -2,15 +2,21 @@
  */
 package org.eclipse.rcptt.core.scenario.impl;
 
+import java.util.Collection;
 import java.util.Map;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.rcptt.core.scenario.CapabilityContext;
+import org.eclipse.rcptt.core.scenario.CapabilityContextItem;
 import org.eclipse.rcptt.core.scenario.ScenarioPackage;
 
 /**
@@ -21,22 +27,21 @@ import org.eclipse.rcptt.core.scenario.ScenarioPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.core.scenario.impl.CapabilityContextImpl#getReferences <em>References</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.core.scenario.impl.CapabilityContextImpl#getItems <em>Items</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class CapabilityContextImpl extends ContextImpl implements CapabilityContext {
 	/**
-	 * The cached value of the '{@link #getReferences() <em>References</em>}' reference.
+	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReferences()
+	 * @see #getItems()
 	 * @generated
 	 * @ordered
 	 */
-	protected Map.Entry<EList<String>, EList<String>> references;
-
+	protected EList<CapabilityContextItem> items;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -61,17 +66,11 @@ public class CapabilityContextImpl extends ContextImpl implements CapabilityCont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
-	public Map.Entry<EList<String>, EList<String>> getReferences() {
-		if (references != null && ((EObject)references).eIsProxy()) {
-			InternalEObject oldReferences = (InternalEObject)references;
-			references = (Map.Entry<EList<String>, EList<String>>)eResolveProxy(oldReferences);
-			if (references != oldReferences) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScenarioPackage.CAPABILITY_CONTEXT__REFERENCES, oldReferences, references));
-			}
+	public EList<CapabilityContextItem> getItems() {
+		if (items == null) {
+			items = new EObjectContainmentEList<CapabilityContextItem>(CapabilityContextItem.class, this, ScenarioPackage.CAPABILITY_CONTEXT__ITEMS);
 		}
-		return references;
+		return items;
 	}
 
 	/**
@@ -79,20 +78,13 @@ public class CapabilityContextImpl extends ContextImpl implements CapabilityCont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<EList<String>, EList<String>> basicGetReferences() {
-		return references;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReferences(Map.Entry<EList<String>, EList<String>> newReferences) {
-		Map.Entry<EList<String>, EList<String>> oldReferences = references;
-		references = newReferences;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScenarioPackage.CAPABILITY_CONTEXT__REFERENCES, oldReferences, references));
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ScenarioPackage.CAPABILITY_CONTEXT__ITEMS:
+				return ((InternalEList<?>)getItems()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -103,9 +95,8 @@ public class CapabilityContextImpl extends ContextImpl implements CapabilityCont
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ScenarioPackage.CAPABILITY_CONTEXT__REFERENCES:
-				if (resolve) return getReferences();
-				return basicGetReferences();
+			case ScenarioPackage.CAPABILITY_CONTEXT__ITEMS:
+				return getItems();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -119,8 +110,9 @@ public class CapabilityContextImpl extends ContextImpl implements CapabilityCont
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ScenarioPackage.CAPABILITY_CONTEXT__REFERENCES:
-				setReferences((Map.Entry<EList<String>, EList<String>>)newValue);
+			case ScenarioPackage.CAPABILITY_CONTEXT__ITEMS:
+				getItems().clear();
+				getItems().addAll((Collection<? extends CapabilityContextItem>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -134,8 +126,8 @@ public class CapabilityContextImpl extends ContextImpl implements CapabilityCont
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ScenarioPackage.CAPABILITY_CONTEXT__REFERENCES:
-				setReferences((Map.Entry<EList<String>, EList<String>>)null);
+			case ScenarioPackage.CAPABILITY_CONTEXT__ITEMS:
+				getItems().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -149,8 +141,8 @@ public class CapabilityContextImpl extends ContextImpl implements CapabilityCont
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ScenarioPackage.CAPABILITY_CONTEXT__REFERENCES:
-				return references != null;
+			case ScenarioPackage.CAPABILITY_CONTEXT__ITEMS:
+				return items != null && !items.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

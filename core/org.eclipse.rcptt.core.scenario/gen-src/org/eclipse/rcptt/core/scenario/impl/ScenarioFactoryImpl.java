@@ -83,7 +83,7 @@ public class ScenarioFactoryImpl extends EFactoryImpl implements ScenarioFactory
 			case ScenarioPackage.UNRESOLVED_VERIFICATION: return createUnresolvedVerification();
 			case ScenarioPackage.WIDGET_VERIFICATION: return createWidgetVerification();
 			case ScenarioPackage.CAPABILITY_CONTEXT: return createCapabilityContext();
-			case ScenarioPackage.STRING_LIST_TO_STRING_LIST_MAP_ENTRY: return (EObject)createStringListToStringListMapEntry();
+			case ScenarioPackage.CAPABILITY_CONTEXT_ITEM: return createCapabilityContextItem();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -264,9 +264,9 @@ public class ScenarioFactoryImpl extends EFactoryImpl implements ScenarioFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<EList<String>, EList<String>> createStringListToStringListMapEntry() {
-		StringListToStringListMapEntryImpl stringListToStringListMapEntry = new StringListToStringListMapEntryImpl();
-		return stringListToStringListMapEntry;
+	public CapabilityContextItem createCapabilityContextItem() {
+		CapabilityContextItemImpl capabilityContextItem = new CapabilityContextItemImpl();
+		return capabilityContextItem;
 	}
 
 	/**

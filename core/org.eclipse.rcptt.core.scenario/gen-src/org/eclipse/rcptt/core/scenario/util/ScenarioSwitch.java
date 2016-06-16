@@ -215,9 +215,9 @@ public class ScenarioSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ScenarioPackage.STRING_LIST_TO_STRING_LIST_MAP_ENTRY: {
-				@SuppressWarnings("unchecked") Map.Entry<EList<String>, EList<String>> stringListToStringListMapEntry = (Map.Entry<EList<String>, EList<String>>)theEObject;
-				T result = caseStringListToStringListMapEntry(stringListToStringListMapEntry);
+			case ScenarioPackage.CAPABILITY_CONTEXT_ITEM: {
+				CapabilityContextItem capabilityContextItem = (CapabilityContextItem)theEObject;
+				T result = caseCapabilityContextItem(capabilityContextItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -481,17 +481,17 @@ public class ScenarioSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>String List To String List Map Entry</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Capability Context Item</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>String List To String List Map Entry</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Capability Context Item</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStringListToStringListMapEntry(Map.Entry<EList<String>, EList<String>> object) {
+	public T caseCapabilityContextItem(CapabilityContextItem object) {
 		return null;
 	}
 

@@ -14,7 +14,7 @@ import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.scenario.CapabilityContext;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
 import org.eclipse.rcptt.ui.context.BaseContextEditor;
-import org.eclipse.rcptt.ui.controls.ContextsTable;
+import org.eclipse.rcptt.ui.controls.SectionWithToolbar;
 import org.eclipse.rcptt.ui.editors.EditorHeader;
 import org.eclipse.rcptt.ui.editors.IQ7EditorActionsProvider;
 import org.eclipse.rcptt.ui.editors.NamedElementEditorActions.INamedElementActions;
@@ -22,10 +22,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Section;
 
 public class CapabilityContextEditor extends BaseContextEditor implements IQ7EditorActionsProvider {
 
-	private ContextsTable contexts;
+	private CapabilityContextTables contexts;
 
 	public CapabilityContext getContextElement() {
 		try {
@@ -38,18 +39,12 @@ public class CapabilityContextEditor extends BaseContextEditor implements IQ7Edi
 
 	public Control create(Composite parent, FormToolkit toolkit, IWorkbenchSite site,
 			EditorHeader header) {
-		// try {
-		getForm().getForm().setText(Messages.CapabilityContextEditor_Title0);
 
-		// contexts = new ContextsTable(getElement(), ScenarioPackage.Literals.SUPER_CONTEXT__CONTEXT_REFERENCES,
-		// false);
-		// return new SectionWithToolbar(contexts, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED)
-		// .create(parent, toolkit);
+		getForm().getForm().setText(getContextElement().getName() + " " + Messages.CapabilityContextEditor_Title0); //$NON-NLS-1$
 
-		// } catch (ModelException e) {
-		// Q7UIPlugin.log(e);
-		// }
-		return null;
+		contexts = new CapabilityContextTables(getElement(), getContextElement(), toolkit);
+		return new SectionWithToolbar(contexts, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED)
+				.create(parent, toolkit);
 	}
 
 	@Override
