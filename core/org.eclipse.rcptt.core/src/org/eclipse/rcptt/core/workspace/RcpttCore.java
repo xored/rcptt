@@ -193,7 +193,7 @@ public class RcpttCore {
 	 * context, then it doesn't have any children and an empty list is returned.
 	 */
 	public List<String> getContextReferences(IContext context) {
-		if (isNotGroupOrSuperContext(context)) {
+		if (isNotGroupOrSuperOrCapabilityContext(context)) {
 			return new ArrayList<String>();
 		}
 		try {
@@ -203,6 +203,15 @@ public class RcpttCore {
 			} else if (namedElement instanceof SuperContext) {
 				return ((SuperContext) namedElement).getContextReferences();
 			}
+			// else if (namedElement instanceof CapabilityContext) {
+			// final CapabilityContext ccontext = (CapabilityContext) namedElement;
+			// for (CapabilityContextItem item : ccontext.getItems()) {
+			// if (item.getCapability().contains(capability)) {
+			// return item.getContextReferences();
+			// }
+			// }
+			// }
+
 		} catch (ModelException e) {
 			RcpttPlugin.log(e);
 		}
@@ -760,7 +769,7 @@ public class RcpttCore {
 		}
 	}
 
-	public boolean isNotGroupOrSuperContext(IContext context) {
+	public boolean isNotGroupOrSuperOrCapabilityContext(IContext context) {
 		String type = Q7SearchCore.findContextTypeByDocument(context);
 		if (type == null && context != null) {
 			try {
@@ -772,7 +781,8 @@ public class RcpttCore {
 		if (type == null) {
 			return false;
 		}
-		if (!"org.eclipse.rcptt.ctx.group".equals(type) && !"org.eclipse.rcptt.ctx.super".equals(type)) {
+		if (!"org.eclipse.rcptt.ctx.capability".equals(type) && !"org.eclipse.rcptt.ctx.group".equals(type)
+				&& !"org.eclipse.rcptt.ctx.super".equals(type)) {
 			return true;
 		}
 		return false;

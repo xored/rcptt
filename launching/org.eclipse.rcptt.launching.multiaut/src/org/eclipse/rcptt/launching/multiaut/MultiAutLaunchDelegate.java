@@ -1,6 +1,5 @@
 package org.eclipse.rcptt.launching.multiaut;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -290,7 +289,11 @@ public class MultiAutLaunchDelegate extends LaunchConfigurationDelegate implemen
 		public void handleAutEvent(org.eclipse.rcptt.core.launching.events.AutEvent autEvent) {
 			launch.handleAutEvent(autEvent);
 		}
-		
-		
+
+		@Override
+		public String getCapability() {
+			return launch.getCapability();
+		}
+
 	}
 }

@@ -362,9 +362,6 @@ public class ChildrenCollectingSession {
 					results.addAll(Arrays.asList(cc));
 				}
 			}
-
-			if (point != null) // only if we have set the location
-				TeslaSWTAccess.setHasLocation(menu, oldHasLocation);
 		}
 	}
 

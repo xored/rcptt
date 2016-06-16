@@ -51,8 +51,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.rap.rwt.RWT;
-import org.eclipse.rap.rwt.internal.lifecycle.IUIThreadHolder;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.Q7WaitUtils;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
@@ -184,7 +182,6 @@ public final class SWTUIPlayer {
 		elementKinds.put(TabFolder.class, ElementKind.TabFolder);
 		elementKinds.put(CTabFolder.class, ElementKind.TabFolder);
 		elementKinds.put(Text.class, ElementKind.Text);
-		// elementKinds.put(StyledText.class, ElementKind.Text);
 		elementKinds.put(Spinner.class, ElementKind.Text);
 		elementKinds.put(Link.class, ElementKind.Link);
 		elementKinds.put(Combo.class, ElementKind.Combo);

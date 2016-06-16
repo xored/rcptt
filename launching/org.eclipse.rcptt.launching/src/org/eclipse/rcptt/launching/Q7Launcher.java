@@ -201,7 +201,7 @@ public class Q7Launcher {
 	 * Returns all named elements which are directly referenced from the given
 	 * one. Thus, for test cases it returns its contexts, for tests suites it
 	 * returns its tests, for group and super contexts returns its children.
-	 * 
+	 *
 	 * @param element
 	 * @param resources
 	 * @throws ModelException
@@ -217,8 +217,7 @@ public class Q7Launcher {
 		return new IQ7NamedElement[0];
 	}
 
-	private static IQ7NamedElement[] collectReferences(
-			IQ7NamedElement[] elements, IWorkspaceFinder finder)
+	private static IQ7NamedElement[] collectReferences(IQ7NamedElement[] elements, IWorkspaceFinder finder)
 			throws ModelException {
 		Set<IQ7NamedElement> result = new HashSet<IQ7NamedElement>();
 		collectReferences(elements, result, new HashSet<IQ7NamedElement>(),
