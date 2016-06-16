@@ -217,6 +217,13 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.rcptt.ctx.capability.ui"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.rcptt.verifications.time.ui"
          download-size="0"
          install-size="0"

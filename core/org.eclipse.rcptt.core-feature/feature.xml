@@ -216,6 +216,13 @@ Not used in runtime.
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.rcptt.ctx.capability"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.rcptt.ctx.extensions"
          download-size="0"
          install-size="0"
