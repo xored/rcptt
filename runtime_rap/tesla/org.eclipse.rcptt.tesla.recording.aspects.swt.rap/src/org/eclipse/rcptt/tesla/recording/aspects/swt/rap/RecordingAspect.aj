@@ -24,17 +24,20 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.rcptt.tesla.core.am.rap.AspectManager;
 import org.eclipse.rcptt.tesla.core.utils.TeslaUtils;
+import org.eclipse.rcptt.tesla.swt.download.RapDownloadHandlerManager;
+import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.logging.SwtEventLog;
 import org.eclipse.rap.rwt.application.ApplicationConfiguration;
 import org.eclipse.rap.rwt.internal.lifecycle.CurrentPhase;
 import org.eclipse.rap.rwt.internal.lifecycle.PhaseId;
-
+import org.eclipse.rap.rwt.internal.service.ServiceManagerImpl;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.rap.rwt.osgi.ApplicationLauncher;
+import org.eclipse.rap.rwt.service.ServiceHandler;
 
 privileged public aspect RecordingAspect {
 	private boolean wasSendEvent = false;
@@ -346,6 +349,23 @@ privileged public aspect RecordingAspect {
 		} catch (Throwable e) {
 			RecordingSWTActivator.log(e);
 		}
+	}
+
+	@SuppressAjWarnings("adviceDidNotMatch")
+	Object around(ServiceManagerImpl manager, String customId):
+		execution(ServiceHandler org.eclipse.rap.rwt.internal.service.ServiceManagerImpl.getCustomHandlerChecked(String))
+		&& target(manager)
+		&& args(customId) {
+		Object result = proceed(manager, customId);
+		try {
+			if(!TeslaEventManager.getManager().hasListeners() && RapDownloadHandlerManager.contains(customId))
+			{
+				return new ServiceHandlerWrapper((ServiceHandler)result);
+			}
+		} catch (Throwable e) {
+			RecordingSWTActivator.log(e);
+		}
+		return result;
 	}
 
 	// @SuppressAjWarnings("adviceDidNotMatch")

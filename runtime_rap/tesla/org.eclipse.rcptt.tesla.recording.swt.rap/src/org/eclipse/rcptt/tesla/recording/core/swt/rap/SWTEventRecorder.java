@@ -39,11 +39,13 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rcptt.tesla.core.am.rap.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
+import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
 import org.eclipse.rcptt.tesla.core.protocol.CompositeUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ControlUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.LinkUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
@@ -2272,6 +2274,21 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			return;
 		}
 		dragSupport.processDND(event);
+	}
+
+	@Override
+	public void recordRapDownloadHandler(String handler, String file, String fileOnBase64) {
+		if (getRecorder() == null) {
+			return;
+		}
+		if (!getRecorder().hasListeners()) {
+			return;
+		}
+
+		CheckRapDownloadResult check = ProtocolFactory.eINSTANCE.createCheckRapDownloadResult();
+		check.setBase64Content(fileOnBase64);
+
+		getRecorder().safeExecuteCommand(check);
 	}
 
 	public void recordSWTDialog(Dialog dialog, Object result) {

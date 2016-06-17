@@ -6,11 +6,15 @@ import java.util.Set;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.eclipse.rap.rwt.internal.application.ApplicationContextImpl;
+import org.eclipse.rap.rwt.internal.service.ServiceManagerImpl;
+import org.eclipse.rap.rwt.service.ServiceHandler;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.am.rap.AspectManager;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
+import org.eclipse.rcptt.tesla.swt.download.RapDownloadHandlerManager;
+import org.eclipse.rcptt.tesla.swt.download.ServiceHandlerWrapper;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
@@ -257,51 +261,54 @@ public aspect DisplayAspect {
 	}
 
 	// Active shell tweak
-//	@SuppressAjWarnings("adviceDidNotMatch")
-//	Object around(Display display): execution(org.eclipse.swt.widgets.Shell Display.getActiveShell()) && target(display) {
-//		Shell activeShell = (Shell) proceed(display);
-//		if (TeslaEventManager.getManager().hasListeners()) {
-//			try {
-//				if (activeShell == null) {
-//					Shell activeShell2 = TeslaEventManager.getActiveShell();
-//					if (activeShell2 != null && !activeShell2.isDisposed() && activeShell2.getDisplay().equals(TeslaEventManager.getManager().getDisplay())) {
-//						return activeShell2;
-//					}
-//					if (activeShell2 != null && (activeShell2.isDisposed() || !activeShell2.getDisplay().equals(TeslaEventManager.getManager().getDisplay()))) {
-//						TeslaEventManager.setActiveShell(null);
-//					}
-//					// Check for first SDK window or any visible window with
-//					// title.
-//					Shell[] shells = display.getShells();
-//					for (Shell shell : shells) {
-//						String pattern = shell.getText();
-//						int sdkIndex = pattern.indexOf("- Eclipse SDK");
-//						if (!shell.isDisposed() && sdkIndex != -1
-//								&& shell.isVisible()) {
-//							return shell;
-//						}
-//					}
-//					for (Shell shell : shells) {
-//						String pattern = shell.getText();
-//						if (!shell.isDisposed() && shell.isVisible()
-//								&& pattern.trim().length() > 0) {
-//							return shell;
-//						}
-//					}
-//				}
-//
-//				activeShell = fixInvisibleShell(activeShell);
-//
-//				if (activeShell != null && !activeShell.isDisposed()) {
-//					return activeShell;
-//				}
-//				return null;
-//			} catch (Throwable e) {
-//				SWTAspectActivator.log(e);
-//			}
-//		}
-//		return activeShell;
-//	}
+	// @SuppressAjWarnings("adviceDidNotMatch")
+	// Object around(Display display): execution(org.eclipse.swt.widgets.Shell Display.getActiveShell()) &&
+	// target(display) {
+	// Shell activeShell = (Shell) proceed(display);
+	// if (TeslaEventManager.getManager().hasListeners()) {
+	// try {
+	// if (activeShell == null) {
+	// Shell activeShell2 = TeslaEventManager.getActiveShell();
+	// if (activeShell2 != null && !activeShell2.isDisposed() &&
+	// activeShell2.getDisplay().equals(TeslaEventManager.getManager().getDisplay())) {
+	// return activeShell2;
+	// }
+	// if (activeShell2 != null && (activeShell2.isDisposed() ||
+	// !activeShell2.getDisplay().equals(TeslaEventManager.getManager().getDisplay()))) {
+	// TeslaEventManager.setActiveShell(null);
+	// }
+	// // Check for first SDK window or any visible window with
+	// // title.
+	// Shell[] shells = display.getShells();
+	// for (Shell shell : shells) {
+	// String pattern = shell.getText();
+	// int sdkIndex = pattern.indexOf("- Eclipse SDK");
+	// if (!shell.isDisposed() && sdkIndex != -1
+	// && shell.isVisible()) {
+	// return shell;
+	// }
+	// }
+	// for (Shell shell : shells) {
+	// String pattern = shell.getText();
+	// if (!shell.isDisposed() && shell.isVisible()
+	// && pattern.trim().length() > 0) {
+	// return shell;
+	// }
+	// }
+	// }
+	//
+	// activeShell = fixInvisibleShell(activeShell);
+	//
+	// if (activeShell != null && !activeShell.isDisposed()) {
+	// return activeShell;
+	// }
+	// return null;
+	// } catch (Throwable e) {
+	// SWTAspectActivator.log(e);
+	// }
+	// }
+	// return activeShell;
+	// }
 
 	private static Set<String> shellsToFix = new HashSet<String>();
 	static {
@@ -562,6 +569,19 @@ public aspect DisplayAspect {
 		} catch (Throwable e) {
 			SWTAspectActivator.log(e);
 		}
+	}
+
+	@SuppressAjWarnings("adviceDidNotMatch")
+	Object around(ServiceManagerImpl manager, String customId):
+		execution(ServiceHandler org.eclipse.rap.rwt.internal.service.ServiceManagerImpl.getCustomHandlerChecked(String))
+		&& target(manager)
+		&& args(customId) {
+		Object result = proceed(manager, customId);
+		if (TeslaEventManager.getManager().hasListeners() && RapDownloadHandlerManager.contains(customId)) {
+			return new ServiceHandlerWrapper((ServiceHandler) result);
+		}
+
+		return result;
 	}
 
 	// DO NOT BEEP on replay.

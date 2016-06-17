@@ -30,6 +30,7 @@ import org.eclipse.rcptt.tesla.ecl.model.Button;
 import org.eclipse.rcptt.tesla.ecl.model.CancelCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.CellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
+import org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickColumn;
 import org.eclipse.rcptt.tesla.ecl.model.ClickLink;
@@ -121,6 +122,7 @@ import org.eclipse.rcptt.tesla.ecl.model.IsDisabled;
 import org.eclipse.rcptt.tesla.ecl.model.IsDisposed;
 import org.eclipse.rcptt.tesla.ecl.model.IsEmpty;
 import org.eclipse.rcptt.tesla.ecl.model.KeyType;
+import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Matches;
 import org.eclipse.rcptt.tesla.ecl.model.Maximize;
 import org.eclipse.rcptt.tesla.ecl.model.MessageBoxInfo;
@@ -1203,6 +1205,20 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 	 * @generated
 	 */
 	private EClass getLastMessageBoxEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass markDownloadHandlerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass checkDownloadResultEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -4425,6 +4441,51 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getMarkDownloadHandler() {
+		return markDownloadHandlerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMarkDownloadHandler_HandlerName() {
+		return (EAttribute)markDownloadHandlerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCheckDownloadResult() {
+		return checkDownloadResultEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCheckDownloadResult_ContentOnBase64() {
+		return (EAttribute)checkDownloadResultEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCheckDownloadResult_FileName() {
+		return (EAttribute)checkDownloadResultEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getButton() {
 		return buttonEEnum;
 	}
@@ -4960,6 +5021,13 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 
 		getLastMessageBoxEClass = createEClass(GET_LAST_MESSAGE_BOX);
 
+		markDownloadHandlerEClass = createEClass(MARK_DOWNLOAD_HANDLER);
+		createEAttribute(markDownloadHandlerEClass, MARK_DOWNLOAD_HANDLER__HANDLER_NAME);
+
+		checkDownloadResultEClass = createEClass(CHECK_DOWNLOAD_RESULT);
+		createEAttribute(checkDownloadResultEClass, CHECK_DOWNLOAD_RESULT__CONTENT_ON_BASE64);
+		createEAttribute(checkDownloadResultEClass, CHECK_DOWNLOAD_RESULT__FILE_NAME);
+
 		// Create enums
 		buttonEEnum = createEEnum(BUTTON);
 
@@ -5147,6 +5215,8 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		decryptEClass.getESuperTypes().add(theCorePackage.getCommand());
 		restartAutEClass.getESuperTypes().add(theCorePackage.getCommand());
 		getLastMessageBoxEClass.getESuperTypes().add(theCorePackage.getCommand());
+		markDownloadHandlerEClass.getESuperTypes().add(theCorePackage.getCommand());
+		checkDownloadResultEClass.getESuperTypes().add(theCorePackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(waitEClass, Wait.class, "Wait", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -5642,6 +5712,13 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		initEAttribute(getMessageBoxInfo_Message(), theEcorePackage.getEString(), "message", null, 0, 1, MessageBoxInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(getLastMessageBoxEClass, GetLastMessageBox.class, "GetLastMessageBox", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(markDownloadHandlerEClass, MarkDownloadHandler.class, "MarkDownloadHandler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMarkDownloadHandler_HandlerName(), theEcorePackage.getEString(), "handlerName", null, 1, 1, MarkDownloadHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(checkDownloadResultEClass, CheckDownloadResult.class, "CheckDownloadResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCheckDownloadResult_ContentOnBase64(), theEcorePackage.getEString(), "contentOnBase64", null, 1, 1, CheckDownloadResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCheckDownloadResult_FileName(), theEcorePackage.getEString(), "fileName", null, 0, 1, CheckDownloadResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(buttonEEnum, Button.class, "Button");

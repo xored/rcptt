@@ -22,6 +22,7 @@ import org.eclipse.rcptt.tesla.ecl.model.BoundControlHandle;
 import org.eclipse.rcptt.tesla.ecl.model.CancelCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.CellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
+import org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickColumn;
 import org.eclipse.rcptt.tesla.ecl.model.ClickLink;
@@ -113,6 +114,7 @@ import org.eclipse.rcptt.tesla.ecl.model.IsDisabled;
 import org.eclipse.rcptt.tesla.ecl.model.IsDisposed;
 import org.eclipse.rcptt.tesla.ecl.model.IsEmpty;
 import org.eclipse.rcptt.tesla.ecl.model.KeyType;
+import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Matches;
 import org.eclipse.rcptt.tesla.ecl.model.Maximize;
 import org.eclipse.rcptt.tesla.ecl.model.MessageBoxInfo;
@@ -804,6 +806,14 @@ public class TeslaAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseGetLastMessageBox(GetLastMessageBox object) {
 				return createGetLastMessageBoxAdapter();
+			}
+			@Override
+			public Adapter caseMarkDownloadHandler(MarkDownloadHandler object) {
+				return createMarkDownloadHandlerAdapter();
+			}
+			@Override
+			public Adapter caseCheckDownloadResult(CheckDownloadResult object) {
+				return createCheckDownloadResultAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -2874,6 +2884,34 @@ public class TeslaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGetLastMessageBoxAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler <em>Mark Download Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler
+	 * @generated
+	 */
+	public Adapter createMarkDownloadHandlerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult <em>Check Download Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult
+	 * @generated
+	 */
+	public Adapter createCheckDownloadResultAdapter() {
 		return null;
 	}
 

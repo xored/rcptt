@@ -630,6 +630,11 @@
             name="SetDialogResult"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptlet>
+        <scriptlet
+            class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ActionService"
+            name="MarkDownloadHandler"
+            namespace="http://eclipse.org/rcptt/tesla/ecl">
+      </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.GetPropertyNodesService"
             name="GetPropertyNodes"

@@ -133,6 +133,11 @@ public final class SWTEventManager {
 			listener.recordSWTDialog(dialog, result);
 		}
 	}
+	public static void recordRapDownload(String handler, String file, String content) {
+		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
+			listener.recordRapDownloadHandler(handler, file, content);
+		}
+	}
 
 	public static void setFreeze(boolean value) {
 		freezeState = value;

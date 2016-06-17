@@ -71,6 +71,7 @@ import org.eclipse.rcptt.tesla.core.protocol.CancelCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.CellClick;
 import org.eclipse.rcptt.tesla.core.protocol.Check;
 import org.eclipse.rcptt.tesla.core.protocol.CheckItem;
+import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Children;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
 import org.eclipse.rcptt.tesla.core.protocol.ClickAboutMenu;
@@ -108,6 +109,7 @@ import org.eclipse.rcptt.tesla.core.protocol.IntResponse;
 import org.eclipse.rcptt.tesla.core.protocol.IsDirty;
 import org.eclipse.rcptt.tesla.core.protocol.IsDisposed;
 import org.eclipse.rcptt.tesla.core.protocol.IsEnabled;
+import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.Maximize;
 import org.eclipse.rcptt.tesla.core.protocol.Minimize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
@@ -171,6 +173,7 @@ import org.eclipse.rcptt.tesla.jface.rap.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
 import org.eclipse.rcptt.tesla.swt.dnd.LocalClipboard;
+import org.eclipse.rcptt.tesla.swt.download.RapDownloadHandlerManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.IUnhandledNativeDialogHandler;
 import org.eclipse.rcptt.tesla.swt.rap.TeslaSWTMessages;
@@ -286,6 +289,10 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ProtocolPackage.Literals.PASTE_TEXT_SELECTION,
 			ProtocolPackage.Literals.CUT_TEXT_SELECTION,
 			ProtocolPackage.Literals.REPLACE_TEXT_SELECTION,
+
+			//RAP commands
+			ProtocolPackage.Literals.MARK_RAP_DOWNLOAD_HANDLER,
+			ProtocolPackage.Literals.CHECK_RAP_DOWNLOAD_RESULT,
 
 			// Link commands
 			ProtocolPackage.Literals.CLICK_LINK,
@@ -749,10 +756,18 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleClickColumn((ClickColumn) command);
 			case ProtocolPackage.MOUSE_EVENT:
 				return handleMouseEvent((MouseEvent) command);
+
+			//RAP
+			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER:
+				return handleMarkDownladHandler((MarkRapDownloadHandler) command);
+			case ProtocolPackage.CHECK_RAP_DOWNLOAD_RESULT:
+				return handleCheckDownloadResult((CheckRapDownloadResult) command);
 			}
 		}
 		return null;
 	}
+
+
 
 	private Response handleMouseEvent(final MouseEvent command) {
 		final SWTUIElement element = getMapper().get(command.getElement());
@@ -1550,6 +1565,33 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			}
 		}
 		return true;
+	}
+
+
+	private Response handleMarkDownladHandler(MarkRapDownloadHandler command) {
+		if(command.getHandler() == null || command.getHandler().equals("")) //$NON-NLS-1$
+			return failResponse("The handler name is empty"); //$NON-NLS-1$
+
+		RapDownloadHandlerManager.addHandler(command.getHandler());
+
+		return okResponse();
+	}
+
+	private Response handleCheckDownloadResult(CheckRapDownloadResult command) {
+		if(StringUtils.isEmpty(command.getBase64Content())) //$NON-NLS-1$
+			return failResponse("The command base 64 content is empty"); //$NON-NLS-1$
+
+		if(!RapDownloadHandlerManager.ckeckName(command.getFile()))
+		{
+			return failResponse("Failed the returned file name is not same."); //$NON-NLS-1$
+		}
+
+		if(!RapDownloadHandlerManager.checkContent(command.getBase64Content()))
+		{
+			return failResponse("Failed the returned file is not same."); //$NON-NLS-1$
+		}
+
+		return okResponse();
 	}
 
 	private Response handleSetSWTDialogInfo(final SetSWTDialogInfo command) {
@@ -2681,6 +2723,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		getCellEditorSupport().clear();
 		TeslaCellEditorManager.getInstance().clean();
 		SWTDialogManager.clear();
+		RapDownloadHandlerManager.clear();
 		JobsManager.getInstance().clean();
 		TeslaEventManager.getManager().setNoWaitForJobs(false);
 		failNextCommandBecauseOf = null;

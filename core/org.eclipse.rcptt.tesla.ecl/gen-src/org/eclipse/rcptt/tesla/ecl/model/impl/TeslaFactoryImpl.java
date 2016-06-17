@@ -23,6 +23,7 @@ import org.eclipse.rcptt.tesla.ecl.model.BoundControlHandle;
 import org.eclipse.rcptt.tesla.ecl.model.Button;
 import org.eclipse.rcptt.tesla.ecl.model.CancelCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
+import org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickColumn;
 import org.eclipse.rcptt.tesla.ecl.model.ClickLink;
@@ -113,6 +114,7 @@ import org.eclipse.rcptt.tesla.ecl.model.IsDisabled;
 import org.eclipse.rcptt.tesla.ecl.model.IsDisposed;
 import org.eclipse.rcptt.tesla.ecl.model.IsEmpty;
 import org.eclipse.rcptt.tesla.ecl.model.KeyType;
+import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Matches;
 import org.eclipse.rcptt.tesla.ecl.model.Maximize;
 import org.eclipse.rcptt.tesla.ecl.model.MessageBoxInfo;
@@ -346,6 +348,8 @@ public class TeslaFactoryImpl extends EFactoryImpl implements TeslaFactory {
 			case TeslaPackage.RESTART_AUT: return createRestartAut();
 			case TeslaPackage.MESSAGE_BOX_INFO: return createMessageBoxInfo();
 			case TeslaPackage.GET_LAST_MESSAGE_BOX: return createGetLastMessageBox();
+			case TeslaPackage.MARK_DOWNLOAD_HANDLER: return createMarkDownloadHandler();
+			case TeslaPackage.CHECK_DOWNLOAD_RESULT: return createCheckDownloadResult();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -1660,6 +1664,26 @@ public class TeslaFactoryImpl extends EFactoryImpl implements TeslaFactory {
 	public GetLastMessageBox createGetLastMessageBox() {
 		GetLastMessageBoxImpl getLastMessageBox = new GetLastMessageBoxImpl();
 		return getLastMessageBox;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MarkDownloadHandler createMarkDownloadHandler() {
+		MarkDownloadHandlerImpl markDownloadHandler = new MarkDownloadHandlerImpl();
+		return markDownloadHandler;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CheckDownloadResult createCheckDownloadResult() {
+		CheckDownloadResultImpl checkDownloadResult = new CheckDownloadResultImpl();
+		return checkDownloadResult;
 	}
 
 	/**

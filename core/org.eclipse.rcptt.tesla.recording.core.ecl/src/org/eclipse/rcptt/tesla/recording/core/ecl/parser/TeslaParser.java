@@ -36,6 +36,7 @@ import org.eclipse.rcptt.tesla.core.protocol.AssertionModeRequest;
 import org.eclipse.rcptt.tesla.core.protocol.CancelCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.Check;
 import org.eclipse.rcptt.tesla.core.protocol.CheckItem;
+import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
 import org.eclipse.rcptt.tesla.core.protocol.ClickAboutMenu;
 import org.eclipse.rcptt.tesla.core.protocol.ClickColumn;
@@ -52,6 +53,7 @@ import org.eclipse.rcptt.tesla.core.protocol.Expand;
 import org.eclipse.rcptt.tesla.core.protocol.GetState;
 import org.eclipse.rcptt.tesla.core.protocol.HoverAtText;
 import org.eclipse.rcptt.tesla.core.protocol.HoverAtTextOffset;
+import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.Maximize;
 import org.eclipse.rcptt.tesla.core.protocol.Minimize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
@@ -301,12 +303,12 @@ public class TeslaParser extends TeslaScriptletFactory {
 	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetText")
- 	protected Command setText(SetText c) {
- 		if (c.getElement().getKind().equals(ElementKind.DateTime.name())
- 				|| c.getElement().getKind().equals(ElementKind.Slider.name())) {
- 			return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()),
- 					TeslaScriptletFactory.makeSetValue(c.getValue()));
- 		}
+	protected Command setText(SetText c) {
+		if (c.getElement().getKind().equals(ElementKind.DateTime.name())
+				|| c.getElement().getKind().equals(ElementKind.Slider.name())) {
+			return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()),
+					TeslaScriptletFactory.makeSetValue(c.getValue()));
+		}
 
 		org.eclipse.rcptt.tesla.ecl.model.SetText cmd = TeslaFactory.eINSTANCE.createSetText();
 		if (c.isHidden()) {
@@ -314,7 +316,7 @@ public class TeslaParser extends TeslaScriptletFactory {
 		} else {
 			cmd.setText(c.getValue());
 		}
- 		return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()),
+		return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()),
 				cmd);
 	}
 
@@ -322,7 +324,7 @@ public class TeslaParser extends TeslaScriptletFactory {
 		Decrypt cmd = TeslaFactory.eINSTANCE.createDecrypt();
 		cmd.setValue(rawdata);
 		return cmd;
- 	}
+	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetTextSelection")
 	protected Command setTextSelection(SetTextSelection c) {
@@ -435,7 +437,7 @@ public class TeslaParser extends TeslaScriptletFactory {
 		} else {
 			return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()), c
 					.isState() ? TeslaScriptletFactory.makeCheck()
-					: TeslaScriptletFactory.makeUncheck());
+							: TeslaScriptletFactory.makeUncheck());
 		}
 	}
 
@@ -443,7 +445,7 @@ public class TeslaParser extends TeslaScriptletFactory {
 	protected Command checkItem(Check c) {
 		return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()), c
 				.isState() ? TeslaScriptletFactory.makeCheck()
-				: TeslaScriptletFactory.makeUncheck());
+						: TeslaScriptletFactory.makeUncheck());
 	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "Close")
@@ -590,7 +592,6 @@ public class TeslaParser extends TeslaScriptletFactory {
 		return TeslaScriptletFactory.makePipe(selectorOf(c.getElement()), drag);
 	}
 
-
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetSWTDialogInfo")
 	protected Command setSWTCopyDialogInfo(SetSWTDialogInfo c) {
 		String kind = null;
@@ -612,6 +613,16 @@ public class TeslaParser extends TeslaScriptletFactory {
 			break;
 		}
 		return TeslaScriptletFactory.makeDialogReturns(kind, c.getPath());
+	}
+
+	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "MarkRapDownloadHandler")
+	protected Command setSWTCopyDialogInfo(MarkRapDownloadHandler c) {
+		return TeslaScriptletFactory.makeMarkDownloadHandler(c.getHandler());
+	}
+
+	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "CheckRapDownloadResult")
+	protected Command setSWTCopyDialogInfo(CheckRapDownloadResult c) {
+		return TeslaScriptletFactory.makeCheckDownloadResult(c.getBase64Content());
 	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetTextOffset")
@@ -899,14 +910,15 @@ public class TeslaParser extends TeslaScriptletFactory {
 			// } else {
 			return makePipe(s, makeContainsImage("base64://", fileContent),
 					makeVerifyTrue());
-			// }
+		// }
 		case IMAGE_CONTAINS_TEXT:
 			AssertImageData data = c.getImageData();
 			return makePipe(
 					s,
 					makeRegionContainsText(data.getX(), data.getY(),
 							data.getSx(), data.getSy(), data.getWidth(),
-							data.getHeight()), makeContains(c.getValue()),
+							data.getHeight()),
+					makeContains(c.getValue()),
 					makeVerifyTrue());
 		default:
 			return TeslaScriptletFactory.unsupported(SimpleCommandPrinter
@@ -960,8 +972,7 @@ public class TeslaParser extends TeslaScriptletFactory {
 			org.eclipse.rcptt.tesla.ecl.model.SetFocus result = TeslaFactory.eINSTANCE
 					.createSetFocus();
 			return makePipe(selectorOf(f.getElement()), result);
-		}
-		else {
+		} else {
 			org.eclipse.rcptt.tesla.ecl.model.Unfocus result = TeslaFactory.eINSTANCE
 					.createUnfocus();
 			return makePipe(selectorOf(f.getElement()), result);

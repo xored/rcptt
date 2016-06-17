@@ -22,6 +22,7 @@ import org.eclipse.rcptt.tesla.ecl.model.BoundControlHandle;
 import org.eclipse.rcptt.tesla.ecl.model.CancelCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.CellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
+import org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickColumn;
 import org.eclipse.rcptt.tesla.ecl.model.ClickLink;
@@ -113,6 +114,7 @@ import org.eclipse.rcptt.tesla.ecl.model.IsDisabled;
 import org.eclipse.rcptt.tesla.ecl.model.IsDisposed;
 import org.eclipse.rcptt.tesla.ecl.model.IsEmpty;
 import org.eclipse.rcptt.tesla.ecl.model.KeyType;
+import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Matches;
 import org.eclipse.rcptt.tesla.ecl.model.Maximize;
 import org.eclipse.rcptt.tesla.ecl.model.MessageBoxInfo;
@@ -1337,6 +1339,20 @@ public class TeslaSwitch<T> {
 				GetLastMessageBox getLastMessageBox = (GetLastMessageBox)theEObject;
 				T result = caseGetLastMessageBox(getLastMessageBox);
 				if (result == null) result = caseCommand(getLastMessageBox);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TeslaPackage.MARK_DOWNLOAD_HANDLER: {
+				MarkDownloadHandler markDownloadHandler = (MarkDownloadHandler)theEObject;
+				T result = caseMarkDownloadHandler(markDownloadHandler);
+				if (result == null) result = caseCommand(markDownloadHandler);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TeslaPackage.CHECK_DOWNLOAD_RESULT: {
+				CheckDownloadResult checkDownloadResult = (CheckDownloadResult)theEObject;
+				T result = caseCheckDownloadResult(checkDownloadResult);
+				if (result == null) result = caseCommand(checkDownloadResult);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -3531,6 +3547,36 @@ public class TeslaSwitch<T> {
 	 * @generated
 	 */
 	public T caseGetLastMessageBox(GetLastMessageBox object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mark Download Handler</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mark Download Handler</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMarkDownloadHandler(MarkDownloadHandler object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Check Download Result</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Check Download Result</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCheckDownloadResult(CheckDownloadResult object) {
 		return null;
 	}
 

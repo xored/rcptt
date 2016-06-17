@@ -5420,6 +5420,89 @@ public interface ProtocolPackage extends EPackage {
 	int UPDATE_CONTROL_COMMAND_FEATURE_COUNT = RawPackage.COMMAND_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.MarkRapDownloadHandlerImpl <em>Mark Rap Download Handler</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.MarkRapDownloadHandlerImpl
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getMarkRapDownloadHandler()
+	 * @generated
+	 */
+	int MARK_RAP_DOWNLOAD_HANDLER = 106;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_RAP_DOWNLOAD_HANDLER__ID = RawPackage.COMMAND__ID;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_RAP_DOWNLOAD_HANDLER__HANDLER = RawPackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Mark Rap Download Handler</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_RAP_DOWNLOAD_HANDLER_FEATURE_COUNT = RawPackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.CheckRapDownloadResultImpl <em>Check Rap Download Result</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.CheckRapDownloadResultImpl
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getCheckRapDownloadResult()
+	 * @generated
+	 */
+	int CHECK_RAP_DOWNLOAD_RESULT = 107;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECK_RAP_DOWNLOAD_RESULT__ID = RawPackage.COMMAND__ID;
+
+	/**
+	 * The feature id for the '<em><b>File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECK_RAP_DOWNLOAD_RESULT__FILE = RawPackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Base64 Content</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECK_RAP_DOWNLOAD_RESULT__BASE64_CONTENT = RawPackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Check Rap Download Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECK_RAP_DOWNLOAD_RESULT_FEATURE_COUNT = RawPackage.COMMAND_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5427,7 +5510,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getSWTDialogKind()
 	 * @generated
 	 */
-	int SWT_DIALOG_KIND = 106;
+	int SWT_DIALOG_KIND = 108;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.AssertKind <em>Assert Kind</em>}' enum.
@@ -5437,7 +5520,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getAssertKind()
 	 * @generated
 	 */
-	int ASSERT_KIND = 107;
+	int ASSERT_KIND = 109;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.DragKind <em>Drag Kind</em>}' enum.
@@ -5447,7 +5530,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getDragKind()
 	 * @generated
 	 */
-	int DRAG_KIND = 108;
+	int DRAG_KIND = 110;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.MouseEventKind <em>Mouse Event Kind</em>}' enum.
@@ -5457,7 +5540,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getMouseEventKind()
 	 * @generated
 	 */
-	int MOUSE_EVENT_KIND = 109;
+	int MOUSE_EVENT_KIND = 111;
 
 
 	/**
@@ -8303,6 +8386,59 @@ public interface ProtocolPackage extends EPackage {
 	EReference getUpdateControlCommand_Elements();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler <em>Mark Rap Download Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Mark Rap Download Handler</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler
+	 * @generated
+	 */
+	EClass getMarkRapDownloadHandler();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Handler</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler#getHandler()
+	 * @see #getMarkRapDownloadHandler()
+	 * @generated
+	 */
+	EAttribute getMarkRapDownloadHandler_Handler();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult <em>Check Rap Download Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Check Rap Download Result</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult
+	 * @generated
+	 */
+	EClass getCheckRapDownloadResult();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult#getFile <em>File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>File</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult#getFile()
+	 * @see #getCheckRapDownloadResult()
+	 * @generated
+	 */
+	EAttribute getCheckRapDownloadResult_File();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult#getBase64Content <em>Base64 Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Base64 Content</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult#getBase64Content()
+	 * @see #getCheckRapDownloadResult()
+	 * @generated
+	 */
+	EAttribute getCheckRapDownloadResult_Base64Content();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10719,6 +10855,50 @@ public interface ProtocolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UPDATE_CONTROL_COMMAND__ELEMENTS = eINSTANCE.getUpdateControlCommand_Elements();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.MarkRapDownloadHandlerImpl <em>Mark Rap Download Handler</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.MarkRapDownloadHandlerImpl
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getMarkRapDownloadHandler()
+		 * @generated
+		 */
+		EClass MARK_RAP_DOWNLOAD_HANDLER = eINSTANCE.getMarkRapDownloadHandler();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MARK_RAP_DOWNLOAD_HANDLER__HANDLER = eINSTANCE.getMarkRapDownloadHandler_Handler();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.CheckRapDownloadResultImpl <em>Check Rap Download Result</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.CheckRapDownloadResultImpl
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getCheckRapDownloadResult()
+		 * @generated
+		 */
+		EClass CHECK_RAP_DOWNLOAD_RESULT = eINSTANCE.getCheckRapDownloadResult();
+
+		/**
+		 * The meta object literal for the '<em><b>File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHECK_RAP_DOWNLOAD_RESULT__FILE = eINSTANCE.getCheckRapDownloadResult_File();
+
+		/**
+		 * The meta object literal for the '<em><b>Base64 Content</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHECK_RAP_DOWNLOAD_RESULT__BASE64_CONTENT = eINSTANCE.getCheckRapDownloadResult_Base64Content();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}' enum.

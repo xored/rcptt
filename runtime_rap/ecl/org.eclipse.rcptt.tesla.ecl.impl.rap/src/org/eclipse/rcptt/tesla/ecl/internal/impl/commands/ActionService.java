@@ -22,11 +22,13 @@ import org.eclipse.rcptt.ecl.core.CoreFactory;
 import org.eclipse.rcptt.ecl.core.EclBoolean;
 import org.eclipse.rcptt.ecl.core.EclString;
 import org.eclipse.rcptt.tesla.core.protocol.CanvasUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.ClickAboutMenu;
 import org.eclipse.rcptt.tesla.core.protocol.ClickPreferencesMenu;
 import org.eclipse.rcptt.tesla.core.protocol.ControlUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.DragKind;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
+import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind;
@@ -47,6 +49,7 @@ import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
 import org.eclipse.rcptt.tesla.ecl.model.ActivateCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.CellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
+import org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickRuler;
 import org.eclipse.rcptt.tesla.ecl.model.ClickText;
@@ -65,6 +68,7 @@ import org.eclipse.rcptt.tesla.ecl.model.HoverText;
 import org.eclipse.rcptt.tesla.ecl.model.IsDisabled;
 import org.eclipse.rcptt.tesla.ecl.model.IsDisposed;
 import org.eclipse.rcptt.tesla.ecl.model.KeyType;
+import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Maximize;
 import org.eclipse.rcptt.tesla.ecl.model.Minimize;
 import org.eclipse.rcptt.tesla.ecl.model.OpenDeclaration;
@@ -91,6 +95,7 @@ import org.eclipse.rcptt.tesla.ecl.model.diagram.DiagramPackage;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.DirectEdit;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseAction;
 import org.eclipse.rcptt.util.KeysAndButtons;
+import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 
@@ -189,6 +194,11 @@ public class ActionService extends AbstractActionService {
 		// Options
 		else if (command instanceof Options)
 			handleOptions((Options) command);
+		//RAP commands
+		else if (command instanceof MarkDownloadHandler)
+			handleMarkDownloadHandler((MarkDownloadHandler) command);
+		else if (command instanceof CheckDownloadResult)
+			handleCheckDownloadResult((CheckDownloadResult) command);
 		return result;
 	}
 
@@ -807,10 +817,6 @@ public class ActionService extends AbstractActionService {
 				if (column == null) {
 					column = ((ActivateCellEdit) c).getColumn();
 				}
-				if (column == null) {
-					throw new CoreException(
-							TeslaImplPlugin.err("Column is not specified"));
-				}
 				// viewerUIElement.setSelection(item.getPath());
 				viewerUIElement.activateCellEditor(column);
 				break;
@@ -874,6 +880,29 @@ public class ActionService extends AbstractActionService {
 			info.getPath().add(currentStr);
 		}
 		TeslaBridge.getPlayer().safeExecuteCommand(info);
+	}
+
+	private void handleMarkDownloadHandler(MarkDownloadHandler command) throws CoreException {
+		MarkRapDownloadHandler handler = ProtocolFactory.eINSTANCE.createMarkRapDownloadHandler();
+		if (StringUtils.isEmpty(command.getHandlerName())) {
+			throw new CoreException(TeslaImplPlugin.err("The handler name is empty.")); //$NON-NLS-1$
+		}
+		handler.setHandler(command.getHandlerName());
+
+		TeslaBridge.getPlayer().safeExecuteCommand(handler);
+	}
+
+	private void handleCheckDownloadResult(CheckDownloadResult command) throws CoreException {
+		CheckRapDownloadResult result = ProtocolFactory.eINSTANCE.createCheckRapDownloadResult();
+
+		if (StringUtils.isEmpty(command.getContentOnBase64())) {
+			throw new CoreException(TeslaImplPlugin.err("The content base 64 is emtpy.")); //$NON-NLS-1$
+		}
+
+		result.setFile(command.getFileName());
+		result.setBase64Content(command.getContentOnBase64());
+
+		TeslaBridge.getPlayer().safeExecuteCommand(result);
 	}
 
 	private void handleSetDialogResult(SetDialogResult c) throws CoreException {

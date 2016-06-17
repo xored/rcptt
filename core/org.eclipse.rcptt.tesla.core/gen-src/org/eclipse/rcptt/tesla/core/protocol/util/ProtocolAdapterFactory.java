@@ -503,6 +503,14 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 				return createUpdateControlCommandAdapter();
 			}
 			@Override
+			public Adapter caseMarkRapDownloadHandler(MarkRapDownloadHandler object) {
+				return createMarkRapDownloadHandlerAdapter();
+			}
+			@Override
+			public Adapter caseCheckRapDownloadResult(CheckRapDownloadResult object) {
+				return createCheckRapDownloadResultAdapter();
+			}
+			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
 			}
@@ -2011,6 +2019,34 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUpdateControlCommandAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler <em>Mark Rap Download Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler
+	 * @generated
+	 */
+	public Adapter createMarkRapDownloadHandlerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult <em>Check Rap Download Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult
+	 * @generated
+	 */
+	public Adapter createCheckRapDownloadResultAdapter() {
 		return null;
 	}
 

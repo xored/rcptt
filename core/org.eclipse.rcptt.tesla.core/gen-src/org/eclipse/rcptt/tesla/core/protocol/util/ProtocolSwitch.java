@@ -905,6 +905,20 @@ public class ProtocolSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER: {
+				MarkRapDownloadHandler markRapDownloadHandler = (MarkRapDownloadHandler)theEObject;
+				T result = caseMarkRapDownloadHandler(markRapDownloadHandler);
+				if (result == null) result = caseCommand(markRapDownloadHandler);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ProtocolPackage.CHECK_RAP_DOWNLOAD_RESULT: {
+				CheckRapDownloadResult checkRapDownloadResult = (CheckRapDownloadResult)theEObject;
+				T result = caseCheckRapDownloadResult(checkRapDownloadResult);
+				if (result == null) result = caseCommand(checkRapDownloadResult);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -2496,6 +2510,36 @@ public class ProtocolSwitch<T> {
 	 * @generated
 	 */
 	public T caseUpdateControlCommand(UpdateControlCommand object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mark Rap Download Handler</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mark Rap Download Handler</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMarkRapDownloadHandler(MarkRapDownloadHandler object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Check Rap Download Result</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Check Rap Download Result</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCheckRapDownloadResult(CheckRapDownloadResult object) {
 		return null;
 	}
 

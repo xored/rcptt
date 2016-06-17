@@ -11,7 +11,8 @@ Require-Bundle: org.aspectj.runtime;visibility:=reexport,
  org.eclipse.rcptt.tesla.core.am.rap;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.watson.core;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.rcptt.util;bundle-version="[2.1.0,3.0.0)",
- org.eclipse.rcptt.tesla.ecl
+ org.eclipse.rcptt.tesla.ecl,
+ javax.servlet
 onEnvironment: JavaSE-1.6
 Import-Package: org.osgi.framework
 Eclipse-SupplementBundle: org.eclipse.rap.rwt
@@ -19,6 +20,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.rcptt.tesla.swt.aspects.rap,
  org.eclipse.rcptt.tesla.swt.dialogs,
  org.eclipse.rcptt.tesla.swt.dnd,
+ org.eclipse.rcptt.tesla.swt.download,
  org.eclipse.rcptt.tesla.swt.events,
  org.eclipse.rcptt.tesla.swt.handles,
  org.eclipse.rcptt.tesla.swt.images,

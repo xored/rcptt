@@ -20,15 +20,11 @@ public interface IExtendedSWTEventListener extends IBasicSWTEventListener {
 
 	public void recordSWTDialog(Dialog dialog, Object result);
 
-	// public void recordStyledTextOffset(StyledText text);
-	//
-	// public void recordStyledTextActionBefore(StyledText text, int action);
-	//
-	// public void recordStyledTextActionAfter(StyledText text, int action);
-
 	public void recordTabFolderEvent(Control tabControl, int eventId);
 
 	public void setCurrentEvent(Event event);
 
     public boolean needProceedEvent();
+
+    public void recordRapDownloadHandler(String handler, String file, String fileOnBase64);
 }
