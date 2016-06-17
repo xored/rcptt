@@ -189,6 +189,8 @@ public class ActionService extends AbstractActionService {
 		// Options
 		else if (command instanceof Options)
 			handleOptions((Options) command);
+		else if(command instanceof GetRuntimeTarget)
+			return "swt"; //$NON-NLS-1$
 		return result;
 	}
 

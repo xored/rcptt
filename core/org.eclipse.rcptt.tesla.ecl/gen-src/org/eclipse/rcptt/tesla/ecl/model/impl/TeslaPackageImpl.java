@@ -101,6 +101,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetRegion;
 import org.eclipse.rcptt.tesla.ecl.model.GetRegionText;
 import org.eclipse.rcptt.tesla.ecl.model.GetRightRuler;
 import org.eclipse.rcptt.tesla.ecl.model.GetRulerColumn;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.GetSection;
 import org.eclipse.rcptt.tesla.ecl.model.GetSlider;
 import org.eclipse.rcptt.tesla.ecl.model.GetTabFolder;
@@ -1219,6 +1220,13 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 	 * @generated
 	 */
 	private EClass checkDownloadResultEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass getRuntimeTargetEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -4486,6 +4494,15 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getGetRuntimeTarget() {
+		return getRuntimeTargetEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getButton() {
 		return buttonEEnum;
 	}
@@ -5028,6 +5045,8 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		createEAttribute(checkDownloadResultEClass, CHECK_DOWNLOAD_RESULT__CONTENT_ON_BASE64);
 		createEAttribute(checkDownloadResultEClass, CHECK_DOWNLOAD_RESULT__FILE_NAME);
 
+		getRuntimeTargetEClass = createEClass(GET_RUNTIME_TARGET);
+
 		// Create enums
 		buttonEEnum = createEEnum(BUTTON);
 
@@ -5217,6 +5236,7 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		getLastMessageBoxEClass.getESuperTypes().add(theCorePackage.getCommand());
 		markDownloadHandlerEClass.getESuperTypes().add(theCorePackage.getCommand());
 		checkDownloadResultEClass.getESuperTypes().add(theCorePackage.getCommand());
+		getRuntimeTargetEClass.getESuperTypes().add(theCorePackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(waitEClass, Wait.class, "Wait", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -5719,6 +5739,8 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		initEClass(checkDownloadResultEClass, CheckDownloadResult.class, "CheckDownloadResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCheckDownloadResult_ContentOnBase64(), theEcorePackage.getEString(), "contentOnBase64", null, 1, 1, CheckDownloadResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCheckDownloadResult_FileName(), theEcorePackage.getEString(), "fileName", null, 0, 1, CheckDownloadResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(getRuntimeTargetEClass, GetRuntimeTarget.class, "GetRuntimeTarget", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(buttonEEnum, Button.class, "Button");

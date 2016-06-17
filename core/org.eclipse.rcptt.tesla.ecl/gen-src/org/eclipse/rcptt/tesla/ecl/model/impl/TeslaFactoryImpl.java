@@ -93,6 +93,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetRegion;
 import org.eclipse.rcptt.tesla.ecl.model.GetRegionText;
 import org.eclipse.rcptt.tesla.ecl.model.GetRightRuler;
 import org.eclipse.rcptt.tesla.ecl.model.GetRulerColumn;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.GetSection;
 import org.eclipse.rcptt.tesla.ecl.model.GetSlider;
 import org.eclipse.rcptt.tesla.ecl.model.GetTabFolder;
@@ -350,6 +351,7 @@ public class TeslaFactoryImpl extends EFactoryImpl implements TeslaFactory {
 			case TeslaPackage.GET_LAST_MESSAGE_BOX: return createGetLastMessageBox();
 			case TeslaPackage.MARK_DOWNLOAD_HANDLER: return createMarkDownloadHandler();
 			case TeslaPackage.CHECK_DOWNLOAD_RESULT: return createCheckDownloadResult();
+			case TeslaPackage.GET_RUNTIME_TARGET: return createGetRuntimeTarget();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -1684,6 +1686,16 @@ public class TeslaFactoryImpl extends EFactoryImpl implements TeslaFactory {
 	public CheckDownloadResult createCheckDownloadResult() {
 		CheckDownloadResultImpl checkDownloadResult = new CheckDownloadResultImpl();
 		return checkDownloadResult;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GetRuntimeTarget createGetRuntimeTarget() {
+		GetRuntimeTargetImpl getRuntimeTarget = new GetRuntimeTargetImpl();
+		return getRuntimeTarget;
 	}
 
 	/**

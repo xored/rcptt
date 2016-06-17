@@ -32,9 +32,9 @@ public class ServiceHandlerWrapper implements ServiceHandler {
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
 		response.setContentLength(0);
-		response.setContentType("text/cmd");
+		response.setContentType("text/js");
 		response.setHeader("Content-Disposition", "");
-		//response.getWriter().write("{}");
+		response.getWriter().write("{}");
 
 		RapDownloadHandlerManager.addFile(null, content);
 

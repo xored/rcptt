@@ -61,6 +61,7 @@ import org.eclipse.rcptt.tesla.ecl.model.DoubleClick;
 import org.eclipse.rcptt.tesla.ecl.model.DoubleClickRuler;
 import org.eclipse.rcptt.tesla.ecl.model.DoubleClickText;
 import org.eclipse.rcptt.tesla.ecl.model.DragAction;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.GetText;
 import org.eclipse.rcptt.tesla.ecl.model.HoverAtTextOffset;
 import org.eclipse.rcptt.tesla.ecl.model.HoverRuler;
@@ -199,6 +200,8 @@ public class ActionService extends AbstractActionService {
 			handleMarkDownloadHandler((MarkDownloadHandler) command);
 		else if (command instanceof CheckDownloadResult)
 			handleCheckDownloadResult((CheckDownloadResult) command);
+		else if(command instanceof GetRuntimeTarget)
+			return "rap"; //$NON-NLS-1$
 		return result;
 	}
 

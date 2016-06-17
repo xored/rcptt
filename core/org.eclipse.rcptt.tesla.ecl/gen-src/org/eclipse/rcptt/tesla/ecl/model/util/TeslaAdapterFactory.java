@@ -93,6 +93,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetRegion;
 import org.eclipse.rcptt.tesla.ecl.model.GetRegionText;
 import org.eclipse.rcptt.tesla.ecl.model.GetRightRuler;
 import org.eclipse.rcptt.tesla.ecl.model.GetRulerColumn;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.GetSection;
 import org.eclipse.rcptt.tesla.ecl.model.GetSlider;
 import org.eclipse.rcptt.tesla.ecl.model.GetTabFolder;
@@ -814,6 +815,10 @@ public class TeslaAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCheckDownloadResult(CheckDownloadResult object) {
 				return createCheckDownloadResultAdapter();
+			}
+			@Override
+			public Adapter caseGetRuntimeTarget(GetRuntimeTarget object) {
+				return createGetRuntimeTargetAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -2912,6 +2917,20 @@ public class TeslaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCheckDownloadResultAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget <em>Get Runtime Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget
+	 * @generated
+	 */
+	public Adapter createGetRuntimeTargetAdapter() {
 		return null;
 	}
 

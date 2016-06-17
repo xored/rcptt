@@ -22,6 +22,7 @@ import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.rcptt.tesla.ecl.model.ShowAlert;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.tesla.ui.RWTUtils;
 
 public class ShowAlertService implements ICommandService {
 
@@ -29,12 +30,11 @@ public class ShowAlertService implements ICommandService {
 			throws InterruptedException, CoreException {
 		final ShowAlert showAlert = (ShowAlert) command;
 
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+		RWTUtils.findDisplay().syncExec(new Runnable() {
 			public void run() {
 				TeslaEventManager.getManager().setShowingAlert(true);
 
-				Shell shell = PlatformUI.getWorkbench().getDisplay()
-						.getShells()[0];
+				Shell shell = RWTUtils.findDisplay().getShells()[0];
 				MessageBox mb = new MessageBox(shell);
 				mb.setMessage(showAlert.getMessage());
 				mb.open();

@@ -93,6 +93,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetRegion;
 import org.eclipse.rcptt.tesla.ecl.model.GetRegionText;
 import org.eclipse.rcptt.tesla.ecl.model.GetRightRuler;
 import org.eclipse.rcptt.tesla.ecl.model.GetRulerColumn;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.GetSection;
 import org.eclipse.rcptt.tesla.ecl.model.GetSlider;
 import org.eclipse.rcptt.tesla.ecl.model.GetTabFolder;
@@ -1353,6 +1354,13 @@ public class TeslaSwitch<T> {
 				CheckDownloadResult checkDownloadResult = (CheckDownloadResult)theEObject;
 				T result = caseCheckDownloadResult(checkDownloadResult);
 				if (result == null) result = caseCommand(checkDownloadResult);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TeslaPackage.GET_RUNTIME_TARGET: {
+				GetRuntimeTarget getRuntimeTarget = (GetRuntimeTarget)theEObject;
+				T result = caseGetRuntimeTarget(getRuntimeTarget);
+				if (result == null) result = caseCommand(getRuntimeTarget);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -3577,6 +3585,21 @@ public class TeslaSwitch<T> {
 	 * @generated
 	 */
 	public T caseCheckDownloadResult(CheckDownloadResult object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Get Runtime Target</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Get Runtime Target</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGetRuntimeTarget(GetRuntimeTarget object) {
 		return null;
 	}
 

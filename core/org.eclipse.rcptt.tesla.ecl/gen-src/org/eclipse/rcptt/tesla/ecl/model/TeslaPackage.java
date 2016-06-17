@@ -10116,6 +10116,43 @@ public interface TeslaPackage extends EPackage {
 	int CHECK_DOWNLOAD_RESULT_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.GetRuntimeTargetImpl <em>Get Runtime Target</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.GetRuntimeTargetImpl
+	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRuntimeTarget()
+	 * @generated
+	 */
+	int GET_RUNTIME_TARGET = 148;
+
+	/**
+	 * The feature id for the '<em><b>Host</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_RUNTIME_TARGET__HOST = CorePackage.COMMAND__HOST;
+
+	/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_RUNTIME_TARGET__BINDINGS = CorePackage.COMMAND__BINDINGS;
+
+	/**
+	 * The number of structural features of the '<em>Get Runtime Target</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_RUNTIME_TARGET_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.Button <em>Button</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10123,7 +10160,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getButton()
 	 * @generated
 	 */
-	int BUTTON = 148;
+	int BUTTON = 149;
 
 	/**
 	 * The meta object id for the '<em>Element Kind</em>' data type.
@@ -10133,7 +10170,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getElementKind()
 	 * @generated
 	 */
-	int ELEMENT_KIND = 149;
+	int ELEMENT_KIND = 150;
 
 
 	/**
@@ -13872,6 +13909,16 @@ public interface TeslaPackage extends EPackage {
 	EAttribute getCheckDownloadResult_FileName();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget <em>Get Runtime Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Get Runtime Target</em>'.
+	 * @see org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget
+	 * @generated
+	 */
+	EClass getGetRuntimeTarget();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.ecl.model.Button <em>Button</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17033,6 +17080,16 @@ public interface TeslaPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CHECK_DOWNLOAD_RESULT__FILE_NAME = eINSTANCE.getCheckDownloadResult_FileName();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.GetRuntimeTargetImpl <em>Get Runtime Target</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.ecl.model.impl.GetRuntimeTargetImpl
+		 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRuntimeTarget()
+		 * @generated
+		 */
+		EClass GET_RUNTIME_TARGET = eINSTANCE.getGetRuntimeTarget();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.model.Button <em>Button</em>}' enum.

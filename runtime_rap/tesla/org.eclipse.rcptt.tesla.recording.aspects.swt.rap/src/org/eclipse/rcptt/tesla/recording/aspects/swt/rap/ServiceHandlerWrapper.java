@@ -24,12 +24,12 @@ public class ServiceHandlerWrapper implements ServiceHandler {
 
 		final OutputStreamResponseWrapper wrappedResponse = new OutputStreamResponseWrapper(response, true);
 
-//		wrapper.service(request, wrappedResponse);
-	//	final ByteArrayOutputStream spyStream = wrappedResponse.getSpyOutputStream();
+		wrapper.service(request, wrappedResponse);
+		final ByteArrayOutputStream spyStream = wrappedResponse.getSpyOutputStream();
 
-		//String content = Base64.encode(spyStream.toByteArray());
+		String content = Base64.encode(spyStream.toByteArray());
 
-//		SWTEventManager.recordRapDownload("", null, content);
+		SWTEventManager.recordRapDownload("", null, content);
 
 	}
 
