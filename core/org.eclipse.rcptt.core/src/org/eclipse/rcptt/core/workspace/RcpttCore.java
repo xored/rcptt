@@ -13,10 +13,12 @@ package org.eclipse.rcptt.core.workspace;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,6 +56,8 @@ import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.model.Q7ElementChangedEvent;
 import org.eclipse.rcptt.core.model.search.Q7SearchCore;
 import org.eclipse.rcptt.core.nature.RcpttNature;
+import org.eclipse.rcptt.core.scenario.CapabilityContext;
+import org.eclipse.rcptt.core.scenario.CapabilityContextItem;
 import org.eclipse.rcptt.core.scenario.GroupContext;
 import org.eclipse.rcptt.core.scenario.NamedElement;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
@@ -119,16 +123,38 @@ public class RcpttCore {
 	}
 
 	/**
+	 * Returns an array of all contexts contained in the given scenario or context, or an empty array if the element is
+	 * neither a scenario nor a context.
+	 */
+	public IContext[] getContexts(IQ7NamedElement element, IWorkspaceFinder finder, boolean ignoreErrors,
+			String capability) {
+		if (element instanceof ITestCase) {
+			return getContexts((ITestCase) element, finder, ignoreErrors);
+		} else if (element instanceof IContext) {
+			return getContexts((IContext) element, finder, ignoreErrors, capability);
+		} else {
+			return new IContext[0];
+		}
+	}
+
+	/**
+	 * Returns an array of all contexts contained in the given scenario, or an empty array in case of an error.
+	 */
+	public IContext[] getContexts(ITestCase scenario, IWorkspaceFinder finder, boolean ignoreErrors) {
+		return getContexts(scenario, finder, ignoreErrors, null);
+	}
+
+	/**
 	 * Returns an array of all contexts contained in the given scenario, or an empty array in case of an error.
 	 */
 	public IContext[] getContexts(ITestCase scenario, IWorkspaceFinder finder,
-			boolean ignoreErrors) {
+			boolean ignoreErrors, String capability) {
 		try {
 			String[] contexts = Q7SearchCore.findContextsByDocument(scenario);
 			if (contexts == null) {
 				contexts = scenario.getContexts();
 			}
-			return getContexts(scenario, Arrays.asList(contexts), finder, ignoreErrors);
+			return getContexts(scenario, Arrays.asList(contexts), finder, ignoreErrors, capability);
 		} catch (ModelException e) {
 			RcpttPlugin.log(e);
 			return new IContext[0];
@@ -143,8 +169,21 @@ public class RcpttCore {
 		return getContexts(context, getContextReferences(context), finder, ignoreErrors);
 	}
 
+	/**
+	 * Returns an array of all child contexts. If the given context is neither a super context nor a group context, then
+	 * it doesn't have any children and an empty array is returned.
+	 */
+	public IContext[] getContexts(IContext context, IWorkspaceFinder finder, boolean ignoreErrors, String capability) {
+		return getContexts(context, getContextReferences(context, capability), finder, ignoreErrors);
+	}
+
 	public IContext[] getContexts(IQ7NamedElement element, List<String> contextIds,
 			IWorkspaceFinder finder, boolean ignoreErrors) {
+		return getContexts(element, contextIds, finder, ignoreErrors, null);
+	}
+
+	public IContext[] getContexts(IQ7NamedElement element, List<String> contextIds,
+			IWorkspaceFinder finder, boolean ignoreErrors, String capability) {
 		if (finder == null) {
 			finder = WorkspaceFinder.getInstance();
 		}
@@ -162,8 +201,18 @@ public class RcpttCore {
 							IContext result = findContext(element, ignoreErrors, ctx,
 									finder);
 							if (result != null) {
-								contexts.add(result);
-								projectContexts.add(result.getID());
+								if (result.getNamedElement() instanceof CapabilityContext) {
+									List<IContext> subcontexts = processedCapabilityContext(element, finder,
+											ignoreErrors, capability,
+											(CapabilityContext) result.getNamedElement());
+									for (IContext context : subcontexts) {
+										contexts.add(context);
+										projectContexts.add(context.getID());
+									}
+								} else {
+									contexts.add(result);
+									projectContexts.add(result.getID());
+								}
 							}
 						}
 					}
@@ -179,13 +228,48 @@ public class RcpttCore {
 			}
 			IContext result = findContext(element, ignoreErrors, contextId, finder);
 			if (result != null) {
-				contexts.add(result);
+				try {
+					if (result.getNamedElement() instanceof CapabilityContext) {
+						List<IContext> subcontexts = processedCapabilityContext(element, finder, ignoreErrors,
+								capability, (CapabilityContext) result.getNamedElement());
+						contexts.addAll(subcontexts);
+
+					} else {
+						contexts.add(result);
+					}
+				} catch (ModelException e) {
+					RcpttPlugin.log(e);
+				}
 			}
 		}
 
 		// Add close modal dialogs context as first
 		addDefaultContext(contexts);
 		return contexts.toArray(new IContext[contexts.size()]);
+	}
+
+	private List<IContext> processedCapabilityContext(IQ7NamedElement element, IWorkspaceFinder finder,
+			boolean ignoreErrors, String capability, CapabilityContext context) throws ModelException {
+		for (CapabilityContextItem item : context.getItems()) {
+			if (item.getCapability().contains(capability)) {
+				final List<IContext> result = new ArrayList<IContext>();
+				for (String id : item.getContextReferences()) {
+					IContext subcontext = findContext(element, ignoreErrors, id, finder);
+					if (subcontext != null) {
+						if (subcontext.getNamedElement() instanceof CapabilityContext) {
+							List<IContext> subcontexts = processedCapabilityContext(element, finder, ignoreErrors,
+									capability, (CapabilityContext) subcontext.getNamedElement());
+							result.addAll(subcontexts);
+						} else {
+							result.add(subcontext);
+						}
+					}
+				}
+				return result;
+			}
+		}
+		return Collections.emptyList();
+
 	}
 
 	/**
@@ -202,15 +286,43 @@ public class RcpttCore {
 				return ((GroupContext) namedElement).getContextReferences();
 			} else if (namedElement instanceof SuperContext) {
 				return ((SuperContext) namedElement).getContextReferences();
+			} else if (namedElement instanceof CapabilityContext) {
+				final CapabilityContext ccontext = (CapabilityContext) namedElement;
+				final Set<String> result = new LinkedHashSet<String>();
+				for (CapabilityContextItem item : ccontext.getItems()) {
+					result.addAll(item.getContextReferences());
+				}
+				return new ArrayList<String>(result);
 			}
-			// else if (namedElement instanceof CapabilityContext) {
-			// final CapabilityContext ccontext = (CapabilityContext) namedElement;
-			// for (CapabilityContextItem item : ccontext.getItems()) {
-			// if (item.getCapability().contains(capability)) {
-			// return item.getContextReferences();
-			// }
-			// }
-			// }
+
+		} catch (ModelException e) {
+			RcpttPlugin.log(e);
+		}
+		return new ArrayList<String>();
+	}
+
+	/**
+	 * Returns a list of references to all child contexts. If the given context is neither a super context nor a group
+	 * context, then it doesn't have any children and an empty list is returned.
+	 */
+	public List<String> getContextReferences(IContext context, String capability) {
+		if (isNotGroupOrSuperOrCapabilityContext(context)) {
+			return new ArrayList<String>();
+		}
+		try {
+			NamedElement namedElement = context.getNamedElement();
+			if (namedElement instanceof GroupContext) {
+				return ((GroupContext) namedElement).getContextReferences();
+			} else if (namedElement instanceof SuperContext) {
+				return ((SuperContext) namedElement).getContextReferences();
+			} else if (namedElement instanceof CapabilityContext) {
+				final CapabilityContext ccontext = (CapabilityContext) namedElement;
+				for (CapabilityContextItem item : ccontext.getItems()) {
+					if (item.getCapability().contains(capability)) {
+						return item.getContextReferences();
+					}
+				}
+			}
 
 		} catch (ModelException e) {
 			RcpttPlugin.log(e);

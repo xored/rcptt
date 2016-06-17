@@ -161,7 +161,7 @@ public class Q7LaunchConfigurationDelegate extends LaunchConfigurationDelegate
 			}
 		}
 
-		Q7Launcher.setMappedResources(config, elements);
+		Q7Launcher.setMappedResources(config, elements, autLaunch.getCapability());
 		IWorkspaceFinder finder = data == null ? null : data.finder;
 		launch(elements, (Q7TestLaunch) launch, autLaunch, finder,
 				namedVariants);

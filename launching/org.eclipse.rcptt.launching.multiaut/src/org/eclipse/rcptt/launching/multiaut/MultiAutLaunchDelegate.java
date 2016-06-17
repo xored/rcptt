@@ -63,7 +63,7 @@ public class MultiAutLaunchDelegate extends LaunchConfigurationDelegate implemen
 			processes.put(entry.aut, q7process);
 
 			ExecutableFactory f = new ExecutableFactory(autLaunch, null, q7process.getDebugger());
-			Executable[] testExecs = f.map(new IQ7NamedElement[] { entry.element }, null);
+			Executable[] testExecs = f.map(new IQ7NamedElement[] { entry.element }, null, autLaunch.getCapability());
 			for (int i = 0; i < testExecs.length; i++) {
 				Executable e = testExecs[i];
 				if (e instanceof PrepareExecutionWrapper) {
