@@ -19,7 +19,6 @@ public class ServiceHandlerWrapper implements ServiceHandler {
 		this.wrapper = wrapped;
 	}
 
-	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		final OutputStreamResponseWrapper wrappedResponse = new OutputStreamResponseWrapper(response, false);
