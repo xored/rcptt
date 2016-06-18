@@ -49,6 +49,7 @@ import org.eclipse.rcptt.tesla.ecl.model.CellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickRuler;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.ClickText;
 import org.eclipse.rcptt.tesla.ecl.model.Close;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
