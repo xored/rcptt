@@ -105,6 +105,31 @@ public class DefaultFormatter implements ICommandFormatter {
 			} else {
 				append(value.substring(0, 2));
 				for (int i = 2; i + 1 < value.length(); i++) {
+					append(value.substring(i, i + 1));
+				}
+				append("\"");
+			}
+		} else {
+			append(value);
+		}
+	}
+
+	public void addAttrValueWithLineBreak(String value) {
+		append(SPACE);
+		if (value.startsWith("\"") && value.length() > 3) {
+			if (value.contains("\\n")) {
+				String[] parts = value.split("\\\\n");
+				append(parts[0]);
+				for (int i = 1; i < parts.length; i++) {
+					append("\\n");
+					if (parts[i].length() > 1) {
+						lineBreak(posInLine, "\"\n+ \"");
+					}
+					append(parts[i]);
+				}
+			} else {
+				append(value.substring(0, 2));
+				for (int i = 2; i + 1 < value.length(); i++) {
 					possibleLineBreak("\"\n+ \"");
 					append(value.substring(i, i + 1));
 				}

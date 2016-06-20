@@ -67,7 +67,8 @@ public class RapDownloadHandlerManager {
 
 	public static String emulateDownload(String url, String handler)
 	{
-		 ServiceHandler serviceHandler = ((ServiceManagerImpl)RWT.getServiceManager()).getServiceHandler(handler);
+		 @SuppressWarnings("restriction")
+		ServiceHandler serviceHandler = ((ServiceManagerImpl)RWT.getServiceManager()).getServiceHandler(handler);
 
 		 MockHttpServletRequest request = new MockHttpServletRequest(url);
 		 MockHttpServletResponse response = new MockHttpServletResponse();
