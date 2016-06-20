@@ -503,12 +503,8 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 				return createUpdateControlCommandAdapter();
 			}
 			@Override
-			public Adapter caseMarkRapDownloadHandler(MarkRapDownloadHandler object) {
-				return createMarkRapDownloadHandlerAdapter();
-			}
-			@Override
-			public Adapter caseCheckRapDownloadResult(CheckRapDownloadResult object) {
-				return createCheckRapDownloadResultAdapter();
+			public Adapter caseRapDownloadFile(RapDownloadFile object) {
+				return createRapDownloadFileAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -2023,30 +2019,16 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler <em>Mark Rap Download Handler</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile <em>Rap Download File</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile
 	 * @generated
 	 */
-	public Adapter createMarkRapDownloadHandlerAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult <em>Check Rap Download Result</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult
-	 * @generated
-	 */
-	public Adapter createCheckRapDownloadResultAdapter() {
+	public Adapter createRapDownloadFileAdapter() {
 		return null;
 	}
 

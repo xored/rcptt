@@ -975,22 +975,13 @@ public interface ProtocolFactory extends EFactory {
 	UpdateControlCommand createUpdateControlCommand();
 
 	/**
-	 * Returns a new object of class '<em>Mark Rap Download Handler</em>'.
+	 * Returns a new object of class '<em>Rap Download File</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Mark Rap Download Handler</em>'.
+	 * @return a new object of class '<em>Rap Download File</em>'.
 	 * @generated
 	 */
-	MarkRapDownloadHandler createMarkRapDownloadHandler();
-
-	/**
-	 * Returns a new object of class '<em>Check Rap Download Result</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Check Rap Download Result</em>'.
-	 * @generated
-	 */
-	CheckRapDownloadResult createCheckRapDownloadResult();
+	RapDownloadFile createRapDownloadFile();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,17 +38,16 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rcptt.tesla.core.am.rap.RecordingModeFeature;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
-import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
 import org.eclipse.rcptt.tesla.core.protocol.CompositeUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ControlUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.LinkUIElement;
-import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
+import org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile;
 import org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind;
 import org.eclipse.rcptt.tesla.core.protocol.SelectCommand;
 import org.eclipse.rcptt.tesla.core.protocol.SelectData;
@@ -94,7 +92,6 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ViewForm;
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
@@ -2277,7 +2274,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	}
 
 	@Override
-	public void recordRapDownloadHandler(String handler, String file, String fileOnBase64) {
+	public void recordRapDownloadHandler(String handler, String url, String content) {
 		if (getRecorder() == null) {
 			return;
 		}
@@ -2285,10 +2282,11 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 			return;
 		}
 
-		CheckRapDownloadResult check = ProtocolFactory.eINSTANCE.createCheckRapDownloadResult();
-		check.setBase64Content(fileOnBase64);
-
-		getRecorder().safeExecuteCommand(check);
+		final RapDownloadFile file = ProtocolFactory.eINSTANCE.createRapDownloadFile();
+		file.setUrl(url);
+		file.setHandler(handler);
+		file.setContent(content);
+		getRecorder().safeExecuteCommand(file);
 	}
 
 	public void recordSWTDialog(Dialog dialog, Object result) {

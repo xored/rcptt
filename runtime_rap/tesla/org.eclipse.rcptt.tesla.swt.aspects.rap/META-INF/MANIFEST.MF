@@ -24,6 +24,7 @@ Export-Package: org.eclipse.rcptt.tesla.swt.aspects.rap,
  org.eclipse.rcptt.tesla.swt.events,
  org.eclipse.rcptt.tesla.swt.handles,
  org.eclipse.rcptt.tesla.swt.images,
+ org.eclipse.rcptt.tesla.swt.js,
  org.eclipse.rcptt.tesla.swt.profiling
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Activator: org.eclipse.rcptt.tesla.swt.aspects.rap.SWTAspectActivator

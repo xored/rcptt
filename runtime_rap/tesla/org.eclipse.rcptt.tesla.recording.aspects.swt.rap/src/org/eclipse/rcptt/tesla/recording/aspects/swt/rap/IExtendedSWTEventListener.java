@@ -26,5 +26,5 @@ public interface IExtendedSWTEventListener extends IBasicSWTEventListener {
 
     public boolean needProceedEvent();
 
-    public void recordRapDownloadHandler(String handler, String file, String fileOnBase64);
+    public void recordRapDownloadHandler(String handler, String url, String fileOnBase64);
 }

@@ -133,9 +133,9 @@ public final class SWTEventManager {
 			listener.recordSWTDialog(dialog, result);
 		}
 	}
-	public static void recordRapDownload(String handler, String file, String content) {
+	public static void recordRapDownload(String handler, String url, String content) {
 		for (IExtendedSWTEventListener listener : getListeners(IExtendedSWTEventListener.class)) {
-			listener.recordRapDownloadHandler(handler, file, content);
+			listener.recordRapDownloadHandler(handler, url, content);
 		}
 	}
 

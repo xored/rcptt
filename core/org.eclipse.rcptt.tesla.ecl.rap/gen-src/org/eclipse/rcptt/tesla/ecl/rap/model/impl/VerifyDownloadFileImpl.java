@@ -1,51 +1,53 @@
 /**
  */
-package org.eclipse.rcptt.tesla.core.protocol.impl;
+package org.eclipse.rcptt.tesla.ecl.rap.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
-import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
+import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
+
+import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaPackage;
+import org.eclipse.rcptt.tesla.ecl.rap.model.TeslaPackage;
+import org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Mark Rap Download Handler</b></em>'.
+ * An implementation of the model object '<em><b>Verify Download File</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.MarkRapDownloadHandlerImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.MarkRapDownloadHandlerImpl#getHandler <em>Handler</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.VerifyDownloadFileImpl#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.VerifyDownloadFileImpl#getHandler <em>Handler</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDownloadHandler {
+public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloadFile {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getUrl()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int ID_EDEFAULT = 0;
+	protected static final String URL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getUrl()
 	 * @generated
 	 * @ordered
 	 */
-	protected int id = ID_EDEFAULT;
+	protected String url = URL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getHandler() <em>Handler</em>}' attribute.
@@ -72,7 +74,7 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected MarkRapDownloadHandlerImpl() {
+	protected VerifyDownloadFileImpl() {
 		super();
 	}
 
@@ -83,7 +85,7 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ProtocolPackage.Literals.MARK_RAP_DOWNLOAD_HANDLER;
+		return RapTeslaPackage.Literals.VERIFY_DOWNLOAD_FILE;
 	}
 
 	/**
@@ -91,8 +93,8 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getId() {
-		return id;
+	public String getUrl() {
+		return url;
 	}
 
 	/**
@@ -100,11 +102,11 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(int newId) {
-		int oldId = id;
-		id = newId;
+	public void setUrl(String newUrl) {
+		String oldUrl = url;
+		url = newUrl;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL, oldUrl, url));
 	}
 
 	/**
@@ -125,7 +127,7 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 		String oldHandler = handler;
 		handler = newHandler;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__HANDLER, oldHandler, handler));
+			eNotify(new ENotificationImpl(this, Notification.SET, RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER, oldHandler, handler));
 	}
 
 	/**
@@ -136,9 +138,9 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__ID:
-				return getId();
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__HANDLER:
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
+				return getUrl();
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
 				return getHandler();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -152,10 +154,10 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__ID:
-				setId((Integer)newValue);
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
+				setUrl((String)newValue);
 				return;
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__HANDLER:
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
 				setHandler((String)newValue);
 				return;
 		}
@@ -170,10 +172,10 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__ID:
-				setId(ID_EDEFAULT);
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
+				setUrl(URL_EDEFAULT);
 				return;
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__HANDLER:
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
 				setHandler(HANDLER_EDEFAULT);
 				return;
 		}
@@ -188,9 +190,9 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__ID:
-				return id != ID_EDEFAULT;
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER__HANDLER:
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
+				return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
 				return HANDLER_EDEFAULT == null ? handler != null : !HANDLER_EDEFAULT.equals(handler);
 		}
 		return super.eIsSet(featureID);
@@ -206,12 +208,12 @@ public class MarkRapDownloadHandlerImpl extends EObjectImpl implements MarkRapDo
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (url: ");
+		result.append(url);
 		result.append(", handler: ");
 		result.append(handler);
 		result.append(')');
 		return result.toString();
 	}
 
-} //MarkRapDownloadHandlerImpl
+} //VerifyDownloadFileImpl

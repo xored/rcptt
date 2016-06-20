@@ -14,9 +14,11 @@ import org.eclipse.rcptt.util.OutputStreamResponseWrapper;
 public class ServiceHandlerWrapper implements ServiceHandler {
 
 	private ServiceHandler wrapper;
+	private String handlerId;
 
-	public ServiceHandlerWrapper(ServiceHandler wrapped) {
+	public ServiceHandlerWrapper(ServiceHandler wrapped, String handlerId) {
 		this.wrapper = wrapped;
+		this.handlerId = handlerId;
 	}
 
 	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -26,9 +28,10 @@ public class ServiceHandlerWrapper implements ServiceHandler {
 		wrapper.service(request, wrappedResponse);
 		final ByteArrayOutputStream spyStream = wrappedResponse.getSpyOutputStream();
 
-		String content = Base64.encode(spyStream.toByteArray());
+		final String content = Base64.encode(spyStream.toByteArray());
 
-		SWTEventManager.recordRapDownload("", null, content);
+		final String url = request.getRequestURL() + "?" + request.getQueryString(); //$NON-NLS-1$
+		SWTEventManager.recordRapDownload(handlerId, url, content);
 
 	}
 

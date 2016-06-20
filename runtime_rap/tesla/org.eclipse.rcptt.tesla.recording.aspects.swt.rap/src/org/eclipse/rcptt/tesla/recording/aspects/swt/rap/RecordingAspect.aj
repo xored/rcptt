@@ -360,7 +360,7 @@ privileged public aspect RecordingAspect {
 		try {
 			if(!TeslaEventManager.getManager().hasListeners() && RapDownloadHandlerManager.contains(customId))
 			{
-				return new ServiceHandlerWrapper((ServiceHandler)result);
+				return new ServiceHandlerWrapper((ServiceHandler)result, customId);
 			}
 		} catch (Throwable e) {
 			RecordingSWTActivator.log(e);

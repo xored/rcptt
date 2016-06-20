@@ -5,16 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
-import org.eclipse.rap.rwt.internal.application.ApplicationContextImpl;
-import org.eclipse.rap.rwt.internal.service.ServiceManagerImpl;
-import org.eclipse.rap.rwt.service.ServiceHandler;
 import org.eclipse.rcptt.sherlock.core.SherlockTimerRunnable;
 import org.eclipse.rcptt.tesla.core.am.rap.AspectManager;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
-import org.eclipse.rcptt.tesla.swt.download.RapDownloadHandlerManager;
-import org.eclipse.rcptt.tesla.swt.download.ServiceHandlerWrapper;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
@@ -569,19 +564,6 @@ public aspect DisplayAspect {
 		} catch (Throwable e) {
 			SWTAspectActivator.log(e);
 		}
-	}
-
-	@SuppressAjWarnings("adviceDidNotMatch")
-	Object around(ServiceManagerImpl manager, String customId):
-		execution(ServiceHandler org.eclipse.rap.rwt.internal.service.ServiceManagerImpl.getCustomHandlerChecked(String))
-		&& target(manager)
-		&& args(customId) {
-		Object result = proceed(manager, customId);
-		if (TeslaEventManager.getManager().hasListeners() && RapDownloadHandlerManager.contains(customId)) {
-			return new ServiceHandlerWrapper((ServiceHandler) result);
-		}
-
-		return result;
 	}
 
 	// DO NOT BEEP on replay.
