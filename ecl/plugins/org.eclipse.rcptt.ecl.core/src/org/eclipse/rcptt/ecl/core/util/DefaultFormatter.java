@@ -105,7 +105,7 @@ public class DefaultFormatter implements ICommandFormatter {
 			} else {
 				append(value.substring(0, 2));
 				for (int i = 2; i + 1 < value.length(); i++) {
-					// possibleLineBreak("\"\n+ \"");
+					possibleLineBreak("\"\n+ \"");
 					append(value.substring(i, i + 1));
 				}
 				append("\"");
@@ -195,6 +195,11 @@ public class DefaultFormatter implements ICommandFormatter {
 	private void possibleLineBreak() {
 		this.possibleLineBreak = posInLine;
 		this.lineBreak = "\n";
+	}
+
+	private void possibleLineBreak(String line) {
+		this.possibleLineBreak = posInLine;
+		this.lineBreak = line;
 	}
 
 }
