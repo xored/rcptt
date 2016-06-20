@@ -15,7 +15,9 @@ import org.eclipse.rcptt.core.model.IQ7NamedElement;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.model.index.IIndexDocument;
 import org.eclipse.rcptt.core.model.index.IIndexer;
+import org.eclipse.rcptt.core.model.index.IQ7IndexConstants;
 import org.eclipse.rcptt.core.scenario.CapabilityContext;
+import org.eclipse.rcptt.core.scenario.CapabilityContextItem;
 import org.eclipse.rcptt.core.scenario.NamedElement;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
 
@@ -34,11 +36,12 @@ public class CapabilityContextIndexer implements IIndexer {
 			NamedElement namedElement = element.getNamedElement();
 			if (namedElement instanceof CapabilityContext) {
 				CapabilityContext ctx = (CapabilityContext) namedElement;
+				for (CapabilityContextItem item : ctx.getItems()) {
+					for (String ctxRef : item.getContextReferences()) {
+						document.addKey(IQ7IndexConstants.CONTEXT_REF, ctxRef);
+					}
+				}
 
-				// EList<String> eList = ctx.getContextReferences();
-				// for (String ctxRef : eList) {
-				// document.addKey(IQ7IndexConstants.CONTEXT_REF, ctxRef);
-				// }
 			}
 		} catch (ModelException e) {
 			RcpttPlugin.log(e);

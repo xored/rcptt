@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.rcptt.core.scenario.CapabilityContext;
 import org.eclipse.rcptt.core.scenario.CapabilityContextItem;
+import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
 
 public class CapabilityManager {
@@ -53,6 +54,10 @@ public class CapabilityManager {
 
 		item.getCapability().clear();
 		item.getCapability().addAll(Arrays.asList(capabilities));
+	}
+
+	public void convertCoCapabilityContext(Context ctx) {
+
 	}
 
 	private void checkContext(CapabilityContext context, CapabilityContextItem ignore, String... capabilities) {
