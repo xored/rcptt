@@ -60,6 +60,7 @@ public class RapTeslaFactoryImpl extends EFactoryImpl implements RapTeslaFactory
 			case RapTeslaPackage.EXEC_WITHOUT_JS: return createExecWithoutJs();
 			case RapTeslaPackage.SET_DOWNLOAD_RESULT_FILE: return createSetDownloadResultFile();
 			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE: return createVerifyDownloadFile();
+			case RapTeslaPackage.MARK_DOWNLOAD_HANDLER: return createMarkDownloadHandler();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -103,6 +104,16 @@ public class RapTeslaFactoryImpl extends EFactoryImpl implements RapTeslaFactory
 	public VerifyDownloadFile createVerifyDownloadFile() {
 		VerifyDownloadFileImpl verifyDownloadFile = new VerifyDownloadFileImpl();
 		return verifyDownloadFile;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MarkDownloadHandler createMarkDownloadHandler() {
+		MarkDownloadHandlerImpl markDownloadHandler = new MarkDownloadHandlerImpl();
+		return markDownloadHandler;
 	}
 
 	/**

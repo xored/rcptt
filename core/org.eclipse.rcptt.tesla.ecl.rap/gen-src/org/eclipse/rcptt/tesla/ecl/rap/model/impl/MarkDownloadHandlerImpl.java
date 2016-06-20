@@ -1,17 +1,19 @@
 /**
  */
-package org.eclipse.rcptt.tesla.ecl.model.impl;
+package org.eclipse.rcptt.tesla.ecl.rap.model.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
 
-import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
-import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
+import org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler;
+import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,31 +23,21 @@ import org.eclipse.rcptt.tesla.ecl.model.TeslaPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.tesla.ecl.model.impl.MarkDownloadHandlerImpl#getHandlerName <em>Handler Name</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.MarkDownloadHandlerImpl#getHandler <em>Handler</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownloadHandler {
 	/**
-	 * The default value of the '{@link #getHandlerName() <em>Handler Name</em>}' attribute.
+	 * The cached value of the '{@link #getHandler() <em>Handler</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getHandlerName()
+	 * @see #getHandler()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String HANDLER_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getHandlerName() <em>Handler Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getHandlerName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String handlerName = HANDLER_NAME_EDEFAULT;
+	protected EList<String> handler;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -63,7 +55,7 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TeslaPackage.Literals.MARK_DOWNLOAD_HANDLER;
+		return RapTeslaPackage.Literals.MARK_DOWNLOAD_HANDLER;
 	}
 
 	/**
@@ -71,20 +63,11 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getHandlerName() {
-		return handlerName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setHandlerName(String newHandlerName) {
-		String oldHandlerName = handlerName;
-		handlerName = newHandlerName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER_NAME, oldHandlerName, handlerName));
+	public EList<String> getHandler() {
+		if (handler == null) {
+			handler = new EDataTypeUniqueEList<String>(String.class, this, RapTeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER);
+		}
+		return handler;
 	}
 
 	/**
@@ -95,8 +78,8 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER_NAME:
-				return getHandlerName();
+			case RapTeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER:
+				return getHandler();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -106,11 +89,13 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER_NAME:
-				setHandlerName((String)newValue);
+			case RapTeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER:
+				getHandler().clear();
+				getHandler().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -124,8 +109,8 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER_NAME:
-				setHandlerName(HANDLER_NAME_EDEFAULT);
+			case RapTeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER:
+				getHandler().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -139,8 +124,8 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER_NAME:
-				return HANDLER_NAME_EDEFAULT == null ? handlerName != null : !HANDLER_NAME_EDEFAULT.equals(handlerName);
+			case RapTeslaPackage.MARK_DOWNLOAD_HANDLER__HANDLER:
+				return handler != null && !handler.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -155,8 +140,8 @@ public class MarkDownloadHandlerImpl extends CommandImpl implements MarkDownload
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (handlerName: ");
-		result.append(handlerName);
+		result.append(" (handler: ");
+		result.append(handler);
 		result.append(')');
 		return result.toString();
 	}

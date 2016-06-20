@@ -86,6 +86,10 @@ public class RapTeslaAdapterFactory extends AdapterFactoryImpl {
 				return createVerifyDownloadFileAdapter();
 			}
 			@Override
+			public Adapter caseMarkDownloadHandler(MarkDownloadHandler object) {
+				return createMarkDownloadHandlerAdapter();
+			}
+			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
 			}
@@ -162,6 +166,20 @@ public class RapTeslaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createVerifyDownloadFileAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler <em>Mark Download Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler
+	 * @generated
+	 */
+	public Adapter createMarkDownloadHandlerAdapter() {
 		return null;
 	}
 

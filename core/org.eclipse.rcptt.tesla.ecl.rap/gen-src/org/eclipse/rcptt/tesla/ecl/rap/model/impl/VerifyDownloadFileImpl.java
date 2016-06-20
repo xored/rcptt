@@ -23,6 +23,7 @@ import org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.VerifyDownloadFileImpl#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.VerifyDownloadFileImpl#getHandler <em>Handler</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,6 +48,26 @@ public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloa
 	 * @ordered
 	 */
 	protected String url = URL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getHandler() <em>Handler</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandler()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String HANDLER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getHandler() <em>Handler</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandler()
+	 * @generated
+	 * @ordered
+	 */
+	protected String handler = HANDLER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,11 +114,34 @@ public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getHandler() {
+		return handler;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHandler(String newHandler) {
+		String oldHandler = handler;
+		handler = newHandler;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER, oldHandler, handler));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
 				return getUrl();
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
+				return getHandler();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,6 +156,9 @@ public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloa
 		switch (featureID) {
 			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
 				setUrl((String)newValue);
+				return;
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
+				setHandler((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -128,6 +175,9 @@ public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloa
 			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
 				setUrl(URL_EDEFAULT);
 				return;
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
+				setHandler(HANDLER_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -142,6 +192,8 @@ public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloa
 		switch (featureID) {
 			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__URL:
 				return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+			case RapTeslaPackage.VERIFY_DOWNLOAD_FILE__HANDLER:
+				return HANDLER_EDEFAULT == null ? handler != null : !HANDLER_EDEFAULT.equals(handler);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -158,6 +210,8 @@ public class VerifyDownloadFileImpl extends CommandImpl implements VerifyDownloa
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (url: ");
 		result.append(url);
+		result.append(", handler: ");
+		result.append(handler);
 		result.append(')');
 		return result.toString();
 	}

@@ -58,6 +58,15 @@ public interface RapTeslaFactory extends EFactory {
 	VerifyDownloadFile createVerifyDownloadFile();
 
 	/**
+	 * Returns a new object of class '<em>Mark Download Handler</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Mark Download Handler</em>'.
+	 * @generated
+	 */
+	MarkDownloadHandler createMarkDownloadHandler();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

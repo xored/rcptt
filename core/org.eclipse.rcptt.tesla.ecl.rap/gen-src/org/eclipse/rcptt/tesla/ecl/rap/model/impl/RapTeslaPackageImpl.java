@@ -15,6 +15,7 @@ import org.eclipse.rcptt.ecl.core.CorePackage;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
 
 import org.eclipse.rcptt.tesla.ecl.rap.model.ExecWithoutJs;
+import org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaFactory;
 import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaPackage;
 import org.eclipse.rcptt.tesla.ecl.rap.model.RunJs;
@@ -55,6 +56,13 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 	 * @generated
 	 */
 	private EClass verifyDownloadFileEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass markDownloadHandlerEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -198,6 +206,33 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getVerifyDownloadFile_Handler() {
+		return (EAttribute)verifyDownloadFileEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMarkDownloadHandler() {
+		return markDownloadHandlerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMarkDownloadHandler_Handler() {
+		return (EAttribute)markDownloadHandlerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public RapTeslaFactory getRapTeslaFactory() {
 		return (RapTeslaFactory)getEFactoryInstance();
 	}
@@ -232,6 +267,10 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 
 		verifyDownloadFileEClass = createEClass(VERIFY_DOWNLOAD_FILE);
 		createEAttribute(verifyDownloadFileEClass, VERIFY_DOWNLOAD_FILE__URL);
+		createEAttribute(verifyDownloadFileEClass, VERIFY_DOWNLOAD_FILE__HANDLER);
+
+		markDownloadHandlerEClass = createEClass(MARK_DOWNLOAD_HANDLER);
+		createEAttribute(markDownloadHandlerEClass, MARK_DOWNLOAD_HANDLER__HANDLER);
 	}
 
 	/**
@@ -270,6 +309,7 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 		execWithoutJsEClass.getESuperTypes().add(theCorePackage.getCommand());
 		setDownloadResultFileEClass.getESuperTypes().add(theCorePackage.getCommand());
 		verifyDownloadFileEClass.getESuperTypes().add(theCorePackage.getCommand());
+		markDownloadHandlerEClass.getESuperTypes().add(theCorePackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(runJsEClass, RunJs.class, "RunJs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -283,6 +323,10 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 
 		initEClass(verifyDownloadFileEClass, VerifyDownloadFile.class, "VerifyDownloadFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getVerifyDownloadFile_Url(), theEcorePackage.getEString(), "url", null, 1, 1, VerifyDownloadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVerifyDownloadFile_Handler(), theEcorePackage.getEString(), "handler", null, 1, 1, VerifyDownloadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(markDownloadHandlerEClass, MarkDownloadHandler.class, "MarkDownloadHandler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMarkDownloadHandler_Handler(), theEcorePackage.getEString(), "handler", null, 1, -1, MarkDownloadHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

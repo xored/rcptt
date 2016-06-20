@@ -10015,52 +10015,6 @@ public interface TeslaPackage extends EPackage {
 	int GET_LAST_MESSAGE_BOX_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.MarkDownloadHandlerImpl <em>Mark Download Handler</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.MarkDownloadHandlerImpl
-	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getMarkDownloadHandler()
-	 * @generated
-	 */
-	int MARK_DOWNLOAD_HANDLER = 146;
-
-	/**
-	 * The feature id for the '<em><b>Host</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARK_DOWNLOAD_HANDLER__HOST = CorePackage.COMMAND__HOST;
-
-	/**
-	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARK_DOWNLOAD_HANDLER__BINDINGS = CorePackage.COMMAND__BINDINGS;
-
-	/**
-	 * The feature id for the '<em><b>Handler Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARK_DOWNLOAD_HANDLER__HANDLER_NAME = CorePackage.COMMAND_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Mark Download Handler</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MARK_DOWNLOAD_HANDLER_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.CheckDownloadResultImpl <em>Check Download Result</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10068,7 +10022,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCheckDownloadResult()
 	 * @generated
 	 */
-	int CHECK_DOWNLOAD_RESULT = 147;
+	int CHECK_DOWNLOAD_RESULT = 146;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10123,7 +10077,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRuntimeTarget()
 	 * @generated
 	 */
-	int GET_RUNTIME_TARGET = 148;
+	int GET_RUNTIME_TARGET = 147;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10160,7 +10114,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getButton()
 	 * @generated
 	 */
-	int BUTTON = 149;
+	int BUTTON = 148;
 
 	/**
 	 * The meta object id for the '<em>Element Kind</em>' data type.
@@ -10170,7 +10124,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getElementKind()
 	 * @generated
 	 */
-	int ELEMENT_KIND = 150;
+	int ELEMENT_KIND = 149;
 
 
 	/**
@@ -13856,27 +13810,6 @@ public interface TeslaPackage extends EPackage {
 	EClass getGetLastMessageBox();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler <em>Mark Download Handler</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Mark Download Handler</em>'.
-	 * @see org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler
-	 * @generated
-	 */
-	EClass getMarkDownloadHandler();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler#getHandlerName <em>Handler Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Handler Name</em>'.
-	 * @see org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler#getHandlerName()
-	 * @see #getMarkDownloadHandler()
-	 * @generated
-	 */
-	EAttribute getMarkDownloadHandler_HandlerName();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult <em>Check Download Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17036,24 +16969,6 @@ public interface TeslaPackage extends EPackage {
 		 * @generated
 		 */
 		EClass GET_LAST_MESSAGE_BOX = eINSTANCE.getGetLastMessageBox();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.MarkDownloadHandlerImpl <em>Mark Download Handler</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.tesla.ecl.model.impl.MarkDownloadHandlerImpl
-		 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getMarkDownloadHandler()
-		 * @generated
-		 */
-		EClass MARK_DOWNLOAD_HANDLER = eINSTANCE.getMarkDownloadHandler();
-
-		/**
-		 * The meta object literal for the '<em><b>Handler Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MARK_DOWNLOAD_HANDLER__HANDLER_NAME = eINSTANCE.getMarkDownloadHandler_HandlerName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.CheckDownloadResultImpl <em>Check Download Result</em>}' class.

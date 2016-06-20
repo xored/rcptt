@@ -36,7 +36,6 @@ import org.eclipse.rcptt.tesla.core.protocol.AssertionModeRequest;
 import org.eclipse.rcptt.tesla.core.protocol.CancelCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.Check;
 import org.eclipse.rcptt.tesla.core.protocol.CheckItem;
-import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
 import org.eclipse.rcptt.tesla.core.protocol.ClickAboutMenu;
 import org.eclipse.rcptt.tesla.core.protocol.ClickColumn;
@@ -53,13 +52,13 @@ import org.eclipse.rcptt.tesla.core.protocol.Expand;
 import org.eclipse.rcptt.tesla.core.protocol.GetState;
 import org.eclipse.rcptt.tesla.core.protocol.HoverAtText;
 import org.eclipse.rcptt.tesla.core.protocol.HoverAtTextOffset;
-import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.Maximize;
 import org.eclipse.rcptt.tesla.core.protocol.Minimize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.OpenDeclaration;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
+import org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile;
 import org.eclipse.rcptt.tesla.core.protocol.RecordingModeRequest;
 import org.eclipse.rcptt.tesla.core.protocol.Restore;
 import org.eclipse.rcptt.tesla.core.protocol.RollbackToState;
@@ -615,14 +614,9 @@ public class TeslaParser extends TeslaScriptletFactory {
 		return TeslaScriptletFactory.makeDialogReturns(kind, c.getPath());
 	}
 
-	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "MarkRapDownloadHandler")
-	protected Command setSWTCopyDialogInfo(MarkRapDownloadHandler c) {
-		return TeslaScriptletFactory.makeMarkDownloadHandler(c.getHandler());
-	}
-
-	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "CheckRapDownloadResult")
-	protected Command setSWTCopyDialogInfo(CheckRapDownloadResult c) {
-		return TeslaScriptletFactory.makeCheckDownloadResult(c.getBase64Content());
+	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "RapDownloadFile")
+	protected Command setSWTCopyDialogInfo(RapDownloadFile c) {
+		return TeslaScriptletFactory.makeCheckDownloadResult(c.getUrl(), c.getHandler(), c.getContent());
 	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetTextOffset")

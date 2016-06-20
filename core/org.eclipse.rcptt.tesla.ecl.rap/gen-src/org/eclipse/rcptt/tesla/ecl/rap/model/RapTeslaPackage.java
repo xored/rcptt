@@ -233,13 +233,69 @@ public interface RapTeslaPackage extends EPackage {
 	int VERIFY_DOWNLOAD_FILE__URL = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERIFY_DOWNLOAD_FILE__HANDLER = CorePackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Verify Download File</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERIFY_DOWNLOAD_FILE_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 1;
+	int VERIFY_DOWNLOAD_FILE_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
+
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.MarkDownloadHandlerImpl <em>Mark Download Handler</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.impl.MarkDownloadHandlerImpl
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.impl.RapTeslaPackageImpl#getMarkDownloadHandler()
+	 * @generated
+	 */
+	int MARK_DOWNLOAD_HANDLER = 4;
+
+	/**
+	 * The feature id for the '<em><b>Host</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_DOWNLOAD_HANDLER__HOST = CorePackage.COMMAND__HOST;
+
+	/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_DOWNLOAD_HANDLER__BINDINGS = CorePackage.COMMAND__BINDINGS;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_DOWNLOAD_HANDLER__HANDLER = CorePackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Mark Download Handler</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARK_DOWNLOAD_HANDLER_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 1;
 
 
 	/**
@@ -325,6 +381,38 @@ public interface RapTeslaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getVerifyDownloadFile_Url();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Handler</em>'.
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile#getHandler()
+	 * @see #getVerifyDownloadFile()
+	 * @generated
+	 */
+	EAttribute getVerifyDownloadFile_Handler();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler <em>Mark Download Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Mark Download Handler</em>'.
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler
+	 * @generated
+	 */
+	EClass getMarkDownloadHandler();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Handler</em>'.
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.MarkDownloadHandler#getHandler()
+	 * @see #getMarkDownloadHandler()
+	 * @generated
+	 */
+	EAttribute getMarkDownloadHandler_Handler();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -419,6 +507,32 @@ public interface RapTeslaPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VERIFY_DOWNLOAD_FILE__URL = eINSTANCE.getVerifyDownloadFile_Url();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERIFY_DOWNLOAD_FILE__HANDLER = eINSTANCE.getVerifyDownloadFile_Handler();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.rap.model.impl.MarkDownloadHandlerImpl <em>Mark Download Handler</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.ecl.rap.model.impl.MarkDownloadHandlerImpl
+		 * @see org.eclipse.rcptt.tesla.ecl.rap.model.impl.RapTeslaPackageImpl#getMarkDownloadHandler()
+		 * @generated
+		 */
+		EClass MARK_DOWNLOAD_HANDLER = eINSTANCE.getMarkDownloadHandler();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MARK_DOWNLOAD_HANDLER__HANDLER = eINSTANCE.getMarkDownloadHandler_Handler();
 
 	}
 

@@ -54,6 +54,7 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.rap.rwt.remote.RemoteObject;
 import org.eclipse.rcptt.tesla.core.Q7WaitUtils;
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
@@ -71,7 +72,6 @@ import org.eclipse.rcptt.tesla.core.protocol.CancelCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.CellClick;
 import org.eclipse.rcptt.tesla.core.protocol.Check;
 import org.eclipse.rcptt.tesla.core.protocol.CheckItem;
-import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Children;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
 import org.eclipse.rcptt.tesla.core.protocol.ClickAboutMenu;
@@ -109,7 +109,6 @@ import org.eclipse.rcptt.tesla.core.protocol.IntResponse;
 import org.eclipse.rcptt.tesla.core.protocol.IsDirty;
 import org.eclipse.rcptt.tesla.core.protocol.IsDisposed;
 import org.eclipse.rcptt.tesla.core.protocol.IsEnabled;
-import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.Maximize;
 import org.eclipse.rcptt.tesla.core.protocol.Minimize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
@@ -119,6 +118,7 @@ import org.eclipse.rcptt.tesla.core.protocol.ObjectResponse;
 import org.eclipse.rcptt.tesla.core.protocol.PasteTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
+import org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile;
 import org.eclipse.rcptt.tesla.core.protocol.ReplaceTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.Restore;
 import org.eclipse.rcptt.tesla.core.protocol.Save;
@@ -176,8 +176,8 @@ import org.eclipse.rcptt.tesla.swt.dnd.LocalClipboard;
 import org.eclipse.rcptt.tesla.swt.download.RapDownloadHandlerManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.IUnhandledNativeDialogHandler;
-import org.eclipse.rcptt.tesla.swt.rap.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
+import org.eclipse.rcptt.tesla.swt.rap.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IImageAssertSupport;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
@@ -291,8 +291,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ProtocolPackage.Literals.REPLACE_TEXT_SELECTION,
 
 			//RAP commands
-			ProtocolPackage.Literals.MARK_RAP_DOWNLOAD_HANDLER,
-			ProtocolPackage.Literals.CHECK_RAP_DOWNLOAD_RESULT,
+			ProtocolPackage.Literals.RAP_DOWNLOAD_FILE,
 
 			// Link commands
 			ProtocolPackage.Literals.CLICK_LINK,
@@ -758,10 +757,8 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleMouseEvent((MouseEvent) command);
 
 			//RAP
-			case ProtocolPackage.MARK_RAP_DOWNLOAD_HANDLER:
-				return handleMarkDownladHandler((MarkRapDownloadHandler) command);
-			case ProtocolPackage.CHECK_RAP_DOWNLOAD_RESULT:
-				return handleCheckDownloadResult((CheckRapDownloadResult) command);
+			case ProtocolPackage.RAP_DOWNLOAD_FILE:
+				return handleRapDownloadFile((RapDownloadFile) command);
 			}
 		}
 		return null;
@@ -1568,30 +1565,11 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 
-	private Response handleMarkDownladHandler(MarkRapDownloadHandler command) {
-		if(command.getHandler() == null || command.getHandler().equals("")) //$NON-NLS-1$
-			return failResponse("The handler name is empty"); //$NON-NLS-1$
-
-		RapDownloadHandlerManager.addHandler(command.getHandler());
-
-		return okResponse();
-	}
-
-	private Response handleCheckDownloadResult(CheckRapDownloadResult command) {
-		if(StringUtils.isEmpty(command.getBase64Content())) //$NON-NLS-1$
-			return failResponse("The command base 64 content is empty"); //$NON-NLS-1$
-
-		if(!RapDownloadHandlerManager.ckeckName(command.getFile()))
-		{
-			return failResponse("Failed the returned file name is not same."); //$NON-NLS-1$
-		}
-
-		if(!RapDownloadHandlerManager.checkContent(command.getBase64Content()))
-		{
-			return failResponse("Failed the returned file is not same."); //$NON-NLS-1$
-		}
-
-		return okResponse();
+	private Response handleRapDownloadFile(RapDownloadFile command) {
+		final String content = RapDownloadHandlerManager.emulateDownload(command.getUrl(), command.getHandler());
+		final ObjectResponse result = ProtocolFactory.eINSTANCE.createObjectResponse();
+		result.setResult(content);
+		return result;
 	}
 
 	private Response handleSetSWTDialogInfo(final SetSWTDialogInfo command) {

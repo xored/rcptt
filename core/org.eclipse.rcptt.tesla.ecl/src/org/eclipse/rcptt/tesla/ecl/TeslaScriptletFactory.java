@@ -21,7 +21,6 @@ import org.eclipse.rcptt.tesla.ecl.model.ApplyCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Button;
 import org.eclipse.rcptt.tesla.ecl.model.CancelCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.Check;
-import org.eclipse.rcptt.tesla.ecl.model.CheckDownloadResult;
 import org.eclipse.rcptt.tesla.ecl.model.Click;
 import org.eclipse.rcptt.tesla.ecl.model.ClickColumn;
 import org.eclipse.rcptt.tesla.ecl.model.ClickRuler;
@@ -84,7 +83,6 @@ import org.eclipse.rcptt.tesla.ecl.model.HoverRuler;
 import org.eclipse.rcptt.tesla.ecl.model.HoverText;
 import org.eclipse.rcptt.tesla.ecl.model.IsEmpty;
 import org.eclipse.rcptt.tesla.ecl.model.KeyType;
-import org.eclipse.rcptt.tesla.ecl.model.MarkDownloadHandler;
 import org.eclipse.rcptt.tesla.ecl.model.Matches;
 import org.eclipse.rcptt.tesla.ecl.model.OpenDeclaration;
 import org.eclipse.rcptt.tesla.ecl.model.Options;
@@ -126,6 +124,10 @@ import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseHover;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseMove;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MousePress;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseRelease;
+import org.eclipse.rcptt.tesla.ecl.rap.model.ExecWithoutJs;
+import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaFactory;
+import org.eclipse.rcptt.tesla.ecl.rap.model.SetDownloadResultFile;
+import org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile;
 import org.eclipse.rcptt.util.KeysAndButtons;
 
 public class TeslaScriptletFactory extends ScriptletFactory {
@@ -805,16 +807,19 @@ public class TeslaScriptletFactory extends ScriptletFactory {
 		return cmd;
 	}
 
-	public static CheckDownloadResult makeCheckDownloadResult(String content) {
-		CheckDownloadResult cmd = TeslaFactory.eINSTANCE.createCheckDownloadResult();
-		cmd.setContentOnBase64(content);
-		return cmd;
-	}
+	public static ExecWithoutJs makeCheckDownloadResult(String url, String handler, String content) {
+		final ExecWithoutJs command = RapTeslaFactory.eINSTANCE.createExecWithoutJs();
 
-	public static MarkDownloadHandler makeMarkDownloadHandler(String name) {
-		MarkDownloadHandler cmd = TeslaFactory.eINSTANCE.createMarkDownloadHandler();
-		cmd.setHandlerName(name);
-		return cmd;
+		final SetDownloadResultFile file = RapTeslaFactory.eINSTANCE.createSetDownloadResultFile();
+		file.setFile(content);
+
+		final VerifyDownloadFile verify = RapTeslaFactory.eINSTANCE.createVerifyDownloadFile();
+		verify.setUrl(url);
+		verify.setHandler(handler);
+
+		command.setCommand(makeSeq(file, verify));
+
+		return command;
 	}
 
 	public static SetTextOffset makeSetTextOffset(int line, int value) {

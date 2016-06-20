@@ -23,7 +23,6 @@ import org.eclipse.rcptt.tesla.core.protocol.CancelCellEditor;
 import org.eclipse.rcptt.tesla.core.protocol.CellClick;
 import org.eclipse.rcptt.tesla.core.protocol.Check;
 import org.eclipse.rcptt.tesla.core.protocol.CheckItem;
-import org.eclipse.rcptt.tesla.core.protocol.CheckRapDownloadResult;
 import org.eclipse.rcptt.tesla.core.protocol.Children;
 import org.eclipse.rcptt.tesla.core.protocol.ChildrenResponse;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
@@ -69,7 +68,6 @@ import org.eclipse.rcptt.tesla.core.protocol.IntResponse;
 import org.eclipse.rcptt.tesla.core.protocol.IsDirty;
 import org.eclipse.rcptt.tesla.core.protocol.IsDisposed;
 import org.eclipse.rcptt.tesla.core.protocol.IsEnabled;
-import org.eclipse.rcptt.tesla.core.protocol.MarkRapDownloadHandler;
 import org.eclipse.rcptt.tesla.core.protocol.Maximize;
 import org.eclipse.rcptt.tesla.core.protocol.Minimize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
@@ -83,6 +81,7 @@ import org.eclipse.rcptt.tesla.core.protocol.ParentResponse;
 import org.eclipse.rcptt.tesla.core.protocol.PasteTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
+import org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile;
 import org.eclipse.rcptt.tesla.core.protocol.RecordingModeRequest;
 import org.eclipse.rcptt.tesla.core.protocol.ReplaceTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.Restore;
@@ -890,14 +889,7 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass markRapDownloadHandlerEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass checkRapDownloadResultEClass = null;
+	private EClass rapDownloadFileEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -3409,8 +3401,8 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getMarkRapDownloadHandler() {
-		return markRapDownloadHandlerEClass;
+	public EClass getRapDownloadFile() {
+		return rapDownloadFileEClass;
 	}
 
 	/**
@@ -3418,8 +3410,8 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMarkRapDownloadHandler_Handler() {
-		return (EAttribute)markRapDownloadHandlerEClass.getEStructuralFeatures().get(0);
+	public EAttribute getRapDownloadFile_Url() {
+		return (EAttribute)rapDownloadFileEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3427,8 +3419,8 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCheckRapDownloadResult() {
-		return checkRapDownloadResultEClass;
+	public EAttribute getRapDownloadFile_Handler() {
+		return (EAttribute)rapDownloadFileEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -3436,17 +3428,8 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getCheckRapDownloadResult_File() {
-		return (EAttribute)checkRapDownloadResultEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCheckRapDownloadResult_Base64Content() {
-		return (EAttribute)checkRapDownloadResultEClass.getEStructuralFeatures().get(1);
+	public EAttribute getRapDownloadFile_Content() {
+		return (EAttribute)rapDownloadFileEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3887,12 +3870,10 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		updateControlCommandEClass = createEClass(UPDATE_CONTROL_COMMAND);
 		createEReference(updateControlCommandEClass, UPDATE_CONTROL_COMMAND__ELEMENTS);
 
-		markRapDownloadHandlerEClass = createEClass(MARK_RAP_DOWNLOAD_HANDLER);
-		createEAttribute(markRapDownloadHandlerEClass, MARK_RAP_DOWNLOAD_HANDLER__HANDLER);
-
-		checkRapDownloadResultEClass = createEClass(CHECK_RAP_DOWNLOAD_RESULT);
-		createEAttribute(checkRapDownloadResultEClass, CHECK_RAP_DOWNLOAD_RESULT__FILE);
-		createEAttribute(checkRapDownloadResultEClass, CHECK_RAP_DOWNLOAD_RESULT__BASE64_CONTENT);
+		rapDownloadFileEClass = createEClass(RAP_DOWNLOAD_FILE);
+		createEAttribute(rapDownloadFileEClass, RAP_DOWNLOAD_FILE__URL);
+		createEAttribute(rapDownloadFileEClass, RAP_DOWNLOAD_FILE__HANDLER);
+		createEAttribute(rapDownloadFileEClass, RAP_DOWNLOAD_FILE__CONTENT);
 
 		// Create enums
 		swtDialogKindEEnum = createEEnum(SWT_DIALOG_KIND);
@@ -4035,8 +4016,7 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		setWidthEClass.getESuperTypes().add(this.getElementCommand());
 		setPositionEClass.getESuperTypes().add(this.getElementCommand());
 		updateControlCommandEClass.getESuperTypes().add(theRawPackage.getCommand());
-		markRapDownloadHandlerEClass.getESuperTypes().add(theRawPackage.getCommand());
-		checkRapDownloadResultEClass.getESuperTypes().add(theRawPackage.getCommand());
+		rapDownloadFileEClass.getESuperTypes().add(theRawPackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(selectDataEClass, SelectData.class, "SelectData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4413,12 +4393,10 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		initEClass(updateControlCommandEClass, UpdateControlCommand.class, "UpdateControlCommand", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUpdateControlCommand_Elements(), theRawPackage.getElement(), null, "elements", null, 0, 1, UpdateControlCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(markRapDownloadHandlerEClass, MarkRapDownloadHandler.class, "MarkRapDownloadHandler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMarkRapDownloadHandler_Handler(), theEcorePackage.getEString(), "handler", null, 0, 1, MarkRapDownloadHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(checkRapDownloadResultEClass, CheckRapDownloadResult.class, "CheckRapDownloadResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCheckRapDownloadResult_File(), theEcorePackage.getEString(), "file", null, 0, 1, CheckRapDownloadResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCheckRapDownloadResult_Base64Content(), theEcorePackage.getEString(), "base64Content", null, 0, 1, CheckRapDownloadResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(rapDownloadFileEClass, RapDownloadFile.class, "RapDownloadFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRapDownloadFile_Url(), theEcorePackage.getEString(), "url", null, 1, 1, RapDownloadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRapDownloadFile_Handler(), theEcorePackage.getEString(), "handler", null, 1, 1, RapDownloadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRapDownloadFile_Content(), theEcorePackage.getEString(), "content", null, 0, 1, RapDownloadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(swtDialogKindEEnum, SWTDialogKind.class, "SWTDialogKind");

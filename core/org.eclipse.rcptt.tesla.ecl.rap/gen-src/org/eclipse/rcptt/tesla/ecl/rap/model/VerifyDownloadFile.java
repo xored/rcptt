@@ -14,6 +14,7 @@ import org.eclipse.rcptt.ecl.core.Command;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile#getUrl <em>Url</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile#getHandler <em>Handler</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaPackage#getVerifyDownloadFile()
@@ -46,5 +47,31 @@ public interface VerifyDownloadFile extends Command {
 	 * @generated
 	 */
 	void setUrl(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Handler</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Handler</em>' attribute.
+	 * @see #setHandler(String)
+	 * @see org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaPackage#getVerifyDownloadFile_Handler()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getHandler();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile#getHandler <em>Handler</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Handler</em>' attribute.
+	 * @see #getHandler()
+	 * @generated
+	 */
+	void setHandler(String value);
 
 } // VerifyDownloadFile

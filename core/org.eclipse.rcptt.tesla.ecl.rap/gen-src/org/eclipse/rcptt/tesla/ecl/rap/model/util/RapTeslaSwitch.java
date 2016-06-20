@@ -113,6 +113,13 @@ public class RapTeslaSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case RapTeslaPackage.MARK_DOWNLOAD_HANDLER: {
+				MarkDownloadHandler markDownloadHandler = (MarkDownloadHandler)theEObject;
+				T result = caseMarkDownloadHandler(markDownloadHandler);
+				if (result == null) result = caseCommand(markDownloadHandler);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -174,6 +181,21 @@ public class RapTeslaSwitch<T> {
 	 * @generated
 	 */
 	public T caseVerifyDownloadFile(VerifyDownloadFile object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mark Download Handler</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mark Download Handler</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMarkDownloadHandler(MarkDownloadHandler object) {
 		return null;
 	}
 

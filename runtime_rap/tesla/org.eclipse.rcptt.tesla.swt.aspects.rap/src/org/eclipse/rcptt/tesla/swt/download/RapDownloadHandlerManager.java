@@ -1,14 +1,41 @@
 package org.eclipse.rcptt.tesla.swt.download;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.rcptt.util.StringUtils;
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
+import javax.servlet.http.Part;
+
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.internal.service.ServiceManagerImpl;
+import org.eclipse.rap.rwt.service.ServiceHandler;
+import org.eclipse.rcptt.util.MockHttpServletRequest;
+import org.eclipse.rcptt.util.MockHttpServletResponse;
 
 public class RapDownloadHandlerManager {
 
 	private final static Set<String> handlers = new HashSet<String>();
-	private static String fileName;
 	private static String content;
 
 
@@ -20,7 +47,6 @@ public class RapDownloadHandlerManager {
 	public static void clear()
 	{
 		//handlers.clear();
-		fileName = null;
 		content = null;
 	}
 
@@ -29,22 +55,37 @@ public class RapDownloadHandlerManager {
 		return handlers.contains(name);
 	}
 
-	public static boolean ckeckName(String file) {
-
-		if(!StringUtils.isEmpty(file))
-		{
-			return file.equals(fileName);
-		}
-		return true;
+	public static boolean checkContent(String content) {
+		return content.equals(RapDownloadHandlerManager.content);
 	}
 
-	public static boolean checkContent(String base64Content) {
-		return base64Content.equals(content);
-	}
-
-	public static void addFile(String name, String base64)
+	public static void addFile(String file)
 	{
-		fileName = name;
-		content = base64;
+		content = file;
+	}
+
+
+	public static String emulateDownload(String url, String handler)
+	{
+		 ServiceHandler serviceHandler = ((ServiceManagerImpl)RWT.getServiceManager()).getServiceHandler(handler);
+
+		 MockHttpServletRequest request = new MockHttpServletRequest(url);
+		 MockHttpServletResponse response = new MockHttpServletResponse();
+
+		 try {
+			serviceHandler.service(request, response);
+
+			return org.eclipse.rcptt.util.Base64.encode(response.getDuplicateOutput().toByteArray());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return null;
 	}
 }
