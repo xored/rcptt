@@ -9,6 +9,7 @@
 		<aspect name="org.eclipse.rcptt.tesla.swt.aspects.rap.BrowserAspect" />
 		<aspect name="org.eclipse.rcptt.tesla.swt.aspects.rap.ClipboardAspect" />
 		<aspect name="org.eclipse.rcptt.tesla.swt.aspects.rap.ImagesAspect" />
+		<aspect name="org.eclipse.rcptt.tesla.swt.aspects.rap.JavaScriptExecutorAspect" />
 		<!--aspect name="org.eclipse.rcptt.tesla.swt.aspects.Handles"/-->
 	</aspects>
 	<weaver options="-verbose -Xset:weaveJavaPackages=true,typeDemotion=true"/>

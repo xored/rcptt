@@ -615,6 +615,7 @@
             name="ExecWithOptions"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptlet>
+
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ShutdownAutService"
             name="ShutdownAut"
@@ -780,6 +781,16 @@
 	        name="GetLastMessageBox"
 	        namespace="http://eclipse.org/rcptt/tesla/ecl">
   		</scriptlet>
+  		 <scriptlet
+            class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ExecWitoutJsService"
+            name="ExecWithoutJs"
+            namespace="http://eclipse.org/rcptt/tesla/ecl/rap">
+      </scriptlet>
+      <scriptlet
+            class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.RunJsService"
+            name="RunJs"
+            namespace="http://eclipse.org/rcptt/tesla/ecl/rap">
+      </scriptlet>
    </extension>
     <extension
           point="org.eclipse.rcptt.tesla.swt.rap.jobCollector">

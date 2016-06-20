@@ -58,6 +58,7 @@ import org.eclipse.rcptt.tesla.ecl.model.DoubleClick;
 import org.eclipse.rcptt.tesla.ecl.model.DoubleClickRuler;
 import org.eclipse.rcptt.tesla.ecl.model.DoubleClickText;
 import org.eclipse.rcptt.tesla.ecl.model.DragAction;
+import org.eclipse.rcptt.tesla.ecl.model.GetRuntimeTarget;
 import org.eclipse.rcptt.tesla.ecl.model.GetText;
 import org.eclipse.rcptt.tesla.ecl.model.HoverAtTextOffset;
 import org.eclipse.rcptt.tesla.ecl.model.HoverRuler;
@@ -189,7 +190,7 @@ public class ActionService extends AbstractActionService {
 		// Options
 		else if (command instanceof Options)
 			handleOptions((Options) command);
-		else if(command instanceof GetRuntimeTarget)
+		else if (command instanceof GetRuntimeTarget)
 			return "swt"; //$NON-NLS-1$
 		return result;
 	}
