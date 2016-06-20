@@ -201,7 +201,13 @@ public class ActionService extends AbstractActionService {
 		else if (command instanceof CheckDownloadResult)
 			handleCheckDownloadResult((CheckDownloadResult) command);
 		else if(command instanceof GetRuntimeTarget)
-			return "rap"; //$NON-NLS-1$
+			return handleRuntimeTarget((GetRuntimeTarget)command);
+		return result;
+	}
+
+	private Object handleRuntimeTarget(GetRuntimeTarget command) {
+		EclString result = CoreFactory.eINSTANCE.createEclString();
+		result.setValue("rap"); //$NON-NLS-1$
 		return result;
 	}
 

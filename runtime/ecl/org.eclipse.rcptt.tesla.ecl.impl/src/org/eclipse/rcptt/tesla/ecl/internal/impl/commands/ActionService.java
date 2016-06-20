@@ -191,7 +191,13 @@ public class ActionService extends AbstractActionService {
 		else if (command instanceof Options)
 			handleOptions((Options) command);
 		else if(command instanceof GetRuntimeTarget)
-			return "swt"; //$NON-NLS-1$
+			return handleRuntimeTarget((GetRuntimeTarget)command);
+		return result;
+	}
+
+	private Object handleRuntimeTarget(GetRuntimeTarget command) {
+		EclString result = CoreFactory.eINSTANCE.createEclString();
+		result.setValue("swt"); //$NON-NLS-1$
 		return result;
 	}
 
