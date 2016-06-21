@@ -118,7 +118,7 @@ public class CommandToStringConverter {
 				.eClass());
 
 		boolean forced = false;
-		boolean bigTextCommand = commandName.equals("exec-without-js");
+		boolean bigTextCommand = commandName.equals("set-download-result-file");
 
 		for (EStructuralFeature feature : attributes) {
 			if (feature.getEAnnotation(CoreUtils.INTERNAL_ANN) != null)
