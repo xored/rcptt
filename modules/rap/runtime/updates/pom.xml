@@ -6,15 +6,10 @@
     <groupId>org.eclipse.rcptt</groupId>
     <version>2.1.0-SNAPSHOT</version>
   </parent>
-  <profiles>
-    <profile>
-      <id>runtimeRap</id>
-      <modules>
-	       <module>org.eclipse.rcptt.updates.runtime.e3x.rap</module>
-         <module>org.eclipse.rcptt.updates.runtime.e3x.rap-feature</module>
-      </modules>
-    </profile>
-  </profiles>
+  <modules>
+	   <module>org.eclipse.rcptt.updates.runtime.e3x.rap</module>
+     <module>org.eclipse.rcptt.updates.runtime.e3x.rap-feature</module>
+  </modules>
   <groupId>org.eclipse.rcptt</groupId>
   <version>2.1.0-SNAPSHOT</version>
   <artifactId>rcptt.runtime.updates</artifactId>

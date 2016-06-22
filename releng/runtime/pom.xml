@@ -59,19 +59,4 @@
       </repositories>
     </profile>
 
-     <profile>
-      <id>runtimeRap</id>
-      <modules>
-        <module>../../runtime_rap</module>
-        <module>../../repository/rap/</module>
-      </modules>
-      <repositories>
-        <repository>
-          <id>rap</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/rt/rap/3.1</url>
-        </repository>
-      </repositories>
-    </profile>    
-  </profiles>
 </project>

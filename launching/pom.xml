@@ -14,9 +14,8 @@
 
   <modules>
     <module>org.eclipse.rcptt.launching-feature</module>
-    <module>org.eclipse.rcptt.launching</module>
+    <module>org.eclipse.rcptt.launching</module<name />
     <module>org.eclipse.rcptt.launching.ext</module>
-    <module>org.eclipse.rcptt.launching.rap</module>
     <module>org.eclipse.rcptt.launching.injection</module>
     <module>org.eclipse.rcptt.launching.p2utils</module>
     <module>org.eclipse.rcptt.reporting.util</module>

@@ -15,7 +15,6 @@
     <module>../../runtime/updates/org.eclipse.rcptt.updates.helios</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.galileo</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.kepler</module>
-    <module>../../runtime_rap/updates/org.eclipse.rcptt.updates.rap</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e3x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e38x</module>
     <module>../../runtime/updates/org.eclipse.rcptt.updates.aspectj.e44x</module>

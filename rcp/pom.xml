@@ -14,7 +14,6 @@
     <module>org.eclipse.rcptt.help</module>
     <module>../launching/org.eclipse.rcptt.launching.multiaut.ui</module>
     <module>org.eclipse.rcptt.launching.ext.ui</module>
-    <module>org.eclipse.rcptt.launching.rap.ui</module>
     <module>org.eclipse.rcptt.launching.remote.ui</module>
     <module>org.eclipse.rcptt.launching.configuration</module>
     <module>org.eclipse.rcptt.expandbar.ide</module>

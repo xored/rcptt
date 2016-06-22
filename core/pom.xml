@@ -16,7 +16,6 @@
 		<module>org.eclipse.rcptt.tesla.recording.core</module>
 		<!-- Tesla ECL plugins -->
 		<module>org.eclipse.rcptt.tesla.ecl</module>
-		<module>org.eclipse.rcptt.tesla.ecl.rap</module>
 		<module>org.eclipse.rcptt.tesla.ecl-feature</module>
 		<module>org.eclipse.rcptt.tesla.recording.core.ecl</module>
 		<!-- Q7 core modules -->
