@@ -319,7 +319,6 @@ Apache Software Foundation http://www.apache.org/
       <feature id="org.eclipse.emf.edit"/>
       <feature id="org.eclipse.emf.transaction"/>
       <feature id="org.eclipse.rcptt.updates"/>
-      <feature id="org.eclipse.rcptt.updates.rap.feature"/>
       <feature id="org.eclipse.rcptt.ecl.core"/>
       <feature id="org.eclipse.platform"/>
       <feature id="org.eclipse.ecf.filetransfer.httpclient4.feature"/>
