@@ -124,10 +124,10 @@ import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseHover;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseMove;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MousePress;
 import org.eclipse.rcptt.tesla.ecl.model.diagram.MouseRelease;
-import org.eclipse.rcptt.tesla.ecl.rap.model.ExecWithoutJs;
-import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaFactory;
-import org.eclipse.rcptt.tesla.ecl.rap.model.SetDownloadResultFile;
-import org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile;
+// import org.eclipse.rcptt.tesla.ecl.rap.model.ExecWithoutJs;
+// import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaFactory;
+// import org.eclipse.rcptt.tesla.ecl.rap.model.SetDownloadResultFile;
+// import org.eclipse.rcptt.tesla.ecl.rap.model.VerifyDownloadFile;
 import org.eclipse.rcptt.util.KeysAndButtons;
 
 public class TeslaScriptletFactory extends ScriptletFactory {
@@ -807,6 +807,7 @@ public class TeslaScriptletFactory extends ScriptletFactory {
 		return cmd;
 	}
 
+/*
 	public static ExecWithoutJs makeCheckDownloadResult(String url, String handler, String content) {
 		final ExecWithoutJs command = RapTeslaFactory.eINSTANCE.createExecWithoutJs();
 
@@ -821,7 +822,7 @@ public class TeslaScriptletFactory extends ScriptletFactory {
 
 		return command;
 	}
-
+*/
 	public static SetTextOffset makeSetTextOffset(int line, int value) {
 		SetTextOffset cmd = TeslaFactory.eINSTANCE.createSetTextOffset();
 		cmd.setValue(value);

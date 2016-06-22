@@ -614,10 +614,10 @@ public class TeslaParser extends TeslaScriptletFactory {
 		return TeslaScriptletFactory.makeDialogReturns(kind, c.getPath());
 	}
 
-	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "RapDownloadFile")
-	protected Command setSWTCopyDialogInfo(RapDownloadFile c) {
-		return TeslaScriptletFactory.makeCheckDownloadResult(c.getUrl(), c.getHandler(), c.getContent());
-	}
+//	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "RapDownloadFile")
+//	protected Command setSWTCopyDialogInfo(RapDownloadFile c) {
+//		return TeslaScriptletFactory.makeCheckDownloadResult(c.getUrl(), c.getHandler(), c.getContent());
+//	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetTextOffset")
 	protected Command setTextOffset(SetTextOffset c) {
