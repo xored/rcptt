@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.rcptt.launching.rap.ui"
+      label="RCPTT Runtime Sites"
+      version="2.1.0.qualifier"
+      provider-name="%proiderName">
+
+   <description>
+      Prepared update sites with RCP Runtime and RCP Runtime prerequsites for ganymede..indigo
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+   
+    <requires>
+      <import feature="org.eclipse.rcptt.launching.rap" version="2.1.0.qualifier"/>
+      <!-- Фича поддрежка IDE -->
+    </requires>  
+
+   <plugin
+         id="org.eclipse.rcptt.launching.rap.ui"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+</feature>
