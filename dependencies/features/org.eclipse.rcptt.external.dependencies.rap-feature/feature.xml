@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.rcptt.launching.rap"
-      label="RCPTT RAP launching"
+      id="org.eclipse.rcptt.external.dependencies.rap.feature"
+      label="RCPTT External Dependensies for RAP"
       version="2.1.0.qualifier"
       provider-name="%proiderName">
 
    <description>
-    des
+      RCPTT External Dependensies for RAP AUTs
    </description>
 
    <copyright url="%copyrightURL">
@@ -16,19 +16,12 @@
    <license url="%licenseURL">
       %license
    </license>
-
+         
    <plugin
-         id="org.eclipse.rcptt.launching.rap"
+         id="org.eclipse.rcptt.updates.external.dependencies.rap"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.rcptt.updates.runtime.rap"
-         download-size="0"
-         install-size="0"
-         version="2.1.0.qualifier"
-         unpack="false"/>         
 
 </feature>
