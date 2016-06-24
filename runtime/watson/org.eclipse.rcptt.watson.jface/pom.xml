@@ -3,12 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.eclipse.rcptt</groupId>
+<<<<<<< HEAD:runtime/watson/org.eclipse.rcptt.watson.jface/pom.xml
     <artifactId>rcptt.runtime.watson</artifactId>
     <version>2.1.0-SNAPSHOT</version>
+=======
+    <artifactId>watson</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+>>>>>>> 54beb56e6bab99cad46794365183945c26e5ce6f:watson/org.eclipse.rcptt.watson.jface/pom.xml
   </parent>
 
   <groupId>org.eclipse.rcptt</groupId>
   <artifactId>org.eclipse.rcptt.watson.jface</artifactId>
-  <version>2.1.0-SNAPSHOT</version>
+  <version>2.2.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>
