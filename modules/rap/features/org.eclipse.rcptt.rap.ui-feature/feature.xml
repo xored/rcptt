@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.rcptt.launching.rap.ui"
-      label="RCPTT Runtime Sites"
+      label="RCP Testing Tools RAP Supporting"
       version="2.1.0.qualifier"
       provider-name="%proiderName">
 
    <description>
-      Prepared update sites with RCP Runtime and RCP Runtime prerequsites for ganymede..indigo
+      RCP Testing Tools RAP Supporting
    </description>
 
    <copyright url="%copyrightURL">

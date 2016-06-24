@@ -26,6 +26,7 @@
     <e3xRepository>${buildUrl}/repository/e3x/target/repository</e3xRepository>
     <e4xRepository>${buildUrl}/repository/e4x/target/repository</e4xRepository>
     <coreRepository>${buildUrl}/repository/core/target/repository</coreRepository>
+    <rcpttExternalDepencenciesRepository>${buildUrl}/repository/dependencies/target/repository</rcpttExternalDepencenciesRepository>
   </properties>
   <repositories>
     <repository>
@@ -59,6 +60,11 @@
       <id>e4x-ide</id>
       <layout>p2</layout>
       <url>${e4xRepository}</url>
+    </repository>
+    <repository>
+       <id>rcptt-external-dependencies</id>
+       <layout>p2</layout>
+       <url>${rcpttExternalDepencenciesRepository}</url>
     </repository>
   </repositories>
 </project>

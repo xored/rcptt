@@ -32,9 +32,7 @@
       <import feature="org.eclipse.rap.equinox.target.feature" version="3.1.0.qualifier"/>
       <import feature="org.eclipse.rap.feature" version="3.1.0.qualifier"/>
       <import plugin="com.google.guava"/>
-   </requires>:
-
-
+   </requires>
 
 <plugin
          id="org.eclipse.rcptt.tesla.recording.swt.rap"
@@ -512,7 +510,6 @@
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
-
 
    <!--  FOR NORMAL WORKING RAP -->
     <plugin

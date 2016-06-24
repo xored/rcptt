@@ -29,8 +29,8 @@
     <profile>
       <id>ide</id>
       <modules>
-          <!-- <module>org.eclipse.rcptt.launching.rap-feature</module> -->
-          <!-- <module>org.eclipse.rcptt.launching.rap.ui-feature</module> -->
+          <module>org.eclipse.rcptt.launching.rap-feature</module>
+          <module>org.eclipse.rcptt.launching.rap.ui-feature</module>
       </modules>
     </profile>
 

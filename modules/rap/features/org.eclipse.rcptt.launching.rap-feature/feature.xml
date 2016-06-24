@@ -16,6 +16,10 @@
    <license url="%licenseURL">
       %license
    </license>
+   
+   <requires>
+      <import feature="org.eclipse.rcptt.external.dependencies.rap.feature" version="2.1.0.qualifier"/>
+   </requires>
 
    <plugin
          id="org.eclipse.rcptt.launching.rap"
@@ -23,12 +27,26 @@
          install-size="0"
          version="2.1.0.qualifier"
          unpack="false"/>
-
+    
    <plugin
-         id="org.eclipse.rcptt.updates.runtime.rap"
+         id="org.eclipse.rcptt.tesla.ecl.rap"
          download-size="0"
          install-size="0"
          version="2.1.0.qualifier"
-         unpack="false"/>         
+         unpack="false"/>
+
+    <plugin
+         id="org.eclipse.rcptt.ecl.platform.ui.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
+
+     <plugin
+         id="org.eclipse.rcptt.updates.external.dependencies.rap"
+         download-size="0"
+         install-size="0"
+         version="2.1.0.qualifier"
+         unpack="false"/>
 
 </feature>

@@ -32,7 +32,7 @@
     <profile>
       <id>ide</id>
       <modules>
-        <!-- <module>../../repositories/rap</module> -->
+        <module>../../repositories/rap</module>
       </modules>
     </profile>
 
@@ -43,6 +43,7 @@
     <buildUrl>file:/${user.dir}</buildUrl>
     <rcpttRepositoryFull>${buildUrl}/repository/full/target/repository/</rcpttRepositoryFull>
     <rapRepository>http://download.eclipse.org/rt/rap/3.1</rapRepository>
+    <rcpttExternalDepencenciesRepository>${buildUrl}/repository/dependencies/target/repository</rcpttExternalDepencenciesRepository>
   </properties>
   
   <repositories>
@@ -58,6 +59,11 @@
        <id>rap</id>
        <layout>p2</layout>
        <url>${rapRepository}</url>
+    </repository>
+    <repository>
+       <id>rcptt-external-dependencies</id>
+       <layout>p2</layout>
+       <url>${rcpttExternalDepencenciesRepository}</url>
     </repository>
   </repositories>
 </project>
