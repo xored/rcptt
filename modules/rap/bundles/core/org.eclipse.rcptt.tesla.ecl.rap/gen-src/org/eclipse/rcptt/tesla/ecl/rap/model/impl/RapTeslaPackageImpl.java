@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * /*******************************************************************************
+ *  * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ *  * All rights reserved. This program and the accompanying materials
+ *  * are made available under the terms of the Eclipse Public License v1.0
+ *  * which accompanies this distribution, and is available at
+ *  * http://www.eclipse.org/legal/epl-v10.html
+ *  *
+ *  * Contributors:
+ *  *     Xored Software Inc - initial API and implementation and/or initial documentation
+ *  *******************************************************************************/
 package org.eclipse.rcptt.tesla.ecl.rap.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -92,7 +101,7 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link RapTeslaPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -123,7 +132,7 @@ public class RapTeslaPackageImpl extends EPackageImpl implements RapTeslaPackage
 		// Mark meta-data to indicate it can't be changed
 		theRapTeslaPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(RapTeslaPackage.eNS_URI, theRapTeslaPackage);
 		return theRapTeslaPackage;
