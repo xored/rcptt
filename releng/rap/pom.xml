@@ -32,7 +32,7 @@
     <profile>
       <id>ide</id>
       <modules>
-        <module>../../repositories/rap</module>
+        <module>../../repository/rap</module>
       </modules>
     </profile>
 

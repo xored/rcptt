@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.rcptt.launching.rap"
+      id="org.eclipse.rcptt.launching.rap.feature"
       label="RCPTT RAP launching"
       version="2.1.0.qualifier"
       provider-name="%proiderName">

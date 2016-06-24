@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.rcptt.launching.rap.ui"
+      id="org.eclipse.rcptt.rap.ui.feature"
       label="RCP Testing Tools RAP Supporting"
       version="2.1.0.qualifier"
       provider-name="%proiderName">
@@ -18,7 +18,7 @@
    </license>
    
     <requires>
-      <import feature="org.eclipse.rcptt.launching.rap" version="2.1.0.qualifier"/>
+      <import feature="org.eclipse.rcptt.launching.rap.feature" version="2.1.0.qualifier"/>
       <!-- Фича поддрежка IDE -->
     </requires>  
 
