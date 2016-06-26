@@ -49,10 +49,10 @@ import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
+import org.eclipse.rcptt.tesla.swt.events.IRwtWorkbenchListener;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.IRwtWorkbenchListener;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.util.Base64;
 import org.eclipse.swt.widgets.Display;
@@ -127,7 +127,6 @@ public class TeslaBridge {
 		TeslaEventManager.getManager().addEventListener(listener);
 
 		workbenchListener = new IRwtWorkbenchListener() {
-			@Override
 			public void workbenchChnage(Object oldWorkbench, Object newWorkbench) {
 				eclipseWindow = null;
 			}

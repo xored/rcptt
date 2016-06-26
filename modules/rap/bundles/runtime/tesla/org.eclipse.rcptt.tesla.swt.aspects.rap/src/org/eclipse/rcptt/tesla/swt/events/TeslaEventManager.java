@@ -433,10 +433,6 @@ public class TeslaEventManager {
 		}
 	}
 
-	public interface IRwtWorkbenchListener {
-		void workbenchChnage(Object oldWorkbench, Object newWorkbench);
-	}
-
 	public void deactivatePushSession() {
 		synchronized(needSync)
 		{
