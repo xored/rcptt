@@ -807,22 +807,6 @@ public class TeslaScriptletFactory extends ScriptletFactory {
 		return cmd;
 	}
 
-/*
-	public static ExecWithoutJs makeCheckDownloadResult(String url, String handler, String content) {
-		final ExecWithoutJs command = RapTeslaFactory.eINSTANCE.createExecWithoutJs();
-
-		final SetDownloadResultFile file = RapTeslaFactory.eINSTANCE.createSetDownloadResultFile();
-		file.setFile(content);
-
-		final VerifyDownloadFile verify = RapTeslaFactory.eINSTANCE.createVerifyDownloadFile();
-		verify.setUrl(url);
-		verify.setHandler(handler);
-
-		command.setCommand(makeSeq(file, verify));
-
-		return command;
-	}
-*/
 	public static SetTextOffset makeSetTextOffset(int line, int value) {
 		SetTextOffset cmd = TeslaFactory.eINSTANCE.createSetTextOffset();
 		cmd.setValue(value);

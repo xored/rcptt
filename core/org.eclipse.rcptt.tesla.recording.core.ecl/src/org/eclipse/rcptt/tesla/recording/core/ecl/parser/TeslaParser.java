@@ -58,7 +58,6 @@ import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.OpenDeclaration;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
-import org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile;
 import org.eclipse.rcptt.tesla.core.protocol.RecordingModeRequest;
 import org.eclipse.rcptt.tesla.core.protocol.Restore;
 import org.eclipse.rcptt.tesla.core.protocol.RollbackToState;
@@ -613,11 +612,6 @@ public class TeslaParser extends TeslaScriptletFactory {
 		}
 		return TeslaScriptletFactory.makeDialogReturns(kind, c.getPath());
 	}
-
-//	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "RapDownloadFile")
-//	protected Command setSWTCopyDialogInfo(RapDownloadFile c) {
-//		return TeslaScriptletFactory.makeCheckDownloadResult(c.getUrl(), c.getHandler(), c.getContent());
-//	}
 
 	@TeslaCommand(packageUri = ProtocolPackage.eNS_URI, classifier = "SetTextOffset")
 	protected Command setTextOffset(SetTextOffset c) {

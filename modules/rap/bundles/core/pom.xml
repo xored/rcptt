@@ -17,6 +17,7 @@
 
   <modules>
     <module>org.eclipse.rcptt.tesla.ecl.rap</module>
+    <modele>org.eclipse.rcptt.tesla.recording.core.ecl.rap</module>
   </modules>
 
 </project>

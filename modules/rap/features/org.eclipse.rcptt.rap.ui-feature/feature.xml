@@ -32,7 +32,6 @@
    
     <requires>
       <import feature="org.eclipse.rcptt.launching.rap.feature" version="2.2.0.qualifier"/>
-      <!-- Фича поддрежка IDE -->
     </requires>  
 
    <plugin
