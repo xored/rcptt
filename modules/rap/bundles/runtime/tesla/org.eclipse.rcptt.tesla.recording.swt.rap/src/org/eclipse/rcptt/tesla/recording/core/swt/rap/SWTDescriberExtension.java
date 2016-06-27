@@ -92,6 +92,12 @@ public class SWTDescriberExtension implements IRecorderDescriberExtension {
 			if (base instanceof Browser) {
 				return descr;
 			}
+
+			if(base instanceof ToolItem)
+			{
+				return getDescriber(base);
+			}
+
 			if (base instanceof Control
 					&& ((Control) base).getParent() instanceof CCombo) {
 				return getDescriber(((Control) base).getParent());
