@@ -14,18 +14,7 @@
   <artifactId>runtime</artifactId>
   <packaging>pom</packaging>
 
-   <modules>
-        <module>contexts</module>
-        <module>ecl</module>
-        <module>org.eclipse.rcptt.core.ecl.debug.rap</module>
-        <module>org.eclipse.rcptt.forms.impl.rap</module>
-        <module>org.eclipse.rcptt.runtime.ui.rap</module>
-        <module>org.eclipse.rcptt.util.swt.rap</module>
-        <module>org.eclipse.rcptt.rap.aspects</module>
-        <module>tesla</module>
-        <module>verifications</module>
-        <module>watson</module>
-    </modules>
+
 
   <profiles>
     <profile>
@@ -33,7 +22,18 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-
+        <modules>
+          <module>contexts</module>
+          <module>ecl</module>
+          <module>org.eclipse.rcptt.core.ecl.debug.rap</module>
+          <module>org.eclipse.rcptt.forms.impl.rap</module>
+          <module>org.eclipse.rcptt.runtime.ui.rap</module>
+          <module>org.eclipse.rcptt.util.swt.rap</module>
+          <module>org.eclipse.rcptt.rap.aspects</module>
+          <module>tesla</module>
+          <module>verifications</module>
+          <module>watson</module>
+        </modules>
     </profile>
 
     <profile>

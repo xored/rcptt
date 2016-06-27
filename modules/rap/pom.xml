@@ -19,5 +19,21 @@
    <module>features</module>
    <module>repositories</module>
   </modules>
-  
+
+  <profiles>
+   <profile>
+      <id>ide</id>
+      <repositories>
+        <repository>
+          <snapshots>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+          <id>rap-rcptt-runtime</id>
+          <layout>p2</layout>
+          <url>file:/${user.dir}/modules/rap/repositories/org.eclipse.rcptt.runtime-updatesite.rap/target/repository/</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
 </project>

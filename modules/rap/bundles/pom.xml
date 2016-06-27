@@ -14,25 +14,28 @@
   <version>2.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <modules>
-    <module>core</module>
-     <module>runtime</module>
-     <module>ecl</module>
-  </modules>
+ 
 
   <profiles>
-
     <profile>
       <id>core</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+      <modules>
+            <module>core</module>
+            <module>runtime</module>
+            <module>ecl</module>
+      </modules>
     </profile>
 
     <profile>
       <id>ide</id>
       <modules>
+        <module>core</module>
+        <module>ecl</module>
         <module>launching</module>
+        <module>runtime</module>
       </modules>
     </profile>
 
