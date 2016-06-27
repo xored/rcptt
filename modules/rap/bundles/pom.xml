@@ -15,7 +15,9 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>core</module>
      <module>runtime</module>
+     <module>ecl</module>
   </modules>
 
   <profiles>
@@ -25,17 +27,12 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-      <modules>
-          <module>core</module>
-          <module>ecl</module>
-        </modules>
     </profile>
 
     <profile>
       <id>ide</id>
       <modules>
         <module>launching</module>
-        <module>runtime</module>
       </modules>
     </profile>
 

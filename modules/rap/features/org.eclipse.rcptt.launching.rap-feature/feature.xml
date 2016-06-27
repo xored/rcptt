@@ -53,7 +53,7 @@
          id="org.eclipse.rcptt.tesla.recording.core.ecl.rap"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="2.2.0.qualifier"
          unpack="false"/>
 
      <plugin

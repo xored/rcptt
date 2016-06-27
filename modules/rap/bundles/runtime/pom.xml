@@ -14,14 +14,7 @@
   <artifactId>runtime</artifactId>
   <packaging>pom</packaging>
 
-
-  <profiles>
-    <profile>
-      <id>core</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
+   <modules>
         <module>contexts</module>
         <module>ecl</module>
         <module>org.eclipse.rcptt.core.ecl.debug.rap</module>
@@ -32,7 +25,15 @@
         <module>tesla</module>
         <module>verifications</module>
         <module>watson</module>
-      </modules>
+    </modules>
+
+  <profiles>
+    <profile>
+      <id>core</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
     </profile>
 
     <profile>
