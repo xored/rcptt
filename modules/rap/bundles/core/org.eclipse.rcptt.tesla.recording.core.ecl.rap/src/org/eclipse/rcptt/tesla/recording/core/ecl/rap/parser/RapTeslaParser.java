@@ -3,6 +3,7 @@ package org.eclipse.rcptt.tesla.recording.core.ecl.rap.parser;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.core.Sequence;
 import org.eclipse.rcptt.ecl.core.util.ScriptletFactory;
+import org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile;
 import org.eclipse.rcptt.tesla.ecl.rap.model.ExecWithoutJs;
 import org.eclipse.rcptt.tesla.ecl.rap.model.RapTeslaFactory;
 import org.eclipse.rcptt.tesla.ecl.rap.model.SetDownloadResultFile;
@@ -12,7 +13,7 @@ import org.eclipse.rcptt.tesla.recording.core.ecl.TeslaCommand;
 public class RapTeslaParser {
 
 	@TeslaCommand(packageUri="", classifier ="")
-	public Command c(RapDownloadFile file)
+	public Command downloadFile(RapDownloadFile file)
 	{
 			final ExecWithoutJs command = RapTeslaFactory.eINSTANCE.createExecWithoutJs();
 
