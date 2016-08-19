@@ -130,4 +130,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="TerminateAut" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
     <eAnnotations source="http://www.eclipse.org/ecl/internal"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssertionAUTControlsHierarchy" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//AssertionAUTControlsHierarchyState"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AssertionAUTControlsHierarchyState">
+    <eLiterals name="GetRoot"/>
+    <eLiterals name="GetNode"/>
+    <eLiterals name="Clear"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -993,6 +993,24 @@ public interface ProtocolFactory extends EFactory {
 	RapUploadFile createRapUploadFile();
 
 	/**
+	 * Returns a new object of class '<em>UI Hierarchy Response</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>UI Hierarchy Response</em>'.
+	 * @generated
+	 */
+	UIHierarchyResponse createUIHierarchyResponse();
+
+	/**
+	 * Returns a new object of class '<em>UI Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>UI Element</em>'.
+	 * @generated
+	 */
+	UIElement createUIElement();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -1180,6 +1180,61 @@ public interface Q7CorePackage extends EPackage {
 	int TERMINATE_AUT_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.core.ecl.core.model.impl.AssertionAUTControlsHierarchyImpl <em>Assertion AUT Controls Hierarchy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.AssertionAUTControlsHierarchyImpl
+	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getAssertionAUTControlsHierarchy()
+	 * @generated
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY = 24;
+
+	/**
+	 * The feature id for the '<em><b>Host</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY__HOST = CorePackage.COMMAND__HOST;
+
+	/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY__BINDINGS = CorePackage.COMMAND__BINDINGS;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY__ID = CorePackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY__STATE = CorePackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Assertion AUT Controls Hierarchy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase <em>Execution Phase</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1187,7 +1242,17 @@ public interface Q7CorePackage extends EPackage {
 	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getExecutionPhase()
 	 * @generated
 	 */
-	int EXECUTION_PHASE = 24;
+	int EXECUTION_PHASE = 25;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState <em>Assertion AUT Controls Hierarchy State</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState
+	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getAssertionAUTControlsHierarchyState()
+	 * @generated
+	 */
+	int ASSERTION_AUT_CONTROLS_HIERARCHY_STATE = 26;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.ecl.core.model.EnterContext <em>Enter Context</em>}'.
@@ -1826,6 +1891,38 @@ public interface Q7CorePackage extends EPackage {
 	EClass getTerminateAut();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy <em>Assertion AUT Controls Hierarchy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Assertion AUT Controls Hierarchy</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy
+	 * @generated
+	 */
+	EClass getAssertionAUTControlsHierarchy();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy#getId()
+	 * @see #getAssertionAUTControlsHierarchy()
+	 * @generated
+	 */
+	EAttribute getAssertionAUTControlsHierarchy_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy#getState <em>State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>State</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy#getState()
+	 * @see #getAssertionAUTControlsHierarchy()
+	 * @generated
+	 */
+	EAttribute getAssertionAUTControlsHierarchy_State();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase <em>Execution Phase</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1834,6 +1931,16 @@ public interface Q7CorePackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getExecutionPhase();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState <em>Assertion AUT Controls Hierarchy State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Assertion AUT Controls Hierarchy State</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState
+	 * @generated
+	 */
+	EEnum getAssertionAUTControlsHierarchyState();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2386,6 +2493,32 @@ public interface Q7CorePackage extends EPackage {
 		EClass TERMINATE_AUT = eINSTANCE.getTerminateAut();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.core.ecl.core.model.impl.AssertionAUTControlsHierarchyImpl <em>Assertion AUT Controls Hierarchy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.core.ecl.core.model.impl.AssertionAUTControlsHierarchyImpl
+		 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getAssertionAUTControlsHierarchy()
+		 * @generated
+		 */
+		EClass ASSERTION_AUT_CONTROLS_HIERARCHY = eINSTANCE.getAssertionAUTControlsHierarchy();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ASSERTION_AUT_CONTROLS_HIERARCHY__ID = eINSTANCE.getAssertionAUTControlsHierarchy_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ASSERTION_AUT_CONTROLS_HIERARCHY__STATE = eINSTANCE.getAssertionAUTControlsHierarchy_State();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase <em>Execution Phase</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2394,6 +2527,16 @@ public interface Q7CorePackage extends EPackage {
 		 * @generated
 		 */
 		EEnum EXECUTION_PHASE = eINSTANCE.getExecutionPhase();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState <em>Assertion AUT Controls Hierarchy State</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState
+		 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getAssertionAUTControlsHierarchyState()
+		 * @generated
+		 */
+		EEnum ASSERTION_AUT_CONTROLS_HIERARCHY_STATE = eINSTANCE.getAssertionAUTControlsHierarchyState();
 
 	}
 
