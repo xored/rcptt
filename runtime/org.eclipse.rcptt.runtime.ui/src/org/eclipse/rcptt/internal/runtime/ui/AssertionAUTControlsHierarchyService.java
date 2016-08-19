@@ -45,7 +45,7 @@ public class AssertionAUTControlsHierarchyService implements ICommandService {
 		this.context = context;
 
 		AssertionAUTControlsHierarchy assertionAUTControlsHierarchy = (AssertionAUTControlsHierarchy) command;
-		String id = assertionAUTControlsHierarchy.getId();
+		final String id = assertionAUTControlsHierarchy.getId();
 		AssertionAUTControlsHierarchyState state = assertionAUTControlsHierarchy.getState();
 
 		if (AssertionAUTControlsHierarchyState.CLEAR == state) {
@@ -64,7 +64,7 @@ public class AssertionAUTControlsHierarchyService implements ICommandService {
 
 		final Exception[] ex = new Exception[1];
 
-		UIHierarchyResponse response = ProtocolFactory.eINSTANCE.createUIHierarchyResponse();
+		final UIHierarchyResponse response = ProtocolFactory.eINSTANCE.createUIHierarchyResponse();
 
 		if (AssertionAUTControlsHierarchyState.GET_ROOT == state) {
 
