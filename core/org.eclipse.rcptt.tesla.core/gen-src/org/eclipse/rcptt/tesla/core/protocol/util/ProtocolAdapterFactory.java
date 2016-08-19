@@ -13,6 +13,7 @@ package org.eclipse.rcptt.tesla.core.protocol.util;
 import org.eclipse.rcptt.tesla.core.protocol.*;
 
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -511,12 +512,24 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 				return createRapUploadFileAdapter();
 			}
 			@Override
+			public Adapter caseUIHierarchyResponse(UIHierarchyResponse object) {
+				return createUIHierarchyResponseAdapter();
+			}
+			@Override
+			public Adapter caseUIElement(UIElement object) {
+				return createUIElementAdapter();
+			}
+			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
 			}
 			@Override
 			public Adapter caseResponse(Response object) {
 				return createResponseAdapter();
+			}
+			@Override
+			public Adapter caseElement(Element object) {
+				return createElementAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -2051,6 +2064,34 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse <em>UI Hierarchy Response</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse
+	 * @generated
+	 */
+	public Adapter createUIHierarchyResponseAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.UIElement <em>UI Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.UIElement
+	 * @generated
+	 */
+	public Adapter createUIElementAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.raw.Command <em>Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2075,6 +2116,20 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createResponseAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.raw.Element <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.raw.Element
+	 * @generated
+	 */
+	public Adapter createElementAdapter() {
 		return null;
 	}
 

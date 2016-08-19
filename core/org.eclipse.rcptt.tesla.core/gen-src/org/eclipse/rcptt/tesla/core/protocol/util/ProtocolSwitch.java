@@ -13,6 +13,7 @@ package org.eclipse.rcptt.tesla.core.protocol.util;
 import org.eclipse.rcptt.tesla.core.protocol.*;
 
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
 
 import java.util.List;
@@ -916,6 +917,20 @@ public class ProtocolSwitch<T> {
 				RapUploadFile rapUploadFile = (RapUploadFile)theEObject;
 				T result = caseRapUploadFile(rapUploadFile);
 				if (result == null) result = caseCommand(rapUploadFile);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ProtocolPackage.UI_HIERARCHY_RESPONSE: {
+				UIHierarchyResponse uiHierarchyResponse = (UIHierarchyResponse)theEObject;
+				T result = caseUIHierarchyResponse(uiHierarchyResponse);
+				if (result == null) result = caseResponse(uiHierarchyResponse);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ProtocolPackage.UI_ELEMENT: {
+				UIElement uiElement = (UIElement)theEObject;
+				T result = caseUIElement(uiElement);
+				if (result == null) result = caseElement(uiElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -2544,6 +2559,36 @@ public class ProtocolSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>UI Hierarchy Response</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>UI Hierarchy Response</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUIHierarchyResponse(UIHierarchyResponse object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>UI Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>UI Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUIElement(UIElement object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Command</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -2570,6 +2615,21 @@ public class ProtocolSwitch<T> {
 	 * @generated
 	 */
 	public T caseResponse(Response object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseElement(Element object) {
 		return null;
 	}
 
