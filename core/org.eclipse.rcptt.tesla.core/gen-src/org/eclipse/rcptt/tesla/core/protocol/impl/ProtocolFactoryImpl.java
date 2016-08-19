@@ -170,6 +170,8 @@ public class ProtocolFactoryImpl extends EFactoryImpl implements ProtocolFactory
 			case ProtocolPackage.UPDATE_CONTROL_COMMAND: return createUpdateControlCommand();
 			case ProtocolPackage.RAP_DOWNLOAD_FILE: return createRapDownloadFile();
 			case ProtocolPackage.RAP_UPLOAD_FILE: return createRapUploadFile();
+			case ProtocolPackage.UI_HIERARCHY_RESPONSE: return createUIHierarchyResponse();
+			case ProtocolPackage.UI_ELEMENT: return createUIElement();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -1285,6 +1287,26 @@ public class ProtocolFactoryImpl extends EFactoryImpl implements ProtocolFactory
 	public RapUploadFile createRapUploadFile() {
 		RapUploadFileImpl rapUploadFile = new RapUploadFileImpl();
 		return rapUploadFile;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UIHierarchyResponse createUIHierarchyResponse() {
+		UIHierarchyResponseImpl uiHierarchyResponse = new UIHierarchyResponseImpl();
+		return uiHierarchyResponse;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UIElement createUIElement() {
+		UIElementImpl uiElement = new UIElementImpl();
+		return uiElement;
 	}
 
 	/**

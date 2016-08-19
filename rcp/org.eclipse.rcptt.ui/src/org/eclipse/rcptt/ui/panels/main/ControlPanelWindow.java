@@ -72,6 +72,7 @@ import org.eclipse.rcptt.ui.dialogs.DialogUtil;
 import org.eclipse.rcptt.ui.editors.ecl.EclSourceViewer;
 import org.eclipse.rcptt.ui.panels.ActionMenuCreator;
 import org.eclipse.rcptt.ui.panels.Actions;
+import org.eclipse.rcptt.ui.panels.assertion.AssertionAUTControlsHierarchyDialog;
 import org.eclipse.rcptt.ui.panels.assertion.AssertionPanelWindow;
 import org.eclipse.rcptt.ui.recording.RecordingContextManager;
 import org.eclipse.rcptt.ui.recording.RecordingSupport;
@@ -121,6 +122,7 @@ public class ControlPanelWindow extends Dialog {
 	private final Listener keyListener = new RecordingShortcutListener();
 
 	private AssertionPanelWindow assertionWindow;
+	private AssertionAUTControlsHierarchyDialog assertionAUTHierarchyDialog;
 	private EmbeddedTabFolder tabFolder;
 	private CoolBar coolBar;
 	private StatusBarComposite statusBar;
@@ -161,7 +163,7 @@ public class ControlPanelWindow extends Dialog {
 		super((Shell) null);
 
 		this.parentShell = parentShell;
-		setShellStyle(SWT.RESIZE /* | SWT.TOOL */ | SWT.CLOSE /* | SWT.ON_TOP */);
+		setShellStyle(SWT.RESIZE | SWT.CLOSE);
 		if (testCase != null) {
 			setModel(testCase);
 			copyContent((Scenario) testCase.getNamedElement(), this.scenario);
@@ -286,7 +288,6 @@ public class ControlPanelWindow extends Dialog {
 			};
 		};
 		statusBar.createControl(parent);
-		// statusBar.getControl().addKeyListener(keyListener);
 		dbc.bindValue(WidgetProperties.text().observe(getShell()),
 				new ComputedValue<Object>() {
 					@Override
@@ -374,18 +375,6 @@ public class ControlPanelWindow extends Dialog {
 		tabFolder.setUnselectedCloseVisible(false);
 		tabFolder.setUnselectedImageVisible(true);
 
-		// ThemeManagerAdapter themePreferences = new ThemeManagerAdapter(
-		// PlatformUI.getWorkbench().getThemeManager());
-		//
-		// DefaultThemeListener themeListener = new DefaultThemeListener(
-		// tabFolder, themePreferences);
-		// themePreferences.addListener(themeListener);
-		// PreferenceStoreAdapter apiPreferences = new PreferenceStoreAdapter(
-		// PrefUtil.getAPIPreferenceStore());
-		// new DefaultSimpleTabListener(apiPreferences,
-		// IWorkbenchPreferenceConstants.SHOW_TRADITIONAL_STYLE_TABS,
-		// tabFolder);
-
 		final Color c1 = new Color(Display.getCurrent(), 232, 238, 244);
 		final Color c2 = new Color(Display.getCurrent(), 153, 180, 209);
 		CTabFolder control = (CTabFolder) tabFolder;
@@ -398,7 +387,6 @@ public class ControlPanelWindow extends Dialog {
 			}
 		});
 
-		// tabFolder.getControl().addKeyListener(keyListener);
 		return tabFolder;
 	}
 
@@ -679,7 +667,13 @@ public class ControlPanelWindow extends Dialog {
 		IAction action = new Action() {
 			@Override
 			public void run() {
-				System.out.println("ControlPanelWindow.createAssertingModeFeatureAction Action.run test");
+				if (assertionAUTHierarchyDialog == null
+						|| assertionAUTHierarchyDialog.getShell() == null
+						|| assertionAUTHierarchyDialog.getShell().isDisposed()) {
+					assertionAUTHierarchyDialog = new AssertionAUTControlsHierarchyDialog(recordingSupport.getAUT(),
+							getShell());
+				}
+				assertionAUTHierarchyDialog.open();
 			}
 		};
 		dbc.bindValue(Actions.observeImageDescriptor(action), new ComputedValue<Object>() {
@@ -691,7 +685,7 @@ public class ControlPanelWindow extends Dialog {
 		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
-				return Messages.ControlPanelWindow_OpenAssertingModeTreeDialogActionToolTip;
+				return Messages.ControlPanelWindow_OpenAssertionAUTControlsHierarchyDialogActionToolTip;
 			}
 		});
 		dbc.bindValue(Actions.observeEnabled(action), new ComputedValue<Boolean>(

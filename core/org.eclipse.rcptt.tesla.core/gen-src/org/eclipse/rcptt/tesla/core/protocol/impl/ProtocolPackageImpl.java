@@ -121,6 +121,8 @@ import org.eclipse.rcptt.tesla.core.protocol.TextSelectionResponse;
 import org.eclipse.rcptt.tesla.core.protocol.Type;
 import org.eclipse.rcptt.tesla.core.protocol.TypeAction;
 import org.eclipse.rcptt.tesla.core.protocol.TypeText;
+import org.eclipse.rcptt.tesla.core.protocol.UIElement;
+import org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse;
 import org.eclipse.rcptt.tesla.core.protocol.UpdateControlCommand;
 import org.eclipse.rcptt.tesla.core.protocol.WaitForRestart;
 import org.eclipse.rcptt.tesla.core.protocol.WaitForState;
@@ -898,6 +900,20 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * @generated
 	 */
 	private EClass rapUploadFileEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass uiHierarchyResponseEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass uiElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -3472,6 +3488,51 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getUIHierarchyResponse() {
+		return uiHierarchyResponseEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUIHierarchyResponse_UiElements() {
+		return (EReference)uiHierarchyResponseEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getUIElement() {
+		return uiElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUIElement_HasChildren() {
+		return (EAttribute)uiElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUIElement_Name() {
+		return (EAttribute)uiElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSWTDialogKind() {
 		return swtDialogKindEEnum;
 	}
@@ -3914,6 +3975,13 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		createEAttribute(rapUploadFileEClass, RAP_UPLOAD_FILE__BASE64FILE);
 		createEAttribute(rapUploadFileEClass, RAP_UPLOAD_FILE__PATH);
 
+		uiHierarchyResponseEClass = createEClass(UI_HIERARCHY_RESPONSE);
+		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__UI_ELEMENTS);
+
+		uiElementEClass = createEClass(UI_ELEMENT);
+		createEAttribute(uiElementEClass, UI_ELEMENT__HAS_CHILDREN);
+		createEAttribute(uiElementEClass, UI_ELEMENT__NAME);
+
 		// Create enums
 		swtDialogKindEEnum = createEEnum(SWT_DIALOG_KIND);
 		assertKindEEnum = createEEnum(ASSERT_KIND);
@@ -4057,6 +4125,8 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		updateControlCommandEClass.getESuperTypes().add(theRawPackage.getCommand());
 		rapDownloadFileEClass.getESuperTypes().add(theRawPackage.getCommand());
 		rapUploadFileEClass.getESuperTypes().add(theRawPackage.getCommand());
+		uiHierarchyResponseEClass.getESuperTypes().add(theRawPackage.getResponse());
+		uiElementEClass.getESuperTypes().add(theRawPackage.getElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(selectDataEClass, SelectData.class, "SelectData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4441,6 +4511,13 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		initEClass(rapUploadFileEClass, RapUploadFile.class, "RapUploadFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRapUploadFile_Base64file(), theEcorePackage.getEString(), "base64file", null, 0, 1, RapUploadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRapUploadFile_Path(), theEcorePackage.getEString(), "path", null, 0, 1, RapUploadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(uiHierarchyResponseEClass, UIHierarchyResponse.class, "UIHierarchyResponse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getUIHierarchyResponse_UiElements(), this.getUIElement(), null, "uiElements", null, 0, -1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(uiElementEClass, UIElement.class, "UIElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getUIElement_HasChildren(), theEcorePackage.getEBoolean(), "hasChildren", null, 0, 1, UIElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUIElement_Name(), theEcorePackage.getEString(), "name", null, 0, 1, UIElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(swtDialogKindEEnum, SWTDialogKind.class, "SWTDialogKind");
