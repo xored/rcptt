@@ -304,10 +304,24 @@ public class AssertionAUTControlsHierarchyDialog extends TrayDialog {
 					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 					for (Iterator iterator = selection.iterator(); iterator.hasNext();) {
 						UIElement uiElement = (UIElement) iterator.next();
-						// TODO: open AssertionPanelWindow
+
 						System.out.println("SELECTED:");
 						System.out.println(uiElement.getId());
 						System.out.println(uiElement.getKind());
+
+						AssertionAUTControlsHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
+								.createAssertionAUTControlsHierarchy();
+
+						assertionAUTControlsHierarchy.setState(AssertionAUTControlsHierarchyState.HIGHLIGHT);
+						assertionAUTControlsHierarchy.setId(uiElement.getId());
+
+						try {
+							getAut().execute(assertionAUTControlsHierarchy);
+						} catch (Exception e) {
+							Q7UIPlugin.log(e);
+						}
+
+						// TODO: open AssertionPanelWindow by doubleclick
 					}
 				}
 			}

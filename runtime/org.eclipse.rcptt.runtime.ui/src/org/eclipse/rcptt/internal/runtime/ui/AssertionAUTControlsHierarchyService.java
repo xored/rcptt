@@ -26,12 +26,14 @@ import org.eclipse.rcptt.tesla.core.protocol.UIElement;
 import org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.rcptt.tesla.recording.core.swt.SWTAssertManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 
 public class AssertionAUTControlsHierarchyService implements ICommandService {
 
-	private Map<String, Object> widgetsMap = new HashMap<String, Object>();
+	private Map<String, Widget> widgetsMap = new HashMap<String, Widget>();
 
 	private int lastIndex = 0;
 
@@ -45,12 +47,16 @@ public class AssertionAUTControlsHierarchyService implements ICommandService {
 		this.context = context;
 
 		AssertionAUTControlsHierarchy assertionAUTControlsHierarchy = (AssertionAUTControlsHierarchy) command;
-		final String id = assertionAUTControlsHierarchy.getId();
 		AssertionAUTControlsHierarchyState state = assertionAUTControlsHierarchy.getState();
 
 		if (AssertionAUTControlsHierarchyState.CLEAR == state) {
 			widgetsMap.clear();
 			lastIndex = 0;
+			return Status.OK_STATUS;
+		}
+
+		if (AssertionAUTControlsHierarchyState.HIGHLIGHT == state) {
+			SWTAssertManager.getDefault().highLightWidget(widgetsMap.get(assertionAUTControlsHierarchy.getId()));
 			return Status.OK_STATUS;
 		}
 
@@ -111,6 +117,8 @@ public class AssertionAUTControlsHierarchyService implements ICommandService {
 			}
 		}
 
+		final String id = assertionAUTControlsHierarchy.getId();
+
 		if (AssertionAUTControlsHierarchyState.GET_NODE == state) {
 			if (!widgetsMap.containsKey(id)) {
 				return Status.OK_STATUS;
@@ -170,8 +178,8 @@ public class AssertionAUTControlsHierarchyService implements ICommandService {
 		this.context.getOutput().write(object);
 	}
 
-	private void addWidgetToMap(Object object) {
-		widgetsMap.put(String.valueOf(lastIndex), object);
+	private void addWidgetToMap(Widget widget) {
+		widgetsMap.put(String.valueOf(lastIndex), widget);
 		lastIndex++;
 	}
 }

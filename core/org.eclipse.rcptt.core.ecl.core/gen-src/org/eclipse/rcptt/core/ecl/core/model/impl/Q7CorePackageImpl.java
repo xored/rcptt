@@ -1172,6 +1172,7 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.GET_ROOT);
 		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.GET_NODE);
 		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.CLEAR);
+		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.HIGHLIGHT);
 
 		// Create resource
 		createResource(eNS_URI);
