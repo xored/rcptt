@@ -26,7 +26,7 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	GET_ROOT(0, "GetRoot", "GetRoot"),
+	GET_ROOT(1, "GetRoot", "GetRoot"),
 
 	/**
 	 * The '<em><b>Get Node</b></em>' literal object.
@@ -36,7 +36,7 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	GET_NODE(0, "GetNode", "GetNode"),
+	GET_NODE(2, "GetNode", "GetNode"),
 
 	/**
 	 * The '<em><b>Clear</b></em>' literal object.
@@ -46,7 +46,15 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	CLEAR(0, "Clear", "Clear");
+	CLEAR(0, "Clear", "Clear"), /**
+	 * The '<em><b>HIGHLIGHT</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #HIGHLIGHT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	HIGHLIGHT(3, "HIGHLIGHT", "HIGHLIGHT");
 
 	/**
 	 * The '<em><b>Get Root</b></em>' literal value.
@@ -61,7 +69,7 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int GET_ROOT_VALUE = 0;
+	public static final int GET_ROOT_VALUE = 1;
 
 	/**
 	 * The '<em><b>Get Node</b></em>' literal value.
@@ -76,7 +84,7 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int GET_NODE_VALUE = 0;
+	public static final int GET_NODE_VALUE = 2;
 
 	/**
 	 * The '<em><b>Clear</b></em>' literal value.
@@ -94,6 +102,21 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	public static final int CLEAR_VALUE = 0;
 
 	/**
+	 * The '<em><b>HIGHLIGHT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>HIGHLIGHT</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #HIGHLIGHT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int HIGHLIGHT_VALUE = 3;
+
+	/**
 	 * An array of all the '<em><b>Assertion AUT Controls Hierarchy State</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,6 +127,7 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 			GET_ROOT,
 			GET_NODE,
 			CLEAR,
+			HIGHLIGHT,
 		};
 
 	/**
@@ -161,6 +185,9 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	public static AssertionAUTControlsHierarchyState get(int value) {
 		switch (value) {
 			case GET_ROOT_VALUE: return GET_ROOT;
+			case GET_NODE_VALUE: return GET_NODE;
+			case CLEAR_VALUE: return CLEAR;
+			case HIGHLIGHT_VALUE: return HIGHLIGHT;
 		}
 		return null;
 	}

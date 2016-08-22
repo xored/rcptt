@@ -47,6 +47,7 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.tesla.ui.describers.WidgetDescriber;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -101,6 +102,15 @@ public class SWTAssertManager implements IRecordingProcessor,
 	private List<Menu> menus = new ArrayList<Menu>();
 
 	private Control beforeFreezeFocus = null;
+
+	private static SWTAssertManager swtAssertManager;
+
+	public static SWTAssertManager getDefault() {
+		if (null == swtAssertManager) {
+			swtAssertManager = new SWTAssertManager();
+		}
+		return swtAssertManager;
+	}
 
 	public void clear() {
 		lastFocusedWidget = null;
@@ -484,6 +494,24 @@ public class SWTAssertManager implements IRecordingProcessor,
 		}
 	}
 
+	// TODO:
+	public synchronized void highLightWidget(final Widget widget) {
+		try {
+			// SWTEventManager.setShouldProceed(true); // ?
+			if (widget != null) {
+				resetAssertSelection();
+				widget.getDisplay().asyncExec(new Runnable() { // async?
+					public void run() {
+						synchronized (widget) {
+							updateHover(widget);
+						}
+					}
+				});
+			}
+		} finally {
+			// SWTEventManager.setShouldProceed(false);
+		}
+	}
 
 	public boolean isShortcutRequest(Event e, String[] shortcuts) {
 		if (shortcuts == null) {
@@ -804,6 +832,11 @@ public class SWTAssertManager implements IRecordingProcessor,
 				selectionShell = null;
 			}
 		}
+	}
+
+	private synchronized void updateHover(Widget widget) {
+		WidgetDescriber descr = new WidgetDescriber(widget);
+		updateHover(descr.getBounds(), descr.getPoint(), true, true);
 	}
 
 	private void updateHoverAccordingTo(IRecordingDescriber descr, int x, int y) {

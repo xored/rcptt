@@ -136,8 +136,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//AssertionAUTControlsHierarchyState"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AssertionAUTControlsHierarchyState">
-    <eLiterals name="GetRoot"/>
-    <eLiterals name="GetNode"/>
+    <eLiterals name="GetRoot" value="1"/>
+    <eLiterals name="GetNode" value="2"/>
     <eLiterals name="Clear"/>
+    <eLiterals name="HIGHLIGHT" value="3"/>
   </eClassifiers>
 </ecore:EPackage>
