@@ -72,7 +72,6 @@ import org.eclipse.rcptt.ui.dialogs.DialogUtil;
 import org.eclipse.rcptt.ui.editors.ecl.EclSourceViewer;
 import org.eclipse.rcptt.ui.panels.ActionMenuCreator;
 import org.eclipse.rcptt.ui.panels.Actions;
-import org.eclipse.rcptt.ui.panels.assertion.AssertionAUTControlsHierarchyDialog;
 import org.eclipse.rcptt.ui.panels.assertion.AssertionPanelWindow;
 import org.eclipse.rcptt.ui.recording.RecordingContextManager;
 import org.eclipse.rcptt.ui.recording.RecordingSupport;
@@ -122,7 +121,6 @@ public class ControlPanelWindow extends Dialog {
 	private final Listener keyListener = new RecordingShortcutListener();
 
 	private AssertionPanelWindow assertionWindow;
-	private AssertionAUTControlsHierarchyDialog assertionAUTHierarchyDialog;
 	private EmbeddedTabFolder tabFolder;
 	private CoolBar coolBar;
 	private StatusBarComposite statusBar;
@@ -489,7 +487,6 @@ public class ControlPanelWindow extends Dialog {
 			if (Q7UIPlugin.isImageRecognitionAllowed()) {
 				manager.add(createImageRecognitionModeAction());
 			}
-			manager.add(createAssertingModeFeatureAction());
 			coolBarManager.add(manager);
 		}
 		coolBar = coolBarManager.createControl(toolbarComposite);
@@ -654,41 +651,6 @@ public class ControlPanelWindow extends Dialog {
 		});
 		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
 		dbc.bindValue(Actions.observeChecked(action), new ComputedValue<Boolean>(
-				Boolean.TYPE) {
-			@Override
-			protected Boolean calculate() {
-				return recordingSupport.getMode() == RecordingMode.Asserting;
-			}
-		});
-		return action;
-	}
-
-	private IAction createAssertingModeFeatureAction() {
-		IAction action = new Action() {
-			@Override
-			public void run() {
-				if (assertionAUTHierarchyDialog == null
-						|| assertionAUTHierarchyDialog.getShell() == null
-						|| assertionAUTHierarchyDialog.getShell().isDisposed()) {
-					assertionAUTHierarchyDialog = new AssertionAUTControlsHierarchyDialog(recordingSupport.getAUT(),
-							getShell());
-				}
-				assertionAUTHierarchyDialog.open();
-			}
-		};
-		dbc.bindValue(Actions.observeImageDescriptor(action), new ComputedValue<Object>() {
-			@Override
-			protected Object calculate() {
-				return Images.getImageDescriptor(Images.ECLIPSE);
-			}
-		});
-		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
-			@Override
-			protected Object calculate() {
-				return Messages.ControlPanelWindow_OpenAssertionAUTControlsHierarchyDialogActionToolTip;
-			}
-		});
-		dbc.bindValue(Actions.observeEnabled(action), new ComputedValue<Boolean>(
 				Boolean.TYPE) {
 			@Override
 			protected Boolean calculate() {
@@ -1068,6 +1030,7 @@ public class ControlPanelWindow extends Dialog {
 			return "";
 		}
 
+		// TODO: remove
 		private void updateAssetionWindow() {
 			switch (recordingSupport.getMode()) {
 			case Asserting:

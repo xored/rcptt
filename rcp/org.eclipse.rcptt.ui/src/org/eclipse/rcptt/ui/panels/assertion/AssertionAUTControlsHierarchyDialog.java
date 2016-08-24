@@ -305,15 +305,12 @@ public class AssertionAUTControlsHierarchyDialog extends TrayDialog {
 					for (Iterator iterator = selection.iterator(); iterator.hasNext();) {
 						UIElement uiElement = (UIElement) iterator.next();
 
-						System.out.println("SELECTED:");
-						System.out.println(uiElement.getId());
-						System.out.println(uiElement.getKind());
-
 						AssertionAUTControlsHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
 								.createAssertionAUTControlsHierarchy();
 
 						assertionAUTControlsHierarchy.setState(AssertionAUTControlsHierarchyState.HIGHLIGHT);
 						assertionAUTControlsHierarchy.setId(uiElement.getId());
+
 
 						try {
 							getAut().execute(assertionAUTControlsHierarchy);
@@ -322,6 +319,8 @@ public class AssertionAUTControlsHierarchyDialog extends TrayDialog {
 						}
 
 						// TODO: open AssertionPanelWindow by doubleclick
+
+						// TODO: add commands recordingSupport
 					}
 				}
 			}

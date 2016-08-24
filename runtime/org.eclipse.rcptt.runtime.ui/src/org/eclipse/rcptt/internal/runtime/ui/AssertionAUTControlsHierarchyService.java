@@ -27,7 +27,9 @@ import org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTAssertManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 
@@ -56,7 +58,48 @@ public class AssertionAUTControlsHierarchyService implements ICommandService {
 		}
 
 		if (AssertionAUTControlsHierarchyState.HIGHLIGHT == state) {
-			SWTAssertManager.getDefault().highLightWidget(widgetsMap.get(assertionAUTControlsHierarchy.getId()));
+
+			final String id = assertionAUTControlsHierarchy.getId();
+			if (!widgetsMap.containsKey(id)) {
+				return Status.OK_STATUS;
+			}
+
+			// SWTAssertManager.getDefault().highLightWidget(widgetsMap.get(id));
+			// widgetsMap.get(assertionAUTControlsHierarchy.getId()).getDisplay().post(event)
+			this.display = PlatformUI.getWorkbench().getDisplay();
+			// SWTAssertManager.getDefault().callCreateHover(true,
+			// SWTAssertManager.getDefault().getShell(widgetsMap.get(id)));
+			final Event event = new Event();
+			event.button = 1;
+			event.x = 500;
+			event.y = 500;
+			this.display = PlatformUI.getWorkbench().getDisplay();
+			display.syncExec(new Runnable() {
+				@Override
+				public void run() {
+					SWTAssertManager.getDefault().handleEventInFreeze(widgetsMap.get(id), SWT.MouseUp, event);
+				}
+			});
+			/*
+			 * this.display.syncExec(new Runnable() {
+			 * 
+			 * @Override
+			 * public void run() {
+			 * widgetsMap.get(id).notifyListeners(SWT.Selection, new Event());
+			 * }
+			 * });
+			 */
+			return Status.OK_STATUS;
+		}
+
+		if (AssertionAUTControlsHierarchyState.HIGHLIGHT == state) {
+
+			final String id = assertionAUTControlsHierarchy.getId();
+			if (!widgetsMap.containsKey(id)) {
+				return Status.OK_STATUS;
+			}
+
+			SWTAssertManager.getDefault().highLightWidget(widgetsMap.get(id));
 			return Status.OK_STATUS;
 		}
 
