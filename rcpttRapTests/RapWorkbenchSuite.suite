@@ -1,0 +1,22 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: RapWorkbenchSuite
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _5xJ2oGhTEeanV-sCWN_RIA
+Runtime-Version: 2.2.0.qualifier
+Save-Time: 8/22/16 5:33 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_UvZaUF0SEeakSNpJMxEgQA	// kind: 'test' name: 'ChartView' path: 'Workbench/ChartView.test'
+_oxx4oF0UEeakSNpJMxEgQA	// kind: 'test' name: 'Editor' path: 'Workbench/Editor.test'
+_65yjsF0QEeakSNpJMxEgQA	// kind: 'test' name: 'FilterAll' path: 'Workbench/FilterAll.test'
+_hJQ8MF0hEeakSNpJMxEgQA	// kind: 'test' name: 'Menu' path: 'Workbench/Menu.test'
+_KcUWUFoEEeaOxdV1zAaYqw	// kind: 'test' name: 'SelectionView' path: 'Workbench/SelectionView.test'
+_iRMGMF0kEeakSNpJMxEgQA	// kind: 'test' name: 'TableAndForm' path: 'Workbench/TableAndForm.test'
+_ujBl4F0REeakSNpJMxEgQA	// kind: 'test' name: 'ViewII' path: 'Workbench/ViewII.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

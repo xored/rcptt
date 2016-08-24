@@ -1,0 +1,33 @@
+Common
+	- "Widget details" not working
+
+Workbench
+	- Switching between tabs isn't recorded
+	- In Assertion Mode can't select anything inside editor
+
+Controls
+	- Buttons
+        - Badges can't be verified
+        - Font dialog doesn't work
+        - Close all diaogs not working
+    - Broser, Canvas, Combo, Composite, Coolbar - assertion doesn't work
+    - CTabFolder
+        - Close button in tabs not working
+        - In disabled state assertion don't work
+        - click tab is recorder 2 times
+    - Dialogs
+    	- dialog assertion doesn't work (you can assert child lebels etc, but not dialog itself)
+    	- SWT MessageBox and FontDialog aren't replayed
+    - DropDown, ExpandBar - assertion doen't work
+    - Focus
+    	- can't assert almost all controls in the second and third rows
+    	- get-tab-folder without "-index 1" when select second TabFolder (recording)
+    	- isn't recorded when click on selected tab in TabFolder
+    - List, Link, Nebula Grid, Nebula RichText, ProgressBar, Sash, SashForm, Scale, ScrolledComposite, Spinner
+    	- assertion doesn't work
+    - TableViewer
+    	- last name editing isn't recorded
+    - ToolBar
+    	- check and radio butons click don't work in replay
+    - ToolTip, Tree
+    	- assertion doesn't work

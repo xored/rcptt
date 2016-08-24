@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sF9RUFoCEeaOxdV1zAaYqw
+Element-Name: Editor
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _oxx4oF0UEeakSNpJMxEgQA
+Runtime-Version: 2.2.0.qualifier
+Save-Time: 8/22/16 5:28 PM
+Tags: rap-workbench-test
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-button "Open new editor" | click
+get-editor ".*.bar" | get-editbox | set-text Test
+with [get-tab-folder -index 1] {
+    get-property "getSelection().getData().getData().isDirty()" | equals true | verify-true
+    get-property "getSelection().getData().getData().getTitleImage().internalImage.getResourceName()"
+        | equals "generated/ed38ecc8.gif" | verify-true
+}
+
+// Switch
+with [get-editor ".*.bar" | get-tab-folder] {
+    get-property activePage | equals Source | verify-true
+    get-tab-item Design | click
+    get-property activePage | equals Design | verify-true
+    get-tab-item Source | click
+}
+
+// Save
+get-button "Save (M1+S)" | click
+get-tab-folder -index 1 | get-property "getSelection().getData().getData().isDirty()" | equals false | verify-true
+get-editor ".*.bar" | get-editbox | get-property text | equals Test | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

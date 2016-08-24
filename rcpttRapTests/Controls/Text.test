@@ -1,0 +1,95 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Text
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _HUo54F7JEeakSNpJMxEgQA
+Runtime-Version: 2.2.0.201608032321
+Save-Time: 8/10/16 4:17 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-window -from "AbstractEntryPoint.createShell()" | get-tree | select Text
+
+// Initial state
+with [get-window -from "AbstractEntryPoint.createShell()" | get-editbox -after [get-label Text]] {
+    get-property borderWith | equals 0 | verify-true
+    get-property text | equals "Lorem ipsum dolor sit amet" | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+    get-property foregroundColor | equals "#4A4A4A" | verify-true
+    get-property "getCharCount()" | equals 26 | verify-true
+    get-property "getTextLimit()" | equals 2147483647 | verify-true
+    get-property "getOrientation()" | equals 33554432 | verify-true
+    get-property "getStyle()" | equals "[SINGLE, LEFT_TO_RIGHT, LEFT]" | verify-true
+}
+
+// Styles, limit, selection
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button BORDER | check
+    get-button WRAP | check
+    get-button SINGLE | check
+    get-button MULTI | check
+    get-button SEARCH | check
+    get-button "ICON_SEARCH" | check
+    get-button "ICON_CANCEL" | check
+    get-button "RIGHT_TO_LEFT orientation" | check
+    get-button Foreground | click
+    get-button Background | click
+    get-editbox -after [get-label "Text limit"] | set-text 10
+    get-button Set -after [get-label "Text limit"] | click
+    get-editbox -after [get-label "Selection from"] | set-text 1
+    get-editbox -after [get-label to] | set-text 5
+    get-button Set -after [get-label "Selection from"] | click
+}
+with [get-window -from "AbstractEntryPoint.createShell()" | get-editbox -after [get-label Text]] {
+    get-property borderWith | equals 1 | verify-true
+    get-property text | equals "Lorem ipsum dolor sit amet" | verify-true
+    get-property backgroundColor | equals "#9ACD32" | verify-true
+    get-property foregroundColor | equals "#C20017" | verify-true
+    get-property "getSelectionText()" | equals "orem" | verify-true
+    get-property "getTextLimit()" | equals 10 | verify-true
+    get-property "getOrientation()" | equals 67108864 | verify-true
+    get-property "getStyle()" | equals "[SINGLE, SEARCH, H_SCROLL, V_SCROLL, BORDER, RIGHT_TO_LEFT, MIRRORED, LEFT]" 
+        | verify-true
+}
+with [get-window -from "AbstractEntryPoint.createShell()" | get-group Text] {
+    get-editbox | set-text 1234567891012345
+    get-button Set | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-editbox -after [get-label Text] | get-property text 
+    | equals 1234567891 | verify-true
+    
+// Listeners
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button "VerifyListener (numbers only)" | check
+    with [get-group Text] {
+        get-editbox | set-text "1two3"
+        get-button Set | click
+    }
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-editbox -after [get-label Text] | get-property text 
+    | equals 13 | verify-true
+    
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button "VerifyListener (reject all)" | check
+    get-editbox -after [get-label Text] | click-text 1
+    with [get-group Text] {
+        get-editbox | set-text 456
+        get-button Set | click
+    }
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-editbox -after [get-label Text] | get-property text 
+    | equals 13 | verify-true
+    
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button "VerifyListener (reject all)" | uncheck
+    get-button ModifyListener | check
+    get-editbox -after [get-label Text] | set-text 789
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-label -after [get-label "Text:"] | get-property caption | equals 789 | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

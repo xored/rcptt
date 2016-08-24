@@ -1,0 +1,26 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _sF9RUFoCEeaOxdV1zAaYqw
+Element-Name: FilterAll
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _65yjsF0QEeakSNpJMxEgQA
+Runtime-Version: 2.2.0.qualifier
+Save-Time: 8/22/16 5:28 PM
+Tags: rap-workbench-test
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view Tree | get-tree | get-item -path Root | get-property childCount | equals 3 | verify-true
+
+get-view Tree | get-button "Filter all leafs" | click
+get-view Tree | get-tree | get-item -path Root | get-property childCount | equals 2 | verify-true
+get-view Tree | get-tree | get-item -path Root | get-property "getItems().TreeItem[0].getText()"
+    | equals "Locate in browser view" | verify-true
+get-view Tree | get-tree | get-item -path Root | get-property "getItems().TreeItem[1].getText()"
+    | equals "Parent 2" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

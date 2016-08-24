@@ -14,3 +14,10 @@ mvn clean verify -B -f rcpttTests/pom.xml \
 -DrcpttPath=repository/full/target/products/org.eclipse.rcptt.platform.product-linux.gtk.x86_64.zip \
 -DexplicitRunner=runner/product/target/rcptt.runner-${productVersion}-SNAPSHOT.zip || true
 test -f rcpttTests/target/results/tests.html
+
+
+#mvn clean verify -B -f rcpttRapTests/pom.xml \
+#-DwarPath=/Users/nomit/samba/RapDemos/controls.war \
+#-DRapTestSuite=RapControlsSuite
+#-DexplicitRunner=runner/product/target/rcptt.runner-${productVersion}-SNAPSHOT.zip || true
+#test -f rcpttRapTests/target/results/tests.html

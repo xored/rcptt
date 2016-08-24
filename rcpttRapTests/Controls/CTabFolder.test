@@ -1,0 +1,78 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: CTabFolder
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _HUr4IF1TEeakSNpJMxEgQA
+Runtime-Version: 2.2.0.201608032321
+Save-Time: 8/11/16 4:52 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-tree | select CTabFolder
+}
+
+// Initial state
+with [get-window -from "AbstractEntryPoint.createShell()" | get-tab-folder] {
+    get-property activePage | equals "Tab 1" | verify-true
+    get-property tabCount | equals 3 | verify-true
+    get-property "getChildren().Control[0].getText()" | equals "Some Content 1" | verify-true
+    get-property "getSelectionBackground()" | equals "#D6D6D6" | verify-true
+    get-property "getBackground()" | equals "#FFFFFF" | verify-true
+    get-property "getStyle()" | equals 33554562
+    get-property "getSingle()" | equals false | verify-true
+    get-property "getEnabled()" | equals true | verify-true
+    get-property "getBorderVisible()" | equals false | verify-true    
+    get-property "getUnselectedCloseVisible()" | equals false | verify-true
+    get-property "getUnselectedImageVisible()" | equals false | verify-true    
+}
+
+// Switch tab
+with [get-window -from "AbstractEntryPoint.createShell()" | get-tab-folder] {
+    click
+    get-tab-item "Tab 2" | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-editbox -after [get-label CTabFolder] | get-property text 
+    | equals "Some Content 2" | verify-true
+    
+// Change styles
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button FLAT | check
+    get-button BORDER | check
+    get-button "RIGHT_TO_LEFT orientation" | check
+    get-button Background | click
+    get-button "Selection Background" | click
+    get-button Enabled | uncheck
+    get-editbox -after [get-label "Tab Height"] | set-text "50.0"
+    get-button CLOSE | check
+    get-button SINGLE | check
+    get-button UnselectedCloseVisible | check
+    get-button UnselectedImageVisible | check
+}
+with [get-window -from "AbstractEntryPoint.createShell()" | get-tab-folder] {
+    get-property "getSelectionBackground()" | equals "#D6D6D6" | verify-false
+    get-property "getBackground()" | equals "#FFFFFF" | verify-false
+    get-property "getStyle()" | equals 209717444 | verify-true
+    get-property "getSingle()" | equals true | verify-true
+    get-property "getEnabled()" | equals false | verify-true
+    get-property "getBorderVisible()" | equals true | verify-true
+    get-property "getTabHeight()" | equals 50 | verify-true    
+    get-property "getUnselectedCloseVisible()" | equals true | verify-true
+    get-property "getUnselectedImageVisible()" | equals true | verify-true    
+}
+
+// Add
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button SINGLE | uncheck
+    get-button Enabled | check
+    get-button "Add Item (SWT.NONE)" | click
+    get-button "Add Item (SWT.CLOSE)" | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-tab-folder | get-property tabCount | equals 5 | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

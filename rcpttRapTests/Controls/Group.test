@@ -1,0 +1,43 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Group
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _rwx34F6qEeakSNpJMxEgQA
+Runtime-Version: 2.2.0.201608032321
+Save-Time: 8/10/16 10:38 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-window -from "AbstractEntryPoint.createShell()" | get-tree | select Group
+
+with [get-window -from "AbstractEntryPoint.createShell()" | get-group "A group with one white label"] {
+    get-property caption | equals "A group with one white label" | verify-true
+    get-property borderWith | equals 0 | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+    get-property foregroundColor | equals "#4A4A4A" | verify-true
+    get-property "getOrientation()" | equals 33554432 | verify-true
+    get-property "getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT]" | verify-true
+}
+
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button BORDER | check
+    get-button "RIGHT_TO_LEFT orientation" | check
+    get-button Foreground | click
+    get-button Background | click
+    get-button "Background Image" | check
+}
+
+with [get-window -from "AbstractEntryPoint.createShell()" | get-group "A group with one white label"] {
+    get-property borderWith | equals 1 | verify-true
+    get-property backgroundColor | equals "#9ACD32" | verify-true
+    get-property foregroundColor | equals "#C20017" | verify-true
+    get-property "getBackgroundImage().internalImage.getResourceName()" | equals "generated/793662f8.png" | verify-true
+    get-property "getOrientation()" | equals 67108864 | verify-true
+    get-property "getStyle()" | equals "[BORDER, NO_FOCUS, RIGHT_TO_LEFT, MIRRORED]" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

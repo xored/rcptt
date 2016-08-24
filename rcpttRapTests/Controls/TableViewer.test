@@ -1,0 +1,79 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: TableViewer
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _pqOn0F66EeakSNpJMxEgQA
+Runtime-Version: 2.2.0.201608032321
+Save-Time: 8/10/16 2:07 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-window -from "AbstractEntryPoint.createShell()" | get-tree | select TableViewer
+
+// Initial state
+with [get-window -from "AbstractEntryPoint.createShell()" | get-table] {
+    get-property itemCount | equals 12 | verify-true
+    get-property "columns[0].caption" | equals "First Name" | verify-true
+    get-property "columns[1].caption" | equals "Last Name" | verify-true
+    get-property "columns[2].caption" | equals Born | verify-true
+    get-property "columns[3].caption" | equals Married | verify-true
+    get-property "getOrientation()" | equals 33554432 | verify-true
+    get-property "getStyle()" | equals "[SINGLE, H_SCROLL, V_SCROLL, LEFT_TO_RIGHT]" | verify-true
+    
+    get-item -path Ada | get-property "columns[0]" | equals Ada | verify-true
+    get-item -path Ada | get-property "columns[1]" | equals Lovelace | verify-true
+    get-item -path Ada | get-property "columns[2]" | equals 1815 | verify-true
+    get-item -path Ada | get-property "columns[3]" | equals yes | verify-true
+    get-item -path Ada | get-property "values['First Name']" | equals Ada | verify-true
+    get-item -path Ada | get-property "values['Born']" | equals 1815 | verify-true
+    get-item -path Ada | get-property "values['Married']" | equals yes | verify-true
+    get-item -path Ada | get-property "values['Last Name']" | equals Lovelace | verify-true
+}
+
+// Orientaion, select
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button "RIGHT_TO_LEFT orientation" | check
+    get-button "Select youngest Person" | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-table | get-property "selection[0].path[0]" | equals Ada 
+    | verify-true
+    
+// Remove, select
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button "Remove selected rows" | click
+    get-button "Select youngest Person" | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-table | get-property "selection[0].path[0]" | equals John 
+    | verify-true
+
+// Add items
+get-window -from "AbstractEntryPoint.createShell()" | get-button "Add 100 Items" | click
+get-window -from "AbstractEntryPoint.createShell()" | get-table | get-property itemCount | equals 111 | verify-true
+
+// Cell editor
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-button "Create Cell Editor" | click
+    get-button "RIGHT_TO_LEFT orientation" | uncheck
+}
+with [get-window -from "AbstractEntryPoint.createShell()" | get-table] {
+    select Kurt | activate-cell-edit -column 2
+    with [get-editbox] {
+        click-text 5 1
+        set-text 2001
+    }
+    apply-cell-edit -deactivate
+    select Kurt | activate-cell-edit -column 3
+    get-button | uncheck
+    apply-cell-edit -deactivate
+}
+with [get-window -from "AbstractEntryPoint.createShell()" | get-table] {
+    get-item -path Kurt | get-property "values['First Name']" | equals Kurt | verify-true
+    get-item -path Kurt | get-property "values['Born']" | equals 2001 | verify-true
+    get-item -path Kurt | get-property "values['Married']" | equals no | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

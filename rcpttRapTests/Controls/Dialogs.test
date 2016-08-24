@@ -1,0 +1,91 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: Dialogs
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _BDPW4F4REeakSNpJMxEgQA
+Runtime-Version: 2.2.0.201608032321
+Save-Time: 8/9/16 5:05 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// Input
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-tree | select Dialogs
+    get-group "JFace Dialogs" | get-button "Input Dialog" | click
+    with [get-window "Input Dialog"] {
+        get-editbox -after [get-label "Enter at least five characters"] | set-text "1234five"
+        get-button OK | click
+    }
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-group "JFace Dialogs" 
+    | get-label "Result: .*" | get-property caption | equals "Result: OK, value: 1234five" 
+    | verify-true
+    
+// Progress
+get-window -from "AbstractEntryPoint.createShell()" | get-group "JFace Dialogs" | get-button ProgressDialog | click
+// Wait until dialog is closed
+loop {
+    try {
+        get-window -from "AbstractEntryPoint.createShell()" | get-window "Progress Information"
+        recur
+    } -catch {
+    }
+}
+
+// Warning
+get-window -from "AbstractEntryPoint.createShell()" | get-group "JFace Dialogs" | get-button "Warning Dialog" | click
+with [get-window -from "AbstractEntryPoint.createShell()" | get-window Warning] {
+    get-label -index 0 | get-property "getImage().internalImage.getResourceName()" | equals "generated/b9666f6b.png" 
+        | verify-true
+    get-label -index 1 | get-property caption | equals "You have been warned." | verify-true
+    get-button OK | click
+}
+
+//  Question
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-group "JFace Dialogs" | get-button "Question Dialog" | click
+    get-window Question | get-button Yes | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-group "JFace Dialogs" | get-label "Result: .*" -index 1 
+    | get-property caption | equals "Result: true" | verify-true
+    
+// Confirm
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-group "JFace Dialogs" | get-button "Confirm Message" | click
+    get-window Confirmation | get-button Cancel | click
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-group "JFace Dialogs" | get-label "Result: .*" -index 1 
+    | get-property caption | equals "Result: false" | verify-true
+
+// Login
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-group "Custom Dialogs" | get-button "Login Dialog" | click
+    with [get-window Login] {
+        get-editbox -after [get-label "Password:"] | set-text [decrypt "6wUlKZzF0zHhPoHnvU0rBQ=="]
+        get-button Login | click
+    }
+}
+get-window -from "AbstractEntryPoint.createShell()" | get-group "Custom Dialogs" 
+    | get-label "Result: .*" | get-property caption 
+    | equals "Result: OK, user: john, password: 5 chars" | verify-true
+    
+// Color
+with [get-window -from "AbstractEntryPoint.createShell()"] {
+    get-group "SWT Dialogs" | get-button ColorDialog | click
+    with [get-window Color] {
+        get-editbox -after [get-label "Red:"] | set-text "255.0"
+        get-editbox -after [get-label "Green:"] | set-text "194.0"
+        get-editbox -after [get-label "Blue:"] | set-text "14.0"
+    }
+}
+set-dialog-result Color "255,194,14"
+get-window -from "AbstractEntryPoint.createShell()" | get-window Color | get-button OK | click
+get-window -from "AbstractEntryPoint.createShell()" | get-group "SWT Dialogs" | get-label "Result: .*" 
+    | get-property caption | equals "Result: RGB {255, 194, 14}" | verify-true
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
