@@ -178,6 +178,22 @@ public final class SWTEventManager {
 		return finalResult;
 	}
 
+	public static boolean selectWidget(Widget widget) {
+		boolean finalResult = false;
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			finalResult = finalResult || listener.selectWidget(widget);
+		}
+		return finalResult;
+	}
+
+	public static boolean openAssertionPanelWindow(Widget widget) {
+		boolean finalResult = false;
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			finalResult = finalResult || listener.openAssertionPanelWindow(widget);
+		}
+		return finalResult;
+	}
+
 	public static void recordCombo(CCombo combo) {
 		comboList.add(new WeakReference<CCombo>(combo));
 		// Remove disposed ones

@@ -105,7 +105,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 	private static SWTAssertManager swtAssertManager;
 
-	public static SWTAssertManager getDefault() {
+	public static SWTAssertManager getDefault() { // thread safely ?
 		if (null == swtAssertManager) {
 			swtAssertManager = new SWTAssertManager();
 		}
@@ -663,7 +663,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 		menuShell.open();
 	}
 
-	private Shell getShell(Widget widget) {
+	public Shell getShell(Widget widget) {
 		if (widget instanceof TreeItem) {
 			return (((TreeItem) widget).getParent()).getShell();
 		}
@@ -769,7 +769,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 		selectionShell.setAlpha(127);
 	}
 
-	private synchronized void callCreateHover(final boolean value, Shell parent) {
+	public synchronized void callCreateHover(final boolean value, Shell parent) {
 		if (!menuShells.isEmpty()) {
 			return;
 		}

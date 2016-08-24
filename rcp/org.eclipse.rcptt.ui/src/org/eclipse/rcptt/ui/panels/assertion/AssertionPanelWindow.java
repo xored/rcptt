@@ -461,11 +461,24 @@ public class AssertionPanelWindow extends Dialog {
 	@Override
 	protected Control createContents(Composite parent) {
 		initializeDialogUnits(parent);
-		final Composite composite = new Composite(parent, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		composite.setLayout(new GridLayout());
 
-		final Composite toolbarComposite = new Composite(composite, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		final Composite autControlsWidgetComposite = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(autControlsWidgetComposite);
+		autControlsWidgetComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		final AssertionAUTControlsHierarchyDialog autControlsWidget = new AssertionAUTControlsHierarchyDialog(
+				autControlsWidgetComposite, recordingSupport.getAUT());
+		autControlsWidget.createContents();
+
+		final Composite assertionComposite = new Composite(composite, SWT.NONE);
+		assertionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		assertionComposite.setLayout(new GridLayout());
+
+		final Composite toolbarComposite = new Composite(assertionComposite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(toolbarComposite);
 		toolbarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
@@ -505,9 +518,10 @@ public class AssertionPanelWindow extends Dialog {
 		};
 		menu.create(toolbarComposite).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
 
-		createTreeViewer(composite).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		createTreeViewer(assertionComposite).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		createButtonPanel(composite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		createButtonPanel(assertionComposite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
 		return composite;
 	}
 
@@ -988,9 +1002,6 @@ public class AssertionPanelWindow extends Dialog {
 				setBlockOnOpen(false);
 				open();
 			} else {
-				Point size = getShell().getSize();
-				Point loc = getInitialLocation(size);
-				getShell().setLocation(loc);
 				getShell().setVisible(true);
 			}
 			currentInput = createAssertTree(commands);
@@ -1000,7 +1011,6 @@ public class AssertionPanelWindow extends Dialog {
 			} else {
 				viewer.expandToLevel(1);
 			}
-			// updateVerificationButton();
 		} else if (getShell() != null && !getShell().isDisposed()) {
 			getShell().setVisible(false);
 			viewer.setInput(AssertInput.EMPTY);
