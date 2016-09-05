@@ -5558,13 +5558,22 @@ public interface ProtocolPackage extends EPackage {
 	int UI_HIERARCHY_RESPONSE__ADVANCED_INFORMATION = RawPackage.RESPONSE__ADVANCED_INFORMATION;
 
 	/**
-	 * The feature id for the '<em><b>Ui Elements</b></em>' reference list.
+	 * The feature id for the '<em><b>Chilren</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_HIERARCHY_RESPONSE__UI_ELEMENTS = RawPackage.RESPONSE_FEATURE_COUNT + 0;
+	int UI_HIERARCHY_RESPONSE__CHILREN = RawPackage.RESPONSE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Ui Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UI_HIERARCHY_RESPONSE__UI_ELEMENT = RawPackage.RESPONSE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>UI Hierarchy Response</em>' class.
@@ -5573,7 +5582,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_HIERARCHY_RESPONSE_FEATURE_COUNT = RawPackage.RESPONSE_FEATURE_COUNT + 1;
+	int UI_HIERARCHY_RESPONSE_FEATURE_COUNT = RawPackage.RESPONSE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIElementImpl <em>UI Element</em>}' class.
@@ -5631,13 +5640,22 @@ public interface ProtocolPackage extends EPackage {
 	int UI_ELEMENT__NAME = RawPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Generation Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UI_ELEMENT__GENERATION_KIND = RawPackage.ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>UI Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ELEMENT_FEATURE_COUNT = RawPackage.ELEMENT_FEATURE_COUNT + 2;
+	int UI_ELEMENT_FEATURE_COUNT = RawPackage.ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}' enum.
@@ -8608,15 +8626,26 @@ public interface ProtocolPackage extends EPackage {
 	EClass getUIHierarchyResponse();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getUiElements <em>Ui Elements</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChilren <em>Chilren</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Ui Elements</em>'.
-	 * @see org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getUiElements()
+	 * @return the meta object for the reference list '<em>Chilren</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChilren()
 	 * @see #getUIHierarchyResponse()
 	 * @generated
 	 */
-	EReference getUIHierarchyResponse_UiElements();
+	EReference getUIHierarchyResponse_Chilren();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getUiElement <em>Ui Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ui Element</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getUiElement()
+	 * @see #getUIHierarchyResponse()
+	 * @generated
+	 */
+	EReference getUIHierarchyResponse_UiElement();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.protocol.UIElement <em>UI Element</em>}'.
@@ -8649,6 +8678,17 @@ public interface ProtocolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getUIElement_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.UIElement#getGenerationKind <em>Generation Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Generation Kind</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.UIElement#getGenerationKind()
+	 * @see #getUIElement()
+	 * @generated
+	 */
+	EAttribute getUIElement_GenerationKind();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}'.
@@ -11139,12 +11179,20 @@ public interface ProtocolPackage extends EPackage {
 		EClass UI_HIERARCHY_RESPONSE = eINSTANCE.getUIHierarchyResponse();
 
 		/**
-		 * The meta object literal for the '<em><b>Ui Elements</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Chilren</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UI_HIERARCHY_RESPONSE__UI_ELEMENTS = eINSTANCE.getUIHierarchyResponse_UiElements();
+		EReference UI_HIERARCHY_RESPONSE__CHILREN = eINSTANCE.getUIHierarchyResponse_Chilren();
+
+		/**
+		 * The meta object literal for the '<em><b>Ui Element</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UI_HIERARCHY_RESPONSE__UI_ELEMENT = eINSTANCE.getUIHierarchyResponse_UiElement();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIElementImpl <em>UI Element</em>}' class.
@@ -11171,6 +11219,14 @@ public interface ProtocolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UI_ELEMENT__NAME = eINSTANCE.getUIElement_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Generation Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UI_ELEMENT__GENERATION_KIND = eINSTANCE.getUIElement_GenerationKind();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}' enum.

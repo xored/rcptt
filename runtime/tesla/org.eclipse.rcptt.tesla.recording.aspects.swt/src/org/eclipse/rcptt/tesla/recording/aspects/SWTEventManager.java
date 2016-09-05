@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
@@ -178,20 +180,40 @@ public final class SWTEventManager {
 		return finalResult;
 	}
 
-	public static boolean selectWidget(Widget widget) {
+	public static boolean highlightWidget(Widget widget) {
 		boolean finalResult = false;
 		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
-			finalResult = finalResult || listener.selectWidget(widget);
+			finalResult = finalResult || listener.highlightWidget(widget);
 		}
 		return finalResult;
 	}
 
-	public static boolean openAssertionPanelWindow(Widget widget) {
+	public static boolean updateAssertionPanelWindow(Widget widget) {
 		boolean finalResult = false;
 		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
-			finalResult = finalResult || listener.openAssertionPanelWindow(widget);
+			finalResult = finalResult || listener.updateAssertionPanelWindow(widget);
 		}
 		return finalResult;
+	}
+
+	public static SWTUIElement getSWTUIElement(Element element) {
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			SWTUIElement result = listener.getSWTUIElement(element);
+			if (null != result) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	public static Element getElement(SWTUIElement swtUIElement) {
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			Element result = listener.getElement(swtUIElement);
+			if (null != result) {
+				return result;
+			}
+		}
+		return null;
 	}
 
 	public static void recordCombo(CCombo combo) {

@@ -122,6 +122,28 @@ public class AssertionPanelWindow extends Dialog {
 	private final ImageManager imageManager = new ImageManager();
 	private final WritableValue<Boolean> hasAssert = new WritableValue<Boolean>(false, Boolean.class);
 
+	private final RecordingSupport recordingSupport;
+	private final Shell parentShell;
+
+	private WidgetDetailsDialog widgetDetailsDialog;
+	private CommandSet commands;
+	private AssertInput currentInput;
+	private IObservableSet<Object> checkedObservable;
+	private Button appendButton;
+	private List<TreeItem> collapsed;
+	private List<TreeItem> references;
+	private CCombo filterCombo;
+	private Text filterText;
+	private String filterValue = "";
+
+	private CheckboxTreeViewer viewer;
+	private FontMetrics fontMetrics;
+
+	private Composite treeViewerComposite;
+	private Composite autControlsWidgetComposite;
+	private GridData autControlsWidgetCompositeGridData;
+	private AUTControlsHierarchyView autControlsView;
+
 	private final IAction collapseAll = new Action() {
 		{
 			setImageDescriptor(Images.getImageDescriptor(Images.PANEL_COLLAPSE_ALL));
@@ -175,19 +197,19 @@ public class AssertionPanelWindow extends Dialog {
 		};
 	};
 
-	private final RecordingSupport recordingSupport;
-	private final Shell parentShell;
+	private final IAction treeVisible = new Action() {
+		{
+			setImageDescriptor(Images.getImageDescriptor(Images.TREE_VISIBLE));
+			setToolTipText(Messages.AssertionPanelWindow_TreeVisibleToolTip);
+		}
 
-	private WidgetDetailsDialog widgetDetailsDialog;
-	private CommandSet commands;
-	private AssertInput currentInput;
-	private IObservableSet<Object> checkedObservable;
-	private Button appendButton;
-	private List<TreeItem> collapsed;
-	private List<TreeItem> references;
-	private CCombo filterCombo;
-	private Text filterText;
-	private String filterValue = "";
+		@Override
+		public void run() {
+			autControlsWidgetComposite.setVisible(autControlsWidgetCompositeGridData.exclude);
+			autControlsWidgetCompositeGridData.exclude = !autControlsWidgetCompositeGridData.exclude;
+			autControlsWidgetComposite.getParent().layout(true, true);
+		};
+	};
 
 	public AssertionPanelWindow(RecordingSupport recordingSupport, Shell parentShell) {
 		super(parentShell);
@@ -325,10 +347,6 @@ public class AssertionPanelWindow extends Dialog {
 		}
 	}
 
-	private CheckboxTreeViewer viewer;
-
-	private FontMetrics fontMetrics;
-
 	protected TreeViewerColumn createPropertyColumn() {
 		final TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
 		column.getColumn().setText(Messages.AssertionPanelWindow_ColumnPropertyName);
@@ -465,14 +483,18 @@ public class AssertionPanelWindow extends Dialog {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		final Composite autControlsWidgetComposite = new Composite(composite, SWT.NONE);
+
+		autControlsWidgetComposite = new Composite(composite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(autControlsWidgetComposite);
 		autControlsWidgetComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		final AssertionAUTControlsHierarchyDialog autControlsWidget = new AssertionAUTControlsHierarchyDialog(
-				autControlsWidgetComposite, recordingSupport.getAUT());
-		autControlsWidget.createContents();
+		autControlsWidgetCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		autControlsWidgetCompositeGridData.exclude = true;
+		autControlsWidgetComposite.setLayoutData(autControlsWidgetCompositeGridData);
+		autControlsWidgetComposite.setVisible(false);
+
+		autControlsView = new AUTControlsHierarchyView(recordingSupport.getAUT());
+		autControlsView.createPartControl(autControlsWidgetComposite);
 
 		final Composite assertionComposite = new Composite(composite, SWT.NONE);
 		assertionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -490,12 +512,8 @@ public class AssertionPanelWindow extends Dialog {
 				manager.add(new Separator());
 				manager.add(expandAll);
 				manager.add(collapseAll);
-				// if
-				// ("true".equalsIgnoreCase(Q7Features.getInstance().getValue(
-				// Q7Features.Q7_IMAGE_ASSERT_SUPPORT))) {
-				// manager.add(new Separator());
-				// manager.add(newImageAssert);
-				// }
+				manager.add(new Separator());
+				manager.add(treeVisible);
 
 				dbc.bindValue(Actions.observeEnabled(selectAll), hasAssert);
 				dbc.bindValue(Actions.observeEnabled(deselectAll), hasAssert);
@@ -598,8 +616,6 @@ public class AssertionPanelWindow extends Dialog {
 	private interface ITreeViewerFilter {
 		public boolean isVisible(AssertImpl object);
 	}
-
-	Composite treeViewerComposite = null;
 
 	protected Control createTreeViewer(Composite parent) {
 		treeViewerComposite = new Composite(parent, SWT.NONE);
@@ -1004,6 +1020,9 @@ public class AssertionPanelWindow extends Dialog {
 			} else {
 				getShell().setVisible(true);
 			}
+
+			autControlsView.expandToElement(commands.getElement());
+
 			currentInput = createAssertTree(commands);
 			viewer.setInput(currentInput);
 			if (currentInput != null && currentInput.getAsserts() != null && currentInput.getAsserts().size() > 0) {

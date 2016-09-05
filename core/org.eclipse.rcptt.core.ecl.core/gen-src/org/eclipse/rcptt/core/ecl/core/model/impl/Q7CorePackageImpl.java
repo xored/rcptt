@@ -8,11 +8,9 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy;
-import org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchyState;
+import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy;
+import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchyState;
 import org.eclipse.rcptt.core.ecl.core.model.BeginReportNode;
 import org.eclipse.rcptt.core.ecl.core.model.CreateContext;
 import org.eclipse.rcptt.core.ecl.core.model.CreateReport;
@@ -40,13 +38,9 @@ import org.eclipse.rcptt.core.ecl.core.model.SetQ7Option;
 import org.eclipse.rcptt.core.ecl.core.model.TerminateAut;
 import org.eclipse.rcptt.core.ecl.core.model.ViewInfo;
 import org.eclipse.rcptt.core.ecl.core.model.ViewList;
-
 import org.eclipse.rcptt.core.scenario.ScenarioPackage;
-
 import org.eclipse.rcptt.ecl.core.CorePackage;
-
 import org.eclipse.rcptt.reporting.ReportingPackage;
-
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.ReportPackage;
 
 /**
@@ -229,7 +223,7 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass assertionAUTControlsHierarchyEClass = null;
+	private EClass autControlsHierarchyEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -243,7 +237,7 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum assertionAUTControlsHierarchyStateEEnum = null;
+	private EEnum autControlsHierarchyStateEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -856,8 +850,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getAssertionAUTControlsHierarchy() {
-		return assertionAUTControlsHierarchyEClass;
+	public EClass getAUTControlsHierarchy() {
+		return autControlsHierarchyEClass;
 	}
 
 	/**
@@ -865,8 +859,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAssertionAUTControlsHierarchy_Id() {
-		return (EAttribute)assertionAUTControlsHierarchyEClass.getEStructuralFeatures().get(0);
+	public EAttribute getAUTControlsHierarchy_Id() {
+		return (EAttribute)autControlsHierarchyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -874,8 +868,26 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAssertionAUTControlsHierarchy_State() {
-		return (EAttribute)assertionAUTControlsHierarchyEClass.getEStructuralFeatures().get(1);
+	public EAttribute getAUTControlsHierarchy_State() {
+		return (EAttribute)autControlsHierarchyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAUTControlsHierarchy_Description() {
+		return (EAttribute)autControlsHierarchyEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAUTControlsHierarchy_Kind() {
+		return (EAttribute)autControlsHierarchyEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -892,8 +904,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getAssertionAUTControlsHierarchyState() {
-		return assertionAUTControlsHierarchyStateEEnum;
+	public EEnum getAUTControlsHierarchyState() {
+		return autControlsHierarchyStateEEnum;
 	}
 
 	/**
@@ -1008,13 +1020,15 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 		terminateAutEClass = createEClass(TERMINATE_AUT);
 
-		assertionAUTControlsHierarchyEClass = createEClass(ASSERTION_AUT_CONTROLS_HIERARCHY);
-		createEAttribute(assertionAUTControlsHierarchyEClass, ASSERTION_AUT_CONTROLS_HIERARCHY__ID);
-		createEAttribute(assertionAUTControlsHierarchyEClass, ASSERTION_AUT_CONTROLS_HIERARCHY__STATE);
+		autControlsHierarchyEClass = createEClass(AUT_CONTROLS_HIERARCHY);
+		createEAttribute(autControlsHierarchyEClass, AUT_CONTROLS_HIERARCHY__ID);
+		createEAttribute(autControlsHierarchyEClass, AUT_CONTROLS_HIERARCHY__STATE);
+		createEAttribute(autControlsHierarchyEClass, AUT_CONTROLS_HIERARCHY__DESCRIPTION);
+		createEAttribute(autControlsHierarchyEClass, AUT_CONTROLS_HIERARCHY__KIND);
 
 		// Create enums
 		executionPhaseEEnum = createEEnum(EXECUTION_PHASE);
-		assertionAUTControlsHierarchyStateEEnum = createEEnum(ASSERTION_AUT_CONTROLS_HIERARCHY_STATE);
+		autControlsHierarchyStateEEnum = createEEnum(AUT_CONTROLS_HIERARCHY_STATE);
 	}
 
 	/**
@@ -1070,7 +1084,7 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 		resetVerificationsEClass.getESuperTypes().add(theCorePackage.getCommand());
 		createVerificationEClass.getESuperTypes().add(theCorePackage.getCommand());
 		terminateAutEClass.getESuperTypes().add(theCorePackage.getCommand());
-		assertionAUTControlsHierarchyEClass.getESuperTypes().add(theCorePackage.getCommand());
+		autControlsHierarchyEClass.getESuperTypes().add(theCorePackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(enterContextEClass, EnterContext.class, "EnterContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1157,9 +1171,11 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 		initEClass(terminateAutEClass, TerminateAut.class, "TerminateAut", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(assertionAUTControlsHierarchyEClass, AssertionAUTControlsHierarchy.class, "AssertionAUTControlsHierarchy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAssertionAUTControlsHierarchy_Id(), theEcorePackage.getEString(), "id", "", 0, 1, AssertionAUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAssertionAUTControlsHierarchy_State(), this.getAssertionAUTControlsHierarchyState(), "state", null, 0, 1, AssertionAUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(autControlsHierarchyEClass, AUTControlsHierarchy.class, "AUTControlsHierarchy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAUTControlsHierarchy_Id(), theEcorePackage.getEString(), "id", "", 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAUTControlsHierarchy_State(), this.getAUTControlsHierarchyState(), "state", null, 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAUTControlsHierarchy_Description(), theEcorePackage.getEString(), "description", "", 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAUTControlsHierarchy_Kind(), theEcorePackage.getEString(), "kind", "", 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(executionPhaseEEnum, ExecutionPhase.class, "ExecutionPhase");
@@ -1168,11 +1184,11 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 		addEEnumLiteral(executionPhaseEEnum, ExecutionPhase.RUN);
 		addEEnumLiteral(executionPhaseEEnum, ExecutionPhase.FINISH);
 
-		initEEnum(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.class, "AssertionAUTControlsHierarchyState");
-		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.GET_ROOT);
-		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.GET_NODE);
-		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.CLEAR);
-		addEEnumLiteral(assertionAUTControlsHierarchyStateEEnum, AssertionAUTControlsHierarchyState.HIGHLIGHT);
+		initEEnum(autControlsHierarchyStateEEnum, AUTControlsHierarchyState.class, "AUTControlsHierarchyState");
+		addEEnumLiteral(autControlsHierarchyStateEEnum, AUTControlsHierarchyState.HIGHLIGHT_WIDGET);
+		addEEnumLiteral(autControlsHierarchyStateEEnum, AUTControlsHierarchyState.UPDATE_ASSERT_WINDOW);
+		addEEnumLiteral(autControlsHierarchyStateEEnum, AUTControlsHierarchyState.GET_ELEMENT);
+		addEEnumLiteral(autControlsHierarchyStateEEnum, AUTControlsHierarchyState.GET_PARENT);
 
 		// Create resource
 		createResource(eNS_URI);

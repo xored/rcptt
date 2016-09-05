@@ -174,8 +174,8 @@ public class Q7CoreAdapterFactory extends AdapterFactoryImpl {
 				return createTerminateAutAdapter();
 			}
 			@Override
-			public Adapter caseAssertionAUTControlsHierarchy(AssertionAUTControlsHierarchy object) {
-				return createAssertionAUTControlsHierarchyAdapter();
+			public Adapter caseAUTControlsHierarchy(AUTControlsHierarchy object) {
+				return createAUTControlsHierarchyAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -538,16 +538,16 @@ public class Q7CoreAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy <em>Assertion AUT Controls Hierarchy</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy <em>AUT Controls Hierarchy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.core.ecl.core.model.AssertionAUTControlsHierarchy
+	 * @see org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy
 	 * @generated
 	 */
-	public Adapter createAssertionAUTControlsHierarchyAdapter() {
+	public Adapter createAUTControlsHierarchyAdapter() {
 		return null;
 	}
 

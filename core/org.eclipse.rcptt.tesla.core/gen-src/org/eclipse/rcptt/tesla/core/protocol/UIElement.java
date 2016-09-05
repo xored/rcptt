@@ -15,6 +15,7 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
  * <ul>
  *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.UIElement#isHasChildren <em>Has Children</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.UIElement#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.UIElement#getGenerationKind <em>Generation Kind</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage#getUIElement()
@@ -73,5 +74,31 @@ public interface UIElement extends Element {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Generation Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Generation Kind</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Generation Kind</em>' attribute.
+	 * @see #setGenerationKind(String)
+	 * @see org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage#getUIElement_GenerationKind()
+	 * @model
+	 * @generated
+	 */
+	String getGenerationKind();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.tesla.core.protocol.UIElement#getGenerationKind <em>Generation Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Generation Kind</em>' attribute.
+	 * @see #getGenerationKind()
+	 * @generated
+	 */
+	void setGenerationKind(String value);
 
 } // UIElement

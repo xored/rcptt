@@ -36,6 +36,8 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.RawFactory;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.recording.aspects.IAssertSWTEventListener;
@@ -47,7 +49,8 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.tesla.ui.describers.WidgetDescriber;
+import org.eclipse.rcptt.tesla.ui.describers.DescriberManager;
+import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -102,15 +105,6 @@ public class SWTAssertManager implements IRecordingProcessor,
 	private List<Menu> menus = new ArrayList<Menu>();
 
 	private Control beforeFreezeFocus = null;
-
-	private static SWTAssertManager swtAssertManager;
-
-	public static SWTAssertManager getDefault() { // thread safely ?
-		if (null == swtAssertManager) {
-			swtAssertManager = new SWTAssertManager();
-		}
-		return swtAssertManager;
-	}
 
 	public void clear() {
 		lastFocusedWidget = null;
@@ -494,23 +488,50 @@ public class SWTAssertManager implements IRecordingProcessor,
 		}
 	}
 
-	// TODO:
-	public synchronized void highLightWidget(final Widget widget) {
-		try {
-			// SWTEventManager.setShouldProceed(true); // ?
-			if (widget != null) {
-				resetAssertSelection();
-				widget.getDisplay().asyncExec(new Runnable() { // async?
-					public void run() {
-						synchronized (widget) {
-							updateHover(widget);
-						}
-					}
-				});
-			}
-		} finally {
-			// SWTEventManager.setShouldProceed(false);
+	public synchronized boolean highlightWidget(final Widget widget) {
+		if (widget == null || widget.isDisposed()) {
+			return false;
 		}
+		resetAssertSelection();
+
+		widget.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				synchronized (widget) {
+					IWidgetDescriber descr = DescriberManager.getDescriber(widget, 0, 0);
+					if (null == descr.getBounds()) {
+						return;
+					}
+					updateHover(descr.getBounds(), descr.getPoint(), true, true);
+				}
+			}
+		});
+		return true;
+	}
+
+	public synchronized SWTUIElement getSWTUIElement(Element element) {
+		SWTUIElement swtUIElement = SWTRecordingHelper.getHelper().findByElement(element);
+		return swtUIElement;
+	}
+
+	public synchronized Element getElement(SWTUIElement swtUIElement) {
+		FindResult result = null;
+		result = SWTRecordingHelper.getHelper().getLocator().findElement(swtUIElement, true, false, true);
+		if (result != null) {
+			return result.element;
+		}
+		return null;
+	}
+
+	public synchronized boolean updateAssertionPanelWindow(Widget widget) {
+		if (widget == null || widget.isDisposed()) {
+			return false;
+		}
+
+		IRecordingDescriber assertDescr = selectAllowedParent(new RecordingWidgetDescriber(widget));
+		seachForElement(assertDescr.searchForElement(recorder), true, assertDescr);
+		freezedCtrl = assertDescr;
+
+		return true;
 	}
 
 	public boolean isShortcutRequest(Event e, String[] shortcuts) {
@@ -542,19 +563,15 @@ public class SWTAssertManager implements IRecordingProcessor,
 					"show popup menu for: " + c.getClass().toString());
 		}
 		Menu menu = null;
-		player.getEvents().sendEvent(c, SWT.MenuDetect, event.x, event.y,
-				SWT.BUTTON2);
+		player.getEvents().sendEvent(c, SWT.MenuDetect, event.x, event.y, SWT.BUTTON2);
 		menu = c.getMenu();
 		if (menu != null && !menu.isDisposed()) {
 			player.getEvents().sendEvent(menu, SWT.Show);
-			// menu.setVisible(true);
 			Menu popupMenu = new Menu(getShell(c), SWT.POP_UP);
 			clearPopupMenus();
 			copyMenuTo(menu, popupMenu);
 			menus.add(popupMenu);
 			popupMenu.setVisible(true);
-
-			// showMenuAt(event, c, menu);
 		}
 	}
 
@@ -658,7 +675,6 @@ public class SWTAssertManager implements IRecordingProcessor,
 		Point pos = c.toDisplay(event.x, event.y);
 		Point size = bar.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		menuShell.setBounds(pos.x, pos.y, size.x + 5, size.y + 5);
-		// sh.setMenuBar(bar);
 		menuShell.layout();
 		menuShell.open();
 	}
@@ -744,8 +760,6 @@ public class SWTAssertManager implements IRecordingProcessor,
 		region.add(0, bounds.height - p0y, 2, p0y);
 
 		if (controlEquals) {
-			// p0x = bounds.width;
-			// p0y = bounds.height;
 			region.add(0, 0, bounds.width, 2);
 			region.add(0, bounds.height - 2, bounds.width, 2);
 			region.add(0, 0, 2, bounds.height);
@@ -761,10 +775,8 @@ public class SWTAssertManager implements IRecordingProcessor,
 		selectionShell.setRegion(region);
 		if (!selectionShell.isVisible()) {
 			selectionShell.setVisible(true);
-			// selectionShell.open();
 		}
 		selectionShell.redraw();
-		// selectionShell.forceActive();
 		selectionShell.moveAbove(null);
 		selectionShell.setAlpha(127);
 	}
@@ -795,48 +807,18 @@ public class SWTAssertManager implements IRecordingProcessor,
 				}
 			}
 		}
-		// if (selectionShell != null && value == true) {
-		// Composite currentParent = selectionShell.getParent();
-		// boolean reCreate = false;
-		// if (currentParent != null) {
-		// reCreate = !currentParent.equals(parent);
-		// } else {
-		// reCreate = (parent != null);
-		// }
-		// if (reCreate) {
-		// selectionShell.dispose();
-		// selectionShell = null;
-		// }
-		// }
 		if (selectionShell == null && value == true) {
-			// if (parent != null) {
-			// selectionShell = new Shell(parent, SWT.NO_TRIM | SWT.ON_TOP |
-			// SWT.TOOL);
-			// } else {
 			selectionShell = new Shell(SWT.NO_TRIM | SWT.ON_TOP | SWT.TOOL);
-			// }
-
 			selectionShell.setBackground(selectionShell.getDisplay()
 					.getSystemColor(SWT.COLOR_RED));
 			selectionShell.setText("Hover");
-			// selectionShell.addMouseMoveListener(new MouseMoveListener() {
-			// public void mouseMove(MouseEvent e) {
-			// if (freezedCtrl != null && freezedCtrl instanceof Control) {
-			// ((Control) freezedCtrl).getShell().setFocus();
-			// }
-			// }
-			// });
+			selectionShell.setData("isHover", true);
 		} else if (value == false) {
 			if (selectionShell != null) {
 				selectionShell.dispose();
 				selectionShell = null;
 			}
 		}
-	}
-
-	private synchronized void updateHover(Widget widget) {
-		WidgetDescriber descr = new WidgetDescriber(widget);
-		updateHover(descr.getBounds(), descr.getPoint(), true, true);
 	}
 
 	private void updateHoverAccordingTo(IRecordingDescriber descr, int x, int y) {
@@ -888,6 +870,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 			focus.setElement(EcoreUtil.copy(element));
 			focus.setPointFixed(fixed);
 			if (fixed) {
+				// System.out.println("clicked: " + element.getId());
 				if (TeslaFeatures.isActivityLogging()) {
 					Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
 							"assert properties of element: ");
@@ -920,6 +903,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 				selectionShell.setBackground(selectionShell.getDisplay()
 						.getSystemColor(SWT.COLOR_RED));
 				selectionShell.setText("Hover");
+				selectionShell.setData("isHover", true);
 				disposeMenuPopups();
 				clearPopupMenus();
 			}
