@@ -3497,8 +3497,17 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUIHierarchyResponse_UiElements() {
+	public EReference getUIHierarchyResponse_Chilren() {
 		return (EReference)uiHierarchyResponseEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUIHierarchyResponse_UiElement() {
+		return (EReference)uiHierarchyResponseEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -3526,6 +3535,15 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 */
 	public EAttribute getUIElement_Name() {
 		return (EAttribute)uiElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUIElement_GenerationKind() {
+		return (EAttribute)uiElementEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3976,11 +3994,13 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		createEAttribute(rapUploadFileEClass, RAP_UPLOAD_FILE__PATH);
 
 		uiHierarchyResponseEClass = createEClass(UI_HIERARCHY_RESPONSE);
-		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__UI_ELEMENTS);
+		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__CHILREN);
+		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__UI_ELEMENT);
 
 		uiElementEClass = createEClass(UI_ELEMENT);
 		createEAttribute(uiElementEClass, UI_ELEMENT__HAS_CHILDREN);
 		createEAttribute(uiElementEClass, UI_ELEMENT__NAME);
+		createEAttribute(uiElementEClass, UI_ELEMENT__GENERATION_KIND);
 
 		// Create enums
 		swtDialogKindEEnum = createEEnum(SWT_DIALOG_KIND);
@@ -4513,11 +4533,13 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		initEAttribute(getRapUploadFile_Path(), theEcorePackage.getEString(), "path", null, 0, 1, RapUploadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiHierarchyResponseEClass, UIHierarchyResponse.class, "UIHierarchyResponse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getUIHierarchyResponse_UiElements(), this.getUIElement(), null, "uiElements", null, 0, -1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIHierarchyResponse_Chilren(), this.getUIElement(), null, "chilren", null, 0, -1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIHierarchyResponse_UiElement(), this.getUIElement(), null, "uiElement", null, 0, 1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiElementEClass, UIElement.class, "UIElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUIElement_HasChildren(), theEcorePackage.getEBoolean(), "hasChildren", null, 0, 1, UIElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIElement_Name(), theEcorePackage.getEString(), "name", null, 0, 1, UIElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUIElement_GenerationKind(), theEcorePackage.getEString(), "generationKind", null, 0, 1, UIElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(swtDialogKindEEnum, SWTDialogKind.class, "SWTDialogKind");

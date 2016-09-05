@@ -23,6 +23,7 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.impl.ElementImpl;
  * <ul>
  *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIElementImpl#isHasChildren <em>Has Children</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIElementImpl#getGenerationKind <em>Generation Kind</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,6 +68,26 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getGenerationKind() <em>Generation Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGenerationKind()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String GENERATION_KIND_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getGenerationKind() <em>Generation Kind</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGenerationKind()
+	 * @generated
+	 * @ordered
+	 */
+	protected String generationKind = GENERATION_KIND_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,6 +155,27 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getGenerationKind() {
+		return generationKind;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGenerationKind(String newGenerationKind) {
+		String oldGenerationKind = generationKind;
+		generationKind = newGenerationKind;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ProtocolPackage.UI_ELEMENT__GENERATION_KIND, oldGenerationKind, generationKind));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -141,6 +183,8 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 				return isHasChildren();
 			case ProtocolPackage.UI_ELEMENT__NAME:
 				return getName();
+			case ProtocolPackage.UI_ELEMENT__GENERATION_KIND:
+				return getGenerationKind();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -158,6 +202,9 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 				return;
 			case ProtocolPackage.UI_ELEMENT__NAME:
 				setName((String)newValue);
+				return;
+			case ProtocolPackage.UI_ELEMENT__GENERATION_KIND:
+				setGenerationKind((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -177,6 +224,9 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 			case ProtocolPackage.UI_ELEMENT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case ProtocolPackage.UI_ELEMENT__GENERATION_KIND:
+				setGenerationKind(GENERATION_KIND_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -193,6 +243,8 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 				return hasChildren != HAS_CHILDREN_EDEFAULT;
 			case ProtocolPackage.UI_ELEMENT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ProtocolPackage.UI_ELEMENT__GENERATION_KIND:
+				return GENERATION_KIND_EDEFAULT == null ? generationKind != null : !GENERATION_KIND_EDEFAULT.equals(generationKind);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -211,6 +263,8 @@ public class UIElementImpl extends ElementImpl implements UIElement {
 		result.append(hasChildren);
 		result.append(", name: ");
 		result.append(name);
+		result.append(", generationKind: ");
+		result.append(generationKind);
 		result.append(')');
 		return result.toString();
 	}

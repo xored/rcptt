@@ -10,145 +10,147 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Assertion AUT Controls Hierarchy State</b></em>',
+ * A representation of the literals of the enumeration '<em><b>AUT Controls Hierarchy State</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getAssertionAUTControlsHierarchyState()
+ * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getAUTControlsHierarchyState()
  * @model
  * @generated
  */
-public enum AssertionAUTControlsHierarchyState implements Enumerator {
+public enum AUTControlsHierarchyState implements Enumerator {
 	/**
-	 * The '<em><b>Get Root</b></em>' literal object.
+	 * The '<em><b>HIGHLIGHT WIDGET</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #GET_ROOT_VALUE
+	 * @see #HIGHLIGHT_WIDGET_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	GET_ROOT(1, "GetRoot", "GetRoot"),
+	HIGHLIGHT_WIDGET(0, "HIGHLIGHT_WIDGET", "HIGHLIGHT_WIDGET"),
 
 	/**
-	 * The '<em><b>Get Node</b></em>' literal object.
+	 * The '<em><b>UPDATE ASSERT WINDOW</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #GET_NODE_VALUE
+	 * @see #UPDATE_ASSERT_WINDOW_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	GET_NODE(2, "GetNode", "GetNode"),
+	UPDATE_ASSERT_WINDOW(1, "UPDATE_ASSERT_WINDOW", "UPDATE_ASSERT_WINDOW"),
 
 	/**
-	 * The '<em><b>Clear</b></em>' literal object.
+	 * The '<em><b>GET ELEMENT</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #CLEAR_VALUE
+	 * @see #GET_ELEMENT_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	CLEAR(0, "Clear", "Clear"), /**
-	 * The '<em><b>HIGHLIGHT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #HIGHLIGHT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	HIGHLIGHT(3, "HIGHLIGHT", "HIGHLIGHT");
+	GET_ELEMENT(2, "GET_ELEMENT", "GET_ELEMENT"),
 
 	/**
-	 * The '<em><b>Get Root</b></em>' literal value.
+	 * The '<em><b>GET PARENT</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #GET_PARENT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	GET_PARENT(3, "GET_PARENT", "GET_PARENT");
+
+	/**
+	 * The '<em><b>HIGHLIGHT WIDGET</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Get Root</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>HIGHLIGHT WIDGET</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #GET_ROOT
-	 * @model name="GetRoot"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int GET_ROOT_VALUE = 1;
-
-	/**
-	 * The '<em><b>Get Node</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Get Node</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #GET_NODE
-	 * @model name="GetNode"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int GET_NODE_VALUE = 2;
-
-	/**
-	 * The '<em><b>Clear</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Clear</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #CLEAR
-	 * @model name="Clear"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int CLEAR_VALUE = 0;
-
-	/**
-	 * The '<em><b>HIGHLIGHT</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>HIGHLIGHT</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #HIGHLIGHT
+	 * @see #HIGHLIGHT_WIDGET
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int HIGHLIGHT_VALUE = 3;
+	public static final int HIGHLIGHT_WIDGET_VALUE = 0;
 
 	/**
-	 * An array of all the '<em><b>Assertion AUT Controls Hierarchy State</b></em>' enumerators.
+	 * The '<em><b>UPDATE ASSERT WINDOW</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>UPDATE ASSERT WINDOW</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #UPDATE_ASSERT_WINDOW
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int UPDATE_ASSERT_WINDOW_VALUE = 1;
+
+	/**
+	 * The '<em><b>GET ELEMENT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>GET ELEMENT</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #GET_ELEMENT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int GET_ELEMENT_VALUE = 2;
+
+	/**
+	 * The '<em><b>GET PARENT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>GET PARENT</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #GET_PARENT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int GET_PARENT_VALUE = 3;
+
+	/**
+	 * An array of all the '<em><b>AUT Controls Hierarchy State</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final AssertionAUTControlsHierarchyState[] VALUES_ARRAY =
-		new AssertionAUTControlsHierarchyState[] {
-			GET_ROOT,
-			GET_NODE,
-			CLEAR,
-			HIGHLIGHT,
+	private static final AUTControlsHierarchyState[] VALUES_ARRAY =
+		new AUTControlsHierarchyState[] {
+			HIGHLIGHT_WIDGET,
+			UPDATE_ASSERT_WINDOW,
+			GET_ELEMENT,
+			GET_PARENT,
 		};
 
 	/**
-	 * A public read-only list of all the '<em><b>Assertion AUT Controls Hierarchy State</b></em>' enumerators.
+	 * A public read-only list of all the '<em><b>AUT Controls Hierarchy State</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final List<AssertionAUTControlsHierarchyState> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<AUTControlsHierarchyState> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Assertion AUT Controls Hierarchy State</b></em>' literal with the specified literal value.
+	 * Returns the '<em><b>AUT Controls Hierarchy State</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static AssertionAUTControlsHierarchyState get(String literal) {
+	public static AUTControlsHierarchyState get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			AssertionAUTControlsHierarchyState result = VALUES_ARRAY[i];
+			AUTControlsHierarchyState result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -157,16 +159,16 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Assertion AUT Controls Hierarchy State</b></em>' literal with the specified name.
+	 * Returns the '<em><b>AUT Controls Hierarchy State</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static AssertionAUTControlsHierarchyState getByName(String name) {
+	public static AUTControlsHierarchyState getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			AssertionAUTControlsHierarchyState result = VALUES_ARRAY[i];
+			AUTControlsHierarchyState result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -175,19 +177,19 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Assertion AUT Controls Hierarchy State</b></em>' literal with the specified integer value.
+	 * Returns the '<em><b>AUT Controls Hierarchy State</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static AssertionAUTControlsHierarchyState get(int value) {
+	public static AUTControlsHierarchyState get(int value) {
 		switch (value) {
-			case GET_ROOT_VALUE: return GET_ROOT;
-			case GET_NODE_VALUE: return GET_NODE;
-			case CLEAR_VALUE: return CLEAR;
-			case HIGHLIGHT_VALUE: return HIGHLIGHT;
+			case HIGHLIGHT_WIDGET_VALUE: return HIGHLIGHT_WIDGET;
+			case UPDATE_ASSERT_WINDOW_VALUE: return UPDATE_ASSERT_WINDOW;
+			case GET_ELEMENT_VALUE: return GET_ELEMENT;
+			case GET_PARENT_VALUE: return GET_PARENT;
 		}
 		return null;
 	}
@@ -219,7 +221,7 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private AssertionAUTControlsHierarchyState(int value, String name, String literal) {
+	private AUTControlsHierarchyState(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -263,4 +265,4 @@ public enum AssertionAUTControlsHierarchyState implements Enumerator {
 		return literal;
 	}
 	
-} //AssertionAUTControlsHierarchyState
+} //AUTControlsHierarchyState

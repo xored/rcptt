@@ -88,6 +88,7 @@ public class Images {
 	public static final String PANEL_DESELECT_ALL_DISABLED = PREFIX
 			+ "panel/d-deselectall.gif"; //$NON-NLS-1$
 	public static final String PANEL_FILTER = PREFIX + "panel/filter.gif"; //$NON-NLS-1$
+	public static final String TREE_VISIBLE = PREFIX + "panel/tree.gif"; //$NON-NLS-1$
 
 	//
 	// Preferences
