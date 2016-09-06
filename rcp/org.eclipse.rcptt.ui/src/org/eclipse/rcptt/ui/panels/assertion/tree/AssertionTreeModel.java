@@ -48,7 +48,7 @@ public class AssertionTreeModel {
 		}
 		UIHierarchyResponse response = UIHierarchyResponseUtilities.getUIHierarchyElement(aut, (UIElement) parent);
 		List<UIElement> list = new ArrayList<UIElement>();
-		for (UIElement uiElement : response.getChilren()) {
+		for (UIElement uiElement : response.getChildren()) {
 			list.add(uiElement);
 		}
 		return (UIElement[]) list.toArray(new UIElement[list.size()]);

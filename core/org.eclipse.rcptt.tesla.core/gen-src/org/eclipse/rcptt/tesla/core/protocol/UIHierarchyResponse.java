@@ -14,7 +14,7 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChilren <em>Chilren</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getUiElement <em>Ui Element</em>}</li>
  * </ul>
  *
@@ -24,20 +24,20 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
  */
 public interface UIHierarchyResponse extends Response {
 	/**
-	 * Returns the value of the '<em><b>Chilren</b></em>' reference list.
+	 * Returns the value of the '<em><b>Children</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.rcptt.tesla.core.protocol.UIElement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Chilren</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Children</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Chilren</em>' reference list.
-	 * @see org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage#getUIHierarchyResponse_Chilren()
+	 * @return the value of the '<em>Children</em>' reference list.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage#getUIHierarchyResponse_Children()
 	 * @model
 	 * @generated
 	 */
-	EList<UIElement> getChilren();
+	EList<UIElement> getChildren();
 
 	/**
 	 * Returns the value of the '<em><b>Ui Element</b></em>' reference.

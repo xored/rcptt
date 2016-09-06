@@ -27,7 +27,7 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.impl.ResponseImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIHierarchyResponseImpl#getChilren <em>Chilren</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIHierarchyResponseImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.rcptt.tesla.core.protocol.impl.UIHierarchyResponseImpl#getUiElement <em>Ui Element</em>}</li>
  * </ul>
  *
@@ -35,14 +35,14 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.impl.ResponseImpl;
  */
 public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchyResponse {
 	/**
-	 * The cached value of the '{@link #getChilren() <em>Chilren</em>}' reference list.
+	 * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getChilren()
+	 * @see #getChildren()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<UIElement> chilren;
+	protected EList<UIElement> children;
 	/**
 	 * The cached value of the '{@link #getUiElement() <em>Ui Element</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -76,11 +76,11 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<UIElement> getChilren() {
-		if (chilren == null) {
-			chilren = new EObjectResolvingEList<UIElement>(UIElement.class, this, ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILREN);
+	public EList<UIElement> getChildren() {
+		if (children == null) {
+			children = new EObjectResolvingEList<UIElement>(UIElement.class, this, ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILDREN);
 		}
-		return chilren;
+		return children;
 	}
 
 	/**
@@ -129,8 +129,8 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILREN:
-				return getChilren();
+			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILDREN:
+				return getChildren();
 			case ProtocolPackage.UI_HIERARCHY_RESPONSE__UI_ELEMENT:
 				if (resolve) return getUiElement();
 				return basicGetUiElement();
@@ -147,9 +147,9 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILREN:
-				getChilren().clear();
-				getChilren().addAll((Collection<? extends UIElement>)newValue);
+			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILDREN:
+				getChildren().clear();
+				getChildren().addAll((Collection<? extends UIElement>)newValue);
 				return;
 			case ProtocolPackage.UI_HIERARCHY_RESPONSE__UI_ELEMENT:
 				setUiElement((UIElement)newValue);
@@ -166,8 +166,8 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILREN:
-				getChilren().clear();
+			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILDREN:
+				getChildren().clear();
 				return;
 			case ProtocolPackage.UI_HIERARCHY_RESPONSE__UI_ELEMENT:
 				setUiElement((UIElement)null);
@@ -184,8 +184,8 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILREN:
-				return chilren != null && !chilren.isEmpty();
+			case ProtocolPackage.UI_HIERARCHY_RESPONSE__CHILDREN:
+				return children != null && !children.isEmpty();
 			case ProtocolPackage.UI_HIERARCHY_RESPONSE__UI_ELEMENT:
 				return uiElement != null;
 		}
