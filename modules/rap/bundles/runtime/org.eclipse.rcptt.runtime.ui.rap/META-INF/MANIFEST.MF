@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.rap.ui,
  org.eclipse.rcptt.ecl.client.tcp;bundle-version="[2.2.0,3.0.0)",
  org.eclipse.rcptt.tesla.ui.ide.aspects.rap;bundle-version="[2.2.0,3.0.0)",
  org.eclipse.rcptt.core.launching;bundle-version="[2.2.0,3.0.0)",
- org.eclipse.rcptt.util.swt.rap;bundle-version="[2.2.0,3.0.0)"
+ org.eclipse.rcptt.util.swt.rap;bundle-version="[2.2.0,3.0.0)",
+ org.eclipse.rcptt.tesla.recording.aspects.swt.rap
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.rcptt.internal.runtime.ui.rap,

@@ -21,7 +21,8 @@ import java.util.WeakHashMap;
 
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.client.service.JavaScriptExecutor;
-import org.eclipse.rcptt.tesla.swt.js.JavaScriptExecutionManager;
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Control;
@@ -196,6 +197,42 @@ public final class SWTEventManager {
 			finalResult = finalResult || listener.handleEventInFreeze(widget, type, event);
 		}
 		return finalResult;
+	}
+
+	public static boolean highlightWidget(Widget widget) {
+		boolean finalResult = false;
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			finalResult = finalResult || listener.highlightWidget(widget);
+		}
+		return finalResult;
+	}
+
+	public static boolean updateAssertionPanelWindow(Widget widget) {
+		boolean finalResult = false;
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			finalResult = finalResult || listener.updateAssertionPanelWindow(widget);
+		}
+		return finalResult;
+	}
+
+	public static SWTUIElement getSWTUIElement(Element element) {
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			SWTUIElement result = listener.getSWTUIElement(element);
+			if (null != result) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	public static Element getElement(SWTUIElement swtUIElement) {
+		for (IAssertSWTEventListener listener : getListeners(IAssertSWTEventListener.class)) {
+			Element result = listener.getElement(swtUIElement);
+			if (null != result) {
+				return result;
+			}
+		}
+		return null;
 	}
 
 	public static void handleUpdateHover(Control widget) {

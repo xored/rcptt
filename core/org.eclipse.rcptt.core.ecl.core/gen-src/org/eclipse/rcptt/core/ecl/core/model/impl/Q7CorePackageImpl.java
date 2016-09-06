@@ -11,6 +11,12 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy;
 import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchyState;
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
+=======
+import org.eclipse.rcptt.ecl.core.CorePackage;
+
+import org.eclipse.rcptt.core.scenario.ScenarioPackage;
+>>>>>>> added AssertionTree for RAP
 import org.eclipse.rcptt.core.ecl.core.model.BeginReportNode;
 import org.eclipse.rcptt.core.ecl.core.model.CreateContext;
 import org.eclipse.rcptt.core.ecl.core.model.CreateReport;
@@ -226,8 +232,12 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	private EClass autControlsHierarchyEClass = null;
 
 	/**
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+=======
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+>>>>>>> added AssertionTree for RAP
 	 * @generated
 	 */
 	private EEnum executionPhaseEEnum = null;
@@ -891,8 +901,12 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+=======
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+>>>>>>> added AssertionTree for RAP
 	 * @generated
 	 */
 	public EEnum getExecutionPhase() {
@@ -909,8 +923,12 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+=======
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+>>>>>>> added AssertionTree for RAP
 	 * @generated
 	 */
 	public Q7CoreFactory getQ7CoreFactory() {
@@ -1172,10 +1190,17 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 		initEClass(terminateAutEClass, TerminateAut.class, "TerminateAut", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(autControlsHierarchyEClass, AUTControlsHierarchy.class, "AUTControlsHierarchy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 		initEAttribute(getAUTControlsHierarchy_Id(), theEcorePackage.getEString(), "id", "", 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAUTControlsHierarchy_State(), this.getAUTControlsHierarchyState(), "state", null, 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAUTControlsHierarchy_Description(), theEcorePackage.getEString(), "description", "", 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAUTControlsHierarchy_Kind(), theEcorePackage.getEString(), "kind", "", 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+=======
+		initEAttribute(getAUTControlsHierarchy_Id(), theEcorePackage.getEString(), "id", null, 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAUTControlsHierarchy_State(), this.getAUTControlsHierarchyState(), "state", null, 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAUTControlsHierarchy_Description(), theEcorePackage.getEString(), "description", null, 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAUTControlsHierarchy_Kind(), theEcorePackage.getEString(), "kind", null, 0, 1, AUTControlsHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+>>>>>>> added AssertionTree for RAP
 
 		// Initialize enums and add enum literals
 		initEEnum(executionPhaseEEnum, ExecutionPhase.class, "ExecutionPhase");

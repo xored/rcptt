@@ -6,7 +6,11 @@ import org.eclipse.rcptt.ecl.core.Command;
 
 /**
  * <!-- begin-user-doc -->
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
  * A representation of the model object '<em><b>Assertion AUT Controls Hierarchy</b></em>'.
+=======
+ * A representation of the model object '<em><b>AUT Controls Hierarchy</b></em>'.
+>>>>>>> added AssertionTree for RAP
  * <!-- end-user-doc -->
  *
  * <p>
@@ -26,7 +30,10 @@ import org.eclipse.rcptt.ecl.core.Command;
 public interface AUTControlsHierarchy extends Command {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * The default value is <code>""</code>.
+=======
+>>>>>>> added AssertionTree for RAP
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
@@ -36,7 +43,11 @@ public interface AUTControlsHierarchy extends Command {
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
 	 * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getAUTControlsHierarchy_Id()
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * @model default=""
+=======
+	 * @model
+>>>>>>> added AssertionTree for RAP
 	 * @generated
 	 */
 	String getId();
@@ -82,7 +93,10 @@ public interface AUTControlsHierarchy extends Command {
 
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * The default value is <code>""</code>.
+=======
+>>>>>>> added AssertionTree for RAP
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
@@ -92,7 +106,11 @@ public interface AUTControlsHierarchy extends Command {
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
 	 * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getAUTControlsHierarchy_Description()
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * @model default=""
+=======
+	 * @model
+>>>>>>> added AssertionTree for RAP
 	 * @generated
 	 */
 	String getDescription();
@@ -109,7 +127,10 @@ public interface AUTControlsHierarchy extends Command {
 
 	/**
 	 * Returns the value of the '<em><b>Kind</b></em>' attribute.
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * The default value is <code>""</code>.
+=======
+>>>>>>> added AssertionTree for RAP
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Kind</em>' attribute isn't clear,
@@ -119,7 +140,11 @@ public interface AUTControlsHierarchy extends Command {
 	 * @return the value of the '<em>Kind</em>' attribute.
 	 * @see #setKind(String)
 	 * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getAUTControlsHierarchy_Kind()
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	 * @model default=""
+=======
+	 * @model
+>>>>>>> added AssertionTree for RAP
 	 * @generated
 	 */
 	String getKind();
@@ -134,4 +159,8 @@ public interface AUTControlsHierarchy extends Command {
 	 */
 	void setKind(String value);
 
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 } // AssertionAUTControlsHierarchy
+=======
+} // AUTControlsHierarchy
+>>>>>>> added AssertionTree for RAP

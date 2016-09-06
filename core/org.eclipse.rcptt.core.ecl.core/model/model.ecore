@@ -131,6 +131,7 @@
     <eAnnotations source="http://www.eclipse.org/ecl/internal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AUTControlsHierarchy" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
         defaultValueLiteral=""/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//AUTControlsHierarchyState"/>
@@ -138,6 +139,12 @@
         defaultValueLiteral=""/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
         defaultValueLiteral=""/>
+=======
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="#//AUTControlsHierarchyState"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+>>>>>>> added AssertionTree for RAP
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AUTControlsHierarchyState">
     <eLiterals name="HIGHLIGHT_WIDGET"/>

@@ -3,6 +3,10 @@
 package org.eclipse.rcptt.tesla.core.protocol;
 
 import org.eclipse.emf.common.util.EList;
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
+=======
+
+>>>>>>> added AssertionTree for RAP
 import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
 
 /**
