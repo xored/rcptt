@@ -5,12 +5,23 @@ package org.eclipse.rcptt.tesla.core.protocol.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+=======
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+>>>>>>> added AssertionTree for RAP
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
@@ -43,6 +54,10 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	 * @ordered
 	 */
 	protected EList<UIElement> children;
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
+=======
+
+>>>>>>> added AssertionTree for RAP
 	/**
 	 * The cached value of the '{@link #getUiElement() <em>Ui Element</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -52,6 +67,10 @@ public class UIHierarchyResponseImpl extends ResponseImpl implements UIHierarchy
 	 * @ordered
 	 */
 	protected UIElement uiElement;
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
+=======
+
+>>>>>>> added AssertionTree for RAP
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

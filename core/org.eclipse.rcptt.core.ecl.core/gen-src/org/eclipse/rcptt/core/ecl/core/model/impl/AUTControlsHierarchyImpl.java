@@ -39,7 +39,11 @@ public class AUTControlsHierarchyImpl extends CommandImpl implements AUTControls
 	 * @generated
 	 * @ordered
 	 */
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	protected static final String ID_EDEFAULT = "";
+=======
+	protected static final String ID_EDEFAULT = null;
+>>>>>>> added AssertionTree for RAP
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -79,7 +83,11 @@ public class AUTControlsHierarchyImpl extends CommandImpl implements AUTControls
 	 * @generated
 	 * @ordered
 	 */
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	protected static final String DESCRIPTION_EDEFAULT = "";
+=======
+	protected static final String DESCRIPTION_EDEFAULT = null;
+>>>>>>> added AssertionTree for RAP
 
 	/**
 	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
@@ -99,7 +107,11 @@ public class AUTControlsHierarchyImpl extends CommandImpl implements AUTControls
 	 * @generated
 	 * @ordered
 	 */
+<<<<<<< 2ca8fe07c97220d724484277eca815ecb233573e
 	protected static final String KIND_EDEFAULT = "";
+=======
+	protected static final String KIND_EDEFAULT = null;
+>>>>>>> added AssertionTree for RAP
 
 	/**
 	 * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
