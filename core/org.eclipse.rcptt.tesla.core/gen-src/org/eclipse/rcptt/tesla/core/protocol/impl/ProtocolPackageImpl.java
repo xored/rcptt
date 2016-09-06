@@ -3497,7 +3497,7 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUIHierarchyResponse_Chilren() {
+	public EReference getUIHierarchyResponse_Children() {
 		return (EReference)uiHierarchyResponseEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -3994,7 +3994,7 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		createEAttribute(rapUploadFileEClass, RAP_UPLOAD_FILE__PATH);
 
 		uiHierarchyResponseEClass = createEClass(UI_HIERARCHY_RESPONSE);
-		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__CHILREN);
+		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__CHILDREN);
 		createEReference(uiHierarchyResponseEClass, UI_HIERARCHY_RESPONSE__UI_ELEMENT);
 
 		uiElementEClass = createEClass(UI_ELEMENT);
@@ -4533,7 +4533,7 @@ public class ProtocolPackageImpl extends EPackageImpl implements ProtocolPackage
 		initEAttribute(getRapUploadFile_Path(), theEcorePackage.getEString(), "path", null, 0, 1, RapUploadFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiHierarchyResponseEClass, UIHierarchyResponse.class, "UIHierarchyResponse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getUIHierarchyResponse_Chilren(), this.getUIElement(), null, "chilren", null, 0, -1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIHierarchyResponse_Children(), this.getUIElement(), null, "children", null, 0, -1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUIHierarchyResponse_UiElement(), this.getUIElement(), null, "uiElement", null, 0, 1, UIHierarchyResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiElementEClass, UIElement.class, "UIElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

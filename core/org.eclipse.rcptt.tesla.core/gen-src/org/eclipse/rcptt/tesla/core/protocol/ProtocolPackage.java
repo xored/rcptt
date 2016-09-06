@@ -5558,13 +5558,13 @@ public interface ProtocolPackage extends EPackage {
 	int UI_HIERARCHY_RESPONSE__ADVANCED_INFORMATION = RawPackage.RESPONSE__ADVANCED_INFORMATION;
 
 	/**
-	 * The feature id for the '<em><b>Chilren</b></em>' reference list.
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_HIERARCHY_RESPONSE__CHILREN = RawPackage.RESPONSE_FEATURE_COUNT + 0;
+	int UI_HIERARCHY_RESPONSE__CHILDREN = RawPackage.RESPONSE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Ui Element</b></em>' reference.
@@ -8626,15 +8626,15 @@ public interface ProtocolPackage extends EPackage {
 	EClass getUIHierarchyResponse();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChilren <em>Chilren</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Chilren</em>'.
-	 * @see org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChilren()
+	 * @return the meta object for the reference list '<em>Children</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getChildren()
 	 * @see #getUIHierarchyResponse()
 	 * @generated
 	 */
-	EReference getUIHierarchyResponse_Chilren();
+	EReference getUIHierarchyResponse_Children();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.tesla.core.protocol.UIHierarchyResponse#getUiElement <em>Ui Element</em>}'.
@@ -11179,12 +11179,12 @@ public interface ProtocolPackage extends EPackage {
 		EClass UI_HIERARCHY_RESPONSE = eINSTANCE.getUIHierarchyResponse();
 
 		/**
-		 * The meta object literal for the '<em><b>Chilren</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UI_HIERARCHY_RESPONSE__CHILREN = eINSTANCE.getUIHierarchyResponse_Chilren();
+		EReference UI_HIERARCHY_RESPONSE__CHILDREN = eINSTANCE.getUIHierarchyResponse_Children();
 
 		/**
 		 * The meta object literal for the '<em><b>Ui Element</b></em>' reference feature.

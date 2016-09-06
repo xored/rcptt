@@ -69,7 +69,7 @@ public class AUTControlsHierarchyUtilities {
 				continue;
 			}
 
-			response.getChilren().add(getUIElement(display, getElement(swtUIChild), swtUIChild));
+			response.getChildren().add(getUIElement(display, getElement(swtUIChild), swtUIChild));
 		}
 	}
 
