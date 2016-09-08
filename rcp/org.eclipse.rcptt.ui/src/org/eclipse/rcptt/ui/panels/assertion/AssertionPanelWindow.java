@@ -538,12 +538,8 @@ public class AssertionPanelWindow extends Dialog {
 
 		createTreeViewer(assertionComposite).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-<<<<<<< 663eeb289232baeec92721816ce8a0771f937641
 		createButtonPanel(assertionComposite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-=======
-		createButtonPanel(composite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
->>>>>>> Fix Assertion dialog on linux
 		return composite;
 	}
 
