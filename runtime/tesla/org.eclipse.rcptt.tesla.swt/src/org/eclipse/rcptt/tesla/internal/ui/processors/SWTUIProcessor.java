@@ -299,7 +299,8 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ProtocolPackage.Literals.CLICK_COLUMN,
 			ProtocolPackage.Literals.MOUSE_EVENT };
 
-	private static final Set<String> SKIP_ACTIVATION_FOR_SHELLS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+	private static final Set<String> SKIP_ACTIVATION_FOR_SHELLS = Collections
+			.unmodifiableSet(new HashSet<String>(Arrays.asList(
 			"ContextInformationPopup.createContextInfoPopup()")));
 
 	protected static ProtocolFactory factory = ProtocolFactory.eINSTANCE;
@@ -877,7 +878,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		return new Point(x, y);
 	}
 
-	private static final Map<MouseEventKind, Integer> mouseToEventType = new HashMap<>();
+	private static final Map<MouseEventKind, Integer> mouseToEventType = new HashMap<MouseEventKind, Integer>();
 
 	static {
 		mouseToEventType.put(MouseEventKind.DOUBLE_CLICK, SWT.MouseDoubleClick);
@@ -2483,7 +2484,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 					return response;
 				}
 
-				final List<String[]> sels = new ArrayList<>();
+				final List<String[]> sels = new ArrayList<String[]>();
 				sels.add(asStringArray(command.getPath()));
 				for (final MultiSelectionItem item : items) {
 					sels.add(asStringArray(item.getPath()));
@@ -2527,7 +2528,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		else if (!command.getPath().isEmpty()
 				|| !command.getAdditionalItems().isEmpty()) {
 
-			List<String[]> items = new ArrayList<>();
+			List<String[]> items = new ArrayList<String[]>();
 			String[] path = asStringArray(command.getPath());
 			if (path != null)
 				items.add(path);
@@ -2879,7 +2880,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
 				.getWorkbenchWindows();
 		for (IWorkbenchWindow win : windows) {
-			Set<SWTUIElement> processed = new HashSet<>();
+			Set<SWTUIElement> processed = new HashSet<SWTUIElement>();
 			processChildren(win, root2, processed);
 		}
 
