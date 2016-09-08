@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -28,7 +29,6 @@ import org.eclipse.rcptt.ui.panels.assertion.tree.AssertionTreeLabelProvider;
 import org.eclipse.rcptt.ui.panels.assertion.tree.AssertionTreeModel;
 import org.eclipse.rcptt.ui.panels.assertion.tree.AssertionTreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 
@@ -62,7 +62,7 @@ public class AUTControlsHierarchyView {
 		final Composite treeComposite = new Composite(parent, SWT.NONE);
 		final TreeColumnLayout layout = new TreeColumnLayout();
 		treeComposite.setLayout(layout);
-		treeComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(treeComposite);
 
 		final Tree tree = new Tree(treeComposite, SWT.BORDER | SWT.FULL_SELECTION);
 		tree.setHeaderVisible(true);
@@ -80,10 +80,10 @@ public class AUTControlsHierarchyView {
 			}
 
 			@Override
-			public boolean equals(Object a, Object b) {
-				if (a instanceof AssertionTreeModel && b instanceof AssertionTreeModel) {
-					AssertionTreeModel model1 = (AssertionTreeModel) a;
-					AssertionTreeModel model2 = (AssertionTreeModel) b;
+			public boolean equals(Object object1, Object object2) {
+				if (object1 instanceof AssertionTreeModel && object2 instanceof AssertionTreeModel) {
+					AssertionTreeModel model1 = (AssertionTreeModel) object1;
+					AssertionTreeModel model2 = (AssertionTreeModel) object2;
 					if (model1.getUIElement() == null || model2.getUIElement() == null) {
 						return model1.getUIElement() == model2.getUIElement();
 					}
@@ -92,7 +92,7 @@ public class AUTControlsHierarchyView {
 					}
 					return model1.getUIElement().getId().equals(model2.getUIElement().getId());
 				}
-				return Objects.equals(a, b);
+				return Objects.equals(object1, object2);
 			}
 		});
 
