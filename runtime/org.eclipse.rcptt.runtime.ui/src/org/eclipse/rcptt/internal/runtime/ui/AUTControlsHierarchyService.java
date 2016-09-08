@@ -148,18 +148,18 @@ public class AUTControlsHierarchyService implements ICommandService {
 			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Display disposed");
 		}
 
+		if (null == swtUIElement) {
+			return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "swtUIElement is null");
+		}
+
 		getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 
 				SWTUIElement swtUIParent = AUTControlsHierarchyUtilities.getSWTUIParent(getDisplay(), swtUIElement);
 
-				// if (null != swtUIParent) {
-					AUTControlsHierarchyUtilities.initResponse(getDisplay(),
-							AUTControlsHierarchyUtilities.getElement(swtUIParent), swtUIParent, response);
-				// } else {
-				// AUTControlsHierarchyUtilities.initResponse(getDisplay(), null, null, response);
-				// }
+				AUTControlsHierarchyUtilities.initResponse(getDisplay(),
+						AUTControlsHierarchyUtilities.getElement(swtUIParent), swtUIParent, response);
 
 				try {
 					write(response);
