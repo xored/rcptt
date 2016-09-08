@@ -482,11 +482,10 @@ public class AssertionPanelWindow extends Dialog {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
 
 		autControlsWidgetComposite = new Composite(composite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(autControlsWidgetComposite);
-		autControlsWidgetComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		autControlsWidgetCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		autControlsWidgetCompositeGridData.exclude = true;
@@ -497,12 +496,12 @@ public class AssertionPanelWindow extends Dialog {
 		autControlsView.createPartControl(autControlsWidgetComposite);
 
 		final Composite assertionComposite = new Composite(composite, SWT.NONE);
-		assertionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		assertionComposite.setLayout(new GridLayout());
+		GridLayoutFactory.fillDefaults().applyTo(assertionComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(assertionComposite);
 
 		final Composite toolbarComposite = new Composite(assertionComposite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(toolbarComposite);
-		toolbarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(toolbarComposite);
 
 		final ActionToolbar actions = new ActionToolbar() {
 			@Override
@@ -521,7 +520,9 @@ public class AssertionPanelWindow extends Dialog {
 				dbc.bindValue(Actions.observeEnabled(collapseAll), hasAssert);
 			}
 		};
-		actions.create(toolbarComposite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+				.applyTo(actions.create(toolbarComposite));
 
 		final MenuToolbar menu = new MenuToolbar() {
 			@Override
@@ -534,11 +535,14 @@ public class AssertionPanelWindow extends Dialog {
 				});
 			};
 		};
-		menu.create(toolbarComposite).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).grab(true, false)
+				.applyTo(menu.create(toolbarComposite));
 
-		createTreeViewer(assertionComposite).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+				.applyTo(createTreeViewer(assertionComposite));
 
-		createButtonPanel(assertionComposite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+				.applyTo(createButtonPanel(assertionComposite));
 
 		return composite;
 	}
@@ -557,7 +561,7 @@ public class AssertionPanelWindow extends Dialog {
 		filterComposite.setLayout(filteredCompositeLayout);
 
 		filterCombo = new CCombo(filterComposite, SWT.READ_ONLY);
-		filterCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(false, false).applyTo(filterCombo);
 		filterCombo.setItems(new String[] { Messages.AssertionPanelWindow_FilterByProperty,
 				Messages.AssertionPanelWindow_FilterByValue });
 		filterCombo.select(1);
@@ -574,7 +578,7 @@ public class AssertionPanelWindow extends Dialog {
 		});
 
 		filterText = new Text(filterComposite, SWT.SINGLE);
-		filterText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(filterText);
 		filterText.setMessage(Messages.AssertionPanelWindow_FilterMessage);
 		filterText.addKeyListener(new KeyListener() {
 			@Override
@@ -770,8 +774,6 @@ public class AssertionPanelWindow extends Dialog {
 				}
 			}
 		});
-
-		// createVerificationsButton(composite);
 
 		appendButton = new Button(composite, SWT.NONE);
 
