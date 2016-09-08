@@ -221,7 +221,7 @@ public class UIJobCollector implements IJobChangeListener {
 		return detectJobStatus(job, delay);
 	}
 
-	private static final Set<String> IGNORED_BY_DEFAULT = Collections.unmodifiableSet(new HashSet<>(asList(
+	private static final Set<String> IGNORED_BY_DEFAULT = Collections.unmodifiableSet(new HashSet<String>(asList(
 			"org.eclipse.jdt.internal.core.search.processing.JobManager$1$ProgressJob",
 			"org.eclipse.ui.internal.progress.ProgressViewUpdater$1",
 			"org.eclipse.ui.internal.progress.WorkbenchSiteProgressService$SiteUpdateJob",
@@ -376,8 +376,8 @@ public class UIJobCollector implements IJobChangeListener {
 	}
 
 	private void logJobInformation(List<Job> realJobs, List<Job> jobsInUI) {
-		List<Job> otherJobs = new ArrayList<>(jobs.keySet());
-		Set<Job> jobInStepMode = new HashSet<>();
+		List<Job> otherJobs = new ArrayList<Job>(jobs.keySet());
+		Set<Job> jobInStepMode = new HashSet<Job>();
 		for (Job job : otherJobs) {
 			if (getOrCreateJobInfo(job).jobInStepMode)
 				jobInStepMode.add(job);
@@ -419,10 +419,10 @@ public class UIJobCollector implements IJobChangeListener {
 
 	public boolean isEmpty(Context context, Q7WaitInfoRoot info) {
 		// Filter already executed UI jobs with async finish status.
-		List<Job> realJobs = new ArrayList<>();
+		List<Job> realJobs = new ArrayList<Job>();
 		long current = System.currentTimeMillis();
 		boolean wasInStepMode = false;
-		List<Job> jobsInUI = new ArrayList<>();
+		List<Job> jobsInUI = new ArrayList<Job>();
 		synchronized (jobs) {
 			// Remove all canceled jobs
 			removeCanceledJobs();
@@ -682,7 +682,7 @@ public class UIJobCollector implements IJobChangeListener {
 
 	private Set<String> getSuperClassNames(Job job) {
 		Class<?> cl = job.getClass();
-		Set<String> names = new HashSet<>();
+		Set<String> names = new HashSet<String>();
 		while (true) {
 			if (cl.equals(Job.class)) {
 				break;
@@ -757,7 +757,7 @@ public class UIJobCollector implements IJobChangeListener {
 
 	public List<Job> getJobs() {
 		synchronized (jobs) {
-			ArrayList<Job> rv = new ArrayList<>();
+			ArrayList<Job> rv = new ArrayList<Job>();
 			for (JobInfo info : jobs.values())
 				if (info.isActive())
 					rv.add(info.job);
@@ -795,7 +795,7 @@ public class UIJobCollector implements IJobChangeListener {
 	}
 
 	private boolean isJoinEmpty() {
-		List<Job> realJobs = new ArrayList<>();
+		List<Job> realJobs = new ArrayList<Job>();
 		synchronized (jobs) {
 			if (jobs.isEmpty()) {
 				return true;
