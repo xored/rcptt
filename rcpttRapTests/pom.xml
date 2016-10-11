@@ -61,7 +61,7 @@
             <rap>
                 <port>10082</port>
                 <servletPath>/</servletPath>
-                <browserCmd>firefox %s </browserCmd>
+		<browserCmd>DISPLAY=:1001 nohup firefox %s </browserCmd>
  	    </rap>
           </aut>
           <runner>
