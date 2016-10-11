@@ -58,10 +58,11 @@
               <arg>-nosplash</arg>
               <arg>-consoleLog</arg>
             </args>
-          <rap>
+            <rap>
                 <port>10082</port>
                 <servletPath>/</servletPath>
-            </rap>
+                <browserCmd>firefox %s </browserCmd>
+ 	    </rap>
           </aut>
           <runner>
             <platform>rap</platform>
