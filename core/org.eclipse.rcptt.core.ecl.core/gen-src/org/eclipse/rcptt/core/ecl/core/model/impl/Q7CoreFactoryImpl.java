@@ -89,7 +89,7 @@ public class Q7CoreFactoryImpl extends EFactoryImpl implements Q7CoreFactory {
 			case Q7CorePackage.CREATE_VERIFICATION: return createCreateVerification();
 			case Q7CorePackage.CREATE_WIDGET_VERIFICATION_PARAM: return createCreateWidgetVerificationParam();
 			case Q7CorePackage.TERMINATE_AUT: return createTerminateAut();
-			case Q7CorePackage.AUT_CONTROLS_HIERARCHY: return createAUTControlsHierarchy();
+			case Q7CorePackage.GET_CONTROL_HIERARCHY: return createGetControlHierarchy();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -105,8 +105,8 @@ public class Q7CoreFactoryImpl extends EFactoryImpl implements Q7CoreFactory {
 		switch (eDataType.getClassifierID()) {
 			case Q7CorePackage.EXECUTION_PHASE:
 				return createExecutionPhaseFromString(eDataType, initialValue);
-			case Q7CorePackage.AUT_CONTROLS_HIERARCHY_STATE:
-				return createAUTControlsHierarchyStateFromString(eDataType, initialValue);
+			case Q7CorePackage.CONTROL_HIERARCHY_STATE:
+				return createControlHierarchyStateFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -122,8 +122,8 @@ public class Q7CoreFactoryImpl extends EFactoryImpl implements Q7CoreFactory {
 		switch (eDataType.getClassifierID()) {
 			case Q7CorePackage.EXECUTION_PHASE:
 				return convertExecutionPhaseToString(eDataType, instanceValue);
-			case Q7CorePackage.AUT_CONTROLS_HIERARCHY_STATE:
-				return convertAUTControlsHierarchyStateToString(eDataType, instanceValue);
+			case Q7CorePackage.CONTROL_HIERARCHY_STATE:
+				return convertControlHierarchyStateToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -374,9 +374,9 @@ public class Q7CoreFactoryImpl extends EFactoryImpl implements Q7CoreFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AUTControlsHierarchy createAUTControlsHierarchy() {
-		AUTControlsHierarchyImpl autControlsHierarchy = new AUTControlsHierarchyImpl();
-		return autControlsHierarchy;
+	public GetControlHierarchy createGetControlHierarchy() {
+		GetControlHierarchyImpl getControlHierarchy = new GetControlHierarchyImpl();
+		return getControlHierarchy;
 	}
 
 	/**
@@ -404,8 +404,8 @@ public class Q7CoreFactoryImpl extends EFactoryImpl implements Q7CoreFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AUTControlsHierarchyState createAUTControlsHierarchyStateFromString(EDataType eDataType, String initialValue) {
-		AUTControlsHierarchyState result = AUTControlsHierarchyState.get(initialValue);
+	public ControlHierarchyState createControlHierarchyStateFromString(EDataType eDataType, String initialValue) {
+		ControlHierarchyState result = ControlHierarchyState.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
 		return result;
 	}
@@ -415,7 +415,7 @@ public class Q7CoreFactoryImpl extends EFactoryImpl implements Q7CoreFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertAUTControlsHierarchyStateToString(EDataType eDataType, Object instanceValue) {
+	public String convertControlHierarchyStateToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

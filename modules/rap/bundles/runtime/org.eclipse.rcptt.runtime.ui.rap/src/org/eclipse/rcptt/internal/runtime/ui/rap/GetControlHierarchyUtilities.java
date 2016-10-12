@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy;
+import org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 
-public class AUTControlsHierarchyUtilities {
+public class GetControlHierarchyUtilities {
 
 	public static void initResponse(Display display, Element element, SWTUIElement swtUIElement,
 			UIHierarchyResponse response) {
@@ -82,7 +82,7 @@ public class AUTControlsHierarchyUtilities {
 		}
 	}
 
-	public static Element getElement(AUTControlsHierarchy autControlsHierarchy) {
+	public static Element getElement(GetControlHierarchy autControlsHierarchy) {
 		Element element = RawFactory.eINSTANCE.createElement();
 		element.setId(autControlsHierarchy.getId());
 		element.setKind(autControlsHierarchy.getKind());

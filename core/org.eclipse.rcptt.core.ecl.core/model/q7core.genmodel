@@ -7,11 +7,24 @@
   <foreignModel>model.ecore</foreignModel>
   <genPackages prefix="Q7Core" basePackage="org.eclipse.rcptt.core.ecl.core" disposableProviderFactory="true"
       ecorePackage="model.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.ecore#//ExecutionPhase">
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ExecutionPhase/Auto"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ExecutionPhase/Start"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ExecutionPhase/Run"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ExecutionPhase/Finish"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.ecore#//ControlHierarchyState">
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ControlHierarchyState/HIGHLIGHT_WIDGET"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ControlHierarchyState/UPDATE_ASSERT_WINDOW"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ControlHierarchyState/GET_ELEMENT"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ControlHierarchyState/GET_PARENT"/>
+    </genEnums>
     <genClasses ecoreClass="model.ecore#//EnterContext">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//EnterContext/data"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//CreateContext">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//CreateContext/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CreateContext/param"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//PrepareEnvironment"/>
     <genClasses ecoreClass="model.ecore#//SetCommandsDelay">
@@ -22,6 +35,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Q7Information/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Q7Information/teslaActive"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Q7Information/teslaPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Q7Information/clientActive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Q7Information/windowCount"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//SetQ7Features">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SetQ7Features/features"/>
@@ -47,7 +62,45 @@
     <genClasses ecoreClass="model.ecore#//ViewList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//ViewList/items"/>
     </genClasses>
-    <genClasses ecoreClass="model.ecore#//CreateReport"/>
+    <genClasses ecoreClass="model.ecore#//CreateReport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//CreateReport/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CreateReport/q7info"/>
+    </genClasses>
     <genClasses ecoreClass="model.ecore#//GetReport"/>
+    <genClasses ecoreClass="model.ecore#//BeginReportNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BeginReportNode/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//BeginReportNode/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//EndReportNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//EndReportNode/snaphots"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//EndReportNode/takeSnaphots"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//EndReportNode/result"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ReportAppend">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ReportAppend/objects"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SetQ7Option">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SetQ7Option/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SetQ7Option/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ExecVerification">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//ExecVerification/verification"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ExecVerification/phase"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ResetVerifications"/>
+    <genClasses ecoreClass="model.ecore#//CreateVerification">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//CreateVerification/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CreateVerification/param"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//CreateWidgetVerificationParam">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//CreateWidgetVerificationParam/selector"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//TerminateAut"/>
+    <genClasses ecoreClass="model.ecore#//GetControlHierarchy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//GetControlHierarchy/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//GetControlHierarchy/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//GetControlHierarchy/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//GetControlHierarchy/kind"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

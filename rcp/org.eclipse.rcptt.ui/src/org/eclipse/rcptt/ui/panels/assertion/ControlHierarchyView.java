@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Xored Software Inc - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.rcptt.ui.panels.assertion;
 
 import java.util.Iterator;
@@ -32,12 +42,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 
-public class AUTControlsHierarchyView {
+public class ControlHierarchyView {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.eclipse.rcptt.ui.panels.assertion.AUTControlsHierarchyView"; //$NON-NLS-1$
+	public static final String ID = "org.eclipse.rcptt.ui.panels.assertion.ControlHierarchyView"; //$NON-NLS-1$
 
 	private final AutLaunch aut;
 
@@ -53,7 +63,7 @@ public class AUTControlsHierarchyView {
 
 	private AtomicBoolean canExpanding = new AtomicBoolean(false);
 
-	public AUTControlsHierarchyView(AutLaunch aut) {
+	public ControlHierarchyView(AutLaunch aut) {
 		this.aut = aut;
 	}
 
@@ -182,8 +192,8 @@ public class AUTControlsHierarchyView {
 
 	protected TreeViewerColumn createNameColumn() {
 		final TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
-		column.getColumn().setText(Messages.AssertionAUTControlsHierarchyDialog_ColumnNameName);
-		column.getColumn().setToolTipText(Messages.AssertionAUTControlsHierarchyDialog_ColumnNameToolTip);
+		column.getColumn().setText(Messages.ControlHierarchyView_NameColumnText);
+		column.getColumn().setToolTipText(Messages.ControlHierarchyView_NameColumnToolTip);
 		column.setLabelProvider(new ColumnLabelProvider() {
 			@Override
 			public String getText(Object object) {

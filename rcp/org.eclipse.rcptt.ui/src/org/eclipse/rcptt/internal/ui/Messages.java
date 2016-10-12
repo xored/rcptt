@@ -27,9 +27,8 @@ public class Messages extends NLS {
 	public static String AssertImageWindow_TextLabel;
 	public static String AssertImageWindow_Tilte;
 	public static String AssertImageWindow_TypeLabel;
-	public static String AssertionAUTControlsHierarchyDialog_Title;
-	public static String AssertionAUTControlsHierarchyDialog_ColumnNameName;
-	public static String AssertionAUTControlsHierarchyDialog_ColumnNameToolTip;
+	public static String ControlHierarchyView_NameColumnText;
+	public static String ControlHierarchyView_NameColumnToolTip;
 	public static String AssertionPanelWindow_AddAssertButton;
 	public static String AssertionPanelWindow_AssertImageButton;
 	public static String AssertionPanelWindow_CloseActionName;
@@ -134,7 +133,6 @@ public class Messages extends NLS {
 	public static String ControlPanelWindow_RecordShortcutToolTip;
 	public static String ControlPanelWindow_ReplayAction;
 	public static String ControlPanelWindow_ReturnActionTooltip;
-	public static String ControlPanelWindow_OpenAssertionAUTControlsHierarchyDialogActionToolTip;
 	public static String ControlPanelWindow_SaveAction;
 	public static String ControlPanelWindow_SaveAsAction;
 	public static String ControlPanelWindow_SaveDialogMsg;

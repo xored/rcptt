@@ -1,7 +1,7 @@
 package org.eclipse.rcptt.ui.panels.assertion;
 
-import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy;
-import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchyState;
+import org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState;
+import org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy;
 import org.eclipse.rcptt.core.ecl.core.model.Q7CoreFactory;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
 import org.eclipse.rcptt.launching.AutLaunch;
@@ -12,14 +12,14 @@ public class UIHierarchyResponseUtilities {
 
 	public static UIHierarchyResponse getUIHierarchyElement(AutLaunch aut, UIElement uiElement) {
 
-		AUTControlsHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
-				.createAUTControlsHierarchy();
+		GetControlHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
+				.createGetControlHierarchy();
 
 		if (null != uiElement) {
 			setAUTControlsHierarchyCommandByUIElement(assertionAUTControlsHierarchy, uiElement);
 		}
 
-		assertionAUTControlsHierarchy.setState(AUTControlsHierarchyState.GET_ELEMENT);
+		assertionAUTControlsHierarchy.setState(ControlHierarchyState.GET_ELEMENT);
 
 		try {
 			Object childAUTObject = aut.execute(assertionAUTControlsHierarchy);
@@ -34,14 +34,14 @@ public class UIHierarchyResponseUtilities {
 
 	public static UIHierarchyResponse getUIHierarchyParent(AutLaunch aut, UIElement uiElement) {
 
-		AUTControlsHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
-				.createAUTControlsHierarchy();
+		GetControlHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
+				.createGetControlHierarchy();
 
 		if (null != uiElement) {
 			setAUTControlsHierarchyCommandByUIElement(assertionAUTControlsHierarchy, uiElement);
 		}
 
-		assertionAUTControlsHierarchy.setState(AUTControlsHierarchyState.GET_PARENT);
+		assertionAUTControlsHierarchy.setState(ControlHierarchyState.GET_PARENT);
 
 		try {
 			Object childAUTObject = aut.execute(assertionAUTControlsHierarchy);
@@ -64,10 +64,10 @@ public class UIHierarchyResponseUtilities {
 
 	public static void highlightWidget(AutLaunch aut, UIElement uiElement) {
 
-		AUTControlsHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
-				.createAUTControlsHierarchy();
+		GetControlHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
+				.createGetControlHierarchy();
 
-		assertionAUTControlsHierarchy.setState(AUTControlsHierarchyState.HIGHLIGHT_WIDGET);
+		assertionAUTControlsHierarchy.setState(ControlHierarchyState.HIGHLIGHT_WIDGET);
 		setAUTControlsHierarchyCommandByUIElement(assertionAUTControlsHierarchy, uiElement);
 
 		try {
@@ -79,10 +79,10 @@ public class UIHierarchyResponseUtilities {
 
 	public static void updateAssertionPanelWindow(AutLaunch aut, UIElement uiElement) {
 
-		AUTControlsHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
-				.createAUTControlsHierarchy();
+		GetControlHierarchy assertionAUTControlsHierarchy = Q7CoreFactory.eINSTANCE
+				.createGetControlHierarchy();
 
-		assertionAUTControlsHierarchy.setState(AUTControlsHierarchyState.UPDATE_ASSERT_WINDOW);
+		assertionAUTControlsHierarchy.setState(ControlHierarchyState.UPDATE_ASSERT_WINDOW);
 		setAUTControlsHierarchyCommandByUIElement(assertionAUTControlsHierarchy, uiElement);
 
 		try {
@@ -93,7 +93,7 @@ public class UIHierarchyResponseUtilities {
 	}
 
 	public static void setAUTControlsHierarchyCommandByUIElement(
-			AUTControlsHierarchy autControlsHierarchyCommand, UIElement uiElement) {
+			GetControlHierarchy autControlsHierarchyCommand, UIElement uiElement) {
 
 		autControlsHierarchyCommand.setId(uiElement.getId());
 		autControlsHierarchyCommand.setKind(uiElement.getKind());

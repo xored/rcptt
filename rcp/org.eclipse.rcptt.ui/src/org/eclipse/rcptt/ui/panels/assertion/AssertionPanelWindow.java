@@ -142,7 +142,7 @@ public class AssertionPanelWindow extends Dialog {
 	private Composite treeViewerComposite;
 	private Composite autControlsWidgetComposite;
 	private GridData autControlsWidgetCompositeGridData;
-	private AUTControlsHierarchyView autControlsView;
+	private ControlHierarchyView autControlsView;
 
 	private final IAction collapseAll = new Action() {
 		{
@@ -492,7 +492,7 @@ public class AssertionPanelWindow extends Dialog {
 		autControlsWidgetComposite.setLayoutData(autControlsWidgetCompositeGridData);
 		autControlsWidgetComposite.setVisible(false);
 
-		autControlsView = new AUTControlsHierarchyView(recordingSupport.getAUT());
+		autControlsView = new ControlHierarchyView(recordingSupport.getAUT());
 		autControlsView.createPartControl(autControlsWidgetComposite);
 
 		final Composite assertionComposite = new Composite(composite, SWT.NONE);

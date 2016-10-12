@@ -1,5 +1,13 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Xored Software Inc - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.rcptt.core.ecl.core.model;
 
 import java.util.Arrays;
@@ -10,14 +18,14 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>AUT Controls Hierarchy State</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Control Hierarchy State</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getAUTControlsHierarchyState()
+ * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#getControlHierarchyState()
  * @model
  * @generated
  */
-public enum AUTControlsHierarchyState implements Enumerator {
+public enum ControlHierarchyState implements Enumerator {
 	/**
 	 * The '<em><b>HIGHLIGHT WIDGET</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -119,13 +127,13 @@ public enum AUTControlsHierarchyState implements Enumerator {
 	public static final int GET_PARENT_VALUE = 3;
 
 	/**
-	 * An array of all the '<em><b>AUT Controls Hierarchy State</b></em>' enumerators.
+	 * An array of all the '<em><b>Control Hierarchy State</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final AUTControlsHierarchyState[] VALUES_ARRAY =
-		new AUTControlsHierarchyState[] {
+	private static final ControlHierarchyState[] VALUES_ARRAY =
+		new ControlHierarchyState[] {
 			HIGHLIGHT_WIDGET,
 			UPDATE_ASSERT_WINDOW,
 			GET_ELEMENT,
@@ -133,24 +141,24 @@ public enum AUTControlsHierarchyState implements Enumerator {
 		};
 
 	/**
-	 * A public read-only list of all the '<em><b>AUT Controls Hierarchy State</b></em>' enumerators.
+	 * A public read-only list of all the '<em><b>Control Hierarchy State</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final List<AUTControlsHierarchyState> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<ControlHierarchyState> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>AUT Controls Hierarchy State</b></em>' literal with the specified literal value.
+	 * Returns the '<em><b>Control Hierarchy State</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static AUTControlsHierarchyState get(String literal) {
+	public static ControlHierarchyState get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			AUTControlsHierarchyState result = VALUES_ARRAY[i];
+			ControlHierarchyState result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -159,16 +167,16 @@ public enum AUTControlsHierarchyState implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>AUT Controls Hierarchy State</b></em>' literal with the specified name.
+	 * Returns the '<em><b>Control Hierarchy State</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static AUTControlsHierarchyState getByName(String name) {
+	public static ControlHierarchyState getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			AUTControlsHierarchyState result = VALUES_ARRAY[i];
+			ControlHierarchyState result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -177,14 +185,14 @@ public enum AUTControlsHierarchyState implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>AUT Controls Hierarchy State</b></em>' literal with the specified integer value.
+	 * Returns the '<em><b>Control Hierarchy State</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static AUTControlsHierarchyState get(int value) {
+	public static ControlHierarchyState get(int value) {
 		switch (value) {
 			case HIGHLIGHT_WIDGET_VALUE: return HIGHLIGHT_WIDGET;
 			case UPDATE_ASSERT_WINDOW_VALUE: return UPDATE_ASSERT_WINDOW;
@@ -221,7 +229,7 @@ public enum AUTControlsHierarchyState implements Enumerator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private AUTControlsHierarchyState(int value, String name, String literal) {
+	private ControlHierarchyState(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -265,4 +273,4 @@ public enum AUTControlsHierarchyState implements Enumerator {
 		return literal;
 	}
 	
-} //AUTControlsHierarchyState
+} //ControlHierarchyState

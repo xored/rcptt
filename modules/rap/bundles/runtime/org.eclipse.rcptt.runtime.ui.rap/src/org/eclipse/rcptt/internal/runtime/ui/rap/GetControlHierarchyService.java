@@ -13,7 +13,7 @@ package org.eclipse.rcptt.internal.runtime.ui.rap;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.rcptt.core.ecl.core.model.AUTControlsHierarchy;
+import org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
@@ -25,16 +25,18 @@ import org.eclipse.rcptt.tesla.recording.aspects.swt.rap.SWTEventManager;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.swt.widgets.Display;
 
-public class AUTControlsHierarchyService implements ICommandService {
+public class GetControlHierarchyService implements ICommandService {
 
 	private IProcess context = null;
+
+	private Display display = null;
 
 	public IStatus service(Command command, IProcess context)
 			throws InterruptedException, CoreException {
 
 		this.context = context;
 
-		AUTControlsHierarchy autControlsHierarchy = (AUTControlsHierarchy) command;
+		GetControlHierarchy autControlsHierarchy = (GetControlHierarchy) command;
 
 		switch (autControlsHierarchy.getState()) {
 
@@ -63,9 +65,9 @@ public class AUTControlsHierarchyService implements ICommandService {
 		return RWTUtils.findDisplay();
 	}
 
-	private IStatus highlightWidget(AUTControlsHierarchy autControlsHierarchy) throws CoreException {
+	private IStatus highlightWidget(GetControlHierarchy autControlsHierarchy) throws CoreException {
 
-		final Element element = AUTControlsHierarchyUtilities.getElement(autControlsHierarchy);
+		final Element element = GetControlHierarchyUtilities.getElement(autControlsHierarchy);
 		final SWTUIElement swtUIElement = SWTEventManager.getSWTUIElement(element);
 
 		if (null == swtUIElement) {
@@ -77,10 +79,10 @@ public class AUTControlsHierarchyService implements ICommandService {
 		return Status.OK_STATUS;
 	}
 
-	private IStatus updateAssertionPanelWindow(AUTControlsHierarchy autControlsHierarchy)
+	private IStatus updateAssertionPanelWindow(GetControlHierarchy autControlsHierarchy)
 			throws CoreException {
 
-		final Element element = AUTControlsHierarchyUtilities.getElement(autControlsHierarchy);
+		final Element element = GetControlHierarchyUtilities.getElement(autControlsHierarchy);
 		final SWTUIElement swtUIElement = SWTEventManager.getSWTUIElement(element);
 
 		if (null == swtUIElement) {
@@ -97,12 +99,12 @@ public class AUTControlsHierarchyService implements ICommandService {
 		return Status.OK_STATUS;
 	}
 
-	private IStatus getElement(AUTControlsHierarchy autControlsHierarchy) throws CoreException {
+	private IStatus getElement(GetControlHierarchy autControlsHierarchy) throws CoreException {
 
 		final CoreException[] ex = new CoreException[1];
 		final UIHierarchyResponse response = ProtocolFactory.eINSTANCE.createUIHierarchyResponse();
 
-		final Element element = AUTControlsHierarchyUtilities.getElement(autControlsHierarchy);
+		final Element element = GetControlHierarchyUtilities.getElement(autControlsHierarchy);
 		final SWTUIElement swtUIElement = SWTEventManager.getSWTUIElement(element);
 
 		if (getDisplay().isDisposed()) {
@@ -113,7 +115,7 @@ public class AUTControlsHierarchyService implements ICommandService {
 			@Override
 			public void run() {
 
-				AUTControlsHierarchyUtilities.initResponse(getDisplay(), element, swtUIElement, response);
+				GetControlHierarchyUtilities.initResponse(getDisplay(), element, swtUIElement, response);
 
 				try {
 					write(response);
@@ -131,12 +133,12 @@ public class AUTControlsHierarchyService implements ICommandService {
 
 	}
 
-	private IStatus getParent(AUTControlsHierarchy autControlsHierarchy) throws CoreException {
+	private IStatus getParent(GetControlHierarchy autControlsHierarchy) throws CoreException {
 
 		final CoreException[] ex = new CoreException[1];
 		final UIHierarchyResponse response = ProtocolFactory.eINSTANCE.createUIHierarchyResponse();
 
-		final Element element = AUTControlsHierarchyUtilities.getElement(autControlsHierarchy);
+		final Element element = GetControlHierarchyUtilities.getElement(autControlsHierarchy);
 		final SWTUIElement swtUIElement = SWTEventManager.getSWTUIElement(element);
 
 		if (getDisplay().isDisposed()) {
@@ -151,10 +153,10 @@ public class AUTControlsHierarchyService implements ICommandService {
 			@Override
 			public void run() {
 
-				SWTUIElement swtUIParent = AUTControlsHierarchyUtilities.getSWTUIParent(getDisplay(), swtUIElement);
+				SWTUIElement swtUIParent = GetControlHierarchyUtilities.getSWTUIParent(getDisplay(), swtUIElement);
 
-				AUTControlsHierarchyUtilities.initResponse(getDisplay(),
-						AUTControlsHierarchyUtilities.getElement(swtUIParent), swtUIParent, response);
+				GetControlHierarchyUtilities.initResponse(getDisplay(),
+						GetControlHierarchyUtilities.getElement(swtUIParent), swtUIParent, response);
 
 				try {
 					write(response);

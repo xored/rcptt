@@ -65,8 +65,8 @@
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.ui.rap.AUTControlsHierarchyService"
-            name="AUTControlsHierarchy"
+            class="org.eclipse.rcptt.internal.runtime.ui.rap.GetControlHierarchyService"
+            name="GetControlHierarchy"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
 
