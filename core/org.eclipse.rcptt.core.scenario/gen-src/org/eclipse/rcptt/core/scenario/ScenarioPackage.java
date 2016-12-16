@@ -273,13 +273,22 @@ public interface ScenarioPackage extends EPackage {
 	int SCENARIO__VERIFICATIONS = NAMED_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Test Rail Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCENARIO__TEST_RAIL_ID = NAMED_ELEMENT_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Scenario</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCENARIO_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 8;
+	int SCENARIO_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.core.scenario.impl.ContextImpl <em>Context</em>}' class.
@@ -1608,6 +1617,17 @@ public interface ScenarioPackage extends EPackage {
 	EAttribute getScenario_Verifications();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.scenario.Scenario#getTestRailId <em>Test Rail Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Test Rail Id</em>'.
+	 * @see org.eclipse.rcptt.core.scenario.Scenario#getTestRailId()
+	 * @see #getScenario()
+	 * @generated
+	 */
+	EAttribute getScenario_TestRailId();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.scenario.Context <em>Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2228,6 +2248,14 @@ public interface ScenarioPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCENARIO__VERIFICATIONS = eINSTANCE.getScenario_Verifications();
+
+		/**
+		 * The meta object literal for the '<em><b>Test Rail Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCENARIO__TEST_RAIL_ID = eINSTANCE.getScenario_TestRailId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.core.scenario.impl.ContextImpl <em>Context</em>}' class.

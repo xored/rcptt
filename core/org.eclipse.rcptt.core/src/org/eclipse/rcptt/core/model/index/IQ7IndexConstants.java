@@ -19,6 +19,7 @@ public interface IQ7IndexConstants {
 	public static final String CONTEXT_REF = "ctx_ref";
 	public static final String WS_LINK_REF = "ws_link";
 	public static final String EXTERN_REF = "extern_ref";
+	public static final String TESTRAIL_ID = "testrail_id";
 	public static final String CONTEXT_TYPE = "context_type";
 	public static final String VERIFICATION_TYPE = "verification_type";
 	public static final String VERIFICATION_REF = "verification_ref";

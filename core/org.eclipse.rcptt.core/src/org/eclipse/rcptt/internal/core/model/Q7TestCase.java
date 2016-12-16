@@ -15,7 +15,6 @@ import java.util.Arrays;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.rcptt.core.model.ITestCase;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.scenario.NamedElement;
@@ -56,6 +55,10 @@ public class Q7TestCase extends Q7NamedElement implements ITestCase {
 
 	public String getExternalReference() throws ModelException {
 		return getScenario().getExternalReference();
+	}
+
+	public String getTestRailId() throws ModelException {
+		return getScenario().getTestRailId();
 	}
 
 	public String getType() throws ModelException {
@@ -116,6 +119,12 @@ public class Q7TestCase extends Q7NamedElement implements ITestCase {
 	public void setExternalReference(String ref) throws ModelException {
 		if (isWorkingCopy()) {
 			getNamedElement().setExternalReference(ref);
+		}
+	}
+
+	public void setTestRailId(String id) throws ModelException {
+		if (isWorkingCopy()) {
+			getNamedElement().setTestRailId(id);
 		}
 	}
 }

@@ -46,6 +46,7 @@ public class ScenarioStructureCreator implements IStructureCreator {
 	public static final String CONTENT_TYPE_NAME = "Name"; //$NON-NLS-1$
 	public static final String CONTENT_TYPE_TAGS = "Tags"; //$NON-NLS-1$
 	public static final String CONTENT_TYPE_EXTERNALREF = "External References"; //$NON-NLS-1$
+	public static final String CONTENT_TYPE_TESTRAILID = "TestRail ID"; //$NON-NLS-1$
 	public static final String CONTENT_TYPE_DESCRIPTION = "Description"; //$NON-NLS-1$
 	public static final String CONTENT_TYPE_SCRIPT = "Script"; //$NON-NLS-1$
 
@@ -109,6 +110,10 @@ public class ScenarioStructureCreator implements IStructureCreator {
 					ScenarioPart extRef = scenario
 							.createPartContainer(CONTENT_TYPE_EXTERNALREF);
 					extRef.setStringContents(sc.getExternalReference());
+					// TestRail ID
+					ScenarioPart testRailId = scenario
+							.createPartContainer(CONTENT_TYPE_TESTRAILID);
+					testRailId.setStringContents(sc.getTestRailId());
 					// Description
 					ScenarioPart desc = scenario
 							.createPartContainer(CONTENT_TYPE_DESCRIPTION);

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.rcptt.core.scenario.Scenario#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.rcptt.core.scenario.Scenario#getExternalReference <em>External Reference</em>}</li>
  *   <li>{@link org.eclipse.rcptt.core.scenario.Scenario#getVerifications <em>Verifications</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.core.scenario.Scenario#getTestRailId <em>Test Rail Id</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.core.scenario.ScenarioPackage#getScenario()
@@ -217,5 +218,31 @@ public interface Scenario extends NamedElement {
 	 * @generated
 	 */
 	EList<String> getVerifications();
+
+	/**
+	 * Returns the value of the '<em><b>Test Rail Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Test Rail Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Test Rail Id</em>' attribute.
+	 * @see #setTestRailId(String)
+	 * @see org.eclipse.rcptt.core.scenario.ScenarioPackage#getScenario_TestRailId()
+	 * @model
+	 * @generated
+	 */
+	String getTestRailId();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.core.scenario.Scenario#getTestRailId <em>Test Rail Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Test Rail Id</em>' attribute.
+	 * @see #getTestRailId()
+	 * @generated
+	 */
+	void setTestRailId(String value);
 
 } // Scenario

@@ -41,6 +41,7 @@ import org.eclipse.rcptt.core.scenario.ScenarioPackage;
  *   <li>{@link org.eclipse.rcptt.core.scenario.impl.ScenarioImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.rcptt.core.scenario.impl.ScenarioImpl#getExternalReference <em>External Reference</em>}</li>
  *   <li>{@link org.eclipse.rcptt.core.scenario.impl.ScenarioImpl#getVerifications <em>Verifications</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.core.scenario.impl.ScenarioImpl#getTestRailId <em>Test Rail Id</em>}</li>
  * </ul>
  *
  * @generated
@@ -150,6 +151,26 @@ public class ScenarioImpl extends NamedElementImpl implements Scenario {
 	 * @ordered
 	 */
 	protected EList<String> verifications;
+
+	/**
+	 * The default value of the '{@link #getTestRailId() <em>Test Rail Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTestRailId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TEST_RAIL_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTestRailId() <em>Test Rail Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTestRailId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String testRailId = TEST_RAIL_ID_EDEFAULT;
 
 	/**
 	 * @generated NOT
@@ -376,6 +397,27 @@ public class ScenarioImpl extends NamedElementImpl implements Scenario {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getTestRailId() {
+		return testRailId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTestRailId(String newTestRailId) {
+		String oldTestRailId = testRailId;
+		testRailId = newTestRailId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScenarioPackage.SCENARIO__TEST_RAIL_ID, oldTestRailId, testRailId));
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -413,6 +455,8 @@ public class ScenarioImpl extends NamedElementImpl implements Scenario {
 				return getExternalReference();
 			case ScenarioPackage.SCENARIO__VERIFICATIONS:
 				return getVerifications();
+			case ScenarioPackage.SCENARIO__TEST_RAIL_ID:
+				return getTestRailId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -452,6 +496,9 @@ public class ScenarioImpl extends NamedElementImpl implements Scenario {
 				getVerifications().clear();
 				getVerifications().addAll((Collection<? extends String>)newValue);
 				return;
+			case ScenarioPackage.SCENARIO__TEST_RAIL_ID:
+				setTestRailId((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -486,6 +533,9 @@ public class ScenarioImpl extends NamedElementImpl implements Scenario {
 				return;
 			case ScenarioPackage.SCENARIO__VERIFICATIONS:
 				getVerifications().clear();
+				return;
+			case ScenarioPackage.SCENARIO__TEST_RAIL_ID:
+				setTestRailId(TEST_RAIL_ID_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -548,6 +598,8 @@ public class ScenarioImpl extends NamedElementImpl implements Scenario {
 		result.append(externalReference);
 		result.append(", verifications: ");
 		result.append(verifications);
+		result.append(", testRailId: ");
+		result.append(testRailId);
 		result.append(')');
 		return result.toString();
 	}

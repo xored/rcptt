@@ -373,6 +373,8 @@ public class Messages extends NLS {
 	public static String ScenarioEditorPage_ExternalReferenceLabel;
 	public static String ScenarioEditorPage_ExternalReferenceToolTip;
 	public static String ScenarioEditorPage_Name;
+	public static String ScenarioEditorPage_TestRailIdLabel;
+	public static String ScenarioEditorPage_TestRailIdToolTip;
 	public static String TestSuiteEditorPage_Name;
 	public static String ScenariosLaunchTab_AddFolderButton;
 	public static String ScenariosLaunchTab_AddFolderDialogTitle;

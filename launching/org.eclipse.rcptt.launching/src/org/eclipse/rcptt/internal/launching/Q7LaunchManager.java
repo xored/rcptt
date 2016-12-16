@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -148,6 +149,19 @@ public class Q7LaunchManager {
 					}
 					Q7LaunchManager.getInstance().fireLaunchStatusChanged(executable);
 				}
+
+				try {
+					List<EclScenarioExecutable> scenarios = Arrays.stream(executables)
+							.flatMap(wrapper -> Arrays.stream(wrapper.getChildren())
+									.filter(EclScenarioExecutable.class::isInstance))
+							.map(scenario -> (EclScenarioExecutable) scenario)
+							.collect(Collectors.toList());
+					TestEngineListenerManager.getInstance().fireExecutionCompleted(scenarios);
+				} catch (Exception e) {
+					// TODO (test-rail-support) catch exception
+					e.printStackTrace();
+				}
+
 				if (massUpdateOnTerminate.size() > 0) {
 					Q7LaunchManager.getInstance().fireLaunchStatusChanged(massUpdateOnTerminate
 							.toArray(new Executable[massUpdateOnTerminate

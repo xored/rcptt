@@ -21,7 +21,6 @@ import java.util.Set;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-
 import org.eclipse.rcptt.core.ContextType;
 import org.eclipse.rcptt.core.ContextTypeManager;
 import org.eclipse.rcptt.core.Scenarios;
@@ -211,6 +210,10 @@ public class Q7ProjectIndexer implements IProjectIndexer, IProjectIndexer.Intern
 				String reference = testcase.getExternalReference();
 				if (reference != null) {
 					document.addKey(IQ7IndexConstants.EXTERN_REF, reference);
+				}
+				String testRailId = testcase.getTestRailId();
+				if (testRailId != null) {
+					document.addKey(IQ7IndexConstants.TESTRAIL_ID, testRailId);
 				}
 			} else if (element instanceof IQ7ProjectMetadata) {
 				IQ7ProjectMetadata meta = (IQ7ProjectMetadata) element;

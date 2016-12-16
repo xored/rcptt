@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.rcptt.ui.preferences"
+            class="org.eclipse.rcptt.testengine.preferences.TestEnginePreferencePage"
+            id="org.eclipse.rcptt.testengine.preferences"
+            name="Test Engines">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.rcptt.testengine.preferences"
+            class="org.eclipse.rcptt.testengine.preferences.TestRailPreferencePage"
+            id="org.eclipse.rcptt.testengine.preferences.testrail"
+            name="Test Rail">
+      </page>
+   </extension>
+
+
+</plugin>
