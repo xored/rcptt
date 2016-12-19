@@ -72,7 +72,6 @@ public class EditorContent implements INamedElementActions {
 	private ScenarioProperties propertiesSection;
 
 	private StyledText externalRefControl;
-	private StyledText testRailIdControl;
 	private boolean scenarioEditor;
 	private final boolean supportRefs;
 
@@ -121,7 +120,7 @@ public class EditorContent implements INamedElementActions {
 		// TextViewer descrViewer = descriptionComposite.getDescriptionViewer();
 		if (supportRefs) {
 			try {
-				contextTable = new ContextsTable((ITestCase)getModel());
+				contextTable = new ContextsTable((ITestCase) getModel());
 			} catch (ModelException e) {
 				Q7UIPlugin.log(e);
 			}
@@ -135,9 +134,9 @@ public class EditorContent implements INamedElementActions {
 				NamedElement namedElement = getModel().getNamedElement();
 				if (namedElement instanceof Scenario) {
 					propertiesSection = new ScenarioProperties((Scenario) namedElement, toolkit);
-					
-					propertiesSectionSection = new SectionWithToolbar(propertiesSection, Section.TITLE_BAR | Section.TWISTIE).create(parent,
-							toolkit);
+
+					propertiesSectionSection = new SectionWithToolbar(propertiesSection,
+							Section.TITLE_BAR | Section.TWISTIE).create(parent, toolkit);
 				}
 			} catch (ModelException e) {
 				Q7UIPlugin.log(e);
@@ -149,7 +148,7 @@ public class EditorContent implements INamedElementActions {
 
 		if (supportRefs) {
 			try {
-				verificationsTable = new VerificationsTable((ITestCase)getModel());
+				verificationsTable = new VerificationsTable((ITestCase) getModel());
 			} catch (ModelException e) {
 				Q7UIPlugin.log(e);
 			}
@@ -294,10 +293,9 @@ public class EditorContent implements INamedElementActions {
 	public boolean isInFocus() {
 		return descriptionComposite.getDescriptionControl().isFocusControl()
 				|| (externalRefControl != null && externalRefControl.isFocusControl())
-				|| (testRailIdControl != null && testRailIdControl.isFocusControl())
 				|| (contextTable != null && contextTable.getControl().isFocusControl())
 				|| (verificationsTable != null && verificationsTable.getControl().isFocusControl())
-				|| header.isInFocus();
+				|| header.isInFocus() || (propertiesSection != null && propertiesSection.getControl().isFocusControl());
 	}
 
 	public void doSelectAll() {
@@ -305,8 +303,6 @@ public class EditorContent implements INamedElementActions {
 			descriptionComposite.getDescriptionControl().selectAll();
 		} else if (externalRefControl.isFocusControl()) {
 			externalRefControl.selectAll();
-		} else if (testRailIdControl.isFocusControl()) {
-			testRailIdControl.selectAll();
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			((Table) contextTable.getControl()).selectAll();
 		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
@@ -319,8 +315,6 @@ public class EditorContent implements INamedElementActions {
 			TextUtils.copy(descriptionComposite.getDescriptionControl());
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			TextUtils.copy(externalRefControl);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			TextUtils.copy(testRailIdControl);
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			if (contextTable.canCopy()) {
 				contextTable.copy();
@@ -339,8 +333,6 @@ public class EditorContent implements INamedElementActions {
 			return TextUtils.canCopy(descriptionComposite.getDescriptionControl());
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			return TextUtils.canCopy(externalRefControl);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			return TextUtils.canCopy(testRailIdControl);
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			return contextTable.canCopy();
 		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
@@ -356,8 +348,6 @@ public class EditorContent implements INamedElementActions {
 			return TextUtils.canPaste(descriptionComposite.getDescriptionControl());
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			return TextUtils.canPaste(externalRefControl);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			return TextUtils.canPaste(testRailIdControl);
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			return contextTable.canPaste();
 		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
@@ -373,8 +363,6 @@ public class EditorContent implements INamedElementActions {
 			return TextUtils.canCut(descriptionComposite.getDescriptionControl());
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			return TextUtils.canCut(externalRefControl);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			return TextUtils.canCut(testRailIdControl);
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			return contextTable.canCut();
 		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
@@ -390,8 +378,6 @@ public class EditorContent implements INamedElementActions {
 			TextUtils.paste(descriptionComposite.getDescriptionControl());
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			TextUtils.paste(externalRefControl);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			TextUtils.paste(testRailIdControl);
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			if (contextTable.canPaste()) {
 				contextTable.paste();
@@ -410,8 +396,6 @@ public class EditorContent implements INamedElementActions {
 			TextUtils.cut(descriptionComposite.getDescriptionControl());
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			TextUtils.cut(externalRefControl);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			TextUtils.cut(testRailIdControl);
 		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			if (contextTable.canCut()) {
 				contextTable.cut();
@@ -438,8 +422,8 @@ public class EditorContent implements INamedElementActions {
 		if (contextTable != null) {
 			contextTable.update(element);
 		}
-		if( propertiesSection != null) {
-			propertiesSection.update((Scenario)element);
+		if (propertiesSection != null) {
+			propertiesSection.update((Scenario) element);
 		}
 		if (verificationsTable != null) {
 			verificationsTable.update(element);
@@ -451,8 +435,6 @@ public class EditorContent implements INamedElementActions {
 			descriptionComposite.getDescriptionControl().invokeAction(fAction);
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			externalRefControl.invokeAction(fAction);
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
-			testRailIdControl.invokeAction(fAction);
 		}
 	}
 
@@ -467,7 +449,6 @@ public class EditorContent implements INamedElementActions {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			return descriptionComposite.canUndo();
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 		return false;
 	}
@@ -476,7 +457,6 @@ public class EditorContent implements INamedElementActions {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			return descriptionComposite.canRedo();
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 		return false;
 	}
@@ -485,7 +465,6 @@ public class EditorContent implements INamedElementActions {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			descriptionComposite.undo();
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 	}
 
@@ -493,7 +472,6 @@ public class EditorContent implements INamedElementActions {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			descriptionComposite.redo();
 		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 	}
 }

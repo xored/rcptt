@@ -10,21 +10,13 @@
  *******************************************************************************/
 package org.eclipse.rcptt.ui.editors;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.Diffs;
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.IViewerObservableList;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
@@ -33,10 +25,8 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -46,15 +36,11 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
 import org.eclipse.rcptt.core.scenario.ScenarioProperty;
-import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.internal.ui.Images;
 import org.eclipse.rcptt.ui.controls.AbstractEmbeddedComposite;
 import org.eclipse.rcptt.ui.editors.NamedElementEditorActions.INamedElementActions;
 import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -74,12 +60,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchSite;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Section;
-
-import com.google.common.collect.Lists;
 
 public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7EditorActionsProvider {
 
@@ -254,7 +235,7 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 				if (element == newParameterItem) {
 					Font tableFont = table.getFont();
 					FontData fd = tableFont.getFontData()[0];
-					fd.setStyle(fd.getStyle() | SWT.ITALIC);
+					fd.setHeight(fd.getHeight()-2);
 
 					return new Font(tableFont.getDevice(), fd);
 				} else
@@ -554,7 +535,7 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 			}
 		}
 
-		if (error != null) {
+		if (error != null && table.getSelection().length > 0) {
 			lastNewName = name;
 
 			Rectangle b = table.getSelection()[0].getBounds();
