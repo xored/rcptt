@@ -8,22 +8,18 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.testengine.preferences;
+package org.eclipse.rcptt.ui.preferences;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-public class TestEnginePreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
-
-	private Button testRailCheckBox;
+public class IntegrationsPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	@Override
 	public void init(IWorkbench workbench) {
@@ -35,18 +31,7 @@ public class TestEnginePreferencePage extends PreferencePage implements IWorkben
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		testRailCheckBox = createCheckBoxButton(composite, "Enable integration with Test Rail",
-				false);
-
 		return null;
-	}
-
-	private Button createCheckBoxButton(Composite parent, String labelText, boolean state) {
-		Label label = new Label(parent, SWT.LEFT);
-		label.setText(labelText);
-		Button button = new Button(parent, SWT.CHECK);
-		button.setSelection(state);
-		return button;
 	}
 
 }

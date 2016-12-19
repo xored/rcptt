@@ -1,4 +1,4 @@
-package org.eclipse.rcptt.testengine.testrail.domain;
+package org.eclipse.rcptt.testrail.domain;
 
 import java.util.List;
 

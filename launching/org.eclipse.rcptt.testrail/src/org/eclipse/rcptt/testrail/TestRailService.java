@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.testengine.testrail;
+package org.eclipse.rcptt.testrail;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,21 +19,29 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.internal.core.model.Q7TestCase;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
+import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
+import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
 import org.eclipse.rcptt.launching.ITestEngineListener;
-import org.eclipse.rcptt.testengine.testrail.domain.TestRailTestResult;
-import org.eclipse.rcptt.testengine.testrail.domain.TestRailTestRun;
+import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
+import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
 public class TestRailService implements ITestEngineListener {
-	private static final String TESTRAILID = "testrailid";
-	private String TESTRUN_NAME_PREFIX = "RCPTT Test Run ";
+	private static final String TESTRAIL_ID = "testrail-id";
+	private static final String TESTRUN_NAME_PREFIX = "RCPTT Test Run ";
+
+	private boolean testRailEnabled;
 	private TestRailAPIClient testRailAPI;
 
 	public TestRailService() {
+		this.testRailEnabled = TestRailPlugin.getTestRailState();
 		this.testRailAPI = new TestRailAPIClient();
 	}
 
 	@Override
 	public void executionCompleted(List<EclScenarioExecutable> scenarios) {
+		if (!testRailEnabled) {
+			return;
+		}
 		try {
 			TestRailTestRun testRunDraft = createTestRunDraft(scenarios);
 			TestRailTestRun testRun = testRailAPI.addRun(testRunDraft);
@@ -67,9 +75,9 @@ public class TestRailService implements ITestEngineListener {
 	private String getTestRailId(EclScenarioExecutable scenario) {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
-			return q7TestCase.getProperties().get(TESTRAILID);
+			return q7TestCase.getProperties().get(TESTRAIL_ID);
 		} catch (ModelException e) {
-			//TODO: Add a propoer logging.
+			// TODO (test-rail-support) Add a proper logging
 			return null;
 		}
 	}
@@ -77,16 +85,18 @@ public class TestRailService implements ITestEngineListener {
 	private void addTestResult(String testRunId, EclScenarioExecutable scenario) {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
-			String testCaseId = q7TestCase.getProperties().get(TESTRAILID);
+			String testCaseId = q7TestCase.getProperties().get(TESTRAIL_ID);
 			
-			if( testCaseId == null ) {
+			if (testCaseId == null) {
 				return;
 			}
 
 			TestRailTestResult testResultDraft = createTestResultDraft(scenario);
-			testResultDraft.setRunId(testRunId);
-			testResultDraft.setCaseId(testCaseId);
-			testRailAPI.addResultForTestCase(testResultDraft);
+			if (testResultDraft != null) {
+				testResultDraft.setRunId(testRunId);
+				testResultDraft.setCaseId(testCaseId);
+				testRailAPI.addResultForTestCase(testResultDraft);
+			}
 		} catch (Exception e) {
 			// TODO (test-rail-support) catch exception
 			e.printStackTrace();
@@ -94,10 +104,10 @@ public class TestRailService implements ITestEngineListener {
 	}
 
 	private TestRailTestResult createTestResultDraft(EclScenarioExecutable scenario) {
-		int testCaseStatus = scenario.getResultStatus().getSeverity();
 		String testCaseStatusId = "";
 		String testCaseComment = scenario.getResultStatus().getMessage();
 
+		int testCaseStatus = scenario.getResultStatus().getSeverity();
 		switch (testCaseStatus) {
 		case IStatus.OK:
 		case IStatus.INFO:

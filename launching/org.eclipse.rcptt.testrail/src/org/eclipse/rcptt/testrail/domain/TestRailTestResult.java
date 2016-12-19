@@ -1,4 +1,4 @@
-package org.eclipse.rcptt.testengine.testrail.domain;
+package org.eclipse.rcptt.testrail.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

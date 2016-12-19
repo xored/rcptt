@@ -8,26 +8,27 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.testengine.testrail;
+package org.eclipse.rcptt.internal.testrail;
 
 import java.text.MessageFormat;
 
-import org.eclipse.rcptt.testengine.internal.testrail.APIClient;
-import org.eclipse.rcptt.testengine.testrail.domain.TestRailTestResult;
-import org.eclipse.rcptt.testengine.testrail.domain.TestRailTestRun;
+import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
+import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class TestRailAPIClient {
-	private final String PROJECT_ID = "1";
+	// TODO (test-rail-support) get project id from properties
+	private static final String PROJECT_ID = "1";
 	private APIClient client;
 
 	public TestRailAPIClient() {
-		this.client = new APIClient(
-			"https://testforrcptt.testrail.net/index.php?/api/v2",
-			"viktoria.dlugopolskaya@xored.com",
-			"VOTikdHKd6/C9UVTPaoy");
+		final String address = TestRailPlugin.getTestRailAddress();
+		final String username = TestRailPlugin.getTestRailUsername();
+		final String password = TestRailPlugin.getTestRailPassword();
+
+		this.client = new APIClient(address, username, password);
 	}
 
 	public TestRailTestRun addRun(TestRailTestRun testRunDraft) throws Exception {

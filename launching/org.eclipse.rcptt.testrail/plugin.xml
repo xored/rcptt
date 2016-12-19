@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.rcptt.launching.testEngineListener">
+      <testEngineListener
+            class="org.eclipse.rcptt.testrail.TestRailService">
+      </testEngineListener>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.rcptt.ui.IntegrationsPreferencePage"
+            class="org.eclipse.rcptt.testrail.ui.preferences.TestRailPreferencePage"
+            id="org.eclipse.rcptt.testrail.TestRailPreferencePage"
+            name="TestRail">
+      </page>
+   </extension>
+
+
+</plugin>
