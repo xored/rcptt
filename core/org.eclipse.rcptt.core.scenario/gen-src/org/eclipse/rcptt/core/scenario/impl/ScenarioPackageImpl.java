@@ -23,6 +23,7 @@ import org.eclipse.rcptt.core.scenario.ProjectMetadata;
 import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
 import org.eclipse.rcptt.core.scenario.ScenarioPackage;
+import org.eclipse.rcptt.core.scenario.ScenarioProperty;
 import org.eclipse.rcptt.core.scenario.SuperContext;
 import org.eclipse.rcptt.core.scenario.TestSuite;
 import org.eclipse.rcptt.core.scenario.TestSuiteItem;
@@ -61,6 +62,13 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * @generated
 	 */
 	private EClass scenarioEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass scenarioPropertyEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -387,8 +395,35 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getScenario_TestRailId() {
-		return (EAttribute)scenarioEClass.getEStructuralFeatures().get(8);
+	public EReference getScenario_Properties() {
+		return (EReference)scenarioEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getScenarioProperty() {
+		return scenarioPropertyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getScenarioProperty_Name() {
+		return (EAttribute)scenarioPropertyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getScenarioProperty_Value() {
+		return (EAttribute)scenarioPropertyEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -832,7 +867,11 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 		createEAttribute(scenarioEClass, SCENARIO__TYPE);
 		createEAttribute(scenarioEClass, SCENARIO__EXTERNAL_REFERENCE);
 		createEAttribute(scenarioEClass, SCENARIO__VERIFICATIONS);
-		createEAttribute(scenarioEClass, SCENARIO__TEST_RAIL_ID);
+		createEReference(scenarioEClass, SCENARIO__PROPERTIES);
+
+		scenarioPropertyEClass = createEClass(SCENARIO_PROPERTY);
+		createEAttribute(scenarioPropertyEClass, SCENARIO_PROPERTY__NAME);
+		createEAttribute(scenarioPropertyEClass, SCENARIO_PROPERTY__VALUE);
 
 		contextEClass = createEClass(CONTEXT);
 
@@ -955,7 +994,11 @@ public class ScenarioPackageImpl extends EPackageImpl implements ScenarioPackage
 		initEAttribute(getScenario_Type(), ecorePackage.getEString(), "type", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScenario_ExternalReference(), ecorePackage.getEString(), "externalReference", "", 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScenario_Verifications(), ecorePackage.getEString(), "verifications", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getScenario_TestRailId(), ecorePackage.getEString(), "testRailId", null, 0, 1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScenario_Properties(), this.getScenarioProperty(), null, "properties", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(scenarioPropertyEClass, ScenarioProperty.class, "ScenarioProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getScenarioProperty_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScenarioProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getScenarioProperty_Value(), ecorePackage.getEString(), "value", null, 0, 1, ScenarioProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(contextEClass, Context.class, "Context", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -24,6 +24,7 @@ import org.eclipse.rcptt.testengine.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testengine.testrail.domain.TestRailTestRun;
 
 public class TestRailService implements ITestEngineListener {
+	private static final String TESTRAILID = "testrailid";
 	private String TESTRUN_NAME_PREFIX = "RCPTT Test Run ";
 	private TestRailAPIClient testRailAPI;
 
@@ -66,18 +67,21 @@ public class TestRailService implements ITestEngineListener {
 	private String getTestRailId(EclScenarioExecutable scenario) {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
-			return q7TestCase.getTestRailId();
+			return q7TestCase.getProperties().get(TESTRAILID);
 		} catch (ModelException e) {
-			// TODO (test-rail-support) catch exception
-			e.printStackTrace();
-			return "";
+			//TODO: Add a propoer logging.
+			return null;
 		}
 	}
 
 	private void addTestResult(String testRunId, EclScenarioExecutable scenario) {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
-			String testCaseId = q7TestCase.getTestRailId();
+			String testCaseId = q7TestCase.getProperties().get(TESTRAILID);
+			
+			if( testCaseId == null ) {
+				return;
+			}
 
 			TestRailTestResult testResultDraft = createTestResultDraft(scenario);
 			testResultDraft.setRunId(testRunId);

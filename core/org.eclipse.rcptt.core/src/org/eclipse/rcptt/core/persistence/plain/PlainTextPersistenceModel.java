@@ -51,6 +51,7 @@ import org.eclipse.rcptt.core.scenario.NamedElement;
 import org.eclipse.rcptt.core.scenario.ProjectMetadata;
 import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
+import org.eclipse.rcptt.core.scenario.ScenarioProperty;
 import org.eclipse.rcptt.core.scenario.TestSuite;
 import org.eclipse.rcptt.core.scenario.TestSuiteItem;
 import org.eclipse.rcptt.core.scenario.Verification;
@@ -78,7 +79,7 @@ public class PlainTextPersistenceModel extends BasePersistenceModel implements
 
 	private static final String ATTR_TESTCASE_TYPE = "Testcase-Type";
 	private static final String ATTR_EXTERNAL_REFERENCE = "External-Reference";
-	private static final String ATTR_TESTRAIL_ID = "TestRail-Id";
+	private static final String ATTR_PROPERTY_PREFIX = "Property-";
 	private static final String ATTR_ELEMENT_VERSION = "Element-Version";
 	// private static final String ATTR_DESCRIPTION = "Description";
 	private static final String ATTR_ID = "Id";
@@ -241,17 +242,17 @@ public class PlainTextPersistenceModel extends BasePersistenceModel implements
 			if (masterAttributes != null) {
 				saveAttrs.putAll(masterAttributes);
 			}
-			saveAttrs.put(
-					"Save-Time",
-					DateFormat.getDateTimeInstance(DateFormat.SHORT,
-							DateFormat.SHORT, Locale.US).format(
-							new Date(System.currentTimeMillis())));
-			Bundle runtimeBundle = Platform
-					.getBundle("org.eclipse.rcptt.updates.runtime");
-			if (runtimeBundle != null) {
-				saveAttrs.put("Runtime-Version", runtimeBundle.getVersion()
-						.toString());
-			}
+//			saveAttrs.put(
+//					"Save-Time",
+//					DateFormat.getDateTimeInstance(DateFormat.SHORT,
+//							DateFormat.SHORT, Locale.US).format(
+//							new Date(System.currentTimeMillis())));
+//			Bundle runtimeBundle = Platform
+//					.getBundle("org.eclipse.rcptt.updates.runtime");
+//			if (runtimeBundle != null) {
+//				saveAttrs.put("Runtime-Version", runtimeBundle.getVersion()
+//						.toString());
+//			}
 
 			writer.writeHeader(saveAttrs);
 			List<String> ordered = new ArrayList<String>();
@@ -468,8 +469,13 @@ public class PlainTextPersistenceModel extends BasePersistenceModel implements
 		masterAttributes.put(ATTR_ELEMENT_TYPE, KIND_TESTCASE);
 		masterAttributes
 				.put(ATTR_EXTERNAL_REFERENCE, sc.getExternalReference());
-		masterAttributes
-				.put(ATTR_TESTRAIL_ID, sc.getTestRailId());
+		
+		EList<ScenarioProperty> properties = sc.getProperties();
+		for( ScenarioProperty p: properties) {
+			masterAttributes
+			.put(ATTR_PROPERTY_PREFIX + p.getName(), p.getValue());
+		}
+
 		masterAttributes.put(ATTR_TESTCASE_TYPE, sc.getType());
 		if (sc.getContexts().size() > 0) {
 			masterAttributes
@@ -634,8 +640,14 @@ public class PlainTextPersistenceModel extends BasePersistenceModel implements
 		if (header.containsKey(ATTR_TESTCASE_TYPE)) {
 			sc.setType(header.get(ATTR_TESTCASE_TYPE));
 		}
-		if (header.containsKey(ATTR_TESTRAIL_ID)) {
-			sc.setTestRailId(header.get(ATTR_TESTRAIL_ID));
+		for( Map.Entry< String, String> e: header.entrySet()) {
+			if( e.getKey().startsWith(ATTR_PROPERTY_PREFIX)) {
+				EList<ScenarioProperty> properties = sc.getProperties();
+				ScenarioProperty prop = ScenarioFactory.eINSTANCE.createScenarioProperty();
+				prop.setName(e.getKey().substring(ATTR_PROPERTY_PREFIX.length()));
+				prop.setValue(e.getValue());
+				properties.add(prop);
+			}
 		}
 
 		if (header.containsKey(ATTR_CONTEXTS)) {

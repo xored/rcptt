@@ -110,10 +110,6 @@ public class ScenarioStructureCreator implements IStructureCreator {
 					ScenarioPart extRef = scenario
 							.createPartContainer(CONTENT_TYPE_EXTERNALREF);
 					extRef.setStringContents(sc.getExternalReference());
-					// TestRail ID
-					ScenarioPart testRailId = scenario
-							.createPartContainer(CONTENT_TYPE_TESTRAILID);
-					testRailId.setStringContents(sc.getTestRailId());
 					// Description
 					ScenarioPart desc = scenario
 							.createPartContainer(CONTENT_TYPE_DESCRIPTION);

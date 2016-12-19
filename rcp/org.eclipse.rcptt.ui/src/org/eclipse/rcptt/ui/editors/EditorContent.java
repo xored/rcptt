@@ -24,11 +24,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage;
 import org.eclipse.rcptt.core.model.IQ7NamedElement;
 import org.eclipse.rcptt.core.model.ITestCase;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.scenario.NamedElement;
+import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.core.scenario.ScenarioPackage;
+import org.eclipse.rcptt.core.workspace.RcpttCore;
 import org.eclipse.rcptt.internal.ui.Messages;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
 import org.eclipse.rcptt.ui.controls.ContextsTable;
@@ -66,6 +69,8 @@ public class EditorContent implements INamedElementActions {
 
 	private Section descriptionSection;
 
+	private ScenarioProperties propertiesSection;
+
 	private StyledText externalRefControl;
 	private StyledText testRailIdControl;
 	private boolean scenarioEditor;
@@ -73,6 +78,7 @@ public class EditorContent implements INamedElementActions {
 
 	private VerificationsTable verificationsTable;
 	private Section verificationsSection;
+	private Section propertiesSectionSection;
 
 	// private StyledText descriptionControl;
 
@@ -91,8 +97,8 @@ public class EditorContent implements INamedElementActions {
 		return verificationsSection;
 	}
 
-	public ITestCase getModel() {
-		return (ITestCase) header.getModel();
+	public IQ7NamedElement getModel() {
+		return header.getModel();
 	}
 
 	public NamedElement getElement() {
@@ -105,42 +111,50 @@ public class EditorContent implements INamedElementActions {
 			public void createControl(Composite parent) {
 				super.createControl(parent);
 				if (supportRefs) {
-					createExternalReferenceControl((Composite) getControl(),
-							toolkit);
-					createTestRailIdControl((Composite) getControl(), toolkit);
+					createExternalReferenceControl((Composite) getControl(), toolkit);
 				}
 			}
 		};
 		descriptionSection = new SectionWithToolbar(descriptionComposite,
-				Section.TITLE_BAR | Section.TWISTIE | getDescriptionFlags())
-				.create(parent, toolkit);
+				Section.TITLE_BAR | Section.TWISTIE | getDescriptionFlags()).create(parent, toolkit);
 		// descriptionControl = descriptionComposite.getDescriptionControl();
 		// TextViewer descrViewer = descriptionComposite.getDescriptionViewer();
 		if (supportRefs) {
 			try {
-				contextTable = new ContextsTable(getModel());
+				contextTable = new ContextsTable((ITestCase)getModel());
 			} catch (ModelException e) {
 				Q7UIPlugin.log(e);
 			}
-			contextSection = new SectionWithToolbar(contextTable,
-					Section.TITLE_BAR | Section.TWISTIE)
-					.create(parent, toolkit);
+			contextSection = new SectionWithToolbar(contextTable, Section.TITLE_BAR | Section.TWISTIE).create(parent,
+					toolkit);
 		}
 
 		if (scenarioEditor) {
+
+			try {
+				NamedElement namedElement = getModel().getNamedElement();
+				if (namedElement instanceof Scenario) {
+					propertiesSection = new ScenarioProperties((Scenario) namedElement, toolkit);
+					
+					propertiesSectionSection = new SectionWithToolbar(propertiesSection, Section.TITLE_BAR | Section.TWISTIE).create(parent,
+							toolkit);
+				}
+			} catch (ModelException e) {
+				Q7UIPlugin.log(e);
+			}
+
 			script = new ScriptSection();
 			script.create(parent, toolkit);
 		}
 
 		if (supportRefs) {
 			try {
-				verificationsTable = new VerificationsTable(getModel());
+				verificationsTable = new VerificationsTable((ITestCase)getModel());
 			} catch (ModelException e) {
 				Q7UIPlugin.log(e);
 			}
 
-			verificationsSection = new SectionWithToolbar(verificationsTable,
-					Section.TITLE_BAR | Section.TWISTIE)
+			verificationsSection = new SectionWithToolbar(verificationsTable, Section.TITLE_BAR | Section.TWISTIE)
 					.create(parent, toolkit);
 		}
 	}
@@ -158,8 +172,7 @@ public class EditorContent implements INamedElementActions {
 			public void setSelection(ISelection selection) {
 			}
 
-			public void removeSelectionChangedListener(
-					ISelectionChangedListener listener) {
+			public void removeSelectionChangedListener(ISelectionChangedListener listener) {
 			}
 
 			public ISelection getSelection() {
@@ -169,8 +182,7 @@ public class EditorContent implements INamedElementActions {
 				return StructuredSelection.EMPTY;
 			}
 
-			public void addSelectionChangedListener(
-					ISelectionChangedListener listener) {
+			public void addSelectionChangedListener(ISelectionChangedListener listener) {
 			}
 		});
 	}
@@ -195,8 +207,7 @@ public class EditorContent implements INamedElementActions {
 				descriptionSection.setExpanded(true);
 			}
 			descriptionComposite.getDescriptionControl().setFocus();
-			descriptionComposite.getDescriptionControl().setSelection(offset,
-					offset + length);
+			descriptionComposite.getDescriptionControl().setSelection(offset, offset + length);
 		} else if (scenarioPart == TAGS) {
 			StyledText tagsControl = header.getTagsControl();
 			tagsControl.setFocus();
@@ -210,25 +221,21 @@ public class EditorContent implements INamedElementActions {
 		}
 	}
 
-	private void createExternalReferenceControl(Composite parent,
-			FormToolkit toolkit) {
+	private void createExternalReferenceControl(Composite parent, FormToolkit toolkit) {
 		Composite composite = toolkit.createComposite(parent);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).span(2, 1).applyTo(composite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).span(2, 1).applyTo(composite);
 
 		final Hyperlink externalRefLabel = toolkit.createHyperlink(composite,
 				Messages.ScenarioEditorPage_ExternalReferenceLabel, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER)
-				.applyTo(externalRefLabel);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(externalRefLabel);
 		externalRefLabel.setToolTipText(EXT_REF_TOOLTIP);
 		externalRefLabel.setUnderlined(true);
-		externalRefControl = new StyledText(composite, SWT.BORDER | SWT.SINGLE
-				| toolkit.getBorderStyle() | toolkit.getOrientation());
+		externalRefControl = new StyledText(composite,
+				SWT.BORDER | SWT.SINGLE | toolkit.getBorderStyle() | toolkit.getOrientation());
 		toolkit.adapt(externalRefControl);
 		externalRefControl.setToolTipText(EXT_REF_TOOLTIP);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).applyTo(externalRefControl);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(externalRefControl);
 
 		externalRefControl.addModifyListener(new ModifyListener() {
 
@@ -256,40 +263,6 @@ public class EditorContent implements INamedElementActions {
 
 	}
 
-	private static final String TESTRAIL_ID_LABEL = Messages.ScenarioEditorPage_TestRailIdLabel;
-	private static final String TESTRAIL_ID_TOOLTIP = Messages.ScenarioEditorPage_TestRailIdToolTip;
-
-	private void createTestRailIdControl(Composite parent,
-			FormToolkit toolkit) {
-		Composite composite = toolkit.createComposite(parent);
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).span(2, 1).applyTo(composite);
-
-		final Label testRailIdLabel = toolkit.createLabel(composite,
-				TESTRAIL_ID_LABEL, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER)
-				.applyTo(testRailIdLabel);
-		testRailIdLabel.setToolTipText(TESTRAIL_ID_TOOLTIP);
-		testRailIdControl = new StyledText(composite, SWT.BORDER | SWT.SINGLE
-				| toolkit.getBorderStyle() | toolkit.getOrientation());
-		toolkit.adapt(testRailIdControl);
-		testRailIdControl.setToolTipText(TESTRAIL_ID_TOOLTIP);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).applyTo(testRailIdControl);
-
-		testRailIdControl.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				testRailIdLabel.setEnabled(!"".equals(testRailIdControl //$NON-NLS-1$
-						.getText().trim()));
-			}
-		});
-
-		update(this.getModel(), getElement());
-
-	}
-
 	private IPropertySource createPropertySource() {
 		return (IPropertySource) Platform.getAdapterManager().getAdapter(getElement(), IPropertySource.class);
 	}
@@ -298,7 +271,6 @@ public class EditorContent implements INamedElementActions {
 
 	private DescriptionComposite descriptionComposite;
 	private Binding externalRefBinding;
-	private Binding testRailIdBinding;
 
 	public void gotoMarker(IMarker marker) {
 		try {
@@ -310,10 +282,8 @@ public class EditorContent implements INamedElementActions {
 				}
 				if (viewer != null) {
 					viewer.getTextWidget().setFocus();
-					IRegion region = viewer.getDocument().getLineInformation(
-							line - 1);
-					viewer.setSelection(new TextSelection(region.getOffset(),
-							region.getLength()), true);
+					IRegion region = viewer.getDocument().getLineInformation(line - 1);
+					viewer.setSelection(new TextSelection(region.getOffset(), region.getLength()), true);
 				}
 			}
 		} catch (Exception e) {
@@ -323,14 +293,10 @@ public class EditorContent implements INamedElementActions {
 
 	public boolean isInFocus() {
 		return descriptionComposite.getDescriptionControl().isFocusControl()
-				|| (externalRefControl != null && externalRefControl
-						.isFocusControl())
-				|| (testRailIdControl != null && testRailIdControl
-						.isFocusControl())
-				|| (contextTable != null && contextTable.getControl()
-						.isFocusControl())
-				|| (verificationsTable != null && verificationsTable.getControl()
-						.isFocusControl())
+				|| (externalRefControl != null && externalRefControl.isFocusControl())
+				|| (testRailIdControl != null && testRailIdControl.isFocusControl())
+				|| (contextTable != null && contextTable.getControl().isFocusControl())
+				|| (verificationsTable != null && verificationsTable.getControl().isFocusControl())
 				|| header.isInFocus();
 	}
 
@@ -341,11 +307,9 @@ public class EditorContent implements INamedElementActions {
 			externalRefControl.selectAll();
 		} else if (testRailIdControl.isFocusControl()) {
 			testRailIdControl.selectAll();
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			((Table) contextTable.getControl()).selectAll();
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			((Table) verificationsTable.getControl()).selectAll();
 		}
 	}
@@ -353,46 +317,35 @@ public class EditorContent implements INamedElementActions {
 	public void copy() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			TextUtils.copy(descriptionComposite.getDescriptionControl());
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			TextUtils.copy(externalRefControl);
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 			TextUtils.copy(testRailIdControl);
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			if (contextTable.canCopy()) {
 				contextTable.copy();
 			}
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			if (verificationsTable.canCopy()) {
 				verificationsTable.copy();
 			}
-		}
-		else if (header.isInFocus()) {
+		} else if (header.isInFocus()) {
 			header.copy();
 		}
 	}
 
 	public boolean canCopy() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
-			return TextUtils.canCopy(descriptionComposite
-					.getDescriptionControl());
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
+			return TextUtils.canCopy(descriptionComposite.getDescriptionControl());
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			return TextUtils.canCopy(externalRefControl);
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 			return TextUtils.canCopy(testRailIdControl);
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			return contextTable.canCopy();
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			return verificationsTable.canCopy();
-		}
-		else if (header.isInFocus()) {
+		} else if (header.isInFocus()) {
 			return header.canCopy();
 		}
 		return false;
@@ -400,22 +353,16 @@ public class EditorContent implements INamedElementActions {
 
 	public boolean canPaste() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
-			return TextUtils.canPaste(descriptionComposite
-					.getDescriptionControl());
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
+			return TextUtils.canPaste(descriptionComposite.getDescriptionControl());
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			return TextUtils.canPaste(externalRefControl);
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 			return TextUtils.canPaste(testRailIdControl);
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			return contextTable.canPaste();
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			return verificationsTable.canPaste();
-		}
-		else if (header.isInFocus()) {
+		} else if (header.isInFocus()) {
 			return header.canPaste();
 		}
 		return false;
@@ -423,22 +370,16 @@ public class EditorContent implements INamedElementActions {
 
 	public boolean canCut() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
-			return TextUtils.canCut(descriptionComposite
-					.getDescriptionControl());
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
+			return TextUtils.canCut(descriptionComposite.getDescriptionControl());
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			return TextUtils.canCut(externalRefControl);
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 			return TextUtils.canCut(testRailIdControl);
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			return contextTable.canCut();
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			return verificationsTable.canCut();
-		}
-		else if (header.isInFocus()) {
+		} else if (header.isInFocus()) {
 			return header.canCut();
 		}
 		return false;
@@ -447,24 +388,19 @@ public class EditorContent implements INamedElementActions {
 	public void paste() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			TextUtils.paste(descriptionComposite.getDescriptionControl());
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			TextUtils.paste(externalRefControl);
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 			TextUtils.paste(testRailIdControl);
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			if (contextTable.canPaste()) {
 				contextTable.paste();
 			}
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			if (verificationsTable.canPaste()) {
 				verificationsTable.paste();
 			}
-		}
-		else if (header.isInFocus()) {
+		} else if (header.isInFocus()) {
 			header.paste();
 		}
 	}
@@ -472,24 +408,19 @@ public class EditorContent implements INamedElementActions {
 	public void cut() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			TextUtils.cut(descriptionComposite.getDescriptionControl());
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
 			TextUtils.cut(externalRefControl);
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 			TextUtils.cut(testRailIdControl);
-		} else if (contextTable != null
-				&& contextTable.getControl().isFocusControl()) {
+		} else if (contextTable != null && contextTable.getControl().isFocusControl()) {
 			if (contextTable.canCut()) {
 				contextTable.cut();
 			}
-		} else if (verificationsTable != null
-				&& verificationsTable.getControl().isFocusControl()) {
+		} else if (verificationsTable != null && verificationsTable.getControl().isFocusControl()) {
 			if (verificationsTable.canCut()) {
 				verificationsTable.cut();
 			}
-		}
-		else if (header.isInFocus()) {
+		} else if (header.isInFocus()) {
 			header.cut();
 		}
 	}
@@ -499,31 +430,16 @@ public class EditorContent implements INamedElementActions {
 			externalRefBinding.dispose();
 		}
 		if (externalRefControl != null) {
-			externalRefBinding = header
-					.getDataBindingContext()
-					.bindValue(
-							SWTObservables.observeText(externalRefControl,
-									SWT.Modify),
-							EMFProperties
-									.value(ScenarioPackage.Literals.SCENARIO__EXTERNAL_REFERENCE)
-									.observe(getElement()));
-		}
-		if (testRailIdBinding != null) {
-			testRailIdBinding.dispose();
-		}
-		if (testRailIdControl != null) {
-			testRailIdBinding = header
-					.getDataBindingContext()
-					.bindValue(
-							SWTObservables.observeText(testRailIdControl,
-									SWT.Modify),
-							EMFProperties
-									.value(ScenarioPackage.Literals.SCENARIO__TEST_RAIL_ID)
-									.observe(getElement()));
+			externalRefBinding = header.getDataBindingContext().bindValue(
+					SWTObservables.observeText(externalRefControl, SWT.Modify),
+					EMFProperties.value(ScenarioPackage.Literals.SCENARIO__EXTERNAL_REFERENCE).observe(getElement()));
 		}
 		descriptionComposite.update(element);
 		if (contextTable != null) {
 			contextTable.update(element);
+		}
+		if( propertiesSection != null) {
+			propertiesSection.update((Scenario)element);
 		}
 		if (verificationsTable != null) {
 			verificationsTable.update(element);
@@ -550,10 +466,8 @@ public class EditorContent implements INamedElementActions {
 	public boolean canUndo() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			return descriptionComposite.canUndo();
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 		return false;
 	}
@@ -561,10 +475,8 @@ public class EditorContent implements INamedElementActions {
 	public boolean canRedo() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			return descriptionComposite.canRedo();
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 		return false;
 	}
@@ -572,20 +484,16 @@ public class EditorContent implements INamedElementActions {
 	public void undo() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			descriptionComposite.undo();
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 	}
 
 	public void redo() {
 		if (descriptionComposite.getDescriptionControl().isFocusControl()) {
 			descriptionComposite.redo();
-		} else if (externalRefControl != null
-				&& externalRefControl.isFocusControl()) {
-		} else if (testRailIdControl != null
-				&& testRailIdControl.isFocusControl()) {
+		} else if (externalRefControl != null && externalRefControl.isFocusControl()) {
+		} else if (testRailIdControl != null && testRailIdControl.isFocusControl()) {
 		}
 	}
 }

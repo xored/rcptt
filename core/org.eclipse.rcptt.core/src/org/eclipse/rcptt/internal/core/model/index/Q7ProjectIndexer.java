@@ -211,10 +211,6 @@ public class Q7ProjectIndexer implements IProjectIndexer, IProjectIndexer.Intern
 				if (reference != null) {
 					document.addKey(IQ7IndexConstants.EXTERN_REF, reference);
 				}
-				String testRailId = testcase.getTestRailId();
-				if (testRailId != null) {
-					document.addKey(IQ7IndexConstants.TESTRAIL_ID, testRailId);
-				}
 			} else if (element instanceof IQ7ProjectMetadata) {
 				IQ7ProjectMetadata meta = (IQ7ProjectMetadata) element;
 				String[] contexts = meta.getContexts();

@@ -7,7 +7,7 @@
             category="org.eclipse.rcptt.ui.preferences"
             class="org.eclipse.rcptt.testengine.preferences.TestEnginePreferencePage"
             id="org.eclipse.rcptt.testengine.preferences"
-            name="Test Engines">
+            name="Integrations">
       </page>
    </extension>
    <extension
