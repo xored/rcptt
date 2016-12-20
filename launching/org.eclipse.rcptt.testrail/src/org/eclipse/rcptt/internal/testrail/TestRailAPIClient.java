@@ -19,12 +19,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class TestRailAPIClient {
+	private static final String ENDPOINT = "index.php?/api/v2";
 	// TODO (test-rail-support) get project id from properties
 	private static final String PROJECT_ID = "1";
 	private APIClient client;
 
 	public TestRailAPIClient() {
-		final String address = TestRailPlugin.getTestRailAddress();
+		final String address = TestRailPlugin.getTestRailAddress() + ENDPOINT;
 		final String username = TestRailPlugin.getTestRailUsername();
 		final String password = TestRailPlugin.getTestRailPassword();
 

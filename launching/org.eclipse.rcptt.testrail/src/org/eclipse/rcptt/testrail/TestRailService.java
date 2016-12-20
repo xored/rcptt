@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.testrail;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +25,12 @@ import org.eclipse.rcptt.launching.ITestEngineListener;
 import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
+import com.google.common.base.Joiner;
+
 public class TestRailService implements ITestEngineListener {
 	private static final String TESTRAIL_ID = "testrail-id";
 	private static final String TESTRUN_NAME_PREFIX = "RCPTT Test Run ";
+	private static final String TESTRESULT_COMMENT_PREFIX = "Context: ";
 
 	private boolean testRailEnabled;
 	private TestRailAPIClient testRailAPI;
@@ -44,6 +47,10 @@ public class TestRailService implements ITestEngineListener {
 		}
 		try {
 			TestRailTestRun testRunDraft = createTestRunDraft(scenarios);
+			if (testRunDraft == null) {
+				return;
+			}
+
 			TestRailTestRun testRun = testRailAPI.addRun(testRunDraft);
 			String testRunId = testRun.getId();
 
@@ -58,11 +65,15 @@ public class TestRailService implements ITestEngineListener {
 	private TestRailTestRun createTestRunDraft(List<EclScenarioExecutable> scenarios) {
 		List<String> caseIds = scenarios.stream()
 				.map(scenario -> getTestRailId(scenario))
-				.filter(testRailId -> testRailId != "")
+				.filter(testRailId -> testRailId != null && !testRailId.equals(""))
 				.collect(Collectors.toList());
 		
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		LocalDate localDate = LocalDate.now();
+		if (caseIds.isEmpty()) {
+			return null;
+		}
+
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+		LocalDateTime localDate = LocalDateTime.now();
 		String name = TESTRUN_NAME_PREFIX + dateFormatter.format(localDate);
 
 		TestRailTestRun testRunDraft = new TestRailTestRun();
@@ -86,7 +97,6 @@ public class TestRailService implements ITestEngineListener {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
 			String testCaseId = q7TestCase.getProperties().get(TESTRAIL_ID);
-			
 			if (testCaseId == null) {
 				return;
 			}
@@ -105,7 +115,12 @@ public class TestRailService implements ITestEngineListener {
 
 	private TestRailTestResult createTestResultDraft(EclScenarioExecutable scenario) {
 		String testCaseStatusId = "";
-		String testCaseComment = scenario.getResultStatus().getMessage();
+		String testCaseComment = "";
+
+		List<String> variantName = scenario.getVariantName();
+		if (variantName != null && !variantName.isEmpty()) {
+			testCaseComment = TESTRESULT_COMMENT_PREFIX + Joiner.on(',').join(variantName);
+		}
 
 		int testCaseStatus = scenario.getResultStatus().getSeverity();
 		switch (testCaseStatus) {
