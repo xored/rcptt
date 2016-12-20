@@ -10,6 +10,7 @@ public class TestRailTestResult {
 	private String caseId;
 	@SerializedName("status_id")
 	private String status;
+	private String elapsed;
 	private String comment;
 
 	public TestRailTestResult() {
@@ -33,6 +34,10 @@ public class TestRailTestResult {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public void setElapsed(String elapsed) {
+		this.elapsed = elapsed;
 	}
 
 	public void setComment(String comment) {

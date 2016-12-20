@@ -23,7 +23,9 @@ public class TestRailPlugin extends Plugin {
 	public static final String TESTRAIL_ADDRESS = "TESTRAIL_ADDRESS";
 	public static final String TESTRAIL_USERNAME = "TESTRAIL_USERNAME";
 	public static final String TESTRAIL_PASSWORD = "TESTRAIL_PASSWORD";
+	public static final String TESTRAIL_PROJECTID = "TESTRAIL_PROJECTID";
 	public static final int DEFAULT_TESTRAIL_STATE = 0;
+	public static final String DEFAULT_TESTRAIL_PROJECTID = "1";
 
 	// The shared instance
 	private static TestRailPlugin plugin;
@@ -118,6 +120,21 @@ public class TestRailPlugin extends Plugin {
 	public static void setTestRailPassword(final String password) {
 		final IEclipsePreferences preferences = getPreferences();
 		preferences.put(TESTRAIL_PASSWORD, password);
+		try {
+			preferences.flush();
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String getTestRailProjectId() {
+		final IEclipsePreferences preferences = getPreferences();
+		return preferences.get(TESTRAIL_PROJECTID, DEFAULT_TESTRAIL_PROJECTID);
+	}
+
+	public static void setTestRailProjectId(final String projectId) {
+		final IEclipsePreferences preferences = getPreferences();
+		preferences.put(TESTRAIL_PROJECTID, projectId);
 		try {
 			preferences.flush();
 		} catch (final Exception e) {

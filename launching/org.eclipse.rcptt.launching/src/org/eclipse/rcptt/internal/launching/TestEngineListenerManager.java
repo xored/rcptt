@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
 import org.eclipse.rcptt.launching.ITestEngineListener;
+import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 
 public class TestEngineListenerManager {
 	private static TestEngineListenerManager instance;
@@ -50,9 +51,27 @@ public class TestEngineListenerManager {
 		this.listeners = list;
     }
 
-	public void fireExecutionCompleted(List<EclScenarioExecutable> scenarios) {
+	public void fireSessionStarted(ExecutionSession session) {
 		for (ITestEngineListener listener : this.listeners) {
-			listener.executionCompleted(scenarios);
+			listener.sessionStarted(session);
+		}
+	}
+
+	public void fireSessionCompleted(ExecutionSession session) {
+		for (ITestEngineListener listener : this.listeners) {
+			listener.sessionCompleted(session);
+		}
+	}
+
+	public void fireExecutionStarted(EclScenarioExecutable scenario) {
+		for (ITestEngineListener listener : this.listeners) {
+			listener.executionStarted(scenario);
+		}
+	}
+
+	public void fireExecutionCompleted(EclScenarioExecutable scenario, Report report) {
+		for (ITestEngineListener listener : this.listeners) {
+			listener.executionCompleted(scenario, report);
 		}
 	}
 }

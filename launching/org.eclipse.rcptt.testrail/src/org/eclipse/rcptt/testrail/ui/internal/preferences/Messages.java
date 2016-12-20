@@ -18,8 +18,10 @@ public class Messages extends NLS {
 	public static String TestRailPreferencePage_Address;
 	public static String TestRailPreferencePage_Username;
 	public static String TestRailPreferencePage_Password;
+	public static String TestRailPreferencePage_ProjectId;
 	public static String TestRailPreferencePage_IncorrectAddressMsg;
-	public static String TestRailPreferencePage_AddressEndsWithSlash;
+	public static String TestRailPreferencePage_AddressEndsWithSlashMsg;
+	public static String TestRailPreferencePage_IncorrectProjectIdMsg;
 
 	static {
 		// initialize resource bundle

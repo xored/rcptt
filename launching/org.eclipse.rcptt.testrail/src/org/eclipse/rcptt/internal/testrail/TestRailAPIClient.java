@@ -20,9 +20,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class TestRailAPIClient {
 	private static final String ENDPOINT = "index.php?/api/v2";
-	// TODO (test-rail-support) get project id from properties
-	private static final String PROJECT_ID = "1";
 	private APIClient client;
+	private String projectId;
 
 	public TestRailAPIClient() {
 		final String address = TestRailPlugin.getTestRailAddress() + ENDPOINT;
@@ -30,10 +29,11 @@ public class TestRailAPIClient {
 		final String password = TestRailPlugin.getTestRailPassword();
 
 		this.client = new APIClient(address, username, password);
+		this.projectId = TestRailPlugin.getTestRailProjectId();
 	}
 
 	public TestRailTestRun addRun(TestRailTestRun testRunDraft) throws Exception {
-		String method = MessageFormat.format("/add_run/{0}", PROJECT_ID);
+		String method = MessageFormat.format("/add_run/{0}", projectId);
 		String params = new Gson().toJson(testRunDraft).toString();
 		String response = client.sendPostRequest(method, params);
 
@@ -46,7 +46,7 @@ public class TestRailAPIClient {
 	public void addResultForTestCase(TestRailTestResult testCaseResult) throws Exception {
 		String method = MessageFormat.format("/add_result_for_case/{0}/{1}",
 				testCaseResult.getRunId(), testCaseResult.getCaseId());
-		String params = new Gson().toJson(testCaseResult).toString();
+		String params = new Gson().toJson(testCaseResult).replace("\\n", "\n").toString();
 		client.sendPostRequest(method, params);
 	}
 }

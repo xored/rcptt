@@ -10,12 +10,18 @@
  *******************************************************************************/
 package org.eclipse.rcptt.launching;
 
-import java.util.List;
-
+import org.eclipse.rcptt.internal.launching.ExecutionSession;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
+import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 
 public interface ITestEngineListener {
 
-	public void executionCompleted(List<EclScenarioExecutable> scenarios);
+	public void sessionStarted(ExecutionSession session);
+
+	public void sessionCompleted(ExecutionSession session);
+
+	public void executionStarted(EclScenarioExecutable scenario);
+
+	public void executionCompleted(EclScenarioExecutable scenario, Report report);
 
 }

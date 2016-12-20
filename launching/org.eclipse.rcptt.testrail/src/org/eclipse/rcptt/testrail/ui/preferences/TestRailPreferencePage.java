@@ -47,6 +47,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 	private Text testRailAddress;
 	private Text testRailUsername;
 	private Text testRailPassword;
+	private Text testRailProjectId;
 
 	@Override
 	public void init(IWorkbench workbench) {
@@ -62,6 +63,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		TestRailPlugin.setTestRailAddress(testRailAddress.getText());
 		TestRailPlugin.setTestRailUsername(testRailUsername.getText());
 		TestRailPlugin.setTestRailPassword(testRailPassword.getText());
+		TestRailPlugin.setTestRailProjectId(testRailProjectId.getText());
 		return super.performOk();
 	}
 
@@ -79,10 +81,13 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 				TestRailPlugin.getTestRailUsername());
 		testRailPassword = createText(composite, Messages.TestRailPreferencePage_Password,
 				TestRailPlugin.getTestRailPassword());
+		testRailProjectId = createText(composite, Messages.TestRailPreferencePage_ProjectId,
+				TestRailPlugin.getTestRailProjectId());
 
 		testRailAddress.setEnabled(TestRailPlugin.getTestRailState());
 		testRailUsername.setEnabled(TestRailPlugin.getTestRailState());
 		testRailPassword.setEnabled(TestRailPlugin.getTestRailState());
+		testRailProjectId.setEnabled(TestRailPlugin.getTestRailState());
 
 		return null;
 	}
@@ -113,6 +118,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 				testRailAddress.setEnabled(state);
 				testRailUsername.setEnabled(state);
 				testRailPassword.setEnabled(state);
+				testRailProjectId.setEnabled(state);
 			}
 		});
 
@@ -131,7 +137,10 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 			return Messages.TestRailPreferencePage_IncorrectAddressMsg;
 		}
 		if (!testRailAddress.getText().endsWith("/")) {
-			return Messages.TestRailPreferencePage_AddressEndsWithSlash;
+			return Messages.TestRailPreferencePage_AddressEndsWithSlashMsg;
+		}
+		if (!isValidId(testRailProjectId.getText())) {
+			return Messages.TestRailPreferencePage_IncorrectProjectIdMsg;
 		}
 		return null;
 	}
@@ -141,6 +150,18 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 			URL url = new URL(urlString);
 			return !url.getHost().equals("");
 		} catch (MalformedURLException e) {
+			// ignore
+		}
+		return false;
+	}
+
+	private boolean isValidId(String idString) {
+		try {
+			int parsedValue = Integer.parseInt(idString);
+			if (parsedValue > 0) {
+				return true;
+			}
+		} catch (Exception e) {
 			// ignore
 		}
 		return false;
