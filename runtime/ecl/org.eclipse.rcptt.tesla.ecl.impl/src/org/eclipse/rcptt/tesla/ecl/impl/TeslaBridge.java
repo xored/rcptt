@@ -265,7 +265,9 @@ public class TeslaBridge {
 		if (selector.getParent() != null) {
 			lastControlUIElement = new ControlUIElement(selector.getParent(), getPlayer());
 		}
-		TeslaBridge.makeScreenshot(true, message.toString());
+		if (isAllowScreenshotOnError(process)) {
+			TeslaBridge.makeScreenshot(true, message.toString());
+		}
 		throw new CoreException(TeslaImplPlugin.err(message.toString()));
 	}
 
