@@ -33,7 +33,7 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.ecl.runtime.ISession;
 
 public abstract class AbstractSession implements ISession {
-	private Map<String, Object> properties = new HashMap<String, Object>();
+	private Map<String, Object> properties = null;
 
 	protected abstract void doExecute(final Command scriptlet, final ICommandService svc,
 			final List<Object> inputContent, final Process process);
@@ -60,7 +60,7 @@ public abstract class AbstractSession implements ISession {
 		input.close(Status.OK_STATUS);
 
 		CommandSession session = new CommandSession(getRoot(), new CommandStack(scriptlet, getStack()), this);
-		
+
 		final Process process = new Process(session, input, output);
 		doExecute(scriptlet, svc, inputContent, process);
 		return process;
@@ -156,14 +156,22 @@ public abstract class AbstractSession implements ISession {
 
 	public synchronized void putProperty(String key, Object value) {
 		if (value == null) {
-			properties.remove(key);
+			if (properties != null) {
+				properties.remove(key);
+			}
 		} else {
+			if (properties == null) {
+				properties = new HashMap<String, Object>();
+			}
 			properties.put(key, value);
 		}
 	}
 
 	public synchronized Object getProperty(String key) {
-		return properties.get(key);
+		if (properties != null) {
+			return properties.get(key);
+		}
+		return null;
 	}
 
 }
