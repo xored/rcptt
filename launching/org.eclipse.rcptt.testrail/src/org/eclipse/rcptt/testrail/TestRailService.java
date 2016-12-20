@@ -14,10 +14,14 @@ import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.debug.core.Launch;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.internal.core.model.Q7TestCase;
 import org.eclipse.rcptt.internal.launching.Executable;
@@ -28,6 +32,7 @@ import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
 import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
 import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
 import org.eclipse.rcptt.launching.IExecutable;
+import org.eclipse.rcptt.launching.IQ7Launch;
 import org.eclipse.rcptt.launching.ITestEngineListener;
 import org.eclipse.rcptt.reporting.util.ReportUtils;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Node;
@@ -37,11 +42,13 @@ import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
 public class TestRailService implements ITestEngineListener {
 	private static final String TESTRAIL_ID_PARAM = "testrail-id";
+	private static final String TESTRAIL_ENGINE_NAME = "TestRail";
 	private static final String TESTRESULT_CONTEXT_PREFIX = "Contexts: ";
 	private static final String TESTRESULT_FAILMSG_PREFIX = "__Fail message:__\n";
 
 	private TestRailAPIClient testRailAPI;
 	private boolean testRailEnabled;
+	private boolean testRailEnabledInLaunchConfig;
 	private String testRunId;
 
 	public TestRailService() {
@@ -51,12 +58,27 @@ public class TestRailService implements ITestEngineListener {
 
 	@Override
 	public void sessionStarted(ExecutionSession session) {
+		this.testRunId = null;
 		if (!testRailEnabled) {
 			return;
 		}
-		try {
-			testRunId = null;
 
+		Map<String, String> testEngines = Collections.emptyMap();
+		try {
+			testEngines = ((Launch) session.getLaunch()).getLaunchConfiguration()
+					.getAttribute(IQ7Launch.ATTR_TEST_ENGINES, Collections.emptyMap());
+		} catch (CoreException e1) {
+			// TODO (test-rail-support) catch exception
+			e1.printStackTrace();
+			return;
+		}
+		String testRailEngineEnabled = testEngines.get(TESTRAIL_ENGINE_NAME);
+		this.testRailEnabledInLaunchConfig = testRailEngineEnabled != null && testRailEngineEnabled.equals("true");
+		if (!testRailEnabledInLaunchConfig) {
+			return;
+		}
+
+		try {
 			TestRailTestRun testRunDraft = createTestRunDraft(session);
 			if (testRunDraft == null) {
 				return;
@@ -81,6 +103,9 @@ public class TestRailService implements ITestEngineListener {
 	@Override
 	public void executionCompleted(EclScenarioExecutable scenario, Report report) {
 		if (!testRailEnabled) {
+			return;
+		}
+		if (!testRailEnabledInLaunchConfig) {
 			return;
 		}
 		if (testRunId == null) {

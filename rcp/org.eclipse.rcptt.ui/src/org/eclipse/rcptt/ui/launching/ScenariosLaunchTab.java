@@ -15,7 +15,10 @@ import static com.google.common.collect.Iterables.toArray;
 import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -37,19 +40,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
-
 import org.eclipse.rcptt.core.model.IQ7Element;
 import org.eclipse.rcptt.core.model.IQ7NamedElement;
 import org.eclipse.rcptt.core.model.ITestCase;
@@ -68,12 +58,26 @@ import org.eclipse.rcptt.launching.utils.TestSuiteUtils;
 import org.eclipse.rcptt.ui.commons.ColumnViewerSorter;
 import org.eclipse.rcptt.ui.controls.TestSuiteButtonsPanel;
 import org.eclipse.rcptt.ui.utils.ModelUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 	private static final String NOTHING_SELECTED = ""; 
 	
 	private TableViewer viewer;
 	private ComboViewer autCombo;
+	private Button testRailButton;
 
 	private final List<ITableElement> elements = new ArrayList<ITableElement>();
 
@@ -262,6 +266,28 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		label.setText("AUT:");
 		autCombo = createAutCombo(testSuiteButtonsPanel);
 		
+		new Label(testSuiteButtonsPanel, SWT.HORIZONTAL | SWT.SEPARATOR);
+		Label label2 = new Label(testSuiteButtonsPanel, SWT.BOTTOM);
+		label2.setText("Test engine:");
+		createTestEngineButtons();
+	}
+
+	private void createTestEngineButtons() {
+		// TODO (test-rail-support) refactor
+		testRailButton = createCheckBoxButton(testSuiteButtonsPanel, "TestRail", false);
+	}
+
+	private Button createCheckBoxButton(Composite parent, String label, boolean state) {
+		Button button = new Button(parent, SWT.CHECK);
+		button.setText(label);
+		button.setSelection(state);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		return button;
 	}
 
 	private ComboViewer createAutCombo(Composite parent) {
@@ -476,6 +502,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 	public void initializeFrom(ILaunchConfiguration config) {
 		IResource[] resources = null;
 		Aut aut = null;
+		Map<String, String> testEngines = Collections.emptyMap();
 		try {
 			int resourceCount = config.getAttribute(IQ7Launch.EXEC_RESOURCES,
 					-1);
@@ -487,11 +514,13 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 			}
 			String autName = config.getAttribute(IQ7Launch.ATTR_BOUND_AUT_NAME, "");
 			aut = AutManager.INSTANCE.getByName(autName);
+			testEngines = config.getAttribute(IQ7Launch.ATTR_TEST_ENGINES, Collections.emptyMap());
 		} catch (CoreException e) {
 			Q7LaunchingPlugin.log(e);
 		}
 		buildElements(resources);
 		setSelectedAut(aut);
+		setSelectedTestEngines(testEngines);
 		validatePage();
 	}
 
@@ -510,6 +539,21 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		if (selected instanceof Aut)
 			return (Aut) selected;
 		return null;
+	}
+
+	private void setSelectedTestEngines(Map<String, String> testEngines) {
+		// TODO (test-rail-support) refactor
+		String testRailEnabled = testEngines.get("TestRail");
+		if (testRailEnabled != null) {
+			testRailButton.setSelection(testRailEnabled.equals("true"));
+		}
+	}
+
+	private Map<String, String> getSelectedTestEngines() {
+		// TODO (test-rail-support) refactor
+		Map<String, String> testEngines = new HashMap<String, String>();
+		testEngines.put("TestRail", String.valueOf(testRailButton.getSelection()));
+		return testEngines;
 	}
 
 	/*
@@ -531,6 +575,8 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		config.setAttribute(IQ7Launch.ATTR_NO_SORT, true);
 		Aut aut = getSelectedAut();
 		config.setAttribute(IQ7Launch.ATTR_BOUND_AUT_NAME, aut == null ? null : aut.getName());
+		Map<String, String> testEngines = getSelectedTestEngines();
+		config.setAttribute(IQ7Launch.ATTR_TEST_ENGINES, testEngines);
 	}
 
 	/*
@@ -582,6 +628,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		initializeName(config, name);
 		config.setAttribute(IQ7Launch.ATTR_NO_SORT, true);
 		config.setAttribute(IQ7Launch.ATTR_AUT_NAME, "");
+		config.setAttribute(IQ7Launch.ATTR_TEST_ENGINES, Collections.emptyMap());
 	}
 
 	private void initializeName(ILaunchConfigurationWorkingCopy config,
