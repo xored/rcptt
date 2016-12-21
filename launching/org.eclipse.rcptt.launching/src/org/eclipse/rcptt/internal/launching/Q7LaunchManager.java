@@ -114,7 +114,7 @@ public class Q7LaunchManager {
 			final Executable[] executables = session.getExecutables();
 
 			Q7LaunchManager.getInstance().fireStarted(session);
-			TestEngineListenerManager.getInstance().fireSessionStarted(session);
+			TestEngineManager.getInstance().fireSessionStarted(session);
 			IStatus result = null;
 			try {
 				List<Executable> massUpdateOnTerminate = new ArrayList<Executable>();
@@ -154,7 +154,7 @@ public class Q7LaunchManager {
 							.toArray(new Executable[massUpdateOnTerminate
 									.size()]));
 				}
-				TestEngineListenerManager.getInstance().fireSessionCompleted(session);
+				TestEngineManager.getInstance().fireSessionCompleted(session);
 				result = Status.OK_STATUS;
 			} catch (final Throwable e) {
 				result = RcpttPlugin.createStatus(e);

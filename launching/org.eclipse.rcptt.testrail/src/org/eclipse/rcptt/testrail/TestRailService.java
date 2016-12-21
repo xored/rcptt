@@ -14,14 +14,10 @@ import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.debug.core.Launch;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.internal.core.model.Q7TestCase;
 import org.eclipse.rcptt.internal.launching.Executable;
@@ -32,23 +28,20 @@ import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
 import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
 import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
 import org.eclipse.rcptt.launching.IExecutable;
-import org.eclipse.rcptt.launching.IQ7Launch;
-import org.eclipse.rcptt.launching.ITestEngineListener;
+import org.eclipse.rcptt.launching.ITestEngine;
 import org.eclipse.rcptt.reporting.util.ReportUtils;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Node;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
-public class TestRailService implements ITestEngineListener {
+public class TestRailService implements ITestEngine {
 	private static final String TESTRAIL_ID_PARAM = "testrail-id";
-	private static final String TESTRAIL_ENGINE_NAME = "TestRail";
-	private static final String TESTRESULT_CONTEXT_PREFIX = "Contexts: ";
+	private static final String TESTRESULT_CONTEXT_PREFIX = "__Contexts:__ ";
 	private static final String TESTRESULT_FAILMSG_PREFIX = "__Fail message:__\n";
 
 	private TestRailAPIClient testRailAPI;
 	private boolean testRailEnabled;
-	private boolean testRailEnabledInLaunchConfig;
 	private String testRunId;
 
 	public TestRailService() {
@@ -60,21 +53,6 @@ public class TestRailService implements ITestEngineListener {
 	public void sessionStarted(ExecutionSession session) {
 		this.testRunId = null;
 		if (!testRailEnabled) {
-			return;
-		}
-
-		Map<String, String> testEngines = Collections.emptyMap();
-		try {
-			testEngines = ((Launch) session.getLaunch()).getLaunchConfiguration()
-					.getAttribute(IQ7Launch.ATTR_TEST_ENGINES, Collections.emptyMap());
-		} catch (CoreException e1) {
-			// TODO (test-rail-support) catch exception
-			e1.printStackTrace();
-			return;
-		}
-		String testRailEngineEnabled = testEngines.get(TESTRAIL_ENGINE_NAME);
-		this.testRailEnabledInLaunchConfig = testRailEngineEnabled != null && testRailEngineEnabled.equals("true");
-		if (!testRailEnabledInLaunchConfig) {
 			return;
 		}
 
@@ -105,12 +83,10 @@ public class TestRailService implements ITestEngineListener {
 		if (!testRailEnabled) {
 			return;
 		}
-		if (!testRailEnabledInLaunchConfig) {
-			return;
-		}
 		if (testRunId == null) {
 			return;
 		}
+
 		try {
 			TestRailTestResult testResultDraft = createTestResultDraft(scenario, report);
 			if (testResultDraft == null) {
@@ -125,23 +101,11 @@ public class TestRailService implements ITestEngineListener {
 	}
 
 	private TestRailTestRun createTestRunDraft(ExecutionSession session) {
-		final Executable[] executables = session.getExecutables();
-		final List<EclScenarioExecutable> scenarios = Arrays.stream(executables)
-				.map(wrapper -> getScenario(wrapper))
-				.filter(scenario -> scenario != null)
-				.collect(Collectors.toList());
-
-		final List<String> caseIds = scenarios.stream()
-				.map(scenario -> getTestRailId(scenario))
-				.filter(testRailId -> testRailId != null)
-				.collect(Collectors.toList());
+		String name = getTestRunName(session);
+		List<String> caseIds = getTestRunCaseIds(session);
 		if (caseIds.isEmpty()) {
 			return null;
 		}
-
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-		LocalDateTime localDate = LocalDateTime.now();
-		String name = MessageFormat.format("{0} {1}", session.getName(), dateFormatter.format(localDate));
 
 		TestRailTestRun testRunDraft = new TestRailTestRun();
 		testRunDraft.setName(name);
@@ -152,52 +116,23 @@ public class TestRailService implements ITestEngineListener {
 
 	private TestRailTestResult createTestResultDraft(EclScenarioExecutable scenario, Report report) {
 		try {
-			Node reportRoot = report.getRoot();
-			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
-			String testCaseId = q7TestCase.getProperties().get(TESTRAIL_ID_PARAM);
+			String testCaseId = getTestRailId(scenario);
 			if (testCaseId == null) {
 				return null;
 			}
 
-			String testCaseStatusId = "";
-			String testCaseDuration = "";
-			String testCaseComment = "";
-
-			long duration = reportRoot.getEndTime() - reportRoot.getStartTime();
-			testCaseDuration = MessageFormat.format("{0}s", String.format("%d", duration / 1000));
-
-			List<String> variantName = scenario.getVariantName();
-			if (variantName != null && !variantName.isEmpty()) {
-				String contextNames = variantName.stream()
-						.collect(Collectors.joining(", "))
-						.toString();
-				testCaseComment = TESTRESULT_CONTEXT_PREFIX + contextNames;
-			}
-
-			int testCaseStatus = scenario.getResultStatus().getSeverity();
-			switch (testCaseStatus) {
-			case IStatus.OK:
-			case IStatus.INFO:
-				testCaseStatusId = "1";
-				break;
-			case IStatus.WARNING:
-				testCaseStatusId = "5";
-				break;
-			case IStatus.ERROR:
-				testCaseStatusId = "5";
-
-				if (!testCaseComment.equals(""))
-					testCaseComment += "\n\n";
-				testCaseComment += TESTRESULT_FAILMSG_PREFIX + ReportUtils.getFailMessage(reportRoot);
-				break;
-			case IStatus.CANCEL:
+			String testCaseStatus = getTestRailStatus(scenario);
+			if (testCaseStatus == null) {
 				return null;
 			}
+
+			String testCaseDuration = getTestRailDuration(report);
+			String testCaseComment = getTestRailComment(scenario, report);
 
 			TestRailTestResult testResultDraft = new TestRailTestResult();
 			testResultDraft.setRunId(testRunId);
 			testResultDraft.setCaseId(testCaseId);
-			testResultDraft.setStatus(testCaseStatusId);
+			testResultDraft.setStatus(testCaseStatus);
 			testResultDraft.setElapsed(testCaseDuration);
 			testResultDraft.setComment(testCaseComment);
 			return testResultDraft;
@@ -228,5 +163,76 @@ public class TestRailService implements ITestEngineListener {
 			// TODO (test-rail-support) Add a proper logging
 			return null;
 		}
+	}
+
+	private String getTestRunName(ExecutionSession session) {
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+		LocalDateTime localDate = LocalDateTime.now();
+		return MessageFormat.format("{0} {1}", session.getName(), dateFormatter.format(localDate));
+	}
+
+	private List<String> getTestRunCaseIds(ExecutionSession session) {
+		final Executable[] executables = session.getExecutables();
+		final List<EclScenarioExecutable> scenarios = Arrays.stream(executables)
+				.map(wrapper -> getScenario(wrapper))
+				.filter(scenario -> scenario != null)
+				.collect(Collectors.toList());
+
+		final List<String> caseIds = scenarios.stream()
+				.map(scenario -> getTestRailId(scenario))
+				.filter(testRailId -> testRailId != null)
+				.collect(Collectors.toList());
+
+		return caseIds;
+	}
+
+	private String getTestRailDuration(Report report) {
+		Node reportRoot = report.getRoot();
+		long duration = reportRoot.getEndTime() - reportRoot.getStartTime();
+
+		if (duration != 0) {
+			return MessageFormat.format("{0}s", String.format("%d", duration / 1000));
+		}
+		return null;
+	}
+
+	private String getTestRailStatus(EclScenarioExecutable scenario) {
+		int severity = scenario.getResultStatus().getSeverity();
+
+		switch (severity) {
+		case IStatus.OK:
+		case IStatus.INFO:
+			return "1";
+		case IStatus.WARNING:
+		case IStatus.ERROR:
+			return "5";
+		case IStatus.CANCEL:
+			return null;
+		}
+		return null;
+	}
+
+	private String getTestRailComment(EclScenarioExecutable scenario, Report report) {
+		String testCaseComment = "";
+
+		List<String> variantName = scenario.getVariantName();
+		if (variantName != null && !variantName.isEmpty()) {
+			String contextNames = variantName.stream()
+					.collect(Collectors.joining(", "))
+					.toString();
+			testCaseComment = TESTRESULT_CONTEXT_PREFIX + contextNames;
+		}
+
+		int testCaseSeveriry = scenario.getResultStatus().getSeverity();
+		if (testCaseSeveriry == IStatus.ERROR) {
+			if (!testCaseComment.equals("")) {
+				testCaseComment += "\n\n";
+			}
+
+			Node reportRoot = report.getRoot();
+			testCaseComment += TESTRESULT_FAILMSG_PREFIX + ReportUtils.getFailMessage(reportRoot);
+		}
+
+		return testCaseComment;
 	}
 }

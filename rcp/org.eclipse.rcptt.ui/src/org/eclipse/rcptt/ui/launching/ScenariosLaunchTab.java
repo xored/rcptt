@@ -48,6 +48,8 @@ import org.eclipse.rcptt.core.model.search.Q7SearchCore;
 import org.eclipse.rcptt.core.workspace.RcpttCore;
 import org.eclipse.rcptt.internal.core.model.OneProjectScope;
 import org.eclipse.rcptt.internal.launching.Q7LaunchingPlugin;
+import org.eclipse.rcptt.internal.launching.TestEngineManager;
+import org.eclipse.rcptt.internal.launching.TestEngineManager.TestEngineExtension;
 import org.eclipse.rcptt.internal.ui.Images;
 import org.eclipse.rcptt.internal.ui.Messages;
 import org.eclipse.rcptt.launching.Aut;
@@ -77,7 +79,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 	
 	private TableViewer viewer;
 	private ComboViewer autCombo;
-	private Button testRailButton;
+	private Map<String, Button> testEngineButtons;
 
 	private final List<ITableElement> elements = new ArrayList<ITableElement>();
 
@@ -266,15 +268,30 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		label.setText("AUT:");
 		autCombo = createAutCombo(testSuiteButtonsPanel);
 		
-		new Label(testSuiteButtonsPanel, SWT.HORIZONTAL | SWT.SEPARATOR);
-		Label label2 = new Label(testSuiteButtonsPanel, SWT.BOTTOM);
-		label2.setText("Test engine:");
-		createTestEngineButtons();
+		createTestEngineGroup();
 	}
 
-	private void createTestEngineButtons() {
-		// TODO (test-rail-support) refactor
-		testRailButton = createCheckBoxButton(testSuiteButtonsPanel, "TestRail", false);
+	private void createTestEngineGroup() {
+		List<TestEngineExtension> engines = TestEngineManager.getInstance().getExtensions();
+		if (engines.isEmpty()) {
+			return;
+		}
+
+		new Label(testSuiteButtonsPanel, SWT.HORIZONTAL | SWT.SEPARATOR);
+		Label label2 = new Label(testSuiteButtonsPanel, SWT.BOTTOM);
+		label2.setText("Test engines:");
+		createTestEnginesButtons(engines);
+	}
+
+	private void createTestEnginesButtons(List<TestEngineExtension> engines) {
+		this.testEngineButtons = new HashMap<String, Button>();
+
+		for (TestEngineExtension engine : engines) {
+			String id = engine.getId();
+			String name = engine.getName();
+			Button button = createCheckBoxButton(testSuiteButtonsPanel, name, false);
+			this.testEngineButtons.put(id, button);
+		}
 	}
 
 	private Button createCheckBoxButton(Composite parent, String label, boolean state) {
@@ -520,7 +537,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		}
 		buildElements(resources);
 		setSelectedAut(aut);
-		setSelectedTestEngines(testEngines);
+		setTestEnginesStatuses(testEngines);
 		validatePage();
 	}
 
@@ -541,18 +558,22 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		return null;
 	}
 
-	private void setSelectedTestEngines(Map<String, String> testEngines) {
-		// TODO (test-rail-support) refactor
-		String testRailEnabled = testEngines.get("TestRail");
-		if (testRailEnabled != null) {
-			testRailButton.setSelection(testRailEnabled.equals("true"));
+	private void setTestEnginesStatuses(Map<String, String> statuses) {
+		for (Map.Entry<String, Button> button : testEngineButtons.entrySet()) {
+			String id = button.getKey();
+			String enabled = statuses.get(id);
+			button.getValue().setSelection(enabled != null && enabled.equals("true"));
 		}
 	}
 
-	private Map<String, String> getSelectedTestEngines() {
-		// TODO (test-rail-support) refactor
+	private Map<String, String> getTestEnginesStatuses() {
 		Map<String, String> testEngines = new HashMap<String, String>();
-		testEngines.put("TestRail", String.valueOf(testRailButton.getSelection()));
+
+		for (Map.Entry<String, Button> button : testEngineButtons.entrySet()) {
+			String id = button.getKey();
+			String enabled = String.valueOf(button.getValue().getSelection());
+			testEngines.put(id, enabled);
+		}
 		return testEngines;
 	}
 
@@ -575,7 +596,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		config.setAttribute(IQ7Launch.ATTR_NO_SORT, true);
 		Aut aut = getSelectedAut();
 		config.setAttribute(IQ7Launch.ATTR_BOUND_AUT_NAME, aut == null ? null : aut.getName());
-		Map<String, String> testEngines = getSelectedTestEngines();
+		Map<String, String> testEngines = getTestEnginesStatuses();
 		config.setAttribute(IQ7Launch.ATTR_TEST_ENGINES, testEngines);
 	}
 

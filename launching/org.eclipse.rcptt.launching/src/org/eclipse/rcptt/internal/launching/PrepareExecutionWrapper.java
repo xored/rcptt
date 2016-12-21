@@ -144,7 +144,7 @@ public class PrepareExecutionWrapper extends Executable {
 			IExecutable rootExecutable = ((GroupExecutable) executable).getRoot();
 			if (rootExecutable instanceof EclScenarioExecutable) {
 				EclScenarioExecutable scenario = (EclScenarioExecutable) rootExecutable;
-				TestEngineListenerManager.getInstance().fireExecutionStarted(scenario);
+				TestEngineManager.getInstance().fireExecutionStarted(scenario);
 			}
 		}
 		return executable.execute();
@@ -302,7 +302,7 @@ public class PrepareExecutionWrapper extends Executable {
 				IExecutable rootExecutable = ((GroupExecutable) executable).getRoot();
 				if (rootExecutable instanceof EclScenarioExecutable) {
 					EclScenarioExecutable scenario = (EclScenarioExecutable) rootExecutable;
-					TestEngineListenerManager.getInstance().fireExecutionCompleted(scenario, resultReport);
+					TestEngineManager.getInstance().fireExecutionCompleted(scenario, resultReport);
 				}
 			}
 			if (this.reportSession != null) {

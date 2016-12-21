@@ -14,7 +14,7 @@ import org.eclipse.rcptt.internal.launching.ExecutionSession;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 
-public interface ITestEngineListener {
+public interface ITestEngine {
 
 	public void sessionStarted(ExecutionSession session);
 
