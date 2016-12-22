@@ -22,15 +22,25 @@ public class TestRailAPIClient {
 	private static final String ENDPOINT = "index.php?/api/v2";
 	private APIClient client;
 	private String projectId;
+	private boolean active;
 
 	public TestRailAPIClient() {
 		final String address = TestRailPlugin.getTestRailAddress() + ENDPOINT;
 		final String username = TestRailPlugin.getTestRailUsername();
 		final String password = TestRailPlugin.getTestRailPassword();
+		if (password == null) {
+			TestRailPlugin.log(ErrorMessages.TestRailAPIClient_FailedToSetUpConnection);
+			this.active = false;
+		}
 		this.client = new APIClient(address, username, password);
 
 		final String projectId = TestRailPlugin.getTestRailProjectId();
 		this.projectId = projectId.substring(1);
+		this.active = true;
+	}
+
+	public boolean isActive() {
+		return active;
 	}
 
 	public TestRailTestRun addRun(TestRailTestRun testRunDraft) {

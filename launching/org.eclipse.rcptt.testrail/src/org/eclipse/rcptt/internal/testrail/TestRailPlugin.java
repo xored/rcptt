@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.internal.testrail;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IStatus;
@@ -17,6 +18,9 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.equinox.security.storage.StorageException;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -104,6 +108,10 @@ public class TestRailPlugin extends Plugin {
 		return InstanceScope.INSTANCE.getNode(PLUGIN_ID);
 	}
 
+	public static ISecurePreferences getSecurePreferences() {
+		return SecurePreferencesFactory.getDefault().node(PLUGIN_ID);
+	}
+
 	public static boolean getTestRailState() {
 		final IEclipsePreferences preferences = getPreferences();
 		return preferences.getInt(TESTRAIL_STATE, DEFAULT_TESTRAIL_STATE) == 1;
@@ -150,16 +158,21 @@ public class TestRailPlugin extends Plugin {
 	}
 
 	public static String getTestRailPassword() {
-		final IEclipsePreferences preferences = getPreferences();
-		return preferences.get(TESTRAIL_PASSWORD, "");
+		final ISecurePreferences preferences = getSecurePreferences();
+		try {
+			return preferences.get(TESTRAIL_PASSWORD, "");
+		} catch (final StorageException e) {
+			log(MessageFormat.format(ErrorMessages.TestRailPlugin_ErrorWhileGetting, TESTRAIL_PASSWORD), e);
+			return null;
+		}
 	}
 
 	public static void setTestRailPassword(final String password) {
-		final IEclipsePreferences preferences = getPreferences();
-		preferences.put(TESTRAIL_PASSWORD, password);
+		final ISecurePreferences preferences = getSecurePreferences();
 		try {
+			preferences.put(TESTRAIL_PASSWORD, password, true);
 			preferences.flush();
-		} catch (final BackingStoreException e) {
+		} catch (final StorageException | IOException e) {
 			log(MessageFormat.format(ErrorMessages.TestRailPlugin_ErrorWhileSaving, TESTRAIL_PASSWORD), e);
 		}
 	}

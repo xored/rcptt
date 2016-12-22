@@ -15,7 +15,9 @@ import org.eclipse.osgi.util.NLS;
 public class ErrorMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.rcptt.internal.testrail.error-messages"; //$NON-NLS-1$
 	public static String TestRailPlugin_ErrorWhileSaving;
+	public static String TestRailPlugin_ErrorWhileGetting;
 	public static String TestRailService_ErrorWhileGettingTestCaseProperty;
+	public static String TestRailAPIClient_FailedToSetUpConnection;
 	public static String TestRailAPIClient_FailedToAddTestRun;
 	public static String TestRailAPIClient_FailedToAddTestResult;
 	public static String APIClient_HTTPError;

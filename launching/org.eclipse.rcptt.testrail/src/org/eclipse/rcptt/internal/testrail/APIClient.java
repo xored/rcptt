@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -53,12 +54,13 @@ public class APIClient {
 	}
 
 	private String sendRequest(HttpUriRequest request) {
-		HttpClient client = createClient(request);
+		HttpClient client = HttpClientBuilder.create().build();
+		setUpHeaders(request);
 		try {
 			HttpResponse response = client.execute(request);
 			int code = response.getStatusLine().getStatusCode();
 			String entity = EntityUtils.toString(response.getEntity());
-			if (code >= 300) {
+			if (code != HttpStatus.SC_OK) {
 				TestRailPlugin.log(MessageFormat.format(ErrorMessages.APIClient_HTTPError, entity));
 				return null;
 			}
@@ -70,17 +72,13 @@ public class APIClient {
 		}
 	}
 
-	private HttpClient createClient(HttpUriRequest request) {
-		// TODO (test-rail-support) use closable client?
-		String auth = username + ":" + password;
-		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("ISO-8859-1")));
-		String authHeader = "Basic " + new String(encodedAuth);
-		request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
+	private void setUpHeaders(HttpUriRequest request) {
+		String credentials = username + ":" + password;
+		byte[] encodedCredentials = Base64.encodeBase64(credentials.getBytes(Charset.forName("ISO-8859-1")));
+		String authorizationHeader = "Basic " + new String(encodedCredentials);
+		request.setHeader(HttpHeaders.AUTHORIZATION, authorizationHeader);
 
 		String contentTypeHeader = "application/json";
 		request.addHeader(HttpHeaders.CONTENT_TYPE, contentTypeHeader);
-
-		HttpClient client = HttpClientBuilder.create().build();
-		return client;
 	}
 }

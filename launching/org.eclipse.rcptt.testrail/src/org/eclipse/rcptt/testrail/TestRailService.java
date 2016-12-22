@@ -45,13 +45,14 @@ public class TestRailService implements ITestEngine {
 	private String testRunId;
 
 	public TestRailService() {
-		this.testRailEnabled = TestRailPlugin.getTestRailState();
-		this.testRailAPI = new TestRailAPIClient();
 	}
 
 	@Override
 	public void sessionStarted(ExecutionSession session) {
 		setUpTestRailService();
+		if (!testRailAPI.isActive()) {
+			return;
+		}
 		if (!testRailEnabled) {
 			return;
 		}
@@ -77,6 +78,9 @@ public class TestRailService implements ITestEngine {
 
 	@Override
 	public void executionCompleted(EclScenarioExecutable scenario, Report report) {
+		if (!testRailAPI.isActive()) {
+			return;
+		}
 		if (!testRailEnabled) {
 			return;
 		}
@@ -151,7 +155,7 @@ public class TestRailService implements ITestEngine {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
 			String testCaseId = q7TestCase.getProperties().get(TESTRAIL_ID_PARAM);
-			return testCaseId.substring(1);
+			return testCaseId.substring(1); // remove "C"
 		} catch (Exception e) {
 			TestRailPlugin.log(
 					MessageFormat.format(ErrorMessages.TestRailService_ErrorWhileGettingTestCaseProperty,
