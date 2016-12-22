@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.testrail.ui.preferences;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.jface.preference.PreferencePage;
@@ -68,6 +67,23 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 	}
 
 	@Override
+	protected void performDefaults() {
+		boolean state = TestRailPlugin.DEFAULT_TESTRAIL_STATE == 1;
+		testRailCheckBox.setSelection(state);
+		testRailAddress.setText("");
+		testRailUsername.setText("");
+		testRailPassword.setText("");
+		testRailProjectId.setText(TestRailPlugin.DEFAULT_TESTRAIL_PROJECTID);
+
+		testRailAddress.setEnabled(state);
+		testRailUsername.setEnabled(state);
+		testRailPassword.setEnabled(state);
+		testRailProjectId.setEnabled(state);
+
+		super.performDefaults();
+	}
+
+	@Override
 	protected Control createContents(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
@@ -81,13 +97,15 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 				TestRailPlugin.getTestRailUsername());
 		testRailPassword = createText(composite, Messages.TestRailPreferencePage_Password,
 				TestRailPlugin.getTestRailPassword());
+		testRailPassword.setEchoChar('*');
 		testRailProjectId = createText(composite, Messages.TestRailPreferencePage_ProjectId,
 				TestRailPlugin.getTestRailProjectId());
 
-		testRailAddress.setEnabled(TestRailPlugin.getTestRailState());
-		testRailUsername.setEnabled(TestRailPlugin.getTestRailState());
-		testRailPassword.setEnabled(TestRailPlugin.getTestRailState());
-		testRailProjectId.setEnabled(TestRailPlugin.getTestRailState());
+		boolean state = TestRailPlugin.getTestRailState();
+		testRailAddress.setEnabled(state);
+		testRailUsername.setEnabled(state);
+		testRailPassword.setEnabled(state);
+		testRailProjectId.setEnabled(state);
 
 		return null;
 	}
@@ -119,6 +137,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 				testRailUsername.setEnabled(state);
 				testRailPassword.setEnabled(state);
 				testRailProjectId.setEnabled(state);
+				validate();
 			}
 		});
 
@@ -133,6 +152,9 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 	}
 
 	private String doValidate() {
+		if (!testRailCheckBox.getSelection()) {
+			return null;
+		}
 		if (!isValidURL(testRailAddress.getText())) {
 			return Messages.TestRailPreferencePage_IncorrectAddressMsg;
 		}
@@ -149,14 +171,18 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		try {
 			URL url = new URL(urlString);
 			return !url.getHost().equals("");
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			// ignore
 		}
 		return false;
 	}
 
 	private boolean isValidId(String idString) {
+		if (!idString.startsWith("P")) {
+			return false;
+		}
 		try {
+			idString = idString.substring(1); // remove "P"
 			int parsedValue = Integer.parseInt(idString);
 			if (parsedValue > 0) {
 				return true;

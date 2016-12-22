@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.internal.launching;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -74,14 +75,14 @@ public class TestEngineManager {
 		final IConfigurationElement[] elements = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor(TESTENGINE_EXTPT);
 		for (final IConfigurationElement element : elements) {
+			final String id = element.getAttribute(TESTENGINE_ID_ATTR);
+			final String name = element.getAttribute(TESTENGINE_NAME_ATTR);
 			try {
-				final String id = element.getAttribute(TESTENGINE_ID_ATTR);
-				final String name = element.getAttribute(TESTENGINE_NAME_ATTR);
 				final ITestEngine engine = (ITestEngine) element
 						.createExecutableExtension(TESTENGINE_CLASS_ATTR);
 				extensions.add(new TestEngineExtension(id, name, engine));
 			} catch (final CoreException e) {
-				e.printStackTrace(); // TODO (test-rail-support) replace with Plugin.log(e);
+				Q7LaunchingPlugin.log(MessageFormat.format("Failed to add {0} engine", name), e);
 			}
 		}
 		this.extensions = extensions;
@@ -122,8 +123,7 @@ public class TestEngineManager {
 			this.engineStatuses = configuration.getAttribute(IQ7Launch.ATTR_TEST_ENGINES,
 					Collections.emptyMap());
 		} catch (CoreException e) {
-			// TODO (test-rail-support) catch exception
-			e.printStackTrace();
+			Q7LaunchingPlugin.log("Failed to request enabled Test Engines", e);
 			this.engineStatuses = Collections.emptyMap();
 		}
 		this.enabledEngines = getEnabledEnginesForSession(session);

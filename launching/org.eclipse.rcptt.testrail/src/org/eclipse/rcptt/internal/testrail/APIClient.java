@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.rcptt.internal.testrail;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.text.MessageFormat;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
@@ -34,7 +36,41 @@ public class APIClient {
 		this.password = password;
 	}
 
-	private String sendRequest(HttpUriRequest request) throws Exception {
+	public String sendGetRequest(String endpoint) {
+		HttpGet request = new HttpGet(url + endpoint);
+		return sendRequest(request);
+	}
+
+	public String sendPostRequest(String endpoint, String params) {
+		HttpPost request = new HttpPost(url + endpoint);
+		try {
+			request.setEntity(new StringEntity(params));
+		} catch (UnsupportedEncodingException e) {
+			TestRailPlugin.log(ErrorMessages.APIClient_ErrorWhileGenerationRequest, e);
+			return null;
+		}
+		return sendRequest(request);
+	}
+
+	private String sendRequest(HttpUriRequest request) {
+		HttpClient client = createClient(request);
+		try {
+			HttpResponse response = client.execute(request);
+			int code = response.getStatusLine().getStatusCode();
+			String entity = EntityUtils.toString(response.getEntity());
+			if (code >= 300) {
+				TestRailPlugin.log(MessageFormat.format(ErrorMessages.APIClient_HTTPError, entity));
+				return null;
+			}
+			return entity;
+		} catch (Exception e) {
+			TestRailPlugin.log(ErrorMessages.APIClient_ErrorWhileSendingRequest, e);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private HttpClient createClient(HttpUriRequest request) {
 		// TODO (test-rail-support) use closable client?
 		String auth = username + ":" + password;
 		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("ISO-8859-1")));
@@ -45,18 +81,6 @@ public class APIClient {
 		request.addHeader(HttpHeaders.CONTENT_TYPE, contentTypeHeader);
 
 		HttpClient client = HttpClientBuilder.create().build();
-		HttpResponse response = client.execute(request);
-		return EntityUtils.toString(response.getEntity());
-	}
-
-	public String sendGetRequest(String endpoint) throws Exception {
-		HttpGet request = new HttpGet(url + endpoint);
-		return sendRequest(request);
-	}
-
-	public String sendPostRequest(String endpoint, String params) throws Exception {
-		HttpPost request = new HttpPost(url + endpoint);
-		request.setEntity(new StringEntity(params));
-		return sendRequest(request);
+		return client;
 	}
 }

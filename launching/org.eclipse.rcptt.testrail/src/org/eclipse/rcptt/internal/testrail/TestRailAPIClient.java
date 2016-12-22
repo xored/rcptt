@@ -27,15 +27,20 @@ public class TestRailAPIClient {
 		final String address = TestRailPlugin.getTestRailAddress() + ENDPOINT;
 		final String username = TestRailPlugin.getTestRailUsername();
 		final String password = TestRailPlugin.getTestRailPassword();
-
 		this.client = new APIClient(address, username, password);
-		this.projectId = TestRailPlugin.getTestRailProjectId();
+
+		final String projectId = TestRailPlugin.getTestRailProjectId();
+		this.projectId = projectId.substring(1);
 	}
 
-	public TestRailTestRun addRun(TestRailTestRun testRunDraft) throws Exception {
+	public TestRailTestRun addRun(TestRailTestRun testRunDraft) {
 		String method = MessageFormat.format("/add_run/{0}", projectId);
 		String params = new Gson().toJson(testRunDraft).toString();
 		String response = client.sendPostRequest(method, params);
+		if (response == null) {
+			TestRailPlugin.log(ErrorMessages.TestRailAPIClient_FailedToAddTestRun);
+			return null;
+		}
 
 		TypeToken<TestRailTestRun> token = new TypeToken<TestRailTestRun>() {
 		};
@@ -43,10 +48,13 @@ public class TestRailAPIClient {
 		return testRun;
 	}
 
-	public void addResultForTestCase(TestRailTestResult testCaseResult) throws Exception {
+	public void addResultForTestCase(TestRailTestResult testCaseResult) {
 		String method = MessageFormat.format("/add_result_for_case/{0}/{1}",
 				testCaseResult.getRunId(), testCaseResult.getCaseId());
 		String params = new Gson().toJson(testCaseResult).replace("\\n", "\n").toString();
-		client.sendPostRequest(method, params);
+		String response = client.sendPostRequest(method, params);
+		if (response == null) {
+			TestRailPlugin.log(ErrorMessages.TestRailAPIClient_FailedToAddTestResult);
+		}
 	}
 }

@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.internal.core.model.Q7TestCase;
 import org.eclipse.rcptt.internal.launching.Executable;
 import org.eclipse.rcptt.internal.launching.ExecutionSession;
 import org.eclipse.rcptt.internal.launching.GroupExecutable;
 import org.eclipse.rcptt.internal.launching.PrepareExecutionWrapper;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
+import org.eclipse.rcptt.internal.testrail.ErrorMessages;
 import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
 import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
 import org.eclipse.rcptt.launching.IExecutable;
@@ -51,22 +51,19 @@ public class TestRailService implements ITestEngine {
 
 	@Override
 	public void sessionStarted(ExecutionSession session) {
-		this.testRunId = null;
+		setUpTestRailService();
 		if (!testRailEnabled) {
 			return;
 		}
 
-		try {
-			TestRailTestRun testRunDraft = createTestRunDraft(session);
-			if (testRunDraft == null) {
-				return;
-			}
+		TestRailTestRun testRunDraft = createTestRunDraft(session);
+		if (testRunDraft == null) {
+			return;
+		}
 
-			TestRailTestRun testRun = testRailAPI.addRun(testRunDraft);
+		TestRailTestRun testRun = testRailAPI.addRun(testRunDraft);
+		if (testRun != null) {
 			this.testRunId = testRun.getId();
-		} catch (Exception e) {
-			// TODO (test-rail-support) catch exception
-			e.printStackTrace();
 		}
 	}
 
@@ -87,17 +84,18 @@ public class TestRailService implements ITestEngine {
 			return;
 		}
 
-		try {
-			TestRailTestResult testResultDraft = createTestResultDraft(scenario, report);
-			if (testResultDraft == null) {
-				return;
-			}
-
-			testRailAPI.addResultForTestCase(testResultDraft);
-		} catch (Exception e) {
-			// TODO (test-rail-support) catch exception
-			e.printStackTrace();
+		TestRailTestResult testResultDraft = createTestResultDraft(scenario, report);
+		if (testResultDraft == null) {
+			return;
 		}
+
+		testRailAPI.addResultForTestCase(testResultDraft);
+	}
+
+	private void setUpTestRailService() {
+		this.testRunId = null;
+		this.testRailEnabled = TestRailPlugin.getTestRailState();
+		this.testRailAPI = new TestRailAPIClient();
 	}
 
 	private TestRailTestRun createTestRunDraft(ExecutionSession session) {
@@ -115,32 +113,26 @@ public class TestRailService implements ITestEngine {
 	}
 
 	private TestRailTestResult createTestResultDraft(EclScenarioExecutable scenario, Report report) {
-		try {
-			String testCaseId = getTestRailId(scenario);
-			if (testCaseId == null) {
-				return null;
-			}
-
-			String testCaseStatus = getTestRailStatus(scenario);
-			if (testCaseStatus == null) {
-				return null;
-			}
-
-			String testCaseDuration = getTestRailDuration(report);
-			String testCaseComment = getTestRailComment(scenario, report);
-
-			TestRailTestResult testResultDraft = new TestRailTestResult();
-			testResultDraft.setRunId(testRunId);
-			testResultDraft.setCaseId(testCaseId);
-			testResultDraft.setStatus(testCaseStatus);
-			testResultDraft.setElapsed(testCaseDuration);
-			testResultDraft.setComment(testCaseComment);
-			return testResultDraft;
-		} catch (Exception e) {
-			// TODO (test-rail-support) catch exception
-			e.printStackTrace();
+		String testCaseId = getTestRailId(scenario);
+		if (testCaseId == null) {
 			return null;
 		}
+
+		String testCaseStatus = getTestRailStatus(scenario);
+		if (testCaseStatus == null) {
+			return null;
+		}
+
+		String testCaseDuration = getTestRailDuration(report);
+		String testCaseComment = getTestRailComment(scenario, report);
+
+		TestRailTestResult testResultDraft = new TestRailTestResult();
+		testResultDraft.setRunId(testRunId);
+		testResultDraft.setCaseId(testCaseId);
+		testResultDraft.setStatus(testCaseStatus);
+		testResultDraft.setElapsed(testCaseDuration);
+		testResultDraft.setComment(testCaseComment);
+		return testResultDraft;
 	}
 
 	private EclScenarioExecutable getScenario(Executable wrapper) {
@@ -158,9 +150,13 @@ public class TestRailService implements ITestEngine {
 	private String getTestRailId(EclScenarioExecutable scenario) {
 		try {
 			Q7TestCase q7TestCase = (Q7TestCase) scenario.getActualElement();
-			return q7TestCase.getProperties().get(TESTRAIL_ID_PARAM);
-		} catch (ModelException e) {
-			// TODO (test-rail-support) Add a proper logging
+			String testCaseId = q7TestCase.getProperties().get(TESTRAIL_ID_PARAM);
+			return testCaseId.substring(1);
+		} catch (Exception e) {
+			TestRailPlugin.log(
+					MessageFormat.format(ErrorMessages.TestRailService_ErrorWhileGettingTestCaseProperty,
+							TESTRAIL_ID_PARAM),
+					e);
 			return null;
 		}
 	}
