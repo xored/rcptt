@@ -14,7 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -25,6 +24,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.rcptt.util.Base64;
 
 public class APIClient {
 	private String url;
@@ -67,14 +67,13 @@ public class APIClient {
 			return entity;
 		} catch (Exception e) {
 			TestRailPlugin.log(ErrorMessages.APIClient_ErrorWhileSendingRequest, e);
-			e.printStackTrace();
 			return null;
 		}
 	}
 
 	private void setUpHeaders(HttpUriRequest request) {
 		String credentials = username + ":" + password;
-		byte[] encodedCredentials = Base64.encodeBase64(credentials.getBytes(Charset.forName("ISO-8859-1")));
+		String encodedCredentials = Base64.encode(credentials.getBytes(Charset.forName("ISO-8859-1")));
 		String authorizationHeader = "Basic " + new String(encodedCredentials);
 		request.setHeader(HttpHeaders.AUTHORIZATION, authorizationHeader);
 
