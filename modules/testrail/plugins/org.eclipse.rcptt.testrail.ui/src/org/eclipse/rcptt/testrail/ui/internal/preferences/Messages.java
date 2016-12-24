@@ -19,9 +19,13 @@ public class Messages extends NLS {
 	public static String TestRailPreferencePage_Username;
 	public static String TestRailPreferencePage_Password;
 	public static String TestRailPreferencePage_ProjectId;
+	public static String TestRailPreferencePage_TestConnection;
 	public static String TestRailPreferencePage_IncorrectAddressMsg;
 	public static String TestRailPreferencePage_AddressEndsWithSlashMsg;
+	public static String TestRailPreferencePage_FieldNotSpecifiedMsg;
 	public static String TestRailPreferencePage_IncorrectProjectIdMsg;
+	public static String TestRailPreferencePage_FailedToConnectMsg;
+	public static String TestRailPreferencePage_SuccessfullyConnectedMsg;
 
 	static {
 		// initialize resource bundle

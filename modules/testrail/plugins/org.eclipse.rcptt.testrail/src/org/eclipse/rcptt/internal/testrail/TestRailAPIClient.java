@@ -39,8 +39,21 @@ public class TestRailAPIClient {
 		this.active = true;
 	}
 
+	public TestRailAPIClient(String address, String username, String password, String projectId) {
+		final String url = address + ENDPOINT;
+		this.client = new APIClient(url, username, password);
+		this.projectId = projectId.substring(1);
+		this.active = true;
+	}
+
 	public boolean isActive() {
 		return active;
+	}
+
+	public boolean isAvailable() {
+		String method = MessageFormat.format("/get_cases/{0}", projectId);
+		String response = client.sendGetRequest(method);
+		return response != null;
 	}
 
 	public TestRailTestRun addRun(TestRailTestRun testRunDraft) {

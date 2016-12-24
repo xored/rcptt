@@ -2,15 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="org.eclipse.rcptt.ui.IntegrationsPreferencePage"
-            class="org.eclipse.rcptt.testrail.ui.preferences.TestRailPreferencePage"
-            id="org.eclipse.rcptt.testrail.TestRailPreferencePage"
-            name="TestRail">
-      </page>
-   </extension>
-   <extension
          point="org.eclipse.rcptt.launching.testEngine">
       <testEngine
             class="org.eclipse.rcptt.testrail.TestRailService"

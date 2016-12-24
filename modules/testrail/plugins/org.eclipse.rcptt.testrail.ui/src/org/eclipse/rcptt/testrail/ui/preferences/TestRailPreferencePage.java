@@ -21,11 +21,14 @@
 package org.eclipse.rcptt.testrail.ui.preferences;
 
 import java.net.URL;
+import java.text.MessageFormat;
 
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
 import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
 import org.eclipse.rcptt.testrail.ui.internal.preferences.Messages;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -35,6 +38,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -47,6 +51,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 	private Text testRailUsername;
 	private Text testRailPassword;
 	private Text testRailProjectId;
+	private Button testConnectionButton;
 
 	@Override
 	public void init(IWorkbench workbench) {
@@ -79,6 +84,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testRailUsername.setEnabled(state);
 		testRailPassword.setEnabled(state);
 		testRailProjectId.setEnabled(state);
+		testConnectionButton.setEnabled(state && isValid());
 
 		super.performDefaults();
 	}
@@ -100,12 +106,14 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testRailPassword.setEchoChar('*');
 		testRailProjectId = createText(composite, Messages.TestRailPreferencePage_ProjectId,
 				TestRailPlugin.getTestRailProjectId());
+		testConnectionButton = createButton(composite, Messages.TestRailPreferencePage_TestConnection);
 
 		boolean state = TestRailPlugin.getTestRailState();
 		testRailAddress.setEnabled(state);
 		testRailUsername.setEnabled(state);
 		testRailPassword.setEnabled(state);
 		testRailProjectId.setEnabled(state);
+		testConnectionButton.setEnabled(state && isValid());
 
 		return null;
 	}
@@ -118,6 +126,9 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		text.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				validate();
+
+				boolean state = testRailCheckBox.getSelection();
+				testConnectionButton.setEnabled(state && isValid());
 			}
 		});
 
@@ -132,12 +143,14 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				validate();
+
 				boolean state = testRailCheckBox.getSelection();
 				testRailAddress.setEnabled(state);
 				testRailUsername.setEnabled(state);
 				testRailPassword.setEnabled(state);
 				testRailProjectId.setEnabled(state);
-				validate();
+				testConnectionButton.setEnabled(state && isValid());
 			}
 		});
 
@@ -145,8 +158,22 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		return button;
 	}
 
+	private Button createButton(Composite parent, String labelText) {
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText(labelText);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				testConnection();
+			}
+		});
+
+		return button;
+	}
+
 	private void validate() {
 		String message = doValidate();
+		setMessage(null);
 		setErrorMessage(message);
 		setValid(message == null);
 	}
@@ -160,6 +187,14 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		}
 		if (!testRailAddress.getText().endsWith("/")) {
 			return Messages.TestRailPreferencePage_AddressEndsWithSlashMsg;
+		}
+		if (testRailUsername.getText() != null && !testRailUsername.getText().equals("")) {
+			return MessageFormat.format(Messages.TestRailPreferencePage_FieldNotSpecifiedMsg,
+					Messages.TestRailPreferencePage_Username);
+		}
+		if (testRailPassword.getText() != null && !testRailPassword.getText().equals("")) {
+			return MessageFormat.format(Messages.TestRailPreferencePage_FieldNotSpecifiedMsg,
+					Messages.TestRailPreferencePage_Password);
 		}
 		if (!isValidId(testRailProjectId.getText())) {
 			return Messages.TestRailPreferencePage_IncorrectProjectIdMsg;
@@ -193,4 +228,24 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		return false;
 	}
 
+	private void testConnection() {
+		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
+			public void run() {
+				String address = testRailAddress.getText();
+				String username = testRailUsername.getText();
+				String password = testRailPassword.getText();
+				String projectId = testRailProjectId.getText();
+
+				TestRailAPIClient client = new TestRailAPIClient(address, username, password, projectId);
+				boolean isAvailable = client.isAvailable();
+				if (!isAvailable) {
+					setMessage(null);
+					setErrorMessage(Messages.TestRailPreferencePage_FailedToConnectMsg);
+				} else {
+					setErrorMessage(null);
+					setMessage(Messages.TestRailPreferencePage_SuccessfullyConnectedMsg, INFORMATION);
+				}
+			}
+		});
+	}
 }
