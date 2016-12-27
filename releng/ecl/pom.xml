@@ -34,11 +34,6 @@
 
   <repositories>
     <repository>
-      <id>indigo</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/neon</url>
-    </repository>
-    <repository>
       <id>orbit</id>
       <layout>p2</layout>
       <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/</url>

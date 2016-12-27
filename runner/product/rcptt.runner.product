@@ -372,10 +372,9 @@
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
       <plugin id="org.eclipse.ui.workbench"/>
       <plugin id="org.eclipse.ui"/> -->
-      <plugin id="org.eclipse.update.configurator"/>
-      <plugin id="org.eclipse.update.core"/>
+      <!-- <plugin id="org.eclipse.update.configurator"/> -->
+      <!-- <plugin id="org.eclipse.update.core"/> -->
       <plugin id="org.hamcrest.core"/>
-      <plugin id="org.junit4"/>
       <plugin id="org.junit"/>
       <plugin id="org.objectweb.asm.tree"/>
       <plugin id="org.objectweb.asm"/>
