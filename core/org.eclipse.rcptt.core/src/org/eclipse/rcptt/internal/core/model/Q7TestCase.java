@@ -60,7 +60,7 @@ public class Q7TestCase extends Q7NamedElement implements ITestCase {
 	}
 
 	public Map<String, String> getProperties() throws ModelException {
-		Map<String, String> result = new HashMap<>();
+		Map<String, String> result = new HashMap<String, String>();
 		for (ScenarioProperty p : getScenario().getProperties()) {
 			result.put(p.getName(), p.getValue());
 		}

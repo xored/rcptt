@@ -531,7 +531,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 			}
 			String autName = config.getAttribute(IQ7Launch.ATTR_BOUND_AUT_NAME, "");
 			aut = AutManager.INSTANCE.getByName(autName);
-			testEngines = config.getAttribute(IQ7Launch.ATTR_TEST_ENGINES, Collections.emptyMap());
+			testEngines = config.getAttribute(IQ7Launch.ATTR_TEST_ENGINES, testEngines);
 		} catch (CoreException e) {
 			Q7LaunchingPlugin.log(e);
 		}
@@ -649,7 +649,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 		initializeName(config, name);
 		config.setAttribute(IQ7Launch.ATTR_NO_SORT, true);
 		config.setAttribute(IQ7Launch.ATTR_AUT_NAME, "");
-		config.setAttribute(IQ7Launch.ATTR_TEST_ENGINES, Collections.emptyMap());
+		config.setAttribute(IQ7Launch.ATTR_TEST_ENGINES, new HashMap<String, String>());
 	}
 
 	private void initializeName(ILaunchConfigurationWorkingCopy config,

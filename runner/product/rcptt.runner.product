@@ -307,6 +307,9 @@
       <plugin id="org.eclipse.rcptt.tesla.core.context"/>
       <plugin id="org.eclipse.rcptt.tesla.core"/>
       <plugin id="org.eclipse.rcptt.tesla.ecl"/>
+      <plugin id="org.eclipse.rcptt.testrail"/>
+      <plugin id="org.eclipse.rcptt.testrail.ecl"/>
+      <plugin id="org.eclipse.rcptt.module.testrail.updates"/>
       <plugin id="org.eclipse.rcptt.tesla.nebula.ecl"/>
       <plugin id="org.eclipse.rcptt.tesla.nebula"/>
       <plugin id="org.eclipse.rcptt.tesla.recording.core.ecl"/>
