@@ -10,11 +10,19 @@
  *******************************************************************************/
 package org.eclipse.rcptt.launching;
 
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.rcptt.internal.core.model.Q7TestCase;
 import org.eclipse.rcptt.internal.launching.ExecutionSession;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 
 public interface ITestEngine {
+
+	public void configuredTestRunStarted(Map<String, String> config, List<Q7TestCase> tests);
+
+	public void configuredTestRunCompleted();
 
 	public void sessionStarted(ExecutionSession session);
 

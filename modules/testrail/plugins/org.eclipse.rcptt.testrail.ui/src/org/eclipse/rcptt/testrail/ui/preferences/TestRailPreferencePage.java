@@ -79,13 +79,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testRailUsername.setText("");
 		testRailPassword.setText("");
 		testRailProjectId.setText(TestRailPlugin.DEFAULT_TESTRAIL_PROJECTID);
-
-		testRailAddress.setEnabled(state);
-		testRailUsername.setEnabled(state);
-		testRailPassword.setEnabled(state);
-		testRailProjectId.setEnabled(state);
 		testConnectionButton.setEnabled(state && isValid());
-
 		super.performDefaults();
 	}
 
@@ -109,10 +103,6 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testConnectionButton = createButton(composite, Messages.TestRailPreferencePage_TestConnection);
 
 		boolean state = TestRailPlugin.getTestRailState();
-		testRailAddress.setEnabled(state);
-		testRailUsername.setEnabled(state);
-		testRailPassword.setEnabled(state);
-		testRailProjectId.setEnabled(state);
 		testConnectionButton.setEnabled(state && isValid());
 
 		return null;
@@ -146,10 +136,6 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 				validate();
 
 				boolean state = testRailCheckBox.getSelection();
-				testRailAddress.setEnabled(state);
-				testRailUsername.setEnabled(state);
-				testRailPassword.setEnabled(state);
-				testRailProjectId.setEnabled(state);
 				testConnectionButton.setEnabled(state && isValid());
 			}
 		});
@@ -188,11 +174,11 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		if (!testRailAddress.getText().endsWith("/")) {
 			return Messages.TestRailPreferencePage_AddressEndsWithSlashMsg;
 		}
-		if (testRailUsername.getText() != null && !testRailUsername.getText().equals("")) {
+		if (testRailUsername.getText() == null || testRailUsername.getText().equals("")) {
 			return MessageFormat.format(Messages.TestRailPreferencePage_FieldNotSpecifiedMsg,
 					Messages.TestRailPreferencePage_Username);
 		}
-		if (testRailPassword.getText() != null && !testRailPassword.getText().equals("")) {
+		if (testRailPassword.getText() == null || testRailPassword.getText().equals("")) {
 			return MessageFormat.format(Messages.TestRailPreferencePage_FieldNotSpecifiedMsg,
 					Messages.TestRailPreferencePage_Password);
 		}

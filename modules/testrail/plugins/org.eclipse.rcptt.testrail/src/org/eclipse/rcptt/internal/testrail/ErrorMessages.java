@@ -17,7 +17,7 @@ public class ErrorMessages extends NLS {
 	public static String TestRailPlugin_ErrorWhileSaving;
 	public static String TestRailPlugin_ErrorWhileGetting;
 	public static String TestRailService_ErrorWhileGettingTestCaseProperty;
-	public static String TestRailAPIClient_FailedToSetUpConnection;
+	public static String TestRailService_FailedToSetUpConnection;
 	public static String TestRailAPIClient_FailedToAddTestRun;
 	public static String TestRailAPIClient_FailedToAddTestResult;
 	public static String APIClient_HTTPError;

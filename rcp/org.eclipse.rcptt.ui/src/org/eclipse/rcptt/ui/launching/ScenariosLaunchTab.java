@@ -272,7 +272,7 @@ public class ScenariosLaunchTab extends AbstractLaunchConfigurationTab {
 	}
 
 	private void createTestEngineGroup() {
-		List<TestEngineExtension> engines = TestEngineManager.getInstance().getExtensions();
+		List<TestEngineExtension> engines = TestEngineManager.getInstance().getEngines();
 		if (engines.isEmpty()) {
 			return;
 		}

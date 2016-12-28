@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -58,10 +59,11 @@ public class APIClient {
 		setUpHeaders(request);
 		try {
 			HttpResponse response = client.execute(request);
-			int code = response.getStatusLine().getStatusCode();
+			StatusLine status = response.getStatusLine();
 			String entity = EntityUtils.toString(response.getEntity());
-			if (code != HttpStatus.SC_OK) {
-				TestRailPlugin.log(MessageFormat.format(ErrorMessages.APIClient_HTTPError, entity));
+			if (status.getStatusCode() != HttpStatus.SC_OK) {
+				TestRailPlugin.log(MessageFormat.format(ErrorMessages.APIClient_HTTPError,
+						status.getStatusCode(), entity.equals("") ? status.getReasonPhrase() : entity));
 				return null;
 			}
 			return entity;

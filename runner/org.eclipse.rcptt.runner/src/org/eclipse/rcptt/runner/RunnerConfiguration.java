@@ -94,7 +94,8 @@ public class RunnerConfiguration {
 		ReuseExisingWorkspace(
 				"When true, treat autWsPrefix as full workspace path and do not change it",
 				"reuseExistingWorkspace"), //
-		Tests("Semicolon-separated list of test name glob patterns (* - any chars, ? - exactly one char)", "tests");
+		Tests("Semicolon-separated list of test name glob patterns (* - any chars, ? - exactly one char)", "tests"), //
+		TestEnginesConfig("Semicolon-separated list of test engines configuration parameters", "testEnginesConfig");
 
 		CommandArg(String message, String... val) {
 			this.val = val;
@@ -163,6 +164,8 @@ public class RunnerConfiguration {
 	public String[] tagsToSkip = new String[] { "skipExecution" };
 
 	public boolean overrideSecurityStorage = true;
+
+	public Map<String, String> testEnginesConfig = new HashMap<String, String>();
 
 	public RunnerConfiguration() {
 
@@ -539,6 +542,70 @@ public class RunnerConfiguration {
 				break;
 			case Runner:
 				rapPlatform = i.next().equalsIgnoreCase("rap");
+				break;
+			case TestEnginesConfig:
+				String configParamsStr = i.next();
+				for (String configParamStr : configParamsStr.split(";")) {
+					if (configParamStr.trim().length() == 0) {
+						continue;
+					}
+					int eqIndex = configParamStr.indexOf('=');
+					if (eqIndex == -1) {
+						HeadlessRunnerPlugin
+								.getDefault()
+								.info("WARNING: Invalid value for testEnginesOptions. Should be key1=value1;key2=value2.");
+						break;
+					}
+					String name = configParamStr.substring(0, eqIndex).trim();
+					String value = configParamStr.substring(eqIndex + 1).trim();
+
+					if ("testRailAddress".equals(name)) {
+						try {
+							URL url = new URL(value);
+							if (url.getHost().equals("")) {
+								HeadlessRunnerPlugin
+										.getDefault()
+										.info("WARNING: Invalid value for testRailAddress. Should be valid URL.");
+								break;
+							}
+						} catch (Exception e) {
+							HeadlessRunnerPlugin
+									.getDefault()
+									.info("WARNING: Invalid value for testRailAddress. Should be valid URL.");
+							break;
+						}
+						if (!value.endsWith("/")) {
+							HeadlessRunnerPlugin
+									.getDefault()
+									.info("WARNING: Invalid value for testRailAddress. Should end with slash \"/\".");
+							break;
+						}
+					}
+					if ("testRailProjectId".equals(name)) {
+						if (!value.startsWith("P")) {
+							HeadlessRunnerPlugin
+									.getDefault()
+									.info("WARNING: Invalid value for testRailProjectId. Should start with \"P\" and end with positive number.");
+							break;
+						}
+						try {
+							String idString = value.substring(1); // remove "P"
+							int parsedValue = Integer.parseInt(idString);
+							if (parsedValue <= 0) {
+								HeadlessRunnerPlugin
+										.getDefault()
+										.info("WARNING: Invalid value for testRailProjectId. Should start with \"P\" and end with positive number.");
+								break;
+							}
+						} catch (Exception e) {
+							HeadlessRunnerPlugin
+									.getDefault()
+									.info("WARNING: Invalid value for testRailProjectId. Should start with \"P\" and end with positive number.");
+							break;
+						}
+					}
+					testEnginesConfig.put(name, value);
+				}
 				break;
 			}
 		}

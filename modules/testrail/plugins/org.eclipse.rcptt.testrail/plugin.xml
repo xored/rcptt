@@ -5,6 +5,7 @@
          point="org.eclipse.rcptt.launching.testEngine">
       <testEngine
             class="org.eclipse.rcptt.testrail.TestRailService"
+            configParams="testRailAddress, testRailUsername, testRailPassword, testRailProjectId"
             id="org.eclipse.rcptt.testrail.TestRailService"
             name="TestRail">
       </testEngine>
