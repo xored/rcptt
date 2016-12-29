@@ -33,6 +33,7 @@ import org.eclipse.rcptt.maven.util.ArchiveUtil;
 import org.eclipse.rcptt.maven.util.AutCoords;
 import org.eclipse.rcptt.maven.util.CoordResolver;
 import org.eclipse.rcptt.maven.util.RCPTTCoords;
+import org.eclipse.rcptt.maven.util.TestEnginesConfig;
 import org.eclipse.rcptt.maven.util.TestOptions;
 
 public abstract class AbstractRCPTTMojo extends AbstractMojo {
@@ -125,6 +126,18 @@ public abstract class AbstractRCPTTMojo extends AbstractMojo {
 			testOptions = TestOptions.createDefaults();
 		}
 		return testOptions;
+	}
+
+	/**
+	 * @parameter
+	 */
+	private Map<String, String> testEnginesConfig;
+
+	protected Map<String, String> getTestEnginesConfig() {
+		if (testEnginesConfig == null) {
+			testEnginesConfig = TestEnginesConfig.createDefaults();
+		}
+		return testEnginesConfig;
 	}
 
 	/**
