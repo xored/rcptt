@@ -294,8 +294,9 @@ public class TestsRunner {
 			List<Q7TestCase> testCases = new ArrayList<Q7TestCase>();
 			for (final TestSuite suite : tests) {
 				for (final IQ7NamedElement scenario : suite.getScenarios()) {
-					// TODO (test-rail-support) add check if (scenario instance of Q7TestCase)
-					testCases.add((Q7TestCase) scenario);
+					if (scenario instanceof Q7TestCase) {
+						testCases.add((Q7TestCase) scenario);
+					}
 				}
 			}
 			TestEngineManager.getInstance()
