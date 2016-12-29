@@ -20,9 +20,9 @@ import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 
 public interface ITestEngine {
 
-	public void configuredTestRunStarted(Map<String, String> config, List<Q7TestCase> tests);
+	public void testRunStarted(Map<String, String> config, List<Q7TestCase> tests);
 
-	public void configuredTestRunCompleted();
+	public void testRunCompleted();
 
 	public void sessionStarted(ExecutionSession session);
 
@@ -31,5 +31,7 @@ public interface ITestEngine {
 	public void executionStarted(EclScenarioExecutable scenario);
 
 	public void executionCompleted(EclScenarioExecutable scenario, Report report);
+
+	public String validateParameter(String paramName, String paramValue);
 
 }

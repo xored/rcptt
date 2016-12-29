@@ -43,7 +43,7 @@ public class TestEngineManager {
 	private final static String TESTENGINE_EXTPT = "org.eclipse.rcptt.launching.testEngine";
 	private final static String TESTENGINE_ID_ATTR = "id";
 	private final static String TESTENGINE_NAME_ATTR = "name";
-	private final static String TESTENGINE_CONFIG_ATTR = "configParams";
+	private final static String TESTENGINE_CONFIG_ATTR = "parameters";
 	private final static String TESTENGINE_CLASS_ATTR = "class";
 
 	public class TestEngineExtension {
@@ -89,7 +89,7 @@ public class TestEngineManager {
 	private final List<TestEngineExtension> engines;
 	private List<TestEngineExtension> enabledEngines;
 	private Map<String, String> engineStatuses;
-	private Map<String, String> config;
+	private Map<String, Map<String, String>> config;
 
 	public TestEngineManager() {
 		final List<TestEngineExtension> extensions = new ArrayList<TestEngineExtension>();
@@ -114,16 +114,16 @@ public class TestEngineManager {
 		return engines;
 	}
 
-	public void fireConfiguredTestRunStarted(Map<String, String> config, List<Q7TestCase> tests) {
+	public void fireTestRunStarted(Map<String, Map<String, String>> config, List<Q7TestCase> tests) {
 		applyConfig(config);
 		for (TestEngineExtension engine : this.enabledEngines) {
-			engine.getEngine().configuredTestRunStarted(engine.getConfig(), tests);
+			engine.getEngine().testRunStarted(engine.getConfig(), tests);
 		}
 	}
 
-	public void fireConfiguredTestRunCompleted() {
+	public void fireTestRunCompleted() {
 		for (TestEngineExtension engine : this.enabledEngines) {
-			engine.getEngine().configuredTestRunCompleted();
+			engine.getEngine().testRunCompleted();
 		}
 		cleanConfig();
 	}
@@ -155,6 +155,15 @@ public class TestEngineManager {
 		}
 	}
 
+	public String validateParameter(String engineId, String paramName, String paramValue) {
+		TestEngineExtension engine = this.engines.stream()
+				.filter(testEngine -> testEngine.getId().equals(engineId))
+				.findFirst()
+				.orElse(null);
+
+		return engine.getEngine().validateParameter(paramName, paramValue);
+	}
+
 	private void applyDefaultConfig(ExecutionSession session) {
 		try {
 			ILaunchConfiguration configuration = ((Launch) session.getLaunch()).getLaunchConfiguration();
@@ -167,7 +176,7 @@ public class TestEngineManager {
 		this.enabledEngines = getEnabledEngines();
 	}
 
-	private void applyConfig(Map<String, String> config) {
+	private void applyConfig(Map<String, Map<String, String>> config) {
 		Map<String, String> statuses = new HashMap<String, String>();
 		for (TestEngineExtension engine : this.engines) {
 			String paramsString = engine.getConfigParams();
@@ -175,22 +184,19 @@ public class TestEngineManager {
 				statuses.put(engine.getId(), "false");
 				continue;
 			}
-
+			String id = engine.getId();
+			Map<String, String> engineConfig = config.get(id);
 			List<String> params = Arrays.asList(paramsString.split("\\s*,\\s*"));
 			boolean allParamsAreProvided = params.stream()
-					.allMatch(param -> config.containsKey(param));
+					.allMatch(param -> engineConfig.containsKey(param));
 			boolean anyParamsAreProvided = params.stream()
-					.anyMatch(param -> config.containsKey(param));
+					.anyMatch(param -> engineConfig.containsKey(param));
 			statuses.put(engine.getId(), String.valueOf(allParamsAreProvided));
 			if (!allParamsAreProvided && anyParamsAreProvided) {
 				Q7LaunchingPlugin.log(MessageFormat.format(
 						"{0} engine is not enabled, because not all required parameters were specified",
 						engine.getName()));
 			}
-
-			Map<String, String> engineConfig = config.entrySet().stream()
-					.filter(entry -> params.contains(entry.getKey()))
-					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 			engine.setConfig(engineConfig);
 		}
 		this.engineStatuses = statuses;

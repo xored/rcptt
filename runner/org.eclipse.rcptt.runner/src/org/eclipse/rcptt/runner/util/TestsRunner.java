@@ -300,7 +300,7 @@ public class TestsRunner {
 				}
 			}
 			TestEngineManager.getInstance()
-					.fireConfiguredTestRunStarted(conf.testEnginesConfig, testCases);
+					.fireTestRunStarted(conf.testEngines, testCases);
 
 			auts.initShutdownHook();
 			auts.launchAutsAndStartTheirThreads(runnables);
@@ -381,7 +381,7 @@ public class TestsRunner {
 			failedCount = failed.size();
 			if (reportWriter != null)
 				reportWriter.close();
-			TestEngineManager.getInstance().fireConfiguredTestRunCompleted();
+			TestEngineManager.getInstance().fireTestRunCompleted();
 		}
 
 		if (reportFile.exists()) {

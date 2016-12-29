@@ -63,7 +63,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="configParams" type="string">
+         <attribute name="parameters" type="string">
             <annotation>
                <documentation>
                   Comma separated list of configuration parameters names

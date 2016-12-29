@@ -18,6 +18,7 @@ import static org.eclipse.rcptt.maven.RunnerVersionDispatcher.parseVersion;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -33,7 +34,7 @@ import org.eclipse.rcptt.maven.util.ArchiveUtil;
 import org.eclipse.rcptt.maven.util.AutCoords;
 import org.eclipse.rcptt.maven.util.CoordResolver;
 import org.eclipse.rcptt.maven.util.RCPTTCoords;
-import org.eclipse.rcptt.maven.util.TestEnginesConfig;
+import org.eclipse.rcptt.maven.util.TestEngine;
 import org.eclipse.rcptt.maven.util.TestOptions;
 
 public abstract class AbstractRCPTTMojo extends AbstractMojo {
@@ -131,13 +132,10 @@ public abstract class AbstractRCPTTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	private Map<String, String> testEnginesConfig;
+	private List<TestEngine> testEngines;
 
-	protected Map<String, String> getTestEnginesConfig() {
-		if (testEnginesConfig == null) {
-			testEnginesConfig = TestEnginesConfig.createDefaults();
-		}
-		return testEnginesConfig;
+	protected List<TestEngine> getTestEngines() {
+		return testEngines;
 	}
 
 	/**

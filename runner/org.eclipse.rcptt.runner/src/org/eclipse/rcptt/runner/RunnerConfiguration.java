@@ -14,6 +14,7 @@ import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.eclipse.rcptt.internal.launching.TestEngineManager;
 import org.eclipse.rcptt.launching.injection.Directory;
 import org.eclipse.rcptt.launching.injection.InjectionConfiguration;
 import org.eclipse.rcptt.launching.injection.InjectionFactory;
@@ -95,7 +97,7 @@ public class RunnerConfiguration {
 				"When true, treat autWsPrefix as full workspace path and do not change it",
 				"reuseExistingWorkspace"), //
 		Tests("Semicolon-separated list of test name glob patterns (* - any chars, ? - exactly one char)", "tests"), //
-		TestEnginesConfig("Semicolon-separated list of test engines configuration parameters", "testEnginesConfig");
+		TestEngine("Semicolon-separated list of test engines configuration parameters", "testEngine");
 
 		CommandArg(String message, String... val) {
 			this.val = val;
@@ -165,7 +167,7 @@ public class RunnerConfiguration {
 
 	public boolean overrideSecurityStorage = true;
 
-	public Map<String, String> testEnginesConfig = new HashMap<String, String>();
+	public Map<String, Map<String, String>> testEngines = new HashMap<String, Map<String, String>>();
 
 	public RunnerConfiguration() {
 
@@ -543,69 +545,42 @@ public class RunnerConfiguration {
 			case Runner:
 				rapPlatform = i.next().equalsIgnoreCase("rap");
 				break;
-			case TestEnginesConfig:
-				String configParamsStr = i.next();
-				for (String configParamStr : configParamsStr.split(";")) {
-					if (configParamStr.trim().length() == 0) {
+			case TestEngine:
+				String testEngineStr = i.next();
+				int colIndex = testEngineStr.indexOf(':');
+				if (colIndex == -1) {
+					HeadlessRunnerPlugin
+							.getDefault()
+							.info("WARNING: Invalid value for testEngine. Should be 'testEngineId:key1=value1;key2=value2'");
+					break;
+				}
+				String id = testEngineStr.substring(0, colIndex).trim();
+				String paramsStr = testEngineStr.substring(colIndex + 1).trim();
+				Map<String, String> params = new HashMap<String, String>();
+				for (String paramStr : paramsStr.split(";")) {
+					if (paramStr.trim().length() == 0) {
 						continue;
 					}
-					int eqIndex = configParamStr.indexOf('=');
+					int eqIndex = paramStr.indexOf('=');
 					if (eqIndex == -1) {
 						HeadlessRunnerPlugin
 								.getDefault()
-								.info("WARNING: Invalid value for testEnginesOptions. Should be key1=value1;key2=value2.");
+								.info("WARNING: Invalid value for testEngine. Should be 'testEngineId:key1=value1;key2=value2'");
 						break;
 					}
-					String name = configParamStr.substring(0, eqIndex).trim();
-					String value = configParamStr.substring(eqIndex + 1).trim();
-
-					if ("testRailAddress".equals(name)) {
-						try {
-							URL url = new URL(value);
-							if (url.getHost().equals("")) {
-								HeadlessRunnerPlugin
-										.getDefault()
-										.info("WARNING: Invalid value for testRailAddress. Should be valid URL.");
-								break;
-							}
-						} catch (Exception e) {
-							HeadlessRunnerPlugin
-									.getDefault()
-									.info("WARNING: Invalid value for testRailAddress. Should be valid URL.");
-							break;
-						}
-						if (!value.endsWith("/")) {
-							HeadlessRunnerPlugin
-									.getDefault()
-									.info("WARNING: Invalid value for testRailAddress. Should end with slash \"/\".");
-							break;
-						}
+					String name = paramStr.substring(0, eqIndex).trim();
+					String value = paramStr.substring(eqIndex + 1).trim();
+					String message = TestEngineManager.getInstance()
+							.validateParameter(id, name, value);
+					if (message != null && !message.equals("")) {
+						HeadlessRunnerPlugin
+								.getDefault()
+								.info(MessageFormat.format("WARNING: Invalid value for {0}. {1}", name, message));
+						break;
 					}
-					if ("testRailProjectId".equals(name)) {
-						if (!value.startsWith("P")) {
-							HeadlessRunnerPlugin
-									.getDefault()
-									.info("WARNING: Invalid value for testRailProjectId. Should start with \"P\" and end with positive number.");
-							break;
-						}
-						try {
-							String idString = value.substring(1); // remove "P"
-							int parsedValue = Integer.parseInt(idString);
-							if (parsedValue <= 0) {
-								HeadlessRunnerPlugin
-										.getDefault()
-										.info("WARNING: Invalid value for testRailProjectId. Should start with \"P\" and end with positive number.");
-								break;
-							}
-						} catch (Exception e) {
-							HeadlessRunnerPlugin
-									.getDefault()
-									.info("WARNING: Invalid value for testRailProjectId. Should start with \"P\" and end with positive number.");
-							break;
-						}
-					}
-					testEnginesConfig.put(name, value);
+					params.put(name, value);
 				}
+				testEngines.put(id, params);
 				break;
 			}
 		}

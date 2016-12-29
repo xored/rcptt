@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.testrail;
 
+import java.net.URL;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,10 +40,10 @@ import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
 public class TestRailService implements ITestEngine {
 	private static final String TESTRAIL_ID_PARAM = "testrail-id";
-	private static final String TESTRAILCONFIG_ADDRESS_PARAM = "testRailAddress";
-	private static final String TESTRAILCONFIG_USERNAME_PARAM = "testRailUsername";
-	private static final String TESTRAILCONFIG_PASSWORD_PARAM = "testRailPassword";
-	private static final String TESTRAILCONFIG_PROJECTID_PARAM = "testRailProjectId";
+	private static final String TESTRAILCONFIG_ADDRESS_PARAM = "host";
+	private static final String TESTRAILCONFIG_USERNAME_PARAM = "username";
+	private static final String TESTRAILCONFIG_PASSWORD_PARAM = "password";
+	private static final String TESTRAILCONFIG_PROJECTID_PARAM = "projectId";
 	private static final String TESTRESULT_CONTEXT_PREFIX = "__Contexts:__ ";
 	private static final String TESTRESULT_FAILMSG_PREFIX = "__Fail message:__\n";
 	private static final String TESTRUN_DEFAULT_NAME = "Tests";
@@ -56,7 +57,7 @@ public class TestRailService implements ITestEngine {
 	}
 
 	@Override
-	public void configuredTestRunStarted(Map<String, String> config, List<Q7TestCase> tests) {
+	public void testRunStarted(Map<String, String> config, List<Q7TestCase> tests) {
 		applyConfig(config);
 
 		TestRailTestRun testRunDraft = createTestRunDraft(tests);
@@ -71,7 +72,7 @@ public class TestRailService implements ITestEngine {
 	}
 
 	@Override
-	public void configuredTestRunCompleted() {
+	public void testRunCompleted() {
 		cleanConfig();
 	}
 
@@ -126,6 +127,39 @@ public class TestRailService implements ITestEngine {
 		}
 
 		testRailAPI.addResultForTestCase(testResultDraft);
+	}
+
+	@Override
+	public String validateParameter(String name, String value) {
+		// TODO (test-rail-support) use messages
+		if (name.equals(TESTRAILCONFIG_ADDRESS_PARAM)) {
+			try {
+				URL url = new URL(value);
+				if (url.getHost().equals("")) {
+					return "Should be valid URL";
+				}
+			} catch (Exception e) {
+				return "Should be valid URL";
+			}
+			if (!value.endsWith("/")) {
+				return "Should end with slash \"/\"";
+			}
+		}
+		if (name.equals(TESTRAILCONFIG_PROJECTID_PARAM)) {
+			if (!value.startsWith("P")) {
+				return "Should start with \"P\" and end with positive number";
+			}
+			try {
+				String idString = value.substring(1); // remove "P"
+				int parsedValue = Integer.parseInt(idString);
+				if (parsedValue <= 0) {
+					return "Should start with \"P\" and end with positive number";
+				}
+			} catch (Exception e) {
+				return "Should start with \"P\" and end with positive number";
+			}
+		}
+		return null;
 	}
 
 	private void applyDefaultConfig() {

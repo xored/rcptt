@@ -10,44 +10,39 @@
  *******************************************************************************/
 package org.eclipse.rcptt.maven.util;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class TestEnginesConfig {
+public class TestEngine {
+	private String id;
+	private Map<String, String> parameters;
 
-	public static final Map<String, String> defaults = new HashMap<String, String>();
-
-	static {
+	public String getId() {
+		return id;
 	}
 
-	public static Map<String, String> createDefaults() {
-		return new HashMap<String, String>(defaults);
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public static Map<String, String> fillDefaults(Map<String, String> map) {
-		Map<String, String> result = createDefaults();
-		if (map != null) {
-			result.putAll(map);
-		}
-		return result;
+	public Map<String, String> getParameters() {
+		return parameters;
 	}
 
-	public static String get(Map<String, String> map, String key) {
-		if (map.containsKey(key)) {
-			return map.get(key);
-		}
-		return defaults.get(key);
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
 	}
 
-	public static String toString(Map<String, String> map) {
+	@Override
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (Entry<String, String> entry : map.entrySet()) {
+		for (Entry<String, String> entry : parameters.entrySet()) {
 			if (sb.length() > 0) {
 				sb.append(";");
 			}
 			sb.append(String.format("%s=%s", entry.getKey(), entry.getValue()));
 		}
+		sb.insert(0, String.format("%s:", id));
 		return sb.toString();
 	}
 }
