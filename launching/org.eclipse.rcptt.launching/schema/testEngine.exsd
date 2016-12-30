@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.rcptt.launching" id="testEngine" name="testEngine"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         Test integration extension point. Allow to monitor individual test executions.
       </documentation>
    </annotation>
 

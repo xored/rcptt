@@ -225,10 +225,12 @@ public class ExecuteMojo extends AbstractRCPTTMojo {
 		cmd.createArg().setValue(TestOptions.get(getTestOptions(), TestOptions.EXEC_TIMEOUT));
 
 		// test engines
-		for (TestEngine engine : getTestEngines()) {
-			cmd.createArg().setValue(TESTENGINE);
-			cmd.createArg().setValue(engine.toString());
-		}
+		if( getTestEngines() != null ) { 
+			for (TestEngine engine : getTestEngines() ) {
+				cmd.createArg().setValue(TESTENGINE);
+				cmd.createArg().setValue(engine.toString());
+			}
+		}	
 
 		int shift = (int) (new Random().nextLong() % 1000);
 		shutdownListenerPort = NetUtils.findFreePort(9000 + shift, 9999 + shift);
