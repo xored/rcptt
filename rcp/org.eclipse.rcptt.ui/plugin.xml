@@ -1136,4 +1136,14 @@
          </part>
       </actionSetPartAssociation>
    </extension-->   
+   
+   <extension
+       point="org.eclipse.core.runtime.adapters">
+     <factory 
+         adaptableType="org.eclipse.rcptt.ui.panels.assertion.tree.AssertionTreeModel" 
+         class="org.eclipse.rcptt.ui.panels.assertion.tree.AssertionTreeDefferedAdapter">
+       <adapter type="org.eclipse.ui.progress.IDeferredWorkbenchAdapter">
+       </adapter>
+     </factory>
+   </extension>
 </plugin>

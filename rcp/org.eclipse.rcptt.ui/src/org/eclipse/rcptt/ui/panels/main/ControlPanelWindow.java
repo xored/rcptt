@@ -114,8 +114,11 @@ public class ControlPanelWindow extends Dialog {
 
 	private final Scenario scenario = ScenarioFactory.eINSTANCE
 			.createScenario();
-	private final WritableValue testCase = new WritableValue(null,
+	private final WritableValue<ITestCase> testCase = new WritableValue<ITestCase>(null,
 			ITestCase.class);
+
+	private final ShellAdapter closeListener = new ParentShellCloseListener();
+	private final Listener keyListener = new RecordingShortcutListener();
 
 	private AssertionPanelWindow assertionWindow;
 	private EmbeddedTabFolder tabFolder;
@@ -123,12 +126,13 @@ public class ControlPanelWindow extends Dialog {
 	private StatusBarComposite statusBar;
 	private ContextsTable contextsTable;
 
-	private final ShellAdapter closeListener = new ParentShellCloseListener();
-	private final Listener keyListener = new RecordingShortcutListener();
-
 	private VerificationsTable verificationsTable;
 
 	private static ControlPanelWindow window;
+
+	private CTabItem script;
+
+	private ScriptComposite scriptPart;
 
 	public static synchronized ControlPanelWindow openControlPanel(
 			Shell parentShell, ITestCase testCase) throws ModelException {
@@ -157,7 +161,7 @@ public class ControlPanelWindow extends Dialog {
 		super((Shell) null);
 
 		this.parentShell = parentShell;
-		setShellStyle(SWT.RESIZE /* | SWT.TOOL */| SWT.CLOSE /* | SWT.ON_TOP */);
+		setShellStyle(SWT.RESIZE | SWT.CLOSE);
 		if (testCase != null) {
 			setModel(testCase);
 			copyContent((Scenario) testCase.getNamedElement(), this.scenario);
@@ -210,7 +214,7 @@ public class ControlPanelWindow extends Dialog {
 		scriptPart = new ScriptComposite(internalModel,
 				model != null ? (IFile) getModel().getResource() : null,
 				getShell(), SWT.SCROLL_LOCK);
-		ComputedValue recordingMode = new ComputedValue() {
+		ComputedValue<Object> recordingMode = new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
 				return recordingSupport.getMode();
@@ -282,9 +286,8 @@ public class ControlPanelWindow extends Dialog {
 			};
 		};
 		statusBar.createControl(parent);
-		// statusBar.getControl().addKeyListener(keyListener);
 		dbc.bindValue(WidgetProperties.text().observe(getShell()),
-				new ComputedValue() {
+				new ComputedValue<Object>() {
 					@Override
 					protected Object calculate() {
 						StringBuilder text = new StringBuilder(
@@ -370,18 +373,6 @@ public class ControlPanelWindow extends Dialog {
 		tabFolder.setUnselectedCloseVisible(false);
 		tabFolder.setUnselectedImageVisible(true);
 
-		// ThemeManagerAdapter themePreferences = new ThemeManagerAdapter(
-		// PlatformUI.getWorkbench().getThemeManager());
-		//
-		// DefaultThemeListener themeListener = new DefaultThemeListener(
-		// tabFolder, themePreferences);
-		// themePreferences.addListener(themeListener);
-		// PreferenceStoreAdapter apiPreferences = new PreferenceStoreAdapter(
-		// PrefUtil.getAPIPreferenceStore());
-		// new DefaultSimpleTabListener(apiPreferences,
-		// IWorkbenchPreferenceConstants.SHOW_TRADITIONAL_STYLE_TABS,
-		// tabFolder);
-
 		final Color c1 = new Color(Display.getCurrent(), 232, 238, 244);
 		final Color c2 = new Color(Display.getCurrent(), 153, 180, 209);
 		CTabFolder control = (CTabFolder) tabFolder;
@@ -394,7 +385,6 @@ public class ControlPanelWindow extends Dialog {
 			}
 		});
 
-		// tabFolder.getControl().addKeyListener(keyListener);
 		return tabFolder;
 	}
 
@@ -439,7 +429,7 @@ public class ControlPanelWindow extends Dialog {
 							Messages.ControlPanelWindow_SaveAction) {
 						{
 							dbc.bindValue(Actions.observeEnabled(this),
-									new ComputedValue() {
+									new ComputedValue<Object>() {
 										@Override
 										protected Object calculate() {
 											return getModel() != null;
@@ -462,7 +452,7 @@ public class ControlPanelWindow extends Dialog {
 				}
 			});
 			dbc.bindValue(Actions.observeToolTipText(saveAction),
-					new ComputedValue() {
+					new ComputedValue<Object>() {
 						@Override
 						protected Object calculate() {
 							if (getModel() != null) {
@@ -519,17 +509,17 @@ public class ControlPanelWindow extends Dialog {
 				}
 			};
 		};
-		dbc.bindValue(Actions.observeEnabled(action), new ComputedValue(
+		dbc.bindValue(Actions.observeEnabled(action), new ComputedValue<Boolean>(
 				Boolean.TYPE) {
 			@Override
-			protected Object calculate() {
+			protected Boolean calculate() {
 				RecordingMode mode = recordingSupport.getMode();
 				return mode == RecordingMode.Stopped
 						|| mode == RecordingMode.Replaying;
 			}
 		});
 		dbc.bindValue(Actions.observeImageDescriptor(action),
-				new ComputedValue() {
+				new ComputedValue<Object>() {
 					@Override
 					protected Object calculate() {
 						if (recordingSupport.getMode() == RecordingMode.Replaying) {
@@ -539,7 +529,7 @@ public class ControlPanelWindow extends Dialog {
 						}
 					}
 				});
-		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue() {
+		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
 				if (recordingSupport.getMode() == RecordingMode.Replaying) {
@@ -563,29 +553,28 @@ public class ControlPanelWindow extends Dialog {
 				}
 			};
 		};
-		dbc.bindValue(Actions.observeEnabled(action), new ComputedValue(
+		dbc.bindValue(Actions.observeEnabled(action), new ComputedValue<Boolean>(
 				Boolean.TYPE) {
 			@Override
-			protected Object calculate() {
+			protected Boolean calculate() {
 				RecordingMode mode = recordingSupport.getMode();
 				return mode == RecordingMode.Stopped
 						|| mode != RecordingMode.Replaying;
 			}
 		});
-		dbc.bindValue(Actions.observeImageDescriptor(action),
-				new ComputedValue() {
-					@Override
-					protected Object calculate() {
-						RecordingMode mode = recordingSupport.getMode();
-						if (mode == RecordingMode.Stopped
-								|| mode == RecordingMode.Replaying) {
-							return Images.getImageDescriptor(Images.RECORD);
-						} else {
-							return Images.getImageDescriptor(Images.STOP);
-						}
-					}
-				});
-		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue() {
+		dbc.bindValue(Actions.observeImageDescriptor(action), new ComputedValue<Object>() {
+			@Override
+			protected Object calculate() {
+				RecordingMode mode = recordingSupport.getMode();
+				if (mode == RecordingMode.Stopped
+						|| mode == RecordingMode.Replaying) {
+					return Images.getImageDescriptor(Images.RECORD);
+				} else {
+					return Images.getImageDescriptor(Images.STOP);
+				}
+			}
+		});
+		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
 				RecordingMode mode = recordingSupport.getMode();
@@ -600,20 +589,16 @@ public class ControlPanelWindow extends Dialog {
 		return action;
 	}
 
-	private final ComputedValue modeEnablementObservable = new ComputedValue(
+	private final ComputedValue<Boolean> modeEnablementObservable = new ComputedValue<Boolean>(
 			Boolean.TYPE) {
 		@Override
-		protected Object calculate() {
+		protected Boolean calculate() {
 			RecordingMode mode = recordingSupport.getMode();
 			return mode != RecordingMode.Stopped
 					&& mode != RecordingMode.Replaying
 					&& mode != RecordingMode.Connecting;
 		}
 	};
-
-	private CTabItem script;
-
-	private ScriptComposite scriptPart;
 
 	private IAction createRecordingModeAction() {
 		IAction action = new Action("", IAction.AS_RADIO_BUTTON) { //$NON-NLS-1$
@@ -622,14 +607,23 @@ public class ControlPanelWindow extends Dialog {
 				recordingSupport.setMode(RecordingMode.Recording);
 			}
 		};
-		action.setImageDescriptor(Images
-				.getImageDescriptor(Images.PANEL_MODE_RECORD));
-		action.setToolTipText(Messages.ControlPanelWindow_SwitchToRecordModeActionToolTip);
-		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
-		dbc.bindValue(Actions.observeChecked(action), new ComputedValue(
-				Boolean.TYPE) {
+		dbc.bindValue(Actions.observeImageDescriptor(action), new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
+				return Images.getImageDescriptor(Images.PANEL_MODE_RECORD);
+			}
+		});
+		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
+			@Override
+			protected Object calculate() {
+				return Messages.ControlPanelWindow_SwitchToRecordModeActionToolTip;
+			}
+		});
+		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
+		dbc.bindValue(Actions.observeChecked(action), new ComputedValue<Boolean>(
+				Boolean.TYPE) {
+			@Override
+			protected Boolean calculate() {
 				return recordingSupport.getMode() == RecordingMode.Recording;
 			}
 		});
@@ -643,14 +637,23 @@ public class ControlPanelWindow extends Dialog {
 				recordingSupport.setMode(RecordingMode.Asserting);
 			}
 		};
-		action.setImageDescriptor(Images
-				.getImageDescriptor(Images.PANEL_MODE_ASSERT));
-		action.setToolTipText(Messages.ControlPanelWindow_SwitchToAssertModeActionToolTip);
-		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
-		dbc.bindValue(Actions.observeChecked(action), new ComputedValue(
-				Boolean.TYPE) {
+		dbc.bindValue(Actions.observeImageDescriptor(action), new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
+				return Images.getImageDescriptor(Images.PANEL_MODE_ASSERT);
+			}
+		});
+		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
+			@Override
+			protected Object calculate() {
+				return Messages.ControlPanelWindow_SwitchToAssertModeActionToolTip;
+			}
+		});
+		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
+		dbc.bindValue(Actions.observeChecked(action), new ComputedValue<Boolean>(
+				Boolean.TYPE) {
+			@Override
+			protected Boolean calculate() {
 				return recordingSupport.getMode() == RecordingMode.Asserting;
 			}
 		});
@@ -664,14 +667,23 @@ public class ControlPanelWindow extends Dialog {
 				recordingSupport.setMode(RecordingMode.ImageRecognition);
 			}
 		};
-		action.setImageDescriptor(Images
-				.getImageDescriptor(Images.PANEL_MODE_IML));
-		action.setToolTipText(Messages.ControlPanelWindow_SwitchToRecognitionModeActionToolTip);
-		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
-		dbc.bindValue(Actions.observeChecked(action), new ComputedValue(
-				Boolean.TYPE) {
+		dbc.bindValue(Actions.observeImageDescriptor(action), new ComputedValue<Object>() {
 			@Override
 			protected Object calculate() {
+				return Images.getImageDescriptor(Images.PANEL_MODE_IML);
+			}
+		});
+		dbc.bindValue(Actions.observeToolTipText(action), new ComputedValue<Object>() {
+			@Override
+			protected Object calculate() {
+				return Messages.ControlPanelWindow_SwitchToRecognitionModeActionToolTip;
+			}
+		});
+		dbc.bindValue(Actions.observeEnabled(action), modeEnablementObservable);
+		dbc.bindValue(Actions.observeChecked(action), new ComputedValue<Boolean>(
+				Boolean.TYPE) {
+			@Override
+			protected Boolean calculate() {
 				return recordingSupport.getMode() == RecordingMode.ImageRecognition;
 			}
 		});
@@ -795,7 +807,8 @@ public class ControlPanelWindow extends Dialog {
 						MessageDialog.ERROR, new String[] {
 								IDialogConstants.YES_LABEL,
 								IDialogConstants.NO_LABEL,
-								IDialogConstants.CANCEL_LABEL }, 0);
+								IDialogConstants.CANCEL_LABEL },
+						0);
 				int value = dialog.open(); // Number of pressed button
 				if (value == 0) {
 					saveAs();
@@ -828,7 +841,8 @@ public class ControlPanelWindow extends Dialog {
 				Messages.ControlPanelWindow_SaveDialogMsg,
 				MessageDialog.QUESTION_WITH_CANCEL, new String[] {
 						IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL,
-						IDialogConstants.CANCEL_LABEL }, 0);
+						IDialogConstants.CANCEL_LABEL },
+				0);
 		int returnCode = dialog.open(); // Number of pressed button
 		if (returnCode == 0) {
 			if (getModel() != null) {
@@ -850,8 +864,6 @@ public class ControlPanelWindow extends Dialog {
 	private void selectTab(CTabItem tab) {
 		tabFolder.setSelection(tab);
 	}
-
-
 
 	@Override
 	protected IDialogSettings getDialogBoundsSettings() {
@@ -1018,6 +1030,7 @@ public class ControlPanelWindow extends Dialog {
 			return "";
 		}
 
+		// TODO: remove
 		private void updateAssetionWindow() {
 			switch (recordingSupport.getMode()) {
 			case Asserting:

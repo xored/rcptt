@@ -255,6 +255,13 @@ public class Q7CoreSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case Q7CorePackage.AUT_CONTROLS_HIERARCHY: {
+				AUTControlsHierarchy autControlsHierarchy = (AUTControlsHierarchy)theEObject;
+				T result = caseAUTControlsHierarchy(autControlsHierarchy);
+				if (result == null) result = caseCommand(autControlsHierarchy);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -616,6 +623,21 @@ public class Q7CoreSwitch<T> {
 	 * @generated
 	 */
 	public T caseTerminateAut(TerminateAut object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>AUT Controls Hierarchy</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>AUT Controls Hierarchy</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAUTControlsHierarchy(AUTControlsHierarchy object) {
 		return null;
 	}
 

@@ -36,8 +36,9 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.AssertionFocus;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.RawFactory;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
-import org.eclipse.rcptt.tesla.core.ui.Item;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.recording.aspects.swt.rap.IAssertSWTEventListener;
@@ -51,9 +52,10 @@ import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
 import org.eclipse.rcptt.tesla.swt.events.RcpttMouseEvents;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
+import org.eclipse.rcptt.tesla.ui.describers.DescriberManager;
+import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -64,7 +66,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -467,6 +468,52 @@ public class SWTAssertManager implements IRecordingProcessor, IAssertSWTEventLis
 		} finally {
 			SWTEventManager.setShouldProceed(false);
 		}
+	}
+
+	public synchronized boolean highlightWidget(final Widget widget) {
+		if (widget == null || widget.isDisposed()) {
+			return false;
+		}
+		resetAssertSelection();
+
+		widget.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				synchronized (widget) {
+					IWidgetDescriber descr = DescriberManager.getDescriber(widget, 0, 0);
+					if (null == descr.getBounds()) {
+						return;
+					}
+					updateHover(descr.getBounds(), descr.getPoint(), true, true);
+				}
+			}
+		});
+		return true;
+	}
+
+	public synchronized SWTUIElement getSWTUIElement(Element element) {
+		SWTUIElement swtUIElement = SWTRecordingHelper.getHelper().findByElement(element);
+		return swtUIElement;
+	}
+
+	public synchronized Element getElement(SWTUIElement swtUIElement) {
+		FindResult result = null;
+		result = SWTRecordingHelper.getHelper().getLocator().findElement(swtUIElement, true, false, true);
+		if (result != null) {
+			return result.element;
+		}
+		return null;
+	}
+
+	public synchronized boolean updateAssertionPanelWindow(Widget widget) {
+		if (widget == null || widget.isDisposed()) {
+			return false;
+		}
+
+		IRecordingDescriber assertDescr = selectAllowedParent(new RecordingWidgetDescriber(widget));
+		seachForElement(assertDescr.searchForElement(recorder), true, assertDescr);
+		freezedCtrl = assertDescr;
+
+		return true;
 	}
 
 	private void assertionLog(String message) {

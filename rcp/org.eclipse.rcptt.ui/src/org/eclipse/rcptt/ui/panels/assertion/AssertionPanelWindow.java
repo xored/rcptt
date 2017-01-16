@@ -122,6 +122,28 @@ public class AssertionPanelWindow extends Dialog {
 	private final ImageManager imageManager = new ImageManager();
 	private final WritableValue<Boolean> hasAssert = new WritableValue<Boolean>(false, Boolean.class);
 
+	private final RecordingSupport recordingSupport;
+	private final Shell parentShell;
+
+	private WidgetDetailsDialog widgetDetailsDialog;
+	private CommandSet commands;
+	private AssertInput currentInput;
+	private IObservableSet<Object> checkedObservable;
+	private Button appendButton;
+	private List<TreeItem> collapsed;
+	private List<TreeItem> references;
+	private CCombo filterCombo;
+	private Text filterText;
+	private String filterValue = "";
+
+	private CheckboxTreeViewer viewer;
+	private FontMetrics fontMetrics;
+
+	private Composite treeViewerComposite;
+	private Composite autControlsWidgetComposite;
+	private GridData autControlsWidgetCompositeGridData;
+	private AUTControlsHierarchyView autControlsView;
+
 	private final IAction collapseAll = new Action() {
 		{
 			setImageDescriptor(Images.getImageDescriptor(Images.PANEL_COLLAPSE_ALL));
@@ -175,19 +197,19 @@ public class AssertionPanelWindow extends Dialog {
 		};
 	};
 
-	private final RecordingSupport recordingSupport;
-	private final Shell parentShell;
+	private final IAction treeVisible = new Action() {
+		{
+			setImageDescriptor(Images.getImageDescriptor(Images.TREE_VISIBLE));
+			setToolTipText(Messages.AssertionPanelWindow_TreeVisibleToolTip);
+		}
 
-	private WidgetDetailsDialog widgetDetailsDialog;
-	private CommandSet commands;
-	private AssertInput currentInput;
-	private IObservableSet<Object> checkedObservable;
-	private Button appendButton;
-	private List<TreeItem> collapsed;
-	private List<TreeItem> references;
-	private CCombo filterCombo;
-	private Text filterText;
-	private String filterValue = "";
+		@Override
+		public void run() {
+			autControlsWidgetComposite.setVisible(autControlsWidgetCompositeGridData.exclude);
+			autControlsWidgetCompositeGridData.exclude = !autControlsWidgetCompositeGridData.exclude;
+			autControlsWidgetComposite.getParent().layout(true, true);
+		};
+	};
 
 	public AssertionPanelWindow(RecordingSupport recordingSupport, Shell parentShell) {
 		super(parentShell);
@@ -325,10 +347,6 @@ public class AssertionPanelWindow extends Dialog {
 		}
 	}
 
-	private CheckboxTreeViewer viewer;
-
-	private FontMetrics fontMetrics;
-
 	protected TreeViewerColumn createPropertyColumn() {
 		final TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
 		column.getColumn().setText(Messages.AssertionPanelWindow_ColumnPropertyName);
@@ -461,13 +479,29 @@ public class AssertionPanelWindow extends Dialog {
 	@Override
 	protected Control createContents(Composite parent) {
 		initializeDialogUnits(parent);
-		final Composite composite = new Composite(parent, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		composite.setLayout(new GridLayout());
 
-		final Composite toolbarComposite = new Composite(composite, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
+
+		autControlsWidgetComposite = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(autControlsWidgetComposite);
+
+		autControlsWidgetCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		autControlsWidgetCompositeGridData.exclude = true;
+		autControlsWidgetComposite.setLayoutData(autControlsWidgetCompositeGridData);
+		autControlsWidgetComposite.setVisible(false);
+
+		autControlsView = new AUTControlsHierarchyView(recordingSupport.getAUT());
+		autControlsView.createPartControl(autControlsWidgetComposite);
+
+		final Composite assertionComposite = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().applyTo(assertionComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(assertionComposite);
+
+		final Composite toolbarComposite = new Composite(assertionComposite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(toolbarComposite);
-		toolbarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(toolbarComposite);
 
 		final ActionToolbar actions = new ActionToolbar() {
 			@Override
@@ -477,12 +511,8 @@ public class AssertionPanelWindow extends Dialog {
 				manager.add(new Separator());
 				manager.add(expandAll);
 				manager.add(collapseAll);
-				// if
-				// ("true".equalsIgnoreCase(Q7Features.getInstance().getValue(
-				// Q7Features.Q7_IMAGE_ASSERT_SUPPORT))) {
-				// manager.add(new Separator());
-				// manager.add(newImageAssert);
-				// }
+				manager.add(new Separator());
+				manager.add(treeVisible);
 
 				dbc.bindValue(Actions.observeEnabled(selectAll), hasAssert);
 				dbc.bindValue(Actions.observeEnabled(deselectAll), hasAssert);
@@ -490,7 +520,9 @@ public class AssertionPanelWindow extends Dialog {
 				dbc.bindValue(Actions.observeEnabled(collapseAll), hasAssert);
 			}
 		};
-		actions.create(toolbarComposite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+				.applyTo(actions.create(toolbarComposite));
 
 		final MenuToolbar menu = new MenuToolbar() {
 			@Override
@@ -503,11 +535,15 @@ public class AssertionPanelWindow extends Dialog {
 				});
 			};
 		};
-		menu.create(toolbarComposite).setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).grab(true, false)
+				.applyTo(menu.create(toolbarComposite));
 
-		createTreeViewer(composite).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+				.applyTo(createTreeViewer(assertionComposite));
 
-		createButtonPanel(composite).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+				.applyTo(createButtonPanel(assertionComposite));
+
 		return composite;
 	}
 
@@ -525,7 +561,7 @@ public class AssertionPanelWindow extends Dialog {
 		filterComposite.setLayout(filteredCompositeLayout);
 
 		filterCombo = new CCombo(filterComposite, SWT.READ_ONLY);
-		filterCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(false, false).applyTo(filterCombo);
 		filterCombo.setItems(new String[] { Messages.AssertionPanelWindow_FilterByProperty,
 				Messages.AssertionPanelWindow_FilterByValue });
 		filterCombo.select(1);
@@ -542,7 +578,7 @@ public class AssertionPanelWindow extends Dialog {
 		});
 
 		filterText = new Text(filterComposite, SWT.SINGLE);
-		filterText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(filterText);
 		filterText.setMessage(Messages.AssertionPanelWindow_FilterMessage);
 		filterText.addKeyListener(new KeyListener() {
 			@Override
@@ -584,8 +620,6 @@ public class AssertionPanelWindow extends Dialog {
 	private interface ITreeViewerFilter {
 		public boolean isVisible(AssertImpl object);
 	}
-
-	Composite treeViewerComposite = null;
 
 	protected Control createTreeViewer(Composite parent) {
 		treeViewerComposite = new Composite(parent, SWT.NONE);
@@ -740,8 +774,6 @@ public class AssertionPanelWindow extends Dialog {
 				}
 			}
 		});
-
-		// createVerificationsButton(composite);
 
 		appendButton = new Button(composite, SWT.NONE);
 
@@ -988,11 +1020,11 @@ public class AssertionPanelWindow extends Dialog {
 				setBlockOnOpen(false);
 				open();
 			} else {
-				Point size = getShell().getSize();
-				Point loc = getInitialLocation(size);
-				getShell().setLocation(loc);
 				getShell().setVisible(true);
 			}
+
+			autControlsView.expandToElement(commands.getElement());
+
 			currentInput = createAssertTree(commands);
 			viewer.setInput(currentInput);
 			if (currentInput != null && currentInput.getAsserts() != null && currentInput.getAsserts().size() > 0) {
@@ -1000,7 +1032,6 @@ public class AssertionPanelWindow extends Dialog {
 			} else {
 				viewer.expandToLevel(1);
 			}
-			// updateVerificationButton();
 		} else if (getShell() != null && !getShell().isDisposed()) {
 			getShell().setVisible(false);
 			viewer.setInput(AssertInput.EMPTY);

@@ -246,6 +246,15 @@ public interface Q7CoreFactory extends EFactory {
 	TerminateAut createTerminateAut();
 
 	/**
+	 * Returns a new object of class '<em>AUT Controls Hierarchy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>AUT Controls Hierarchy</em>'.
+	 * @generated
+	 */
+	AUTControlsHierarchy createAUTControlsHierarchy();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
