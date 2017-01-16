@@ -18,6 +18,7 @@ public class Messages extends NLS {
 	public static String TestRailPlugin_ErrorWhileGetting;
 	public static String TestRailService_TestRailIsNotEnabled;
 	public static String TestRailService_SuccessfullyCreatedClient;
+	public static String TestRailService_TestCasePropertyIsNotSpecified;
 	public static String TestRailService_TestCaseCanceled;
 	public static String TestRailService_ErrorWhileGettingTestCaseProperty;
 	public static String TestRailService_FailedToSetUpConnection;
@@ -27,7 +28,6 @@ public class Messages extends NLS {
 	public static String APIClient_RecievedResponse;
 	public static String APIClient_HTTPError;
 	public static String APIClient_ErrorWhileSendingRequest;
-	public static String APIClient_ErrorWhileGenerationRequest;
 
 	static {
 		// initialize resource bundle

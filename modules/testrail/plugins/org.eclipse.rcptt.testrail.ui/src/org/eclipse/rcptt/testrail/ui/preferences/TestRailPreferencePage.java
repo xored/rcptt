@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.forms.widgets.Section;
 
 public class TestRailPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -52,6 +53,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 	private Text testRailPassword;
 	private Text testRailProjectId;
 	private Button testConnectionButton;
+	private Button useUnicodeButton;
 
 	@Override
 	public void init(IWorkbench workbench) {
@@ -68,6 +70,12 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		TestRailPlugin.setTestRailUsername(testRailUsername.getText());
 		TestRailPlugin.setTestRailPassword(testRailPassword.getText());
 		TestRailPlugin.setTestRailProjectId(testRailProjectId.getText());
+
+		if (useUnicodeButton.getSelection())
+			TestRailPlugin.setTestRailUseUnicode(1);
+		else
+			TestRailPlugin.setTestRailUseUnicode(0);
+
 		return super.performOk();
 	}
 
@@ -80,6 +88,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testRailPassword.setText("");
 		testRailProjectId.setText(TestRailPlugin.DEFAULT_TESTRAIL_PROJECTID);
 		testConnectionButton.setEnabled(state && isValid());
+		testConnectionButton.setEnabled(TestRailPlugin.DEFAULT_TESTRAIL_USEUNICODE == 1);
 		super.performDefaults();
 	}
 
@@ -100,10 +109,22 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testRailPassword.setEchoChar('*');
 		testRailProjectId = createText(composite, Messages.TestRailPreferencePage_ProjectId,
 				TestRailPlugin.getTestRailProjectId());
-		testConnectionButton = createButton(composite, Messages.TestRailPreferencePage_TestConnection);
 
+		testConnectionButton = createButton(composite, Messages.TestRailPreferencePage_TestConnection);
 		boolean state = TestRailPlugin.getTestRailState();
 		testConnectionButton.setEnabled(state && isValid());
+
+		// Advanced configuration
+		Section advancedExpander = new Section(composite, Section.TWISTIE);
+		advancedExpander.setText(Messages.TestRailPreferencePage_AdvancedSectionLabel);
+		advancedExpander.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		Composite advancedComposite = new Composite(advancedExpander, SWT.NONE);
+		advancedComposite.setLayout(new GridLayout(1, false));
+		advancedExpander.setClient(advancedComposite);
+
+		Button useUnicodeButton = new Button(advancedComposite, SWT.CHECK);
+		useUnicodeButton.setText(Messages.TestRailPreferencePage_UseUnicode);
+		useUnicodeButton.setSelection(TestRailPlugin.getTestRailUseUnicode());
 
 		return null;
 	}

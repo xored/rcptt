@@ -26,6 +26,8 @@ public class Messages extends NLS {
 	public static String TestRailPreferencePage_IncorrectProjectIdMsg;
 	public static String TestRailPreferencePage_FailedToConnectMsg;
 	public static String TestRailPreferencePage_SuccessfullyConnectedMsg;
+	public static String TestRailPreferencePage_AdvancedSectionLabel;
+	public static String TestRailPreferencePage_UseUnicode;
 
 	static {
 		// initialize resource bundle

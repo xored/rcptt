@@ -48,6 +48,8 @@ public class TestRailService implements ITestEngine {
 	private static final String TESTRAILCONFIG_USERNAME_PARAM = "username";
 	private static final String TESTRAILCONFIG_PASSWORD_PARAM = "password";
 	private static final String TESTRAILCONFIG_PROJECTID_PARAM = "projectId";
+	private static final String TESTRAILCONFIG_TESTRUNID_PARAM = "testRunId";
+	private static final String TESTRAILCONFIG_USEUNICODE_PARAM = "useUnicode";
 	private static final String TESTRESULT_CONTEXT_PREFIX = "__Contexts:__ ";
 	private static final String TESTRESULT_FAILMSG_PREFIX = "__Fail message:__\n";
 	private static final String TESTRUN_DEFAULT_NAME = "Tests";
@@ -164,6 +166,13 @@ public class TestRailService implements ITestEngine {
 				return "Should start with \"P\" and end with positive number";
 			}
 		}
+		if (name.equals(TESTRAILCONFIG_USEUNICODE_PARAM)) {
+			try {
+				Boolean.parseBoolean(value);
+			} catch (Exception e) {
+				return "Should be valid boolean value";
+			}
+		}
 		return null;
 	}
 
@@ -184,7 +193,10 @@ public class TestRailService implements ITestEngine {
 			return;
 		}
 		String projectId = TestRailPlugin.getTestRailProjectId();
+		boolean useUnicode = TestRailPlugin.getTestRailUseUnicode();
+
 		this.testRailAPI = new TestRailAPIClient(address, username, password, projectId);
+		testRailAPI.setUseUnicode(useUnicode);
 		TestRailPlugin.logInfo(Messages.TestRailService_SuccessfullyCreatedClient);
 	}
 
@@ -243,11 +255,15 @@ public class TestRailService implements ITestEngine {
 		Q7TestCase testCase = (Q7TestCase) scenario.getActualElement();
 		String testCaseId = getTestRailId(testCase);
 		if (testCaseId == null) {
+			TestRailPlugin.logInfo(
+					MessageFormat.format(Messages.TestRailService_TestCasePropertyIsNotSpecified,
+							TESTRAIL_ID_PARAM));
 			return null;
 		}
 
 		String testCaseStatus = getTestRailStatus(scenario);
 		if (testCaseStatus == null) {
+			TestRailPlugin.logInfo(Messages.TestRailService_TestCaseCanceled);
 			return null;
 		}
 
@@ -332,7 +348,6 @@ public class TestRailService implements ITestEngine {
 		case IStatus.ERROR:
 			return "5";
 		case IStatus.CANCEL:
-			TestRailPlugin.logInfo(Messages.TestRailService_TestCaseCanceled);
 			return null;
 		}
 		return null;
