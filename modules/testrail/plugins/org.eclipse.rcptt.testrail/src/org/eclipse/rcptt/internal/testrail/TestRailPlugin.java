@@ -29,6 +29,8 @@ public class TestRailPlugin extends Plugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.rcptt.testrail"; //$NON-NLS-1$
 
+	public static final String LAUNCH_TESTRUNID = PLUGIN_ID + ".ATTR_TESTRAIL_TESTRUNID";
+
 	public static final String TESTRAIL_STATE = "TESTRAIL_STATE";
 	public static final String TESTRAIL_ADDRESS = "TESTRAIL_ADDRESS";
 	public static final String TESTRAIL_USERNAME = "TESTRAIL_USERNAME";

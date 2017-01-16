@@ -8,16 +8,6 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-/*******************************************************************************
- * Copyright (c) 2009, 2016 Xored Software Inc and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Xored Software Inc - initial API and implementation and/or initial documentation
- *******************************************************************************/
 package org.eclipse.rcptt.testrail.ui.preferences;
 
 import java.net.URL;
@@ -26,7 +16,7 @@ import java.text.MessageFormat;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
 import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
-import org.eclipse.rcptt.testrail.ui.internal.preferences.Messages;
+import org.eclipse.rcptt.testrail.internal.ui.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.ModifyEvent;
@@ -88,7 +78,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		testRailPassword.setText("");
 		testRailProjectId.setText(TestRailPlugin.DEFAULT_TESTRAIL_PROJECTID);
 		testConnectionButton.setEnabled(state && isValid());
-		testConnectionButton.setEnabled(TestRailPlugin.DEFAULT_TESTRAIL_USEUNICODE == 1);
+		useUnicodeButton.setSelection(TestRailPlugin.DEFAULT_TESTRAIL_USEUNICODE == 1);
 		super.performDefaults();
 	}
 
@@ -122,7 +112,7 @@ public class TestRailPreferencePage extends PreferencePage implements IWorkbench
 		advancedComposite.setLayout(new GridLayout(1, false));
 		advancedExpander.setClient(advancedComposite);
 
-		Button useUnicodeButton = new Button(advancedComposite, SWT.CHECK);
+		useUnicodeButton = new Button(advancedComposite, SWT.CHECK);
 		useUnicodeButton.setText(Messages.TestRailPreferencePage_UseUnicode);
 		useUnicodeButton.setSelection(TestRailPlugin.getTestRailUseUnicode());
 

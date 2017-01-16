@@ -8,12 +8,14 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.testrail.ui.internal.preferences;
+package org.eclipse.rcptt.testrail.internal.ui;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.rcptt.testrail.ui.internal.preferences.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.rcptt.testrail.internal.ui.messages"; //$NON-NLS-1$
+	public static String TestRailLaunchConfig_TestRunIdField;
+	public static String TestRailLaunchConfig_IncorrectTestRunIdMsg;
 	public static String TestRailPreferencePage_EnableIntegration;
 	public static String TestRailPreferencePage_Address;
 	public static String TestRailPreferencePage_Username;
