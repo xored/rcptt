@@ -41,7 +41,12 @@ public class TestEngine {
 				if (sb.length() > 0) {
 					sb.append(";");
 				}
-				sb.append(String.format("%s=%s", entry.getKey(), entry.getValue()));
+				String key = entry.getKey();
+				String value = entry.getValue();
+				if (value == null) {
+					value = "";
+				}
+				sb.append(String.format("%s=%s", key, value));
 			}
 		}
 		if (sb.length() > 0) {

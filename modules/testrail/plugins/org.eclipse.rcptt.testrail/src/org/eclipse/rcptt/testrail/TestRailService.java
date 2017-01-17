@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.CoreException;
@@ -238,7 +239,7 @@ public class TestRailService implements ITestEngine {
 
 	private TestRailTestRun createTestRunDraft(ExecutionSession session) {
 		String name = getTestRunName(session.getName());
-		List<String> caseIds = getTestRunCaseIds(session);
+		Set<String> caseIds = getTestRunCaseIds(session);
 		if (caseIds.isEmpty()) {
 			return null;
 		}
@@ -252,10 +253,10 @@ public class TestRailService implements ITestEngine {
 
 	private TestRailTestRun createTestRunDraft(List<Q7TestCase> tests) {
 		String name = getTestRunName(TESTRUN_DEFAULT_NAME);
-		List<String> caseIds = tests.stream()
+		Set<String> caseIds = tests.stream()
 				.map(test -> getTestRailId(test))
 				.filter(testRailId -> testRailId != null && !testRailId.equals(""))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 		if (caseIds.isEmpty()) {
 			return null;
 		}
@@ -338,17 +339,17 @@ public class TestRailService implements ITestEngine {
 		return MessageFormat.format("{0} {1}", name, dateFormatter.format(localDate));
 	}
 
-	private List<String> getTestRunCaseIds(ExecutionSession session) {
+	private Set<String> getTestRunCaseIds(ExecutionSession session) {
 		final Executable[] executables = session.getExecutables();
 		final List<Q7TestCase> testCases = Arrays.stream(executables)
 				.map(wrapper -> (Q7TestCase) getScenario(wrapper).getActualElement())
 				.filter(testCase -> testCase != null)
 				.collect(Collectors.toList());
 
-		final List<String> caseIds = testCases.stream()
+		final Set<String> caseIds = testCases.stream()
 				.map(scenario -> getTestRailId(scenario))
 				.filter(testRailId -> testRailId != null && !testRailId.equals(""))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 
 		return caseIds;
 	}
