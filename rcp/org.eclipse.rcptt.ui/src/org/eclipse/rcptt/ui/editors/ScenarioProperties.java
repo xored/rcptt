@@ -263,7 +263,7 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 
 						switch (e.detail) {
 						case SWT.TRAVERSE_TAB_NEXT:
-							if (validateName(element, text.getText()))
+//							if (validateName(element, text.getText()))
 								viewer.editElement(element, 1);
 							e.detail = SWT.TRAVERSE_NONE;
 							e.doit = false;
@@ -334,17 +334,17 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 					return;
 				}
 
-				if (!validateName(element, name)) {
-					table.getDisplay().asyncExec(new Runnable() {
+//				if (!validateName(element, name)) {
+//					table.getDisplay().asyncExec(new Runnable() {
+//
+//						public void run() {
+//							if (!table.isDisposed())
+//								viewer.editElement(element, 0);
+//						}
+//					});
 
-						public void run() {
-							if (!table.isDisposed())
-								viewer.editElement(element, 0);
-						}
-					});
-
-					return;
-				}
+//					return;
+//				}
 
 				if (param != newParameterItem) {
 					if (!param.getName().equals(name)) {
@@ -398,7 +398,7 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 
 						switch (e.detail) {
 						case SWT.TRAVERSE_TAB_PREVIOUS:
-							if (validateName(element, text.getText()))
+//							if (validateName(element, text.getText()))
 								viewer.editElement(element, 0);
 							e.detail = SWT.TRAVERSE_NONE;
 							e.doit = false;
