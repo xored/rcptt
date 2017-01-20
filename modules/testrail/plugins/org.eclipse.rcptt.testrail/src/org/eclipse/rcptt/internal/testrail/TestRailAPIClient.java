@@ -11,7 +11,9 @@
 package org.eclipse.rcptt.internal.testrail;
 
 import java.text.MessageFormat;
+import java.util.List;
 
+import org.eclipse.rcptt.testrail.domain.TestRailTestCase;
 import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
@@ -38,6 +40,20 @@ public class TestRailAPIClient {
 		String method = MessageFormat.format("/get_cases/{0}", projectId);
 		String response = client.sendGetRequest(method);
 		return response != null;
+	}
+
+	public List<TestRailTestCase> getCases() {
+		String method = MessageFormat.format("/get_cases/{0}", projectId);
+		String response = client.sendGetRequest(method);
+		if (response == null) {
+			TestRailPlugin.log(Messages.TestRailAPIClient_FailedToGetTestCases);
+			return null;
+		}
+
+		TypeToken<List<TestRailTestCase>> token = new TypeToken<List<TestRailTestCase>>() {
+		};
+		List<TestRailTestCase> testCases = new Gson().fromJson(response, token.getType());
+		return testCases;
 	}
 
 	public TestRailTestRun addRun(TestRailTestRun testRunDraft) {

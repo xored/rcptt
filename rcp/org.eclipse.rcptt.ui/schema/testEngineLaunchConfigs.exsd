@@ -3,7 +3,7 @@
 <schema targetNamespace="org.eclipse.rcptt.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.rcptt.ui" id="testEngineLaunchConfig" name="Test Engine Launch Config"/>
+         <meta.schema plugin="org.eclipse.rcptt.ui" id="testEngineLaunchConfigs" name="Test Engine Launch Configs"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]

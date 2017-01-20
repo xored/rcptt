@@ -43,6 +43,7 @@ import org.eclipse.rcptt.reporting.util.ReportUtils;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Node;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.Report;
 import org.eclipse.rcptt.testrail.domain.TestRailStepResult;
+import org.eclipse.rcptt.testrail.domain.TestRailTestCase;
 import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
@@ -167,6 +168,22 @@ public class TestRailService implements ITestEngine {
 			return validateBoolean(value);
 		}
 		return null;
+	}
+
+	public List<String> getTestCaseIdSuggestions() {
+		applyDefaultConfig();
+		if (testRailAPI == null) {
+			return Collections.emptyList();
+		}
+
+		List<TestRailTestCase> testCases = testRailAPI.getCases();
+		if (testCases == null) {
+			return Collections.emptyList();
+		}
+		List<String> suggestions = testCases.stream()
+				.map(testCase -> TESTRAIL_TESTCASEID_PREFIX + testCase.getId())
+				.collect(Collectors.toList());
+		return suggestions;
 	}
 
 	private void applyDefaultConfig() {
