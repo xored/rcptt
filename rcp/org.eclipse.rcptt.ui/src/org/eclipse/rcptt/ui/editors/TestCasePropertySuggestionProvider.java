@@ -3,20 +3,22 @@ package org.eclipse.rcptt.ui.editors;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.rcptt.ui.controls.SuggestionItem;
+
 public class TestCasePropertySuggestionProvider implements ITestCasePropertySuggestionProvider {
 
 	@Override
-	public List<String> getProperties() {
+	public List<SuggestionItem> getProperties() {
 		// TODO (test-rail-support) replace with Messages
-		List<String> properties = new ArrayList<String>();
-		properties.add("issue-id");
-		properties.add("creator");
-		properties.add("version");
+		List<SuggestionItem> properties = new ArrayList<SuggestionItem>();
+		properties.add(new SuggestionItem("issue-id"));
+		properties.add(new SuggestionItem("creator"));
+		properties.add(new SuggestionItem("version"));
 		return properties;
 	}
 
 	@Override
-	public List<String> getPropertyValues(String name) {
+	public List<SuggestionItem> getPropertyValues(String name) {
 		return null;
 	}
 

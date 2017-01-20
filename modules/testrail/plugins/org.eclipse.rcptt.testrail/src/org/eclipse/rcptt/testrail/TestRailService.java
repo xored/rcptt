@@ -12,7 +12,9 @@ package org.eclipse.rcptt.testrail;
 
 import java.net.URL;
 import java.text.MessageFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,8 +49,16 @@ import org.eclipse.rcptt.testrail.domain.TestRailTestCase;
 import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 public class TestRailService implements ITestEngine {
-	private static final String TESTRAIL_ID_PARAM = "testrail-id";
+	public static final String TESTRAIL_ID_PARAM = "testrail-id";
+	public static final String TESTRAIL_PROJECTID_PREFIX = "P";
+	public static final String TESTRAIL_TESTRUNID_PREFIX = "R";
+	public static final String TESTRAIL_TESTCASEID_PREFIX = "C";
+
 	private static final String TESTRAILCONFIG_ADDRESS_PARAM = "host";
 	private static final String TESTRAILCONFIG_USERNAME_PARAM = "username";
 	private static final String TESTRAILCONFIG_PASSWORD_PARAM = "password";
@@ -59,9 +69,6 @@ public class TestRailService implements ITestEngine {
 	private static final String TESTRESULT_FAILMSG_PREFIX = "__Fail message:__\n";
 	private static final String TESTRUN_DEFAULT_NAME = "Tests";
 	private static final String TESTRAILSTEP_PROPERTYNAME = "test-rail-step:{0}";
-	private static final String TESTRAIL_PROJECTID_PREFIX = "P";
-	private static final String TESTRAIL_TESTRUNID_PREFIX = "R";
-	private static final String TESTRAIL_TESTCASEID_PREFIX = "C";
 
 	private TestRailAPIClient testRailAPI;
 	private boolean testRailEnabled;
@@ -170,20 +177,87 @@ public class TestRailService implements ITestEngine {
 		return null;
 	}
 
-	public List<String> getTestCaseIdSuggestions() {
+	public List<TestRailTestCase> getTestCases(boolean fillDescription) {
 		applyDefaultConfig();
 		if (testRailAPI == null) {
 			return Collections.emptyList();
 		}
 
-		List<TestRailTestCase> testCases = testRailAPI.getCases();
-		if (testCases == null) {
+		String response = testRailAPI.getTestCasesString();
+		if (response == null) {
 			return Collections.emptyList();
 		}
-		List<String> suggestions = testCases.stream()
-				.map(testCase -> TESTRAIL_TESTCASEID_PREFIX + testCase.getId())
-				.collect(Collectors.toList());
-		return suggestions;
+		JsonArray array = TestRailAPIClient.getTestCasesJsonArray(response);
+		List<TestRailTestCase> testCases = TestRailAPIClient.getTestCasesList(response);
+		for (JsonElement element : array) {
+			if (element instanceof JsonObject) {
+				JsonObject object = (JsonObject) element;
+				StringBuilder sb = new StringBuilder();
+				String id = "";
+				for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+					JsonElement valueElement = entry.getValue();
+					if (valueElement == null || valueElement.toString().equals("")
+							|| valueElement.toString().equals("null")) {
+						continue;
+					}
+					String name = entry.getKey();
+					String value = valueElement.toString();
+					switch (name) {
+					case "id":
+						id = value;
+						continue;
+					case "section_id":
+					case "template_id":
+					case "type_id":
+					case "priority_id":
+					case "milestone_id":
+					case "created_by":
+					case "updated_by":
+					case "suite_id":
+						continue;
+					case "created_on":
+					case "updated_on":
+						DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+						LocalDateTime localDate = LocalDateTime.ofInstant(
+								Instant.ofEpochSecond(Integer.valueOf(value)),
+								ZoneId.systemDefault());
+						value = dateFormatter.format(localDate);
+						break;
+					}
+
+					if (name.startsWith("custom_")) {
+						name = name.substring(7);
+					}
+					name = name.replaceAll("_", " ");
+					String firstChar = name.substring(0, 1);
+					firstChar = firstChar.toUpperCase();
+					name = firstChar + name.substring(1);
+					if (sb.length() > 0) {
+						sb.append("<br>");
+					}
+					sb.append("<b>");
+					sb.append(name + ": ");
+					sb.append("</b>");
+
+					value = value.replaceAll("\"", " ");
+					value = value.replaceAll("\\\\r\\\\n", "<br>");
+					if (value.contains("<br>")) {
+						sb.append("<br>");
+					}
+					sb.append(value);
+				}
+				final String testCaseId = id;
+				if (sb.length() > 0 && !testCaseId.equals("")) {
+					TestRailTestCase testCase = testCases.stream()
+							.filter(tcase -> testCaseId.equals(tcase.getId()))
+							.findFirst().orElse(null);
+					if (testCase != null) {
+						testCase.setDescription(sb.toString());
+					}
+				}
+			}
+		}
+		return testCases;
 	}
 
 	private void applyDefaultConfig() {

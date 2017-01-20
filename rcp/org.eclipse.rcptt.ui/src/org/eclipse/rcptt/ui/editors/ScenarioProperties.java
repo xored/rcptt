@@ -37,10 +37,15 @@ import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.core.scenario.ScenarioFactory;
 import org.eclipse.rcptt.core.scenario.ScenarioProperty;
 import org.eclipse.rcptt.internal.ui.Images;
+import org.eclipse.rcptt.internal.ui.PropertySuggestionManager;
 import org.eclipse.rcptt.ui.controls.AbstractEmbeddedComposite;
+import org.eclipse.rcptt.ui.controls.SuggestionItem;
+import org.eclipse.rcptt.ui.controls.SuggestionsPopup;
 import org.eclipse.rcptt.ui.editors.NamedElementEditorActions.INamedElementActions;
 import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -55,6 +60,8 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -84,13 +91,15 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 	private TableColumn nameColumn;
 	private TableColumn valueColumn;
 
+	private SuggestionsPopup namePopup;
+	private SuggestionsPopup valuePopup;
+
 	// to preserve default sort order while keeping newParameterItem on bottom
 	private HashMap<String, Integer> nameToIndex = new HashMap<String, Integer>();
 	private Scenario namedElement;
 	
 	protected final DataBindingContext dbc = new DataBindingContext();
 	private FormToolkit toolkit;
-
 
 	public void setSelectionAtLine(int line) {
 		if (table != null) {
@@ -259,29 +268,44 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 							e.detail = SWT.TRAVERSE_NONE;
 							e.doit = false;
 							break;
-						case SWT.TRAVERSE_ARROW_NEXT:
-							if (e.keyCode == SWT.ARROW_DOWN) {
-								if (table.getItemCount() > table.getSelectionIndex() + 1
-										&& (isNewAndBlank(element, text.getText())
-												|| validateName(element, text.getText())))
-									viewer.editElement(viewer.getElementAt(table.getSelectionIndex() + 1), 0);
-								e.detail = SWT.TRAVERSE_NONE;
-								e.doit = false;
-							}
-							break;
-						case SWT.TRAVERSE_ARROW_PREVIOUS:
-							if (e.keyCode == SWT.ARROW_UP) {
-								if (table.getSelectionIndex() > 0 && (isNewAndBlank(element, text.getText())
-										|| validateName(element, text.getText())))
-									viewer.editElement(viewer.getElementAt(table.getSelectionIndex() - 1), 0);
-								e.detail = SWT.TRAVERSE_NONE;
-								e.doit = false;
-							}
-							break;
 						}
 					}
 
 				});
+
+				List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+						.getTestCaseProperties();
+
+				Text text = (Text) editor.getControl();
+				namePopup = new SuggestionsPopup(text);
+				namePopup.setItems(suggestions);
+
+				editor.getControl().addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusGained(FocusEvent e) {
+						List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+								.getTestCaseProperties();
+						namePopup.setItems(suggestions);
+						namePopup.open();
+					}
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						namePopup.close();
+					}
+
+				});
+
+				editor.getControl().addListener(SWT.Modify, new Listener() {
+
+					@Override
+					public void handleEvent(Event e) {
+						setValue(element, text.getText());
+					}
+
+				});
+
 				return editor;
 			}
 
@@ -379,26 +403,45 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 							e.detail = SWT.TRAVERSE_NONE;
 							e.doit = false;
 							break;
-						case SWT.TRAVERSE_ARROW_NEXT:
-							if (e.keyCode == SWT.ARROW_DOWN) {
-								if (table.getItemCount() > table.getSelectionIndex() + 1)
-									viewer.editElement(viewer.getElementAt(table.getSelectionIndex() + 1), 1);
-								e.detail = SWT.TRAVERSE_NONE;
-								e.doit = false;
-							}
-							break;
-						case SWT.TRAVERSE_ARROW_PREVIOUS:
-							if (e.keyCode == SWT.ARROW_UP) {
-								if (table.getSelectionIndex() > 0)
-									viewer.editElement(viewer.getElementAt(table.getSelectionIndex() - 1), 1);
-								e.detail = SWT.TRAVERSE_NONE;
-								e.doit = false;
-							}
-							break;
 						}
 					}
 
 				});
+
+				ScenarioProperty param = (ScenarioProperty) element;
+
+				List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+						.getTestCasePropertySuggestions(param.getName());
+				Text text = (Text) editor.getControl();
+				valuePopup = new SuggestionsPopup(text);
+				valuePopup.setItems(suggestions);
+
+				editor.getControl().addFocusListener(new FocusListener() {
+
+					@Override
+					public void focusGained(FocusEvent e) {
+						List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+								.getTestCasePropertySuggestions(param.getName());
+						valuePopup.setItems(suggestions);
+						valuePopup.open();
+					}
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						valuePopup.close();
+					}
+
+				});
+
+				editor.getControl().addListener(SWT.Modify, new Listener() {
+
+					@Override
+					public void handleEvent(Event e) {
+						setValue(element, text.getText());
+					}
+
+				});
+
 				return editor;
 			}
 
