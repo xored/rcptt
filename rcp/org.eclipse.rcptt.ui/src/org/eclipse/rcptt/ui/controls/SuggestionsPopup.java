@@ -55,7 +55,7 @@ public class SuggestionsPopup {
 	public SuggestionsPopup(Text textField) {
 		text = textField;
 
-		int popupStyle = SWT.ON_TOP | SWT.NO_TRIM;
+		int popupStyle = SWT.TOOL | SWT.ON_TOP | SWT.NO_TRIM;
 		int listStyle = SWT.SINGLE | SWT.V_SCROLL;
 
 		shell = new Shell(text.getShell(), popupStyle);

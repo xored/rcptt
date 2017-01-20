@@ -9,11 +9,10 @@ public class TestCasePropertySuggestionProvider implements ITestCasePropertySugg
 
 	@Override
 	public List<SuggestionItem> getProperties() {
-		// TODO (test-rail-support) replace with Messages
 		List<SuggestionItem> properties = new ArrayList<SuggestionItem>();
-		properties.add(new SuggestionItem("issue-id"));
-		properties.add(new SuggestionItem("creator"));
-		properties.add(new SuggestionItem("version"));
+		properties.add(new SuggestionItem("Issue-ID"));
+		properties.add(new SuggestionItem("Creator"));
+		properties.add(new SuggestionItem("Version"));
 		return properties;
 	}
 
