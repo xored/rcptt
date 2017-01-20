@@ -200,6 +200,7 @@ public class TestRailService implements ITestEngine {
 							|| valueElement.toString().equals("null")) {
 						continue;
 					}
+
 					String name = entry.getKey();
 					String value = valueElement.toString();
 					switch (name) {
@@ -239,12 +240,42 @@ public class TestRailService implements ITestEngine {
 					sb.append(name + ": ");
 					sb.append("</b>");
 
-					value = value.replaceAll("\"", " ");
-					value = value.replaceAll("\\\\r\\\\n", "<br>");
-					if (value.contains("<br>")) {
-						sb.append("<br>");
+					if (valueElement instanceof JsonArray) {
+						JsonArray valueArray = (JsonArray) valueElement;
+
+						sb.append("<ol>");
+						for (JsonElement subElement : valueArray) {
+							sb.append("<li>");
+							if (subElement instanceof JsonObject) {
+								JsonObject subObject = (JsonObject) subElement;
+								StringBuilder subSb = new StringBuilder();
+								for (Map.Entry<String, JsonElement> subEntry : subObject.entrySet()) {
+									if (subEntry.getValue() == null) {
+										continue;
+									}
+									if (subSb.length() > 0) {
+										subSb.append(", ");
+									}
+									subSb.append("<i>");
+									subSb.append(subEntry.getKey().toString() + ": ");
+									subSb.append("</i>");
+									subSb.append(subEntry.getValue().toString());
+								}
+								sb.append(subSb.toString());
+							} else {
+								sb.append(subElement.toString());
+							}
+							sb.append("</li>");
+						}
+						sb.append("</ol>");
+					} else {
+						value = value.replaceAll("\"", " ");
+						value = value.replaceAll("\\\\r\\\\n", "<br>");
+						if (value.contains("<br>")) {
+							sb.append("<br>");
+						}
+						sb.append(value);
 					}
-					sb.append(value);
 				}
 				final String testCaseId = id;
 				if (sb.length() > 0 && !testCaseId.equals("")) {
