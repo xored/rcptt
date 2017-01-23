@@ -60,9 +60,10 @@ public class PropertySuggestionManager {
 		if (name == null || name.equals("")) {
 			return Collections.emptyList();
 		}
-		/*if (testCasePropertySuggestions.containsKey(name)) {
+		// TODO (test-rail-support) add caching
+		if (testCasePropertySuggestions.containsKey(name)) {
 			return testCasePropertySuggestions.get(name);
-		}*/
+		}
 		for (ITestCasePropertySuggestionProvider provider : providers) {
 			List<SuggestionItem> values = provider.getPropertyValues(name);
 			if (values != null) {

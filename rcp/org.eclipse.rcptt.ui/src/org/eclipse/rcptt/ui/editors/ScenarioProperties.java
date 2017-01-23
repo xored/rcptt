@@ -30,7 +30,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.rcptt.core.scenario.Scenario;
@@ -39,13 +38,11 @@ import org.eclipse.rcptt.core.scenario.ScenarioProperty;
 import org.eclipse.rcptt.internal.ui.Images;
 import org.eclipse.rcptt.internal.ui.PropertySuggestionManager;
 import org.eclipse.rcptt.ui.controls.AbstractEmbeddedComposite;
+import org.eclipse.rcptt.ui.controls.ISuggestionProvider;
 import org.eclipse.rcptt.ui.controls.SuggestionItem;
-import org.eclipse.rcptt.ui.controls.SuggestionsPopup;
 import org.eclipse.rcptt.ui.editors.NamedElementEditorActions.INamedElementActions;
 import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -90,9 +87,6 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 
 	private TableColumn nameColumn;
 	private TableColumn valueColumn;
-
-	private SuggestionsPopup namePopup;
-	private SuggestionsPopup valuePopup;
 
 	// to preserve default sort order while keeping newParameterItem on bottom
 	private HashMap<String, Integer> nameToIndex = new HashMap<String, Integer>();
@@ -255,7 +249,16 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 		nameViewerColumn.setEditingSupport(new EditingSupport(viewer) {
 
 			protected CellEditor getCellEditor(final Object element) {
-				final TextCellEditor editor = new TextCellEditor(table);
+				final PropertyCellEditor editor = new PropertyCellEditor(table);
+				editor.setSuggestionProvider(new ISuggestionProvider() {
+
+					@Override
+					public List<SuggestionItem> getSuggestions() {
+						return PropertySuggestionManager.getInstance()
+								.getTestCaseProperties();
+					}
+
+				});
 				editor.getControl().addTraverseListener(new TraverseListener() {
 
 					public void keyTraversed(TraverseEvent e) {
@@ -273,35 +276,36 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 
 				});
 
-				List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
-						.getTestCaseProperties();
+				final Text text = (Text) editor.getControl();
 
-				Text text = (Text) editor.getControl();
-				namePopup = new SuggestionsPopup(text);
-				namePopup.setItems(suggestions);
-
-				editor.getControl().addFocusListener(new FocusListener() {
-
-					@Override
-					public void focusGained(FocusEvent e) {
-						List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
-								.getTestCaseProperties();
-						namePopup.setItems(suggestions);
-						namePopup.open();
-					}
-
-					@Override
-					public void focusLost(FocusEvent e) {
-						namePopup.close();
-					}
-
-				});
+//				List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+//						.getTestCaseProperties();
+//
+//				namePopup = new SuggestionsPopup(text);
+//				namePopup.setItems(suggestions);
+//
+//				editor.getControl().addFocusListener(new FocusListener() {
+//
+//					@Override
+//					public void focusGained(FocusEvent e) {
+//						List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+//								.getTestCaseProperties();
+//						namePopup.setItems(suggestions);
+//						namePopup.open();
+//					}
+//
+//					@Override
+//					public void focusLost(FocusEvent e) {
+//						namePopup.close();
+//					}
+//
+//				});
 
 				editor.getControl().addListener(SWT.Modify, new Listener() {
 
 					@Override
 					public void handleEvent(Event e) {
-						setValue(element, text.getText());
+						// setValue(element, text.getText());
 					}
 
 				});
@@ -390,7 +394,17 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 		valueViewerColumn.setEditingSupport(new EditingSupport(viewer) {
 
 			protected CellEditor getCellEditor(final Object element) {
-				final TextCellEditor editor = new TextCellEditor(table);
+				final PropertyCellEditor editor = new PropertyCellEditor(table);
+				editor.setSuggestionProvider(new ISuggestionProvider() {
+
+					@Override
+					public List<SuggestionItem> getSuggestions() {
+						ScenarioProperty param = (ScenarioProperty) element;
+						return PropertySuggestionManager.getInstance()
+								.getTestCasePropertySuggestions(param.getName());
+					}
+
+				});
 				editor.getControl().addTraverseListener(new TraverseListener() {
 
 					public void keyTraversed(TraverseEvent e) {
@@ -408,36 +422,37 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 
 				});
 
-				ScenarioProperty param = (ScenarioProperty) element;
+				final Text text = (Text) editor.getControl();
 
-				List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
-						.getTestCasePropertySuggestions(param.getName());
-				Text text = (Text) editor.getControl();
-				valuePopup = new SuggestionsPopup(text);
-				valuePopup.setItems(suggestions);
-
-				editor.getControl().addFocusListener(new FocusListener() {
-
-					@Override
-					public void focusGained(FocusEvent e) {
-						List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
-								.getTestCasePropertySuggestions(param.getName());
-						valuePopup.setItems(suggestions);
-						valuePopup.open();
-					}
-
-					@Override
-					public void focusLost(FocusEvent e) {
-						valuePopup.close();
-					}
-
-				});
+//				ScenarioProperty param = (ScenarioProperty) element;
+//
+//				List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+//						.getTestCasePropertySuggestions(param.getName());
+//				valuePopup = new SuggestionsPopup(text);
+//				valuePopup.setItems(suggestions);
+//
+//				editor.getControl().addFocusListener(new FocusListener() {
+//
+//					@Override
+//					public void focusGained(FocusEvent e) {
+//						List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
+//								.getTestCasePropertySuggestions(param.getName());
+//						valuePopup.setItems(suggestions);
+//						// valuePopup.open();
+//					}
+//
+//					@Override
+//					public void focusLost(FocusEvent e) {
+//						// valuePopup.close();
+//					}
+//
+//				});
 
 				editor.getControl().addListener(SWT.Modify, new Listener() {
 
 					@Override
 					public void handleEvent(Event e) {
-						setValue(element, text.getText());
+						// setValue(element, text.getText());
 					}
 
 				});
