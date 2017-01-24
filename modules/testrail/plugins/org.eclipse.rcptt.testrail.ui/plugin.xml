@@ -32,7 +32,7 @@
    <extension
          point="org.eclipse.rcptt.ui.propertySuggestionProviders">
       <propertySuggestions
-            testCaseProperties="org.eclipse.rcptt.testrail.ui.TestRailPropertySuggestionProvider">
+            scenarioProperties="org.eclipse.rcptt.testrail.ui.TestRailPropertySuggestionProvider">
       </propertySuggestions>
    </extension>
 

@@ -1131,7 +1131,7 @@
   <extension
         point="org.eclipse.rcptt.ui.propertySuggestionProviders">
      <propertySuggestions
-           testCaseProperties="org.eclipse.rcptt.ui.editors.TestCasePropertySuggestionProvider">
+           scenarioProperties="org.eclipse.rcptt.ui.editors.ScenarioPropertySuggestionProvider">
      </propertySuggestions>
   </extension>
    

@@ -14,7 +14,6 @@ import org.eclipse.jface.internal.text.html.HTMLPrinter;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
-import org.eclipse.rcptt.ui.controls.ISuggestionProvider;
 import org.eclipse.rcptt.ui.controls.SuggestionItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -52,10 +51,10 @@ public class PropertyCellEditor extends TextCellEditor {
 	private Shell description;
 	private Browser browser;
 
-	private ISuggestionProvider provider;
 	private java.util.List<SuggestionItem> suggestions;
 
 	private java.util.List<Job> jobs;
+	// TODO (test-rail-support) is it really needed?
 	private Control lastFocusLostControl;
 
 	private int listMaxHeight;
@@ -66,11 +65,13 @@ public class PropertyCellEditor extends TextCellEditor {
 	private static final int DESC_WIDTH = 300;
 	private static final int DESC_HEIGHT = 200;
 
-	public PropertyCellEditor(Composite parent) {
+	public PropertyCellEditor(Composite parent, java.util.List<SuggestionItem> suggestions) {
 		super(parent);
+		this.suggestions = suggestions;
 		text = (Text) super.getControl();
 		createPopup(text);
 		addListeners();
+		Q7UIPlugin.log(" *** new instance was created *** ", null);
 	}
 
 	private void createPopup(Text textField) {
@@ -80,7 +81,7 @@ public class PropertyCellEditor extends TextCellEditor {
 		int listStyle = SWT.SINGLE | SWT.V_SCROLL;
 
 		shell = new Shell(text.getShell(), popupStyle);
-		list = new org.eclipse.swt.widgets.List(shell, listStyle);
+		list = new List(shell, listStyle);
 		description = new Shell(text.getShell(), popupStyle);
 		description.setForeground(text.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND));
 		description.setBackground(text.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
@@ -89,6 +90,50 @@ public class PropertyCellEditor extends TextCellEditor {
 		listMaxHeight = LIST_MAX_HEIGHT;
 		descWidth = DESC_WIDTH;
 		descHeight = DESC_HEIGHT;
+	}
+
+	@Override
+	public void activate() {
+		lastFocusLostControl = null;
+		jobs = new ArrayList<Job>();
+		super.activate();
+	}
+
+	@Override
+	public void deactivate() {
+		Q7UIPlugin.log("deactivate() call", null);
+		if (shell == null) {
+			return;
+		}
+		if (!isActive()) {
+			super.deactivate();
+			return;
+		}
+		addJob();
+	}
+
+	@Override
+	protected void focusLost() {
+	}
+
+	@Override
+	protected boolean dependsOnExternalFocusListener() {
+		return false;
+	}
+
+	public void open() {
+		if (!isActive()) {
+			return;
+		}
+		setItems(suggestions);
+		setShellBounds();
+		setChildElementsBounds();
+		shell.setVisible(true);
+	}
+
+	public void close() {
+		shell.setVisible(false);
+		description.setVisible(false);
 	}
 
 	private void addListeners() {
@@ -172,7 +217,6 @@ public class PropertyCellEditor extends TextCellEditor {
 			public void focusGained(FocusEvent e) {
 				Q7UIPlugin.log("text :: Focus gained", null);
 				if (!isVisible()) {
-					setItems(provider.getSuggestions());
 					open();
 					return;
 				}
@@ -282,49 +326,6 @@ public class PropertyCellEditor extends TextCellEditor {
 		});
 	}
 
-	@Override
-	public void activate() {
-		lastFocusLostControl = null;
-		jobs = new ArrayList<Job>();
-		super.activate();
-	}
-
-	@Override
-	public void deactivate() {
-		Q7UIPlugin.log("deactivate() call", null);
-		if (shell == null) {
-			return;
-		}
-		if (!isActive()) {
-			super.deactivate();
-			return;
-		}
-		addJob();
-	}
-
-	@Override
-	protected void focusLost() {
-	}
-
-	@Override
-	protected boolean dependsOnExternalFocusListener() {
-		return false;
-	}
-
-	public void open() {
-		if (!isActive()) {
-			return;
-		}
-		setShellBounds();
-		setChildElementsBounds();
-		shell.setVisible(true);
-	}
-
-	public void close() {
-		shell.setVisible(false);
-		description.setVisible(false);
-	}
-
 	private void addJob() {
 		Q7UIPlugin.log("Job scheduled", null);
 		Job job = new Job("Deactivate") {
@@ -399,12 +400,6 @@ public class PropertyCellEditor extends TextCellEditor {
 			}
 
 		}
-	}
-
-	public void setSuggestionProvider(ISuggestionProvider provider) {
-		this.provider = provider;
-		// NPE if secure storage password is provided while field gets focus
-		setItems(provider.getSuggestions());
 	}
 
 	private void setItems(java.util.List<SuggestionItem> suggestions) {

@@ -49,13 +49,13 @@
 
    <element name="propertySuggestions">
       <complexType>
-         <attribute name="testCaseProperties" type="string">
+         <attribute name="scenarioProperties" type="string">
             <annotation>
                <documentation>
-                  Comma separated list of Test Case properties names
+                  
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.rcptt.ui.editors.ITestCasePropertySuggestionProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.rcptt.ui.editors.IScenarioPropertyProvider"/>
                </appinfo>
             </annotation>
          </attribute>

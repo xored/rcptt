@@ -5,15 +5,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.testrail.TestRailService;
 import org.eclipse.rcptt.testrail.domain.TestRailTestCase;
 import org.eclipse.rcptt.ui.controls.SuggestionItem;
-import org.eclipse.rcptt.ui.editors.ITestCasePropertySuggestionProvider;
+import org.eclipse.rcptt.ui.editors.IScenarioPropertyProvider;
 
-public class TestRailPropertySuggestionProvider implements ITestCasePropertySuggestionProvider {
+public class TestRailPropertySuggestionProvider implements IScenarioPropertyProvider {
+	
+	private final static long UPDATE_DELAY = 30000;
+
+	private List<SuggestionItem> testCaseIdSuggestions;
 
 	@Override
-	public List<SuggestionItem> getProperties() {
+	public List<SuggestionItem> getProperties(Scenario scenario) {
 		List<SuggestionItem> props = new ArrayList<SuggestionItem>();
 		props.add(new SuggestionItem(TestRailService.TESTRAIL_ID_PARAM));
 		return props;
@@ -23,9 +32,31 @@ public class TestRailPropertySuggestionProvider implements ITestCasePropertySugg
 	public List<SuggestionItem> getPropertyValues(String name) {
 		switch (name) {
 		case TestRailService.TESTRAIL_ID_PARAM:
-			return getTestCaseIdSuggestions();
+			initializeSuggestions();
+			return testCaseIdSuggestions;
 		}
 		return Collections.emptyList();
+	}
+
+	private void initializeSuggestions() {
+		if (testCaseIdSuggestions == null) {
+			testCaseIdSuggestions = getTestCaseIdSuggestions();
+			scheduleSuggestionsUpdate();
+		}
+	}
+	
+	private void scheduleSuggestionsUpdate() {
+		Job openJob = new Job("Get suggestions") {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				testCaseIdSuggestions = getTestCaseIdSuggestions();
+				schedule(UPDATE_DELAY);
+				return Status.OK_STATUS;
+			}
+
+		};
+		openJob.schedule(UPDATE_DELAY);
 	}
 
 	private List<SuggestionItem> getTestCaseIdSuggestions() {
@@ -34,10 +65,10 @@ public class TestRailPropertySuggestionProvider implements ITestCasePropertySugg
 		if (testCases == null) {
 			return Collections.emptyList();
 		}
-		List<SuggestionItem> suggestions = testCases.stream()
+		testCaseIdSuggestions = testCases.stream()
 				.map(testCase -> getTestCaseIdSuggestion(testCase))
 				.collect(Collectors.toList());
-		return suggestions;
+		return testCaseIdSuggestions;
 	}
 
 	private SuggestionItem getTestCaseIdSuggestion(TestRailTestCase testCase) {

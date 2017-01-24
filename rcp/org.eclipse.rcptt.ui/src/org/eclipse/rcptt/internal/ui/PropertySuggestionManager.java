@@ -2,16 +2,15 @@ package org.eclipse.rcptt.internal.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.rcptt.core.scenario.Scenario;
 import org.eclipse.rcptt.internal.launching.Q7LaunchingPlugin;
 import org.eclipse.rcptt.ui.controls.SuggestionItem;
-import org.eclipse.rcptt.ui.editors.ITestCasePropertySuggestionProvider;
+import org.eclipse.rcptt.ui.editors.IScenarioPropertyProvider;
 
 public class PropertySuggestionManager {
 	private static PropertySuggestionManager instance;
@@ -24,50 +23,43 @@ public class PropertySuggestionManager {
 	}
 
 	private final static String PROPSUGGESTION_EXTPT = "org.eclipse.rcptt.ui.propertySuggestionProviders";
-	private final static String PROPSUGGESTION_TESTCASE_ATTR = "testCaseProperties";
+	private final static String PROPSUGGESTION_TESTCASE_ATTR = "scenarioProperties";
 
-	private List<ITestCasePropertySuggestionProvider> providers;
-	private List<SuggestionItem> testCaseProperties;
-	private Map<String, List<SuggestionItem>> testCasePropertySuggestions;
+	private List<IScenarioPropertyProvider> providers;
 
 	public PropertySuggestionManager() {
-		// Set<SuggestionItem> testCaseProps = new TreeSet<SuggestionItem>();
-		List<SuggestionItem> testCaseProps = new ArrayList<SuggestionItem>();
-		// TODO (test-rail-support) add destinct and sorting
-		this.providers = new ArrayList<ITestCasePropertySuggestionProvider>();
+		this.providers = new ArrayList<IScenarioPropertyProvider>();
 		final IConfigurationElement[] elements = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor(PROPSUGGESTION_EXTPT);
 		for (final IConfigurationElement element : elements) {
 			try {
-				final ITestCasePropertySuggestionProvider provider = (ITestCasePropertySuggestionProvider) element
+				final IScenarioPropertyProvider provider = (IScenarioPropertyProvider) element
 						.createExecutableExtension(PROPSUGGESTION_TESTCASE_ATTR);
 				providers.add(provider);
-				// TODO (test-rail-support) add if-null check
-				testCaseProps.addAll(provider.getProperties());
 			} catch (final CoreException e) {
 				Q7LaunchingPlugin.log(e);
 			}
 		}
-		this.testCaseProperties = new ArrayList<SuggestionItem>(testCaseProps);
-		this.testCasePropertySuggestions = new HashMap<String, List<SuggestionItem>>();
 	}
 
-	public List<SuggestionItem> getTestCaseProperties() {
-		return testCaseProperties;
+	public List<SuggestionItem> getScenarioProperties(Scenario scenario) {
+		List<SuggestionItem> testCaseProps = new ArrayList<SuggestionItem>();
+		for (IScenarioPropertyProvider provider : providers) {
+			List<SuggestionItem> props = provider.getProperties(scenario);
+			if (props != null && !props.isEmpty()) {
+				testCaseProps.addAll(props);
+			}
+		}
+		return testCaseProps;
 	}
 
-	public List<SuggestionItem> getTestCasePropertySuggestions(String name) {
+	public List<SuggestionItem> getScenarioPropertySuggestions(String name) {
 		if (name == null || name.equals("")) {
 			return Collections.emptyList();
 		}
-		// TODO (test-rail-support) add caching
-		if (testCasePropertySuggestions.containsKey(name)) {
-			return testCasePropertySuggestions.get(name);
-		}
-		for (ITestCasePropertySuggestionProvider provider : providers) {
+		for (IScenarioPropertyProvider provider : providers) {
 			List<SuggestionItem> values = provider.getPropertyValues(name);
 			if (values != null) {
-				testCasePropertySuggestions.put(name, values);
 				return values;
 			}
 		}
