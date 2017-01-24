@@ -111,8 +111,7 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 		if (response == null) {
 			response = ProtocolFactory.eINSTANCE.createSelectResponse();
 			response.setStatus(ResponseStatus.FAILED);
-			response.setMessage("No Element with kind:" + kind
-					+ " is available for selection...");
+			response.setMessage("No Element with kind:" + kind + " is available for selection...");
 		}
 		if (response.getStatus().equals(ResponseStatus.FAILED)) {
 			handleFailedResponse(cmd, response);
@@ -167,15 +166,18 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 					for (ITeslaCommandProcessor processor : processors) {
 						if (processor != null) {
 							try {
-								PreExecuteStatus status = processor.preExecute(
-										command, preStatus, info);
+								PreExecuteStatus status = processor.preExecute(command, preStatus, info);
 								if (status != null) {
 									preStatuses.put(command, status);
+									if (preStatus != status) {
+										cleanPreStatus(preStatus);
+									}
 									if (!status.canExecute) {
 										return false;
 									}
 								} else {
 									preStatuses.remove(command);
+									cleanPreStatus(preStatus);
 								}
 							} catch (Throwable e) {
 								TeslaCore.log(e);
@@ -192,6 +194,18 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 			}
 		}
 		return true;
+	}
+
+	private void cleanPreStatus(PreExecuteStatus preStatus) {
+		if (preStatus != null) {
+			try {
+				// We need to call clean to be sure status is finalized all
+				// things.
+				preStatus.clean();
+			} catch (Throwable ee) {
+				TeslaCore.log(ee);
+			}
+		}
 	}
 
 	synchronized public void addCommand(Command cmd) {
@@ -258,14 +272,11 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 				if (processors != null) {
 					for (ITeslaCommandProcessor processor : processors) {
 						if (processor != null) {
-							Response response = processor
-									.executeCommand(command, this);
+							Response response = processor.executeCommand(command, this);
 							if (response != null) {
-								if (response.getStatus().equals(
-										ResponseStatus.FAILED)) {
-									handleFailedResponse(command,
-											response);
-									}
+								if (response.getStatus().equals(ResponseStatus.FAILED)) {
+									handleFailedResponse(command, response);
+								}
 								return response;
 							}
 						}
@@ -291,8 +302,7 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 			case ProtocolPackage.NOP:
 				return RawFactory.eINSTANCE.createResponse();
 			case ProtocolPackage.GET_STATE:
-				GetStateResponse res = ProtocolFactory.eINSTANCE
-						.createGetStateResponse();
+				GetStateResponse res = ProtocolFactory.eINSTANCE.createGetStateResponse();
 				Element state = RawFactory.eINSTANCE.createElement();
 				String returnedState = currentContext.getID();
 				// System.out.println("RETURNED WAIT STATE:" +
@@ -317,7 +327,11 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 	private Response createErrorResponse(Throwable e) {
 		Response errorResponse = RawFactory.eINSTANCE.createResponse();
 		errorResponse.setStatus(ResponseStatus.FAILED);
-		errorResponse.setMessage("Exception happened:\n" + Exceptions.toString(e)); // class name and exception message
+		errorResponse.setMessage("Exception happened:\n" + Exceptions.toString(e)); // class
+																					// name
+																					// and
+																					// exception
+																					// message
 		return errorResponse;
 	}
 
