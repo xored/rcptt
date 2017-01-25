@@ -75,6 +75,7 @@ public class PropertyCellEditor extends TextCellEditor {
 	private int listMaxHeight;
 	private int descWidth;
 	private int descHeight;
+	private boolean closed = false;
 
 	private static final int LIST_MAX_HEIGHT = 200;
 	private static final int DESC_WIDTH = 350;
@@ -172,6 +173,9 @@ public class PropertyCellEditor extends TextCellEditor {
 	}
 
 	private void open() {
+		if( closed) {
+			return;
+		}
 		if (!isActive()) {
 			return;
 		}
@@ -182,6 +186,7 @@ public class PropertyCellEditor extends TextCellEditor {
 	}
 
 	private void close() {
+		this.closed = true;
 		if (!shell.isDisposed()) {
 			shell.setVisible(false);
 		}
