@@ -12,9 +12,7 @@ package org.eclipse.rcptt.testrail;
 
 import java.net.URL;
 import java.text.MessageFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +36,7 @@ import org.eclipse.rcptt.internal.launching.PrepareExecutionWrapper;
 import org.eclipse.rcptt.internal.launching.ecl.EclScenarioExecutable;
 import org.eclipse.rcptt.internal.testrail.Messages;
 import org.eclipse.rcptt.internal.testrail.TestRailAPIClient;
+import org.eclipse.rcptt.internal.testrail.TestRailParser;
 import org.eclipse.rcptt.internal.testrail.TestRailPlugin;
 import org.eclipse.rcptt.launching.IExecutable;
 import org.eclipse.rcptt.launching.ITestEngine;
@@ -50,8 +49,6 @@ import org.eclipse.rcptt.testrail.domain.TestRailTestResult;
 import org.eclipse.rcptt.testrail.domain.TestRailTestRun;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class TestRailService implements ITestEngine {
 	public static final String TESTRAIL_ID_PARAM = "testrail-id";
@@ -187,106 +184,10 @@ public class TestRailService implements ITestEngine {
 		if (response == null) {
 			return Collections.emptyList();
 		}
-		JsonArray array = TestRailAPIClient.getTestCasesJsonArray(response);
 		List<TestRailTestCase> testCases = TestRailAPIClient.getTestCasesList(response);
-		for (JsonElement element : array) {
-			if (element instanceof JsonObject) {
-				JsonObject object = (JsonObject) element;
-				StringBuilder sb = new StringBuilder();
-				String id = "";
-				for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-					JsonElement valueElement = entry.getValue();
-					if (valueElement == null || valueElement.toString().equals("")
-							|| valueElement.toString().equals("null")) {
-						continue;
-					}
-
-					String name = entry.getKey();
-					String value = valueElement.toString();
-					switch (name) {
-					case "id":
-						id = value;
-						continue;
-					case "section_id":
-					case "template_id":
-					case "type_id":
-					case "priority_id":
-					case "milestone_id":
-					case "created_by":
-					case "updated_by":
-					case "suite_id":
-						continue;
-					case "created_on":
-					case "updated_on":
-						DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-						LocalDateTime localDate = LocalDateTime.ofInstant(
-								Instant.ofEpochSecond(Integer.valueOf(value)),
-								ZoneId.systemDefault());
-						value = dateFormatter.format(localDate);
-						break;
-					}
-
-					if (name.startsWith("custom_")) {
-						name = name.substring(7);
-					}
-					name = name.replaceAll("_", " ");
-					String firstChar = name.substring(0, 1);
-					firstChar = firstChar.toUpperCase();
-					name = firstChar + name.substring(1);
-					if (sb.length() > 0) {
-						sb.append("<br>");
-					}
-					sb.append("<b>");
-					sb.append(name + ": ");
-					sb.append("</b>");
-
-					if (valueElement instanceof JsonArray) {
-						JsonArray valueArray = (JsonArray) valueElement;
-
-						sb.append("<ol>");
-						for (JsonElement subElement : valueArray) {
-							sb.append("<li>");
-							if (subElement instanceof JsonObject) {
-								JsonObject subObject = (JsonObject) subElement;
-								StringBuilder subSb = new StringBuilder();
-								for (Map.Entry<String, JsonElement> subEntry : subObject.entrySet()) {
-									if (subEntry.getValue() == null) {
-										continue;
-									}
-									if (subSb.length() > 0) {
-										subSb.append(", ");
-									}
-									subSb.append("<i>");
-									subSb.append(subEntry.getKey().toString() + ": ");
-									subSb.append("</i>");
-									subSb.append(subEntry.getValue().toString());
-								}
-								sb.append(subSb.toString());
-							} else {
-								sb.append(subElement.toString());
-							}
-							sb.append("</li>");
-						}
-						sb.append("</ol>");
-					} else {
-						value = value.replaceAll("\"", " ");
-						value = value.replaceAll("\\\\r\\\\n", "<br>");
-						if (value.contains("<br>")) {
-							sb.append("<br>");
-						}
-						sb.append(value);
-					}
-				}
-				final String testCaseId = id;
-				if (sb.length() > 0 && !testCaseId.equals("")) {
-					TestRailTestCase testCase = testCases.stream()
-							.filter(tcase -> testCaseId.equals(tcase.getId()))
-							.findFirst().orElse(null);
-					if (testCase != null) {
-						testCase.setDescription(sb.toString());
-					}
-				}
-			}
+		if (fillDescription) {
+			JsonArray array = TestRailAPIClient.getTestCasesJsonArray(response);
+			TestRailParser.parseTestCases(testCases, array);
 		}
 		return testCases;
 	}

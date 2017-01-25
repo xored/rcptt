@@ -2,8 +2,39 @@ package org.eclipse.rcptt.ui.controls;
 
 public class SuggestionItem {
 
+	public static class SuggestionDescription {
+
+		private String text;
+		private String html;
+
+		public SuggestionDescription() {
+		}
+
+		public SuggestionDescription(String text, String html) {
+			this.text = text;
+			this.html = html;
+		}
+
+		public String getText() {
+			return text;
+		}
+
+		public void setText(String text) {
+			this.text = text;
+		}
+
+		public String getHTML() {
+			return html;
+		}
+
+		public void setHTML(String html) {
+			this.html = html;
+		}
+
+	}
+
 	private String name;
-	private String description;
+	private SuggestionDescription description;
 
 	public SuggestionItem() {
 	}
@@ -12,7 +43,7 @@ public class SuggestionItem {
 		this.name = name;
 	}
 
-	public SuggestionItem(String name, String description) {
+	public SuggestionItem(String name, SuggestionDescription description) {
 		this.name = name;
 		this.description = description;
 	}
@@ -25,11 +56,11 @@ public class SuggestionItem {
 		this.name = name;
 	}
 
-	public String getDescription() {
+	public SuggestionDescription getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(SuggestionDescription description) {
 		this.description = description;
 	}
 

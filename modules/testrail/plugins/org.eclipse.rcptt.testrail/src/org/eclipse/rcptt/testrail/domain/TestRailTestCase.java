@@ -9,7 +9,10 @@ public class TestRailTestCase {
 	@Expose
 	@SerializedName("title")
 	private String name;
-	private String description;
+	@Expose(serialize = false, deserialize = false)
+	private String textDescription;
+	@Expose(serialize = false, deserialize = false)
+	private String htmlDescription;
 
 	public TestRailTestCase() {
 	}
@@ -22,11 +25,19 @@ public class TestRailTestCase {
 		return name;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTextDescription(String textDescription) {
+		this.textDescription = textDescription;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getTextDescription() {
+		return textDescription;
+	}
+
+	public void setHTMLDescription(String htmlDescription) {
+		this.htmlDescription = htmlDescription;
+	}
+
+	public String getHTMLDescription() {
+		return htmlDescription;
 	}
 }

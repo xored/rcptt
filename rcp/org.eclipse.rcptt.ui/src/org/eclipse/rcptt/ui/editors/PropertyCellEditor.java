@@ -13,10 +13,16 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.internal.text.html.HTMLPrinter;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.rcptt.internal.ui.Images;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
 import org.eclipse.rcptt.ui.controls.SuggestionItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.OpenWindowListener;
+import org.eclipse.swt.browser.WindowEvent;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -27,17 +33,25 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -50,28 +64,30 @@ public class PropertyCellEditor extends TextCellEditor {
 	private List list;
 	private Shell description;
 	private Browser browser;
+	private Button button;
 
 	private java.util.List<SuggestionItem> suggestions;
 
 	private java.util.List<Job> jobs;
-	// TODO (test-rail-support) is it really needed?
-	private Control lastFocusLostControl;
+	private boolean mouseClickDetect;
+	private String descriptionData;
 
 	private int listMaxHeight;
 	private int descWidth;
 	private int descHeight;
 
 	private static final int LIST_MAX_HEIGHT = 200;
-	private static final int DESC_WIDTH = 300;
-	private static final int DESC_HEIGHT = 200;
+	private static final int DESC_WIDTH = 350;
+	private static final int DESC_HEIGHT = 220;
 
 	public PropertyCellEditor(Composite parent, java.util.List<SuggestionItem> suggestions) {
 		super(parent);
 		this.suggestions = suggestions;
 		text = (Text) super.getControl();
 		createPopup(text);
+		createButton();
 		addListeners();
-		Q7UIPlugin.log(" *** new instance was created *** ", null);
+		Q7UIPlugin.log(" *** new instance was created ver 0.3 *** ", null);
 	}
 
 	private void createPopup(Text textField) {
@@ -83,19 +99,53 @@ public class PropertyCellEditor extends TextCellEditor {
 		shell = new Shell(text.getShell(), popupStyle);
 		list = new List(shell, listStyle);
 		description = new Shell(text.getShell(), popupStyle);
+		description.setLayout(new FormLayout());
 		description.setForeground(text.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND));
 		description.setBackground(text.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
 		browser = new Browser(description, SWT.NONE);
+		browser.setJavascriptEnabled(false);
+		browser.setForeground(text.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND));
+		browser.setBackground(text.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
+		browser.setMenu(new Menu(description, SWT.NONE));
+		browser.addOpenWindowListener(new OpenWindowListener() {
+			@Override
+			public void open(WindowEvent event) {
+				event.required = true;
+			}
+		});
 
 		listMaxHeight = LIST_MAX_HEIGHT;
 		descWidth = DESC_WIDTH;
 		descHeight = DESC_HEIGHT;
 	}
 
+	private void createButton() {
+		Composite composite = new Composite(description, SWT.NONE);
+		FormData data = new FormData();
+		data.left = new FormAttachment(0);
+		data.right = new FormAttachment(100);
+		data.bottom = new FormAttachment(100);
+		composite.setLayoutData(data);
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginWidth = 3;
+		layout.marginHeight = 3;
+		layout.verticalSpacing = 3;
+		layout.horizontalSpacing = 3;
+		composite.setLayout(layout);
+
+		button = new Button(composite, SWT.PUSH);
+		button.setText("Copy to the clipboard");
+		button.setImage(Images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY).createImage());
+		Font font = button.getFont();
+		FontData fontdata = font.getFontData()[0];
+		fontdata.setHeight(fontdata.getHeight() - 2);
+		button.setFont(new Font(font.getDevice(), fontdata));
+	}
+
 	@Override
 	public void activate() {
-		lastFocusLostControl = null;
 		jobs = new ArrayList<Job>();
+		mouseClickDetect = false;
 		super.activate();
 	}
 
@@ -121,7 +171,7 @@ public class PropertyCellEditor extends TextCellEditor {
 		return false;
 	}
 
-	public void open() {
+	private void open() {
 		if (!isActive()) {
 			return;
 		}
@@ -131,9 +181,13 @@ public class PropertyCellEditor extends TextCellEditor {
 		shell.setVisible(true);
 	}
 
-	public void close() {
-		shell.setVisible(false);
-		description.setVisible(false);
+	private void close() {
+		if (!shell.isDisposed()) {
+			shell.setVisible(false);
+		}
+		if (!description.isDisposed()) {
+			description.setVisible(false);
+		}
 	}
 
 	private void addListeners() {
@@ -211,6 +265,19 @@ public class PropertyCellEditor extends TextCellEditor {
 
 		});
 
+		button.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event e) {
+				if (descriptionData != null && !descriptionData.equals("")) {
+					final Clipboard clipboard = new Clipboard(Display.getCurrent());
+					TextTransfer transfer = TextTransfer.getInstance();
+					clipboard.setContents(new Object[] { descriptionData }, new Transfer[] { transfer });
+				}
+			}
+
+		});
+
 		text.addFocusListener(new FocusListener() {
 
 			@Override
@@ -220,18 +287,17 @@ public class PropertyCellEditor extends TextCellEditor {
 					open();
 					return;
 				}
-				if (!noJobsCreated() && lastFocusLostControl != text) {
-					Q7UIPlugin.log("text :: Job canceled", null);
+				if (!noJobsCreated()) {
 					cancelJobs();
+					Q7UIPlugin.log("text :: Job canceled", null);
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
 				Q7UIPlugin.log("text :: Focus lost", null);
-				lastFocusLostControl = text;
 				Control control = Display.getCurrent().getFocusControl();
-				if (control != browser && control != list) {
+				if (control != browser && control != list && control != button) {
 					addJob();
 					return;
 				}
@@ -244,19 +310,24 @@ public class PropertyCellEditor extends TextCellEditor {
 
 			@Override
 			public void focusGained(FocusEvent e) {
+				mouseClickDetect = false;
 				Q7UIPlugin.log("list :: Focus gained", null);
-				if (!noJobsCreated() && lastFocusLostControl != list) {
-					Q7UIPlugin.log("list :: Job canceled", null);
+				if (!noJobsCreated()) {
 					cancelJobs();
+					Q7UIPlugin.log("list :: Job canceled", null);
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
+				if (mouseClickDetect) {
+					mouseClickDetect = false;
+					Q7UIPlugin.log("list :: Stay in focus : mouseClickDetect", null);
+					return;
+				}
 				Q7UIPlugin.log("list :: Focus lost", null);
-				lastFocusLostControl = list;
 				Control control = Display.getCurrent().getFocusControl();
-				if (control != browser && control != text) {
+				if (control != browser && control != text && control != button) {
 					addJob();
 					return;
 				}
@@ -270,22 +341,83 @@ public class PropertyCellEditor extends TextCellEditor {
 			@Override
 			public void focusGained(FocusEvent e) {
 				Q7UIPlugin.log("browser :: Focus gained", null);
-				if (!noJobsCreated() && lastFocusLostControl != browser) {
+				if (!noJobsCreated()) {
+					cancelJobs();
 					Q7UIPlugin.log("browser :: Job canceled", null);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (mouseClickDetect) {
+					mouseClickDetect = false; // ???
+					Q7UIPlugin.log("browser :: Stay in focus : mouseClickDetect", null);
+					return;
+				}
+				Q7UIPlugin.log("browser :: Focus lost", null);
+				Control control = Display.getCurrent().getFocusControl();
+				if (control != list && control != text && control != button) {
+					addJob();
+					return;
+				}
+				Q7UIPlugin.log("browser :: Stay in focus", null);
+			}
+
+		});
+
+		button.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				Q7UIPlugin.log("button :: Focus gained", null);
+				if (!noJobsCreated()) {
+					Q7UIPlugin.log("button :: Job canceled", null);
 					cancelJobs();
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				Q7UIPlugin.log("browser :: Focus lost", null);
-				lastFocusLostControl = browser;
+				if (mouseClickDetect) {
+					mouseClickDetect = false;
+					Q7UIPlugin.log("button :: Stay in focus : mouseClickDetect", null);
+					return;
+				}
+				Q7UIPlugin.log("button :: Focus lost", null);
 				Control control = Display.getCurrent().getFocusControl();
-				if (control != list && control != text) {
+				if (control != browser && control != text && control != list) {
 					addJob();
 					return;
 				}
-				Q7UIPlugin.log("browser :: Stay in focus", null);
+				Q7UIPlugin.log("button :: Stay in focus", null);
+			}
+
+		});
+
+		browser.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				Q7UIPlugin.log("browser :: mouseDown", null);
+				mouseClickDetect = true;
+				if (!noJobsCreated()) {
+					cancelJobs();
+					Q7UIPlugin.log("browser :: mouseUp :: Job canceled", null);
+				}
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				Q7UIPlugin.log("browser :: mouseUp", null);
+				if (!noJobsCreated()) {
+					cancelJobs();
+					Q7UIPlugin.log("browser :: mouseUp :: Job canceled", null);
+				}
+				list.setFocus();
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
 			}
 
 		});
@@ -302,9 +434,9 @@ public class PropertyCellEditor extends TextCellEditor {
 			}
 
 		};
-
 		list.addListener(SWT.KeyDown, keyDown);
 		browser.addListener(SWT.KeyDown, keyDown);
+		button.addListener(SWT.KeyDown, keyDown);
 
 		Listener traverse = new Listener() {
 
@@ -314,9 +446,9 @@ public class PropertyCellEditor extends TextCellEditor {
 			}
 
 		};
-
 		list.addListener(SWT.Traverse, traverse);
 		browser.addListener(SWT.Traverse, traverse);
+		button.addListener(SWT.Traverse, traverse);
 
 		text.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -366,7 +498,6 @@ public class PropertyCellEditor extends TextCellEditor {
 
 	private void deactivateAll() {
 		Q7UIPlugin.log("DEACTIVATE!", null);
-		lastFocusLostControl = null;
 		if (shell != null) {
 			close();
 		}
@@ -390,15 +521,20 @@ public class PropertyCellEditor extends TextCellEditor {
 			list.select(index);
 			list.showSelection();
 
-			String desc = getDescription(value);
-			if (desc != null && !desc.equals("")) {
+			SuggestionItem.SuggestionDescription desc = getDescription(value);
+			if (desc != null
+					&& desc.getText() != null
+					&& !desc.getText().equals("")
+					&& desc.getHTML() != null
+					&& !desc.getHTML().equals("")) {
+				descriptionData = desc.getText();
+				browser.setText(applyStyling(desc.getHTML()));
 				description.setVisible(true);
-				browser.setText(applyStyling(desc));
 			} else {
 				description.setVisible(false);
+				descriptionData = "";
 				browser.setText("");
 			}
-
 		}
 	}
 
@@ -412,7 +548,7 @@ public class PropertyCellEditor extends TextCellEditor {
 		this.suggestions = suggestions;
 	}
 
-	private String getDescription(String name) {
+	private SuggestionItem.SuggestionDescription getDescription(String name) {
 		for (SuggestionItem suggestion : suggestions) {
 			if (name.equals(suggestion.getName())) {
 				return suggestion.getDescription();
@@ -515,6 +651,7 @@ public class PropertyCellEditor extends TextCellEditor {
 	private void setChildElementsBounds() {
 		Rectangle shellBounds = shell.getBounds();
 		Rectangle screenBounds = shell.getDisplay().getBounds();
+		Point buttonSize = button.getParent().getSize();
 
 		int descX = shellBounds.x;
 		int descY = shellBounds.y;
@@ -537,7 +674,7 @@ public class PropertyCellEditor extends TextCellEditor {
 
 		list.setSize(shellBounds.width, shellBounds.height);
 		description.setBounds(descX, descY, descWidth, descHeight);
-		browser.setSize(descWidth, descHeight);
+		browser.setSize(descWidth, descHeight - buttonSize.y);
 	}
 
 }

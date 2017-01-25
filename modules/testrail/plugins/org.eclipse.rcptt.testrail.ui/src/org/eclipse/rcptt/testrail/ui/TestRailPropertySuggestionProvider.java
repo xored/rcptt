@@ -73,7 +73,10 @@ public class TestRailPropertySuggestionProvider implements IScenarioPropertyProv
 
 	private SuggestionItem getTestCaseIdSuggestion(TestRailTestCase testCase) {
 		String value = TestRailService.TESTRAIL_TESTCASEID_PREFIX + testCase.getId();
-		String description = testCase.getDescription();
+		String textDescription = testCase.getTextDescription();
+		String htmlDescription = testCase.getHTMLDescription();
+		SuggestionItem.SuggestionDescription description = new SuggestionItem.SuggestionDescription(textDescription,
+				htmlDescription);
 		return new SuggestionItem(value, description);
 	}
 
