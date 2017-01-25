@@ -31,6 +31,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Font;
@@ -51,6 +52,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.ISharedImages;
 
 import com.google.common.base.Charsets;
@@ -68,8 +70,6 @@ public class PropertyCellEditor extends TextCellEditor {
 
 	private java.util.List<SuggestionItem> suggestions;
 
-	private java.util.List<Job> jobs;
-	private boolean mouseClickDetect;
 	private String descriptionData;
 
 	private int listMaxHeight;
@@ -87,7 +87,10 @@ public class PropertyCellEditor extends TextCellEditor {
 		createPopup(text);
 		createButton();
 		addListeners();
-		Q7UIPlugin.log(" *** new instance was created ver 0.3 *** ", null);
+	}
+	
+	public void completeEdit() {
+		
 	}
 
 	private void createPopup(Text textField) {
@@ -133,7 +136,7 @@ public class PropertyCellEditor extends TextCellEditor {
 		layout.horizontalSpacing = 3;
 		composite.setLayout(layout);
 
-		button = new Button(composite, SWT.PUSH);
+		button = new Button(composite, SWT.PUSH | SWT.FLAT);
 		button.setText("Copy to the clipboard");
 		button.setImage(Images.getImageDescriptor(ISharedImages.IMG_TOOL_COPY).createImage());
 		Font font = button.getFont();
@@ -144,14 +147,11 @@ public class PropertyCellEditor extends TextCellEditor {
 
 	@Override
 	public void activate() {
-		jobs = new ArrayList<Job>();
-		mouseClickDetect = false;
 		super.activate();
 	}
 
 	@Override
 	public void deactivate() {
-		Q7UIPlugin.log("deactivate() call", null);
 		if (shell == null) {
 			return;
 		}
@@ -195,13 +195,13 @@ public class PropertyCellEditor extends TextCellEditor {
 
 			@Override
 			public void controlMoved(ControlEvent e) {
-				shell.setFocus();
+//				shell.setFocus();
 				close();
 			}
 
 			@Override
 			public void controlResized(ControlEvent e) {
-				shell.setFocus();
+//				shell.setFocus();
 				close();
 			}
 
@@ -219,22 +219,36 @@ public class PropertyCellEditor extends TextCellEditor {
 			}
 
 		});
-
-		list.addMouseListener(new MouseListener() {
-
+		
+		list.addSelectionListener(new SelectionListener() {
 			@Override
-			public void mouseDown(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				select(list.getSelectionIndex());
 			}
-
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {				
+			}
+		});
+		
+		list.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
-
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
+				select(list.getSelectionIndex());
+				completeEdit();
 			}
-
 		});
 
 		text.addTraverseListener(new TraverseListener() {
@@ -278,156 +292,39 @@ public class PropertyCellEditor extends TextCellEditor {
 
 		});
 
-		text.addFocusListener(new FocusListener() {
+		FocusListener focusListener = new FocusListener() {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				Q7UIPlugin.log("text :: Focus gained", null);
-				if (!isVisible()) {
-					open();
-					return;
+				if (e.widget == text) {
+					if (!isVisible()) {
+						open();
+						return;
+					}
 				}
-				if (!noJobsCreated()) {
-					cancelJobs();
-					Q7UIPlugin.log("text :: Job canceled", null);
-				}
+				cancelJobs();
+
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				Q7UIPlugin.log("text :: Focus lost", null);
-				Control control = Display.getCurrent().getFocusControl();
-				if (control != browser && control != list && control != button) {
-					addJob();
-					return;
-				}
-				Q7UIPlugin.log("text :: Stay in focus", null);
+				addJob();
 			}
 
-		});
-
-		list.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				mouseClickDetect = false;
-				Q7UIPlugin.log("list :: Focus gained", null);
-				if (!noJobsCreated()) {
-					cancelJobs();
-					Q7UIPlugin.log("list :: Job canceled", null);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (mouseClickDetect) {
-					mouseClickDetect = false;
-					Q7UIPlugin.log("list :: Stay in focus : mouseClickDetect", null);
-					return;
-				}
-				Q7UIPlugin.log("list :: Focus lost", null);
-				Control control = Display.getCurrent().getFocusControl();
-				if (control != browser && control != text && control != button) {
-					addJob();
-					return;
-				}
-				Q7UIPlugin.log("list :: Stay in focus", null);
-			}
-
-		});
-
-		browser.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				Q7UIPlugin.log("browser :: Focus gained", null);
-				if (!noJobsCreated()) {
-					cancelJobs();
-					Q7UIPlugin.log("browser :: Job canceled", null);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (mouseClickDetect) {
-					mouseClickDetect = false; // ???
-					Q7UIPlugin.log("browser :: Stay in focus : mouseClickDetect", null);
-					return;
-				}
-				Q7UIPlugin.log("browser :: Focus lost", null);
-				Control control = Display.getCurrent().getFocusControl();
-				if (control != list && control != text && control != button) {
-					addJob();
-					return;
-				}
-				Q7UIPlugin.log("browser :: Stay in focus", null);
-			}
-
-		});
-
-		button.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				Q7UIPlugin.log("button :: Focus gained", null);
-				if (!noJobsCreated()) {
-					Q7UIPlugin.log("button :: Job canceled", null);
-					cancelJobs();
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (mouseClickDetect) {
-					mouseClickDetect = false;
-					Q7UIPlugin.log("button :: Stay in focus : mouseClickDetect", null);
-					return;
-				}
-				Q7UIPlugin.log("button :: Focus lost", null);
-				Control control = Display.getCurrent().getFocusControl();
-				if (control != browser && control != text && control != list) {
-					addJob();
-					return;
-				}
-				Q7UIPlugin.log("button :: Stay in focus", null);
-			}
-
-		});
-
-		browser.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				Q7UIPlugin.log("browser :: mouseDown", null);
-				mouseClickDetect = true;
-				if (!noJobsCreated()) {
-					cancelJobs();
-					Q7UIPlugin.log("browser :: mouseUp :: Job canceled", null);
-				}
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				Q7UIPlugin.log("browser :: mouseUp", null);
-				if (!noJobsCreated()) {
-					cancelJobs();
-					Q7UIPlugin.log("browser :: mouseUp :: Job canceled", null);
-				}
-				list.setFocus();
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-		});
+		};
+		text.addFocusListener(focusListener);
+		browser.addFocusListener(focusListener);
+		list.addFocusListener(focusListener);
+		button.addFocusListener(focusListener);
+		shell.addFocusListener(focusListener);
+		description.addFocusListener(focusListener);
 
 		Listener keyDown = new Listener() {
 
 			@Override
 			public void handleEvent(Event e) {
 				if (e.character == '\r') { // Return key
-					text.notifyListeners(SWT.DefaultSelection, e);
+					completeEdit();
 				} else {
 					text.notifyListeners(SWT.KeyDown, e);
 				}
@@ -459,16 +356,19 @@ public class PropertyCellEditor extends TextCellEditor {
 	}
 
 	private void addJob() {
-		Q7UIPlugin.log("Job scheduled", null);
+		cancelJobs();
 		Job job = new Job("Deactivate") {
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return family == PropertyCellEditor.this;
+			}
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
-						Q7UIPlugin.log("Job started", null);
 						deactivateAll();
-						jobs.removeAll(jobs);
 					}
 				});
 				return Status.OK_STATUS;
@@ -476,28 +376,13 @@ public class PropertyCellEditor extends TextCellEditor {
 
 		};
 		job.schedule(100);
-		if (jobs == null) {
-			jobs = new ArrayList<Job>();
-		}
-		jobs.add(job);
 	}
 
 	private void cancelJobs() {
-		if (jobs == null) {
-			return;
-		}
-		for (Job job : jobs) {
-			job.cancel();
-		}
-		jobs.removeAll(jobs);
-	}
-
-	private boolean noJobsCreated() {
-		return jobs == null || jobs.isEmpty();
+		Job.getJobManager().cancel(PropertyCellEditor.this);
 	}
 
 	private void deactivateAll() {
-		Q7UIPlugin.log("DEACTIVATE!", null);
 		if (shell != null) {
 			close();
 		}
@@ -522,10 +407,7 @@ public class PropertyCellEditor extends TextCellEditor {
 			list.showSelection();
 
 			SuggestionItem.SuggestionDescription desc = getDescription(value);
-			if (desc != null
-					&& desc.getText() != null
-					&& !desc.getText().equals("")
-					&& desc.getHTML() != null
+			if (desc != null && desc.getText() != null && !desc.getText().equals("") && desc.getHTML() != null
 					&& !desc.getHTML().equals("")) {
 				descriptionData = desc.getText();
 				browser.setText(applyStyling(desc.getHTML()));
@@ -578,8 +460,7 @@ public class PropertyCellEditor extends TextCellEditor {
 			return styles;
 
 		try {
-			URL url = Q7UIPlugin.getDefault().getBundle()
-					.getResource("/docs.css");
+			URL url = Q7UIPlugin.getDefault().getBundle().getResource("/docs.css");
 			// Check for missing styles resource.
 			if (url == null) {
 				return styles = "";

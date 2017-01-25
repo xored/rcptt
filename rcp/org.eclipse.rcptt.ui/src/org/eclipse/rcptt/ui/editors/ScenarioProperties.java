@@ -44,6 +44,8 @@ import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
@@ -58,6 +60,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.ISharedImages;
@@ -192,8 +195,30 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 				}
 			}
 		});
+		
 
 		final TableViewer viewer = new TableViewer(table);
+		
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseUp(MouseEvent e) {				
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				TableItem item = table.getItem( new Point(e.x, e.y));
+				if( item == null) {
+					viewer.cancelEditing();
+				}
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		viewer.setContentProvider(new IStructuredContentProvider() {
 
 			public void dispose() {
@@ -249,7 +274,11 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 				final Scenario scenario = getNamedElement();
 				final List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
 						.getScenarioProperties(scenario);
-				final PropertyCellEditor editor = new PropertyCellEditor(table, suggestions);
+				final PropertyCellEditor editor = new PropertyCellEditor(table, suggestions) {
+					public void completeEdit() {
+						viewer.applyEditorValue();
+					};
+				};
 				editor.getControl().addTraverseListener(new TraverseListener() {
 
 					public void keyTraversed(TraverseEvent e) {
@@ -354,7 +383,11 @@ public class ScenarioProperties extends AbstractEmbeddedComposite implements IQ7
 				final ScenarioProperty param = (ScenarioProperty) element;
 				final List<SuggestionItem> suggestions = PropertySuggestionManager.getInstance()
 						.getScenarioPropertySuggestions(param.getName());
-				final PropertyCellEditor editor = new PropertyCellEditor(table, suggestions);
+				final PropertyCellEditor editor = new PropertyCellEditor(table, suggestions) {
+					public void completeEdit() {
+						viewer.applyEditorValue();
+					};
+				};
 				editor.getControl().addTraverseListener(new TraverseListener() {
 
 					public void keyTraversed(TraverseEvent e) {
