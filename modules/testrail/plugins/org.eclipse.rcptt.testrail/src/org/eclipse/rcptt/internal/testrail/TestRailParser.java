@@ -27,6 +27,7 @@ public class TestRailParser {
 					JsonElement valueElement = entry.getValue();
 					if (valueElement == null
 							|| valueElement.toString().equals("")
+							|| valueElement.toString().equals("[]")
 							|| valueElement.toString().equals("null")) {
 						continue;
 					}

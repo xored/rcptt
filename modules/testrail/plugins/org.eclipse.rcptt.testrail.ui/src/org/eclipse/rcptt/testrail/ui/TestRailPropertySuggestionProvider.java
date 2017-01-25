@@ -46,7 +46,7 @@ public class TestRailPropertySuggestionProvider implements IScenarioPropertyProv
 	}
 	
 	private void scheduleSuggestionsUpdate() {
-		Job openJob = new Job("Get suggestions") {
+		Job openJob = new Job("Connecting to the TestRail Host") {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
