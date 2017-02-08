@@ -27,9 +27,12 @@ public class Messages extends NLS {
 	public static String AssertImageWindow_TextLabel;
 	public static String AssertImageWindow_Tilte;
 	public static String AssertImageWindow_TypeLabel;
+	public static String ControlHierarchyView_NameColumnText;
+	public static String ControlHierarchyView_NameColumnToolTip;
 	public static String AssertionPanelWindow_AddAssertButton;
 	public static String AssertionPanelWindow_AssertImageButton;
 	public static String AssertionPanelWindow_CloseActionName;
+	public static String AssertionPanelWindow_TreeVisibleToolTip;
 	public static String AssertionPanelWindow_CollapseAllActionToolTip;
 	public static String AssertionPanelWindow_ColumnOperationName;
 	public static String AssertionPanelWindow_ColumnOperationToolTip;

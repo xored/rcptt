@@ -1,13 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2009, 2015 Xored Software Inc and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Xored Software Inc - initial API and implementation and/or initial documentation
- *******************************************************************************/
+/**
+ */
 package org.eclipse.rcptt.core.ecl.core.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -16,11 +8,11 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.rcptt.ecl.core.CorePackage;
 
-import org.eclipse.rcptt.core.scenario.ScenarioPackage;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.rcptt.core.ecl.core.model.BeginReportNode;
+import org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState;
 import org.eclipse.rcptt.core.ecl.core.model.CreateContext;
 import org.eclipse.rcptt.core.ecl.core.model.CreateReport;
 import org.eclipse.rcptt.core.ecl.core.model.CreateVerification;
@@ -29,6 +21,7 @@ import org.eclipse.rcptt.core.ecl.core.model.EndReportNode;
 import org.eclipse.rcptt.core.ecl.core.model.EnterContext;
 import org.eclipse.rcptt.core.ecl.core.model.ExecVerification;
 import org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase;
+import org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy;
 import org.eclipse.rcptt.core.ecl.core.model.GetPerspectives;
 import org.eclipse.rcptt.core.ecl.core.model.GetQ7Information;
 import org.eclipse.rcptt.core.ecl.core.model.GetReport;
@@ -47,131 +40,158 @@ import org.eclipse.rcptt.core.ecl.core.model.SetQ7Option;
 import org.eclipse.rcptt.core.ecl.core.model.TerminateAut;
 import org.eclipse.rcptt.core.ecl.core.model.ViewInfo;
 import org.eclipse.rcptt.core.ecl.core.model.ViewList;
+
+import org.eclipse.rcptt.core.scenario.ScenarioPackage;
+
+import org.eclipse.rcptt.ecl.core.CorePackage;
+
 import org.eclipse.rcptt.reporting.ReportingPackage;
+
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.ReportPackage;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model <b>Package</b>.
+ * <!-- end-user-doc -->
  * @generated
  */
 public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass enterContextEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass createContextEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass prepareEnvironmentEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass setCommandsDelayEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass getQ7InformationEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass q7InformationEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass setQ7FeaturesEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass getPerspectivesEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass perspectiveInfoEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass perspectivesListEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass getViewsEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass viewInfoEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass viewListEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass createReportEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass getReportEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass beginReportNodeEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass endReportNodeEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass reportAppendEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass setQ7OptionEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass execVerificationEClass = null;
@@ -205,21 +225,36 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	private EClass terminateAutEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass getControlHierarchyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EEnum executionPhaseEEnum = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum controlHierarchyStateEEnum = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the
-	 * package package URI value.
-	 * <p>
-	 * Note: the correct way to create the package is via the static factory
-	 * method {@link #init init()}, which also performs initialization of the
-	 * package, or returns the registered package, if one already exists. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+	 * package URI value.
+	 * <p>Note: the correct way to create the package is via the static
+	 * factory method {@link #init init()}, which also performs
+	 * initialization of the package, or returns the registered package,
+	 * if one already exists.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.rcptt.core.ecl.core.model.Q7CorePackage#eNS_URI
 	 * @see #init()
@@ -230,21 +265,19 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this model,
-	 * and for any others upon which it depends.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>
-	 * This method is used to initialize {@link Q7CorePackage#eINSTANCE} when
-	 * that field is accessed. Clients should not invoke it directly. Instead,
-	 * they should simply access that field to obtain the package. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <p>This method is used to initialize {@link Q7CorePackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -279,7 +312,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getEnterContext() {
@@ -287,7 +321,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getEnterContext_Data() {
@@ -295,7 +330,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getCreateContext() {
@@ -303,7 +339,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCreateContext_Type() {
@@ -311,7 +348,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getCreateContext_Param() {
@@ -319,7 +357,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getPrepareEnvironment() {
@@ -327,7 +366,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getSetCommandsDelay() {
@@ -335,7 +375,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSetCommandsDelay_Delay() {
@@ -343,7 +384,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getGetQ7Information() {
@@ -351,7 +393,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getQ7Information() {
@@ -359,7 +402,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getQ7Information_Version() {
@@ -367,7 +411,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getQ7Information_TeslaActive() {
@@ -375,7 +420,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getQ7Information_TeslaPort() {
@@ -401,7 +447,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getSetQ7Features() {
@@ -409,7 +456,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSetQ7Features_Features() {
@@ -417,7 +465,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getGetPerspectives() {
@@ -425,7 +474,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getPerspectiveInfo() {
@@ -433,7 +483,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getPerspectiveInfo_Id() {
@@ -441,7 +492,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getPerspectiveInfo_Image() {
@@ -449,7 +501,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getPerspectiveInfo_Label() {
@@ -457,7 +510,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getPerspectiveInfo_Description() {
@@ -465,7 +519,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getPerspectivesList() {
@@ -473,7 +528,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getPerspectivesList_Perspectives() {
@@ -481,7 +537,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getGetViews() {
@@ -489,7 +546,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getViewInfo() {
@@ -497,7 +555,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getViewInfo_Id() {
@@ -505,7 +564,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getViewInfo_Image() {
@@ -513,7 +573,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getViewInfo_Label() {
@@ -521,7 +582,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getViewInfo_Description() {
@@ -529,7 +591,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getViewInfo_Items() {
@@ -537,7 +600,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getViewList() {
@@ -545,7 +609,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getViewList_Items() {
@@ -553,7 +618,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getCreateReport() {
@@ -561,7 +627,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getCreateReport_Name() {
@@ -569,7 +636,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getCreateReport_Q7info() {
@@ -577,7 +645,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getGetReport() {
@@ -585,7 +654,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getBeginReportNode() {
@@ -593,7 +663,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getBeginReportNode_Name() {
@@ -601,7 +672,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getBeginReportNode_Properties() {
@@ -609,7 +681,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getEndReportNode() {
@@ -617,7 +690,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getEndReportNode_Snaphots() {
@@ -625,7 +699,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getEndReportNode_TakeSnaphots() {
@@ -642,7 +717,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getReportAppend() {
@@ -650,7 +726,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getReportAppend_Objects() {
@@ -658,7 +735,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getSetQ7Option() {
@@ -666,7 +744,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSetQ7Option_Key() {
@@ -674,7 +753,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getSetQ7Option_Value() {
@@ -682,7 +762,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EClass getExecVerification() {
@@ -690,7 +771,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EReference getExecVerification_Verification() {
@@ -698,7 +780,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EAttribute getExecVerification_Phase() {
@@ -769,7 +852,53 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGetControlHierarchy() {
+		return getControlHierarchyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGetControlHierarchy_Id() {
+		return (EAttribute)getControlHierarchyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGetControlHierarchy_State() {
+		return (EAttribute)getControlHierarchyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGetControlHierarchy_Description() {
+		return (EAttribute)getControlHierarchyEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGetControlHierarchy_Kind() {
+		return (EAttribute)getControlHierarchyEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EEnum getExecutionPhase() {
@@ -777,7 +906,17 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getControlHierarchyState() {
+		return controlHierarchyStateEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Q7CoreFactory getQ7CoreFactory() {
@@ -785,7 +924,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -886,21 +1026,29 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 		terminateAutEClass = createEClass(TERMINATE_AUT);
 
+		getControlHierarchyEClass = createEClass(GET_CONTROL_HIERARCHY);
+		createEAttribute(getControlHierarchyEClass, GET_CONTROL_HIERARCHY__ID);
+		createEAttribute(getControlHierarchyEClass, GET_CONTROL_HIERARCHY__STATE);
+		createEAttribute(getControlHierarchyEClass, GET_CONTROL_HIERARCHY__DESCRIPTION);
+		createEAttribute(getControlHierarchyEClass, GET_CONTROL_HIERARCHY__KIND);
+
 		// Create enums
 		executionPhaseEEnum = createEEnum(EXECUTION_PHASE);
+		controlHierarchyStateEEnum = createEEnum(CONTROL_HIERARCHY_STATE);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model. This
-	 * method is guarded to have no affect on any invocation but its first. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Complete the initialization of the package and its meta-model.  This
+	 * method is guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -942,6 +1090,7 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 		resetVerificationsEClass.getESuperTypes().add(theCorePackage.getCommand());
 		createVerificationEClass.getESuperTypes().add(theCorePackage.getCommand());
 		terminateAutEClass.getESuperTypes().add(theCorePackage.getCommand());
+		getControlHierarchyEClass.getESuperTypes().add(theCorePackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(enterContextEClass, EnterContext.class, "EnterContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1028,12 +1177,24 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 		initEClass(terminateAutEClass, TerminateAut.class, "TerminateAut", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEClass(getControlHierarchyEClass, GetControlHierarchy.class, "GetControlHierarchy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGetControlHierarchy_Id(), theEcorePackage.getEString(), "id", "", 0, 1, GetControlHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGetControlHierarchy_State(), this.getControlHierarchyState(), "state", null, 0, 1, GetControlHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGetControlHierarchy_Description(), theEcorePackage.getEString(), "description", "", 0, 1, GetControlHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGetControlHierarchy_Kind(), theEcorePackage.getEString(), "kind", "", 0, 1, GetControlHierarchy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(executionPhaseEEnum, ExecutionPhase.class, "ExecutionPhase");
 		addEEnumLiteral(executionPhaseEEnum, ExecutionPhase.AUTO);
 		addEEnumLiteral(executionPhaseEEnum, ExecutionPhase.START);
 		addEEnumLiteral(executionPhaseEEnum, ExecutionPhase.RUN);
 		addEEnumLiteral(executionPhaseEEnum, ExecutionPhase.FINISH);
+
+		initEEnum(controlHierarchyStateEEnum, ControlHierarchyState.class, "ControlHierarchyState");
+		addEEnumLiteral(controlHierarchyStateEEnum, ControlHierarchyState.HIGHLIGHT_WIDGET);
+		addEEnumLiteral(controlHierarchyStateEEnum, ControlHierarchyState.UPDATE_ASSERT_WINDOW);
+		addEEnumLiteral(controlHierarchyStateEEnum, ControlHierarchyState.GET_ELEMENT);
+		addEEnumLiteral(controlHierarchyStateEEnum, ControlHierarchyState.GET_PARENT);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1049,8 +1210,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/ecl/internal</b>.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void createInternalAnnotations() {
@@ -1144,7 +1305,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/ecl/input</b>.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void createInputAnnotations() {
@@ -1158,7 +1320,8 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/ecl/docs</b>.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void createDocsAnnotations() {
@@ -1178,4 +1341,4 @@ public class Q7CorePackageImpl extends EPackageImpl implements Q7CorePackage {
 		   });
 	}
 
-} // Q7CorePackageImpl
+} //Q7CorePackageImpl

@@ -174,6 +174,10 @@ public class Q7CoreAdapterFactory extends AdapterFactoryImpl {
 				return createTerminateAutAdapter();
 			}
 			@Override
+			public Adapter caseGetControlHierarchy(GetControlHierarchy object) {
+				return createGetControlHierarchyAdapter();
+			}
+			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
 			}
@@ -530,6 +534,20 @@ public class Q7CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTerminateAutAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy <em>Get Control Hierarchy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy
+	 * @generated
+	 */
+	public Adapter createGetControlHierarchyAdapter() {
 		return null;
 	}
 

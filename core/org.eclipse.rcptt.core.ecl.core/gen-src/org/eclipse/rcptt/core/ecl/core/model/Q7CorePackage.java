@@ -1180,6 +1180,79 @@ public interface Q7CorePackage extends EPackage {
 	int TERMINATE_AUT_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.core.ecl.core.model.impl.GetControlHierarchyImpl <em>Get Control Hierarchy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.GetControlHierarchyImpl
+	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getGetControlHierarchy()
+	 * @generated
+	 */
+	int GET_CONTROL_HIERARCHY = 24;
+
+	/**
+	 * The feature id for the '<em><b>Host</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY__HOST = CorePackage.COMMAND__HOST;
+
+	/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY__BINDINGS = CorePackage.COMMAND__BINDINGS;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY__ID = CorePackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY__STATE = CorePackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY__DESCRIPTION = CorePackage.COMMAND_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY__KIND = CorePackage.COMMAND_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Get Control Hierarchy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_CONTROL_HIERARCHY_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 4;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase <em>Execution Phase</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1187,7 +1260,17 @@ public interface Q7CorePackage extends EPackage {
 	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getExecutionPhase()
 	 * @generated
 	 */
-	int EXECUTION_PHASE = 24;
+	int EXECUTION_PHASE = 25;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState <em>Control Hierarchy State</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState
+	 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getControlHierarchyState()
+	 * @generated
+	 */
+	int CONTROL_HIERARCHY_STATE = 26;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.ecl.core.model.EnterContext <em>Enter Context</em>}'.
@@ -1826,6 +1909,60 @@ public interface Q7CorePackage extends EPackage {
 	EClass getTerminateAut();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy <em>Get Control Hierarchy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Get Control Hierarchy</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy
+	 * @generated
+	 */
+	EClass getGetControlHierarchy();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getId()
+	 * @see #getGetControlHierarchy()
+	 * @generated
+	 */
+	EAttribute getGetControlHierarchy_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getState <em>State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>State</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getState()
+	 * @see #getGetControlHierarchy()
+	 * @generated
+	 */
+	EAttribute getGetControlHierarchy_State();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getDescription()
+	 * @see #getGetControlHierarchy()
+	 * @generated
+	 */
+	EAttribute getGetControlHierarchy_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.GetControlHierarchy#getKind()
+	 * @see #getGetControlHierarchy()
+	 * @generated
+	 */
+	EAttribute getGetControlHierarchy_Kind();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase <em>Execution Phase</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1834,6 +1971,16 @@ public interface Q7CorePackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getExecutionPhase();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState <em>Control Hierarchy State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Control Hierarchy State</em>'.
+	 * @see org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState
+	 * @generated
+	 */
+	EEnum getControlHierarchyState();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2386,6 +2533,48 @@ public interface Q7CorePackage extends EPackage {
 		EClass TERMINATE_AUT = eINSTANCE.getTerminateAut();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.core.ecl.core.model.impl.GetControlHierarchyImpl <em>Get Control Hierarchy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.core.ecl.core.model.impl.GetControlHierarchyImpl
+		 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getGetControlHierarchy()
+		 * @generated
+		 */
+		EClass GET_CONTROL_HIERARCHY = eINSTANCE.getGetControlHierarchy();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GET_CONTROL_HIERARCHY__ID = eINSTANCE.getGetControlHierarchy_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GET_CONTROL_HIERARCHY__STATE = eINSTANCE.getGetControlHierarchy_State();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GET_CONTROL_HIERARCHY__DESCRIPTION = eINSTANCE.getGetControlHierarchy_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GET_CONTROL_HIERARCHY__KIND = eINSTANCE.getGetControlHierarchy_Kind();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.core.ecl.core.model.ExecutionPhase <em>Execution Phase</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2394,6 +2583,16 @@ public interface Q7CorePackage extends EPackage {
 		 * @generated
 		 */
 		EEnum EXECUTION_PHASE = eINSTANCE.getExecutionPhase();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState <em>Control Hierarchy State</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.core.ecl.core.model.ControlHierarchyState
+		 * @see org.eclipse.rcptt.core.ecl.core.model.impl.Q7CorePackageImpl#getControlHierarchyState()
+		 * @generated
+		 */
+		EEnum CONTROL_HIERARCHY_STATE = eINSTANCE.getControlHierarchyState();
 
 	}
 

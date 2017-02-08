@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.aspects.swt.rap;
 
+import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
@@ -18,5 +20,13 @@ public interface IAssertSWTEventListener extends IAbstractSWTEventListener {
 
 	public boolean handleEventInFreeze(Widget widget, int type, Event event);
 	public void handleUpdateHover(Control control);
+
+	public boolean highlightWidget(Widget widget);
+
+	public boolean updateAssertionPanelWindow(Widget widget);
+
+	public SWTUIElement getSWTUIElement(Element element);
+
+	public Element getElement(SWTUIElement swtUIElement);
 
 }
