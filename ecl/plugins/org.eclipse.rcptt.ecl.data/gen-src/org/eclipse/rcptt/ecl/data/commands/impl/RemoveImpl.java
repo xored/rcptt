@@ -12,6 +12,7 @@ package org.eclipse.rcptt.ecl.data.commands.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
@@ -27,7 +28,7 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.RemoveImpl#getTree <em>Tree</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.RemoveImpl#getObject <em>Object</em>}</li>
  *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.RemoveImpl#getIndex <em>Index</em>}</li>
  * </ul>
  *
@@ -35,14 +36,14 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  */
 public class RemoveImpl extends CommandImpl implements Remove {
 	/**
-	 * The cached value of the '{@link #getTree() <em>Tree</em>}' reference.
+	 * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTree()
+	 * @see #getObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected Tree tree;
+	protected EObject object;
 
 	/**
 	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
@@ -88,16 +89,16 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tree getTree() {
-		if (tree != null && tree.eIsProxy()) {
-			InternalEObject oldTree = (InternalEObject)tree;
-			tree = (Tree)eResolveProxy(oldTree);
-			if (tree != oldTree) {
+	public EObject getObject() {
+		if (object != null && object.eIsProxy()) {
+			InternalEObject oldObject = (InternalEObject)object;
+			object = eResolveProxy(oldObject);
+			if (object != oldObject) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.REMOVE__TREE, oldTree, tree));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.REMOVE__OBJECT, oldObject, object));
 			}
 		}
-		return tree;
+		return object;
 	}
 
 	/**
@@ -105,8 +106,8 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tree basicGetTree() {
-		return tree;
+	public EObject basicGetObject() {
+		return object;
 	}
 
 	/**
@@ -114,11 +115,11 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTree(Tree newTree) {
-		Tree oldTree = tree;
-		tree = newTree;
+	public void setObject(EObject newObject) {
+		EObject oldObject = object;
+		object = newObject;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.REMOVE__TREE, oldTree, tree));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.REMOVE__OBJECT, oldObject, object));
 	}
 
 	/**
@@ -150,9 +151,9 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CommandsPackage.REMOVE__TREE:
-				if (resolve) return getTree();
-				return basicGetTree();
+			case CommandsPackage.REMOVE__OBJECT:
+				if (resolve) return getObject();
+				return basicGetObject();
 			case CommandsPackage.REMOVE__INDEX:
 				return getIndex();
 		}
@@ -167,8 +168,8 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CommandsPackage.REMOVE__TREE:
-				setTree((Tree)newValue);
+			case CommandsPackage.REMOVE__OBJECT:
+				setObject((EObject)newValue);
 				return;
 			case CommandsPackage.REMOVE__INDEX:
 				setIndex((Integer)newValue);
@@ -185,8 +186,8 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.REMOVE__TREE:
-				setTree((Tree)null);
+			case CommandsPackage.REMOVE__OBJECT:
+				setObject((EObject)null);
 				return;
 			case CommandsPackage.REMOVE__INDEX:
 				setIndex(INDEX_EDEFAULT);
@@ -203,8 +204,8 @@ public class RemoveImpl extends CommandImpl implements Remove {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.REMOVE__TREE:
-				return tree != null;
+			case CommandsPackage.REMOVE__OBJECT:
+				return object != null;
 			case CommandsPackage.REMOVE__INDEX:
 				return index != INDEX_EDEFAULT;
 		}

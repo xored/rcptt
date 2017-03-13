@@ -13,8 +13,10 @@ package org.eclipse.rcptt.ecl.data.internal.commands;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.data.commands.HasAttr;
+import org.eclipse.rcptt.ecl.data.internal.EclDataPlugin;
 import org.eclipse.rcptt.ecl.data.objects.Attribute;
 import org.eclipse.rcptt.ecl.data.objects.Tree;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
@@ -26,7 +28,17 @@ public class HasAttrService implements ICommandService {
 			throws InterruptedException, CoreException {
 		HasAttr ha = (HasAttr) command;
 		String name = ha.getName();
-		Tree tree = ha.getTree();
+		EObject object = ha.getObject();
+		if (object instanceof Tree) {
+			Tree tree = (Tree) object;
+			boolean hasAttribute = treeHasAttr(tree, name);
+			context.getOutput().write(hasAttribute);
+			return Status.OK_STATUS;
+		}
+		return EclDataPlugin.createErr("This type of object is not supported by the command");
+	}
+
+	public boolean treeHasAttr(Tree tree, String name) {
 		boolean hasAttribute = false;
 		for (Attribute attr : tree.getAttributes()) {
 			if (attr.getName().equals(name)) {
@@ -34,8 +46,7 @@ public class HasAttrService implements ICommandService {
 				break;
 			}
 		}
-		context.getOutput().write(hasAttribute);
-		return Status.OK_STATUS;
+		return hasAttribute;
 	}
 
 }

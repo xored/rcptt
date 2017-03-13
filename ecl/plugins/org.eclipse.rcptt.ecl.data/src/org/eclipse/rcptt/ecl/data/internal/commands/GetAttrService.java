@@ -13,6 +13,7 @@ package org.eclipse.rcptt.ecl.data.internal.commands;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.data.commands.GetAttr;
 import org.eclipse.rcptt.ecl.data.internal.EclDataPlugin;
@@ -27,14 +28,24 @@ public class GetAttrService implements ICommandService {
 			throws InterruptedException, CoreException {
 		GetAttr ga = (GetAttr) command;
 		String name = ga.getName();
-		Tree tree = ga.getTree();
+		EObject object = ga.getObject();
+		if (object instanceof Tree) {
+			Tree tree = (Tree) object;
+			String value = getAttrFromTree(tree, name);
+			context.getOutput().write(value);
+			return Status.OK_STATUS;
+		}
+		return EclDataPlugin.createErr("This type of object is not supported by the command");
+	}
+
+	private String getAttrFromTree(Tree tree, String name) throws CoreException {
 		for (Attribute attr : tree.getAttributes()) {
 			if (attr.getName().equals(name)) {
-				context.getOutput().write(attr.getValue());
-				return Status.OK_STATUS;
+				return attr.getValue();
 			}
 		}
-		return EclDataPlugin.createErr("There is no attribute with name %s in the tree", name);
+		throw new CoreException(EclDataPlugin.createErr(
+				"There is no attribute with name %s in the tree", name));
 	}
 
 }

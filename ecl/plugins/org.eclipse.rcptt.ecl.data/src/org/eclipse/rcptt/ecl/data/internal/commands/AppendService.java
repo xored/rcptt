@@ -13,7 +13,9 @@ package org.eclipse.rcptt.ecl.data.internal.commands;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.data.commands.Append;
 import org.eclipse.rcptt.ecl.data.internal.EclDataPlugin;
@@ -26,23 +28,50 @@ public class AppendService implements ICommandService {
 	public IStatus service(Command command, IProcess context)
 			throws InterruptedException, CoreException {
 		Append append = (Append) command;
-		Tree tree = append.getTree();
 		int index = append.getIndex();
-		EList<Tree> newChilds = append.getChildren();
-		EList<Tree> treeChilds = tree.getChildren();
+		EList<EObject> childs = append.getChildren();
 
+		EObject object = append.getObject();
+		if (object instanceof Tree) {
+			Tree tree = (Tree) object;
+			EList<Tree> treeChilds = getAndValidateTreeChilds(childs);
+			appendToTree(tree, treeChilds, index);
+		} else {
+			return EclDataPlugin.createErr("This type of object is not supported by the command");
+		}
+
+		context.getOutput().write(object);
+		return Status.OK_STATUS;
+	}
+
+	private void appendToTree(Tree tree, EList<Tree> childs, int index) throws CoreException {
+		index = getAndValidateIndex(index, childs.size());
+		tree.getChildren().addAll(index, childs);
+	}
+
+	private EList<Tree> getAndValidateTreeChilds(EList<EObject> childs) throws CoreException {
+		EList<Tree> treeChilds = new BasicEList<Tree>();
+		for (EObject child : childs) {
+			if (!(child instanceof Tree)) {
+				throw new CoreException(EclDataPlugin.createErr(
+						"Children must have same type as the input object"));
+			}
+			treeChilds.add((Tree) child);
+		}
+		return treeChilds;
+	}
+
+	private int getAndValidateIndex(int index, int size) throws CoreException {
 		// -1 means max index + 1
 		if (index == -1) {
-			index = treeChilds.size();
+			index = size;
 		}
-		if (index < 0 || index > treeChilds.size()) {
-			return EclDataPlugin.createErr("Invalid value of the index. Index should be in the range [%d, %d].",
-					0, treeChilds.size());
+		if (index < 0 || index > size) {
+			throw new CoreException(EclDataPlugin.createErr(
+					"Invalid value of the index. Index should be in the range [%d, %d].",
+					0, size));
 		}
-
-		treeChilds.addAll(index, newChilds);
-		context.getOutput().write(tree);
-		return Status.OK_STATUS;
+		return index;
 	}
 
 }

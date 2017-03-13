@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.ecl.data.commands;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.data.objects.Tree;
 
@@ -22,41 +23,41 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getTree <em>Tree</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getObject <em>Object</em>}</li>
  *   <li>{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getName <em>Name</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getGetAttr()
- * @model annotation="http://www.eclipse.org/ecl/docs description='Gets attribute from the tree node by name. Fails if attribute is not found.' returns='Value of the attribute' example='tree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| get-attr \"name\" | log'"
+ * @model annotation="http://www.eclipse.org/ecl/docs description='Gets attribute from the object by name. Fails if attribute is not found.' returns='Value of the attribute' example='tree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| get-attr \"name\" | log'"
  * @generated
  */
 public interface GetAttr extends Command {
 	/**
-	 * Returns the value of the '<em><b>Tree</b></em>' reference.
+	 * Returns the value of the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Tree</em>' reference isn't clear,
+	 * If the meaning of the '<em>Object</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tree</em>' reference.
-	 * @see #setTree(Tree)
-	 * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getGetAttr_Tree()
+	 * @return the value of the '<em>Object</em>' reference.
+	 * @see #setObject(EObject)
+	 * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getGetAttr_Object()
 	 * @model required="true"
 	 *        annotation="http://www.eclipse.org/ecl/docs description='Tree node to get attribute from'"
 	 * @generated
 	 */
-	Tree getTree();
+	EObject getObject();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getTree <em>Tree</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getObject <em>Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Tree</em>' reference.
-	 * @see #getTree()
+	 * @param value the new value of the '<em>Object</em>' reference.
+	 * @see #getObject()
 	 * @generated
 	 */
-	void setTree(Tree value);
+	void setObject(EObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -70,7 +71,7 @@ public interface GetAttr extends Command {
 	 * @see #setName(String)
 	 * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getGetAttr_Name()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/ecl/docs description='Name of the node attribute'"
+	 *        annotation="http://www.eclipse.org/ecl/docs description='Name of the attribute'"
 	 * @generated
 	 */
 	String getName();

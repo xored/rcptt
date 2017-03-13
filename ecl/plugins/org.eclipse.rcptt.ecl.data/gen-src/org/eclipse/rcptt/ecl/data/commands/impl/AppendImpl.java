@@ -15,6 +15,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -31,7 +32,7 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.AppendImpl#getTree <em>Tree</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.AppendImpl#getObject <em>Object</em>}</li>
  *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.AppendImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.AppendImpl#getIndex <em>Index</em>}</li>
  * </ul>
@@ -40,14 +41,14 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  */
 public class AppendImpl extends CommandImpl implements Append {
 	/**
-	 * The cached value of the '{@link #getTree() <em>Tree</em>}' reference.
+	 * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTree()
+	 * @see #getObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected Tree tree;
+	protected EObject object;
 
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
@@ -57,7 +58,7 @@ public class AppendImpl extends CommandImpl implements Append {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Tree> children;
+	protected EList<EObject> children;
 
 	/**
 	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
@@ -103,16 +104,16 @@ public class AppendImpl extends CommandImpl implements Append {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tree getTree() {
-		if (tree != null && tree.eIsProxy()) {
-			InternalEObject oldTree = (InternalEObject)tree;
-			tree = (Tree)eResolveProxy(oldTree);
-			if (tree != oldTree) {
+	public EObject getObject() {
+		if (object != null && object.eIsProxy()) {
+			InternalEObject oldObject = (InternalEObject)object;
+			object = eResolveProxy(oldObject);
+			if (object != oldObject) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.APPEND__TREE, oldTree, tree));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.APPEND__OBJECT, oldObject, object));
 			}
 		}
-		return tree;
+		return object;
 	}
 
 	/**
@@ -120,8 +121,8 @@ public class AppendImpl extends CommandImpl implements Append {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tree basicGetTree() {
-		return tree;
+	public EObject basicGetObject() {
+		return object;
 	}
 
 	/**
@@ -129,11 +130,11 @@ public class AppendImpl extends CommandImpl implements Append {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTree(Tree newTree) {
-		Tree oldTree = tree;
-		tree = newTree;
+	public void setObject(EObject newObject) {
+		EObject oldObject = object;
+		object = newObject;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.APPEND__TREE, oldTree, tree));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.APPEND__OBJECT, oldObject, object));
 	}
 
 	/**
@@ -141,9 +142,9 @@ public class AppendImpl extends CommandImpl implements Append {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Tree> getChildren() {
+	public EList<EObject> getChildren() {
 		if (children == null) {
-			children = new EObjectResolvingEList<Tree>(Tree.class, this, CommandsPackage.APPEND__CHILDREN);
+			children = new EObjectResolvingEList<EObject>(EObject.class, this, CommandsPackage.APPEND__CHILDREN);
 		}
 		return children;
 	}
@@ -177,9 +178,9 @@ public class AppendImpl extends CommandImpl implements Append {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CommandsPackage.APPEND__TREE:
-				if (resolve) return getTree();
-				return basicGetTree();
+			case CommandsPackage.APPEND__OBJECT:
+				if (resolve) return getObject();
+				return basicGetObject();
 			case CommandsPackage.APPEND__CHILDREN:
 				return getChildren();
 			case CommandsPackage.APPEND__INDEX:
@@ -197,12 +198,12 @@ public class AppendImpl extends CommandImpl implements Append {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CommandsPackage.APPEND__TREE:
-				setTree((Tree)newValue);
+			case CommandsPackage.APPEND__OBJECT:
+				setObject((EObject)newValue);
 				return;
 			case CommandsPackage.APPEND__CHILDREN:
 				getChildren().clear();
-				getChildren().addAll((Collection<? extends Tree>)newValue);
+				getChildren().addAll((Collection<? extends EObject>)newValue);
 				return;
 			case CommandsPackage.APPEND__INDEX:
 				setIndex((Integer)newValue);
@@ -219,8 +220,8 @@ public class AppendImpl extends CommandImpl implements Append {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.APPEND__TREE:
-				setTree((Tree)null);
+			case CommandsPackage.APPEND__OBJECT:
+				setObject((EObject)null);
 				return;
 			case CommandsPackage.APPEND__CHILDREN:
 				getChildren().clear();
@@ -240,8 +241,8 @@ public class AppendImpl extends CommandImpl implements Append {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.APPEND__TREE:
-				return tree != null;
+			case CommandsPackage.APPEND__OBJECT:
+				return object != null;
 			case CommandsPackage.APPEND__CHILDREN:
 				return children != null && !children.isEmpty();
 			case CommandsPackage.APPEND__INDEX:

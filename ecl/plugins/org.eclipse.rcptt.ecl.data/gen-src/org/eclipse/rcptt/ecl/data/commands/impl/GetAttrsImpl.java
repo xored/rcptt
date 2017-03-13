@@ -12,6 +12,7 @@ package org.eclipse.rcptt.ecl.data.commands.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
@@ -27,22 +28,21 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.GetAttrsImpl#getTree <em>Tree</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.commands.impl.GetAttrsImpl#getObject <em>Object</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	/**
-	 * The cached value of the '{@link #getTree() <em>Tree</em>}' reference.
+	 * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTree()
+	 * @see #getObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected Tree tree;
-
+	protected EObject object;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -67,16 +67,16 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tree getTree() {
-		if (tree != null && tree.eIsProxy()) {
-			InternalEObject oldTree = (InternalEObject)tree;
-			tree = (Tree)eResolveProxy(oldTree);
-			if (tree != oldTree) {
+	public EObject getObject() {
+		if (object != null && object.eIsProxy()) {
+			InternalEObject oldObject = (InternalEObject)object;
+			object = eResolveProxy(oldObject);
+			if (object != oldObject) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.GET_ATTRS__TREE, oldTree, tree));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.GET_ATTRS__OBJECT, oldObject, object));
 			}
 		}
-		return tree;
+		return object;
 	}
 
 	/**
@@ -84,8 +84,8 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tree basicGetTree() {
-		return tree;
+	public EObject basicGetObject() {
+		return object;
 	}
 
 	/**
@@ -93,11 +93,11 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTree(Tree newTree) {
-		Tree oldTree = tree;
-		tree = newTree;
+	public void setObject(EObject newObject) {
+		EObject oldObject = object;
+		object = newObject;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.GET_ATTRS__TREE, oldTree, tree));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.GET_ATTRS__OBJECT, oldObject, object));
 	}
 
 	/**
@@ -108,9 +108,9 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CommandsPackage.GET_ATTRS__TREE:
-				if (resolve) return getTree();
-				return basicGetTree();
+			case CommandsPackage.GET_ATTRS__OBJECT:
+				if (resolve) return getObject();
+				return basicGetObject();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -123,8 +123,8 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CommandsPackage.GET_ATTRS__TREE:
-				setTree((Tree)newValue);
+			case CommandsPackage.GET_ATTRS__OBJECT:
+				setObject((EObject)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,8 +138,8 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.GET_ATTRS__TREE:
-				setTree((Tree)null);
+			case CommandsPackage.GET_ATTRS__OBJECT:
+				setObject((EObject)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -153,8 +153,8 @@ public class GetAttrsImpl extends CommandImpl implements GetAttrs {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.GET_ATTRS__TREE:
-				return tree != null;
+			case CommandsPackage.GET_ATTRS__OBJECT:
+				return object != null;
 		}
 		return super.eIsSet(featureID);
 	}

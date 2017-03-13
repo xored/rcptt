@@ -918,7 +918,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGetAttrs_Tree() {
+	public EReference getGetAttrs_Object() {
 		return (EReference)getAttrsEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -936,7 +936,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGetAttr_Tree() {
+	public EReference getGetAttr_Object() {
 		return (EReference)getAttrEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -963,7 +963,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSetAttr_Tree() {
+	public EReference getSetAttr_Object() {
 		return (EReference)setAttrEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -999,7 +999,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getHasAttr_Tree() {
+	public EReference getHasAttr_Object() {
 		return (EReference)hasAttrEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1026,7 +1026,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGetNodes_Tree() {
+	public EReference getGetNodes_Object() {
 		return (EReference)getNodesEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1071,7 +1071,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getAppend_Tree() {
+	public EReference getAppend_Object() {
 		return (EReference)appendEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1107,7 +1107,7 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRemove_Tree() {
+	public EReference getRemove_Object() {
 		return (EReference)removeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1251,34 +1251,34 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		createEAttribute(treeNodeEClass, TREE_NODE__TEXT);
 
 		getAttrsEClass = createEClass(GET_ATTRS);
-		createEReference(getAttrsEClass, GET_ATTRS__TREE);
+		createEReference(getAttrsEClass, GET_ATTRS__OBJECT);
 
 		getAttrEClass = createEClass(GET_ATTR);
-		createEReference(getAttrEClass, GET_ATTR__TREE);
+		createEReference(getAttrEClass, GET_ATTR__OBJECT);
 		createEAttribute(getAttrEClass, GET_ATTR__NAME);
 
 		setAttrEClass = createEClass(SET_ATTR);
-		createEReference(setAttrEClass, SET_ATTR__TREE);
+		createEReference(setAttrEClass, SET_ATTR__OBJECT);
 		createEAttribute(setAttrEClass, SET_ATTR__NAME);
 		createEAttribute(setAttrEClass, SET_ATTR__VALUE);
 
 		hasAttrEClass = createEClass(HAS_ATTR);
-		createEReference(hasAttrEClass, HAS_ATTR__TREE);
+		createEReference(hasAttrEClass, HAS_ATTR__OBJECT);
 		createEAttribute(hasAttrEClass, HAS_ATTR__NAME);
 
 		getNodesEClass = createEClass(GET_NODES);
-		createEReference(getNodesEClass, GET_NODES__TREE);
+		createEReference(getNodesEClass, GET_NODES__OBJECT);
 		createEAttribute(getNodesEClass, GET_NODES__NAME);
 		createEAttribute(getNodesEClass, GET_NODES__POS);
 		createEAttribute(getNodesEClass, GET_NODES__LEN);
 
 		appendEClass = createEClass(APPEND);
-		createEReference(appendEClass, APPEND__TREE);
+		createEReference(appendEClass, APPEND__OBJECT);
 		createEReference(appendEClass, APPEND__CHILDREN);
 		createEAttribute(appendEClass, APPEND__INDEX);
 
 		removeEClass = createEClass(REMOVE);
-		createEReference(removeEClass, REMOVE__TREE);
+		createEReference(removeEClass, REMOVE__OBJECT);
 		createEAttribute(removeEClass, REMOVE__INDEX);
 
 		// Create enums
@@ -1434,34 +1434,34 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		initEAttribute(getTreeNode_Text(), ecorePackage.getEString(), "text", null, 0, 1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(getAttrsEClass, GetAttrs.class, "GetAttrs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGetAttrs_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, GetAttrs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGetAttrs_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, GetAttrs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(getAttrEClass, GetAttr.class, "GetAttr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGetAttr_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, GetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGetAttr_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, GetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGetAttr_Name(), ecorePackage.getEString(), "name", null, 1, 1, GetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(setAttrEClass, SetAttr.class, "SetAttr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSetAttr_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, SetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSetAttr_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, SetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSetAttr_Name(), ecorePackage.getEString(), "name", null, 1, 1, SetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSetAttr_Value(), ecorePackage.getEString(), "value", null, 0, 1, SetAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(hasAttrEClass, HasAttr.class, "HasAttr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getHasAttr_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, HasAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getHasAttr_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, HasAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getHasAttr_Name(), ecorePackage.getEString(), "name", null, 1, 1, HasAttr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(getNodesEClass, GetNodes.class, "GetNodes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGetNodes_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, GetNodes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGetNodes_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, GetNodes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGetNodes_Name(), ecorePackage.getEString(), "name", null, 0, 1, GetNodes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGetNodes_Pos(), theEcorePackage.getEInt(), "pos", "0", 0, 1, GetNodes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGetNodes_Len(), theEcorePackage.getEInt(), "len", "-1", 0, 1, GetNodes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(appendEClass, Append.class, "Append", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAppend_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, Append.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAppend_Children(), theObjectsPackage.getTree(), null, "children", null, 1, -1, Append.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAppend_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, Append.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAppend_Children(), theEcorePackage.getEObject(), null, "children", null, 1, -1, Append.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAppend_Index(), theEcorePackage.getEInt(), "index", "-1", 0, 1, Append.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(removeEClass, Remove.class, "Remove", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRemove_Tree(), theObjectsPackage.getTree(), null, "tree", null, 1, 1, Remove.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRemove_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, Remove.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRemove_Index(), theEcorePackage.getEInt(), "index", "-1", 1, 1, Remove.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
@@ -1885,26 +1885,26 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		  (getAttrsEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Gets attributes from the tree node",
-			 "returns", "Map with tree node attributes",
+			 "description", "Gets attributes from the object",
+			 "returns", "Map with object attributes",
 			 "example", "tree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| get-attrs | get \"name\" | log"
 		   });	
 		addAnnotation
-		  (getGetAttrs_Tree(), 
+		  (getGetAttrs_Object(), 
 		   source, 
 		   new String[] {
-			 "description", "Tree node to get attributes from"
+			 "description", "Object to get attributes from"
 		   });	
 		addAnnotation
 		  (getAttrEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Gets attribute from the tree node by name. Fails if attribute is not found.",
+			 "description", "Gets attribute from the object by name. Fails if attribute is not found.",
 			 "returns", "Value of the attribute",
 			 "example", "tree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| get-attr \"name\" | log"
 		   });	
 		addAnnotation
-		  (getGetAttr_Tree(), 
+		  (getGetAttr_Object(), 
 		   source, 
 		   new String[] {
 			 "description", "Tree node to get attribute from"
@@ -1913,67 +1913,67 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		  (getGetAttr_Name(), 
 		   source, 
 		   new String[] {
-			 "description", "Name of the node attribute"
+			 "description", "Name of the attribute"
 		   });	
 		addAnnotation
 		  (setAttrEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Sets value of the tree node attribute. If <code>value</code> parameter is not specified, the attribute will be removed.",
-			 "returns", "The value of <code>tree</code> argument",
+			 "description", "Sets value of the object attribute. If <code>value</code> parameter is not specified, the attribute will be removed.",
+			 "returns", "The value of <code>object</code> argument",
 			 "example", "tree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| get-attr \"name\" | log\n\n\n--set-attr-\n\n\n\ntree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| set-attr \"name\" \"second\" | get-attr \"name\" | log"
 		   });	
 		addAnnotation
-		  (getSetAttr_Tree(), 
+		  (getSetAttr_Object(), 
 		   source, 
 		   new String[] {
-			 "description", "Tree node to set attribute to"
+			 "description", "Object to set attribute to"
 		   });	
 		addAnnotation
 		  (getSetAttr_Name(), 
 		   source, 
 		   new String[] {
-			 "description", "Name of the node attribute"
+			 "description", "Name of the attribute"
 		   });	
 		addAnnotation
 		  (getSetAttr_Value(), 
 		   source, 
 		   new String[] {
-			 "description", "New value of the node attribute"
+			 "description", "New value of the attribute"
 		   });	
 		addAnnotation
 		  (hasAttrEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Checks if the tree node has attribute",
+			 "description", "Checks if the object has attribute",
 			 "returns", "<code>true</code> when attribute is exist, <code>false</code> otherwise",
 			 "example", "tree-node \"Device\" [map [entry \"id\" \"1\"] [entry \"name\" \"first\"]]\n\t| has-attr \"name\" | log"
 		   });	
 		addAnnotation
-		  (getHasAttr_Tree(), 
+		  (getHasAttr_Object(), 
 		   source, 
 		   new String[] {
-			 "description", "Tree node to check attribute from"
+			 "description", "Object to check attribute from"
 		   });	
 		addAnnotation
 		  (getHasAttr_Name(), 
 		   source, 
 		   new String[] {
-			 "description", "Name of the node attribute"
+			 "description", "Name of the attribute"
 		   });	
 		addAnnotation
 		  (getNodesEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Gets child nodes from the tree node and writes them into output pipe. Fails if <code>pos</code> of <code>len</code> parameter is out of range.",
-			 "returns", "<code>Tree</code> EMF Object",
+			 "description", "Gets child nodes from the object and writes them into output pipe. Fails if <code>pos</code> of <code>len</code> parameter is out of range.",
+			 "returns", "Child nodes of the object",
 			 "example", "proc newDevice [val id] [val name] [val target] {\n\ttree-node \"Device\"\n\t\t[map [entry \"id\" $id]]\n\t\t[tree-node -name \"DeviceName\" -text $name]\n\t\t[tree-node -name \"DeviceTarget\" -text $target]\n}\n \nglobal [val supportedDevices [tree-node \"SupportedDevices\"\n\t[newDevice \"1\" \"device 1\" \"target 1\"]\n\t[newDevice \"2\" \"device 2\" \"target 2\"]\n\t[newDevice \"3\" \"device 3\" \"target 3\"]\n]]\n \n$supportedDevices | get-nodes \"Device\" -pos 1 -len 1\n\t| get-nodes \"DeviceName\" | get text\n\t| equals \"device 2\" | verify-true"
 		   });	
 		addAnnotation
-		  (getGetNodes_Tree(), 
+		  (getGetNodes_Object(), 
 		   source, 
 		   new String[] {
-			 "description", "Tree node to get child nodes from"
+			 "description", "Object to get child nodes from"
 		   });	
 		addAnnotation
 		  (getGetNodes_Name(), 
@@ -1997,21 +1997,21 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		  (appendEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Adds child tree nodes to the tree attribute from tree. Fails if <code>index</code> parameter is out of range.",
-			 "returns", "The value of <code>tree</code> argument",
+			 "description", "Adds child nodes to the object. Fails if <code>index</code> parameter is out of range.",
+			 "returns", "The value of <code>object</code> argument",
 			 "example", "tree-node \"Device\" [tree-node -name \"DeviceName\" -text \"device\"]\n\t| append [tree-node -name \"DeviceTarget\" -text \"target\"] -index 0"
 		   });	
 		addAnnotation
-		  (getAppend_Tree(), 
+		  (getAppend_Object(), 
 		   source, 
 		   new String[] {
-			 "description", "Tree node to add child nodes to"
+			 "description", "Object to add child nodes to"
 		   });	
 		addAnnotation
 		  (getAppend_Children(), 
 		   source, 
 		   new String[] {
-			 "description", "New children nodes to add to the tree"
+			 "description", "New child nodes to add to the object"
 		   });	
 		addAnnotation
 		  (getAppend_Index(), 
@@ -2023,15 +2023,15 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		  (removeEClass, 
 		   source, 
 		   new String[] {
-			 "description", "Removes child node from the tree by index. Fails if <code>index</code> parameter is out of range.",
-			 "returns", "The value of <code>tree</code> argument",
+			 "description", "Removes child node from the object by index. Fails if <code>index</code> parameter is out of range.",
+			 "returns", "The value of <code>object</code> argument",
 			 "example", "tree-node \"Device\"\n\t[tree-node -name \"DeviceName\" -text \"device\"]\n\t[tree-node -name \"DeviceTarget\" -text \"target\"]\n\t\t| remove -index 1"
 		   });	
 		addAnnotation
-		  (getRemove_Tree(), 
+		  (getRemove_Object(), 
 		   source, 
 		   new String[] {
-			 "description", "Tree node to remove child node from"
+			 "description", "Object to remove child node from"
 		   });	
 		addAnnotation
 		  (getRemove_Index(), 
@@ -2140,37 +2140,37 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getGetAttrs_Tree(), 
+		  (getGetAttrs_Object(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getGetAttr_Tree(), 
+		  (getGetAttr_Object(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getSetAttr_Tree(), 
+		  (getSetAttr_Object(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getHasAttr_Tree(), 
+		  (getHasAttr_Object(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getGetNodes_Tree(), 
+		  (getGetNodes_Object(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getAppend_Tree(), 
+		  (getAppend_Object(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getRemove_Tree(), 
+		  (getRemove_Object(), 
 		   source, 
 		   new String[] {
 		   });

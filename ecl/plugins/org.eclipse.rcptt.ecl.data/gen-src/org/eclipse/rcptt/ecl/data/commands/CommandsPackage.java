@@ -1250,13 +1250,13 @@ public interface CommandsPackage extends EPackage {
 	int GET_ATTRS__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_ATTRS__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int GET_ATTRS__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Get Attrs</em>' class.
@@ -1296,13 +1296,13 @@ public interface CommandsPackage extends EPackage {
 	int GET_ATTR__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_ATTR__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int GET_ATTR__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1351,13 +1351,13 @@ public interface CommandsPackage extends EPackage {
 	int SET_ATTR__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SET_ATTR__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int SET_ATTR__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1415,13 +1415,13 @@ public interface CommandsPackage extends EPackage {
 	int HAS_ATTR__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HAS_ATTR__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int HAS_ATTR__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1470,13 +1470,13 @@ public interface CommandsPackage extends EPackage {
 	int GET_NODES__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_NODES__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int GET_NODES__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1543,13 +1543,13 @@ public interface CommandsPackage extends EPackage {
 	int APPEND__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int APPEND__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int APPEND__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -1607,13 +1607,13 @@ public interface CommandsPackage extends EPackage {
 	int REMOVE__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
-	 * The feature id for the '<em><b>Tree</b></em>' reference.
+	 * The feature id for the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMOVE__TREE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int REMOVE__OBJECT = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -2338,15 +2338,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getGetAttrs();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.GetAttrs#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.GetAttrs#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.GetAttrs#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.GetAttrs#getObject()
 	 * @see #getGetAttrs()
 	 * @generated
 	 */
-	EReference getGetAttrs_Tree();
+	EReference getGetAttrs_Object();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.commands.GetAttr <em>Get Attr</em>}'.
@@ -2359,15 +2359,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getGetAttr();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.GetAttr#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.GetAttr#getObject()
 	 * @see #getGetAttr()
 	 * @generated
 	 */
-	EReference getGetAttr_Tree();
+	EReference getGetAttr_Object();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.commands.GetAttr#getName <em>Name</em>}'.
@@ -2391,15 +2391,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getSetAttr();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.SetAttr#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.SetAttr#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.SetAttr#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.SetAttr#getObject()
 	 * @see #getSetAttr()
 	 * @generated
 	 */
-	EReference getSetAttr_Tree();
+	EReference getSetAttr_Object();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.commands.SetAttr#getName <em>Name</em>}'.
@@ -2434,15 +2434,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getHasAttr();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.HasAttr#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.HasAttr#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.HasAttr#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.HasAttr#getObject()
 	 * @see #getHasAttr()
 	 * @generated
 	 */
-	EReference getHasAttr_Tree();
+	EReference getHasAttr_Object();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.commands.HasAttr#getName <em>Name</em>}'.
@@ -2466,15 +2466,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getGetNodes();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.GetNodes#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.GetNodes#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.GetNodes#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.GetNodes#getObject()
 	 * @see #getGetNodes()
 	 * @generated
 	 */
-	EReference getGetNodes_Tree();
+	EReference getGetNodes_Object();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.commands.GetNodes#getName <em>Name</em>}'.
@@ -2520,15 +2520,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getAppend();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.Append#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.Append#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.Append#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.Append#getObject()
 	 * @see #getAppend()
 	 * @generated
 	 */
-	EReference getAppend_Tree();
+	EReference getAppend_Object();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.rcptt.ecl.data.commands.Append#getChildren <em>Children</em>}'.
@@ -2563,15 +2563,15 @@ public interface CommandsPackage extends EPackage {
 	EClass getRemove();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.Remove#getTree <em>Tree</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.commands.Remove#getObject <em>Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tree</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.commands.Remove#getTree()
+	 * @return the meta object for the reference '<em>Object</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.commands.Remove#getObject()
 	 * @see #getRemove()
 	 * @generated
 	 */
-	EReference getRemove_Tree();
+	EReference getRemove_Object();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.commands.Remove#getIndex <em>Index</em>}'.
@@ -3183,12 +3183,12 @@ public interface CommandsPackage extends EPackage {
 		EClass GET_ATTRS = eINSTANCE.getGetAttrs();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GET_ATTRS__TREE = eINSTANCE.getGetAttrs_Tree();
+		EReference GET_ATTRS__OBJECT = eINSTANCE.getGetAttrs_Object();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.commands.impl.GetAttrImpl <em>Get Attr</em>}' class.
@@ -3201,12 +3201,12 @@ public interface CommandsPackage extends EPackage {
 		EClass GET_ATTR = eINSTANCE.getGetAttr();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GET_ATTR__TREE = eINSTANCE.getGetAttr_Tree();
+		EReference GET_ATTR__OBJECT = eINSTANCE.getGetAttr_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -3227,12 +3227,12 @@ public interface CommandsPackage extends EPackage {
 		EClass SET_ATTR = eINSTANCE.getSetAttr();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference SET_ATTR__TREE = eINSTANCE.getSetAttr_Tree();
+		EReference SET_ATTR__OBJECT = eINSTANCE.getSetAttr_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -3261,12 +3261,12 @@ public interface CommandsPackage extends EPackage {
 		EClass HAS_ATTR = eINSTANCE.getHasAttr();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference HAS_ATTR__TREE = eINSTANCE.getHasAttr_Tree();
+		EReference HAS_ATTR__OBJECT = eINSTANCE.getHasAttr_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -3287,12 +3287,12 @@ public interface CommandsPackage extends EPackage {
 		EClass GET_NODES = eINSTANCE.getGetNodes();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GET_NODES__TREE = eINSTANCE.getGetNodes_Tree();
+		EReference GET_NODES__OBJECT = eINSTANCE.getGetNodes_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -3329,12 +3329,12 @@ public interface CommandsPackage extends EPackage {
 		EClass APPEND = eINSTANCE.getAppend();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference APPEND__TREE = eINSTANCE.getAppend_Tree();
+		EReference APPEND__OBJECT = eINSTANCE.getAppend_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
@@ -3363,12 +3363,12 @@ public interface CommandsPackage extends EPackage {
 		EClass REMOVE = eINSTANCE.getRemove();
 
 		/**
-		 * The meta object literal for the '<em><b>Tree</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference REMOVE__TREE = eINSTANCE.getRemove_Tree();
+		EReference REMOVE__OBJECT = eINSTANCE.getRemove_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.

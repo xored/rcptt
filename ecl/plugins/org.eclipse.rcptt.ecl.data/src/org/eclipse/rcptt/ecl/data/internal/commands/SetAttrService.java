@@ -14,8 +14,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.data.commands.SetAttr;
+import org.eclipse.rcptt.ecl.data.internal.EclDataPlugin;
 import org.eclipse.rcptt.ecl.data.objects.Attribute;
 import org.eclipse.rcptt.ecl.data.objects.ObjectsFactory;
 import org.eclipse.rcptt.ecl.data.objects.Tree;
@@ -29,8 +31,17 @@ public class SetAttrService implements ICommandService {
 		SetAttr sa = (SetAttr) command;
 		String name = sa.getName();
 		String value = sa.getValue();
-		Tree tree = sa.getTree();
+		EObject object = sa.getObject();
+		if (object instanceof Tree) {
+			Tree tree = (Tree) object;
+			setAttrToTree(tree, name, value);
+			context.getOutput().write(tree);
+			return Status.OK_STATUS;
+		}
+		return EclDataPlugin.createErr("This type of object is not supported by the command");
+	}
 
+	private void setAttrToTree(Tree tree, String name, String value) {
 		Attribute attribute = null;
 		EList<Attribute> attrs = tree.getAttributes();
 		for (Attribute attr : attrs) {
@@ -52,9 +63,6 @@ public class SetAttrService implements ICommandService {
 		} else if (attribute != null && (value == null || value.equals(""))) {
 			tree.getAttributes().remove(attribute);
 		}
-
-		context.getOutput().write(tree);
-		return Status.OK_STATUS;
 	}
 
 }

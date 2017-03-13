@@ -11,6 +11,7 @@
 package org.eclipse.rcptt.ecl.data.commands;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.data.objects.Tree;
 
@@ -23,46 +24,46 @@ import org.eclipse.rcptt.ecl.data.objects.Tree;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.commands.Append#getTree <em>Tree</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.commands.Append#getObject <em>Object</em>}</li>
  *   <li>{@link org.eclipse.rcptt.ecl.data.commands.Append#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.rcptt.ecl.data.commands.Append#getIndex <em>Index</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getAppend()
- * @model annotation="http://www.eclipse.org/ecl/docs description='Adds child tree nodes to the tree attribute from tree. Fails if <code>index</code> parameter is out of range.' returns='The value of <code>tree</code> argument' example='tree-node \"Device\" [tree-node -name \"DeviceName\" -text \"device\"]\n\t| append [tree-node -name \"DeviceTarget\" -text \"target\"] -index 0'"
+ * @model annotation="http://www.eclipse.org/ecl/docs description='Adds child nodes to the object. Fails if <code>index</code> parameter is out of range.' returns='The value of <code>object</code> argument' example='tree-node \"Device\" [tree-node -name \"DeviceName\" -text \"device\"]\n\t| append [tree-node -name \"DeviceTarget\" -text \"target\"] -index 0'"
  * @generated
  */
 public interface Append extends Command {
 	/**
-	 * Returns the value of the '<em><b>Tree</b></em>' reference.
+	 * Returns the value of the '<em><b>Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Tree</em>' reference isn't clear,
+	 * If the meaning of the '<em>Object</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tree</em>' reference.
-	 * @see #setTree(Tree)
-	 * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getAppend_Tree()
+	 * @return the value of the '<em>Object</em>' reference.
+	 * @see #setObject(EObject)
+	 * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getAppend_Object()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/ecl/docs description='Tree node to add child nodes to'"
+	 *        annotation="http://www.eclipse.org/ecl/docs description='Object to add child nodes to'"
 	 * @generated
 	 */
-	Tree getTree();
+	EObject getObject();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.commands.Append#getTree <em>Tree</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.commands.Append#getObject <em>Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Tree</em>' reference.
-	 * @see #getTree()
+	 * @param value the new value of the '<em>Object</em>' reference.
+	 * @see #getObject()
 	 * @generated
 	 */
-	void setTree(Tree value);
+	void setObject(EObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.rcptt.ecl.data.objects.Tree}.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Children</em>' reference list isn't clear,
@@ -72,10 +73,10 @@ public interface Append extends Command {
 	 * @return the value of the '<em>Children</em>' reference list.
 	 * @see org.eclipse.rcptt.ecl.data.commands.CommandsPackage#getAppend_Children()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/ecl/docs description='New children nodes to add to the tree'"
+	 *        annotation="http://www.eclipse.org/ecl/docs description='New child nodes to add to the object'"
 	 * @generated
 	 */
-	EList<Tree> getChildren();
+	EList<EObject> getChildren();
 
 	/**
 	 * Returns the value of the '<em><b>Index</b></em>' attribute.
