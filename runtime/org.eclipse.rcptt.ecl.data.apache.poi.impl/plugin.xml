@@ -24,6 +24,20 @@
             name="ReadExcelFile" 
             namespace="http://www.eclipse.org/ecl/data/apache/poi/commands.ecore"> 
       </scriptlet>
+      <scriptlet 
+            class="org.eclipse.rcptt.ecl.data.apache.poi.impl.internal.commands.GetExcelCellsService" 
+            name="GetExcelCells" 
+            namespace="http://www.eclipse.org/ecl/data/apache/poi/commands.ecore"> 
+      </scriptlet>
+      <scriptlet 
+            class="org.eclipse.rcptt.ecl.data.apache.poi.impl.internal.commands.GetExcelRangeService" 
+            name="GetExcelRange" 
+            namespace="http://www.eclipse.org/ecl/data/apache/poi/commands.ecore"> 
+      </scriptlet>
+      <scriptlet 
+            class="org.eclipse.rcptt.ecl.data.apache.poi.impl.internal.commands.SetExcelCellsService" 
+            name="SetExcelCells" 
+            namespace="http://www.eclipse.org/ecl/data/apache/poi/commands.ecore"> 
+      </scriptlet>
    </extension>
-
 </plugin>

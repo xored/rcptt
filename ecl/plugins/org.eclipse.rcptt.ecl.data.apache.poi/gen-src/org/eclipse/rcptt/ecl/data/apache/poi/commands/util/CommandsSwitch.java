@@ -1,15 +1,24 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Xored Software Inc - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.rcptt.ecl.data.apache.poi.commands.util;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.rcptt.ecl.core.Command;
-
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.*;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.ReadExcelFile;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.WriteExcelFile;
 
 /**
  * <!-- begin-user-doc -->
@@ -99,6 +108,27 @@ public class CommandsSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CommandsPackage.GET_EXCEL_CELLS: {
+				GetExcelCells getExcelCells = (GetExcelCells)theEObject;
+				T result = caseGetExcelCells(getExcelCells);
+				if (result == null) result = caseCommand(getExcelCells);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CommandsPackage.GET_EXCEL_RANGE: {
+				GetExcelRange getExcelRange = (GetExcelRange)theEObject;
+				T result = caseGetExcelRange(getExcelRange);
+				if (result == null) result = caseCommand(getExcelRange);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CommandsPackage.SET_EXCEL_CELLS: {
+				SetExcelCells setExcelCells = (SetExcelCells)theEObject;
+				T result = caseSetExcelCells(setExcelCells);
+				if (result == null) result = caseCommand(setExcelCells);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -130,6 +160,51 @@ public class CommandsSwitch<T> {
 	 * @generated
 	 */
 	public T caseReadExcelFile(ReadExcelFile object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Get Excel Cells</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Get Excel Cells</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGetExcelCells(GetExcelCells object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Get Excel Range</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Get Excel Range</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGetExcelRange(GetExcelRange object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Set Excel Cells</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Set Excel Cells</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSetExcelCells(SetExcelCells object) {
 		return null;
 	}
 

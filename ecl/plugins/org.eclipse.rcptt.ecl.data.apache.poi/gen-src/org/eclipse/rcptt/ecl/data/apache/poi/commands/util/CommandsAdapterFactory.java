@@ -1,17 +1,24 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Xored Software Inc - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.rcptt.ecl.data.apache.poi.commands.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.rcptt.ecl.core.Command;
-
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.*;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.ReadExcelFile;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.WriteExcelFile;
 
 /**
  * <!-- begin-user-doc -->
@@ -78,6 +85,18 @@ public class CommandsAdapterFactory extends AdapterFactoryImpl {
 				return createReadExcelFileAdapter();
 			}
 			@Override
+			public Adapter caseGetExcelCells(GetExcelCells object) {
+				return createGetExcelCellsAdapter();
+			}
+			@Override
+			public Adapter caseGetExcelRange(GetExcelRange object) {
+				return createGetExcelRangeAdapter();
+			}
+			@Override
+			public Adapter caseSetExcelCells(SetExcelCells object) {
+				return createSetExcelCellsAdapter();
+			}
+			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
 			}
@@ -126,6 +145,48 @@ public class CommandsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReadExcelFileAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells <em>Get Excel Cells</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells
+	 * @generated
+	 */
+	public Adapter createGetExcelCellsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange <em>Get Excel Range</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange
+	 * @generated
+	 */
+	public Adapter createGetExcelRangeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells <em>Set Excel Cells</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells
+	 * @generated
+	 */
+	public Adapter createSetExcelCellsAdapter() {
 		return null;
 	}
 
