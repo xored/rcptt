@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.core.EclMap;
 import org.eclipse.rcptt.ecl.core.EclMapEntry;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells;
 import org.eclipse.rcptt.ecl.data.apache.poi.impl.internal.EclDataApachePOIImplPlugin;
 import org.eclipse.rcptt.ecl.data.objects.ObjectsFactory;
 import org.eclipse.rcptt.ecl.data.objects.Row;
@@ -27,14 +27,14 @@ import org.eclipse.rcptt.ecl.runtime.BoxedValues;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 
-public class SetExcelCellsService implements ICommandService {
+public class SetTableCellsService implements ICommandService {
 
 	public IStatus service(Command command, IProcess context)
 			throws InterruptedException, CoreException {
-		SetExcelCells setExcelCells = (SetExcelCells) command;
-		Table table = setExcelCells.getTable();
+		SetTableCells setTableCells = (SetTableCells) command;
+		Table table = setTableCells.getTable();
 
-		EclMap cells = setExcelCells.getCells();
+		EclMap cells = setTableCells.getCells();
 		for (EclMapEntry entry : cells.getEntries()) {
 			String key = getValue(entry.getKey());
 			if (key == null || key.equals("")) {

@@ -185,14 +185,14 @@ public interface CommandsPackage extends EPackage {
 
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelCellsImpl <em>Get Excel Cells</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableCellsImpl <em>Get Table Cells</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelCellsImpl
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetExcelCells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableCellsImpl
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetTableCells()
 	 * @generated
 	 */
-	int GET_EXCEL_CELLS = 2;
+	int GET_TABLE_CELLS = 2;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -201,7 +201,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_CELLS__HOST = CorePackage.COMMAND__HOST;
+	int GET_TABLE_CELLS__HOST = CorePackage.COMMAND__HOST;
 
 	/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -210,7 +210,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_CELLS__BINDINGS = CorePackage.COMMAND__BINDINGS;
+	int GET_TABLE_CELLS__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
 	 * The feature id for the '<em><b>Table</b></em>' reference.
@@ -219,7 +219,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_CELLS__TABLE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int GET_TABLE_CELLS__TABLE = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Cells</b></em>' attribute list.
@@ -228,26 +228,26 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_CELLS__CELLS = CorePackage.COMMAND_FEATURE_COUNT + 1;
+	int GET_TABLE_CELLS__CELLS = CorePackage.COMMAND_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Get Excel Cells</em>' class.
+	 * The number of structural features of the '<em>Get Table Cells</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_CELLS_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
+	int GET_TABLE_CELLS_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelRangeImpl <em>Get Excel Range</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableRangeImpl <em>Get Table Range</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelRangeImpl
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetExcelRange()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableRangeImpl
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetTableRange()
 	 * @generated
 	 */
-	int GET_EXCEL_RANGE = 3;
+	int GET_TABLE_RANGE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -256,7 +256,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_RANGE__HOST = CorePackage.COMMAND__HOST;
+	int GET_TABLE_RANGE__HOST = CorePackage.COMMAND__HOST;
 
 	/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -265,7 +265,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_RANGE__BINDINGS = CorePackage.COMMAND__BINDINGS;
+	int GET_TABLE_RANGE__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
 	 * The feature id for the '<em><b>Table</b></em>' reference.
@@ -274,7 +274,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_RANGE__TABLE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int GET_TABLE_RANGE__TABLE = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Range</b></em>' attribute.
@@ -283,26 +283,26 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_RANGE__RANGE = CorePackage.COMMAND_FEATURE_COUNT + 1;
+	int GET_TABLE_RANGE__RANGE = CorePackage.COMMAND_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Get Excel Range</em>' class.
+	 * The number of structural features of the '<em>Get Table Range</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GET_EXCEL_RANGE_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
+	int GET_TABLE_RANGE_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetExcelCellsImpl <em>Set Excel Cells</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetTableCellsImpl <em>Set Table Cells</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetExcelCellsImpl
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getSetExcelCells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetTableCellsImpl
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getSetTableCells()
 	 * @generated
 	 */
-	int SET_EXCEL_CELLS = 4;
+	int SET_TABLE_CELLS = 4;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -311,7 +311,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SET_EXCEL_CELLS__HOST = CorePackage.COMMAND__HOST;
+	int SET_TABLE_CELLS__HOST = CorePackage.COMMAND__HOST;
 
 	/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -320,7 +320,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SET_EXCEL_CELLS__BINDINGS = CorePackage.COMMAND__BINDINGS;
+	int SET_TABLE_CELLS__BINDINGS = CorePackage.COMMAND__BINDINGS;
 
 	/**
 	 * The feature id for the '<em><b>Table</b></em>' reference.
@@ -329,7 +329,7 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SET_EXCEL_CELLS__TABLE = CorePackage.COMMAND_FEATURE_COUNT + 0;
+	int SET_TABLE_CELLS__TABLE = CorePackage.COMMAND_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Cells</b></em>' reference.
@@ -338,16 +338,16 @@ public interface CommandsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SET_EXCEL_CELLS__CELLS = CorePackage.COMMAND_FEATURE_COUNT + 1;
+	int SET_TABLE_CELLS__CELLS = CorePackage.COMMAND_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Set Excel Cells</em>' class.
+	 * The number of structural features of the '<em>Set Table Cells</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SET_EXCEL_CELLS_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
+	int SET_TABLE_CELLS_FEATURE_COUNT = CorePackage.COMMAND_FEATURE_COUNT + 2;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.WriteExcelFile <em>Write Excel File</em>}'.
@@ -425,100 +425,100 @@ public interface CommandsPackage extends EPackage {
 	EAttribute getReadExcelFile_Sheets();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells <em>Get Excel Cells</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells <em>Get Table Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Get Excel Cells</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells
+	 * @return the meta object for class '<em>Get Table Cells</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells
 	 * @generated
 	 */
-	EClass getGetExcelCells();
+	EClass getGetTableCells();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells#getTable <em>Table</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells#getTable <em>Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Table</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells#getTable()
-	 * @see #getGetExcelCells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells#getTable()
+	 * @see #getGetTableCells()
 	 * @generated
 	 */
-	EReference getGetExcelCells_Table();
+	EReference getGetTableCells_Table();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells#getCells <em>Cells</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells#getCells <em>Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Cells</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells#getCells()
-	 * @see #getGetExcelCells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells#getCells()
+	 * @see #getGetTableCells()
 	 * @generated
 	 */
-	EAttribute getGetExcelCells_Cells();
+	EAttribute getGetTableCells_Cells();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange <em>Get Excel Range</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange <em>Get Table Range</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Get Excel Range</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange
+	 * @return the meta object for class '<em>Get Table Range</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange
 	 * @generated
 	 */
-	EClass getGetExcelRange();
+	EClass getGetTableRange();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange#getTable <em>Table</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange#getTable <em>Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Table</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange#getTable()
-	 * @see #getGetExcelRange()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange#getTable()
+	 * @see #getGetTableRange()
 	 * @generated
 	 */
-	EReference getGetExcelRange_Table();
+	EReference getGetTableRange_Table();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange#getRange <em>Range</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange#getRange <em>Range</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Range</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange#getRange()
-	 * @see #getGetExcelRange()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange#getRange()
+	 * @see #getGetTableRange()
 	 * @generated
 	 */
-	EAttribute getGetExcelRange_Range();
+	EAttribute getGetTableRange_Range();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells <em>Set Excel Cells</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells <em>Set Table Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Set Excel Cells</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells
+	 * @return the meta object for class '<em>Set Table Cells</em>'.
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells
 	 * @generated
 	 */
-	EClass getSetExcelCells();
+	EClass getSetTableCells();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getTable <em>Table</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getTable <em>Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Table</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getTable()
-	 * @see #getSetExcelCells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getTable()
+	 * @see #getSetTableCells()
 	 * @generated
 	 */
-	EReference getSetExcelCells_Table();
+	EReference getSetTableCells_Table();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getCells <em>Cells</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getCells <em>Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Cells</em>'.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getCells()
-	 * @see #getSetExcelCells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getCells()
+	 * @see #getSetTableCells()
 	 * @generated
 	 */
-	EReference getSetExcelCells_Cells();
+	EReference getSetTableCells_Cells();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -603,14 +603,14 @@ public interface CommandsPackage extends EPackage {
 		EAttribute READ_EXCEL_FILE__SHEETS = eINSTANCE.getReadExcelFile_Sheets();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelCellsImpl <em>Get Excel Cells</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableCellsImpl <em>Get Table Cells</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelCellsImpl
-		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetExcelCells()
+		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableCellsImpl
+		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetTableCells()
 		 * @generated
 		 */
-		EClass GET_EXCEL_CELLS = eINSTANCE.getGetExcelCells();
+		EClass GET_TABLE_CELLS = eINSTANCE.getGetTableCells();
 
 		/**
 		 * The meta object literal for the '<em><b>Table</b></em>' reference feature.
@@ -618,7 +618,7 @@ public interface CommandsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GET_EXCEL_CELLS__TABLE = eINSTANCE.getGetExcelCells_Table();
+		EReference GET_TABLE_CELLS__TABLE = eINSTANCE.getGetTableCells_Table();
 
 		/**
 		 * The meta object literal for the '<em><b>Cells</b></em>' attribute list feature.
@@ -626,17 +626,17 @@ public interface CommandsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute GET_EXCEL_CELLS__CELLS = eINSTANCE.getGetExcelCells_Cells();
+		EAttribute GET_TABLE_CELLS__CELLS = eINSTANCE.getGetTableCells_Cells();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelRangeImpl <em>Get Excel Range</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableRangeImpl <em>Get Table Range</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelRangeImpl
-		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetExcelRange()
+		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableRangeImpl
+		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getGetTableRange()
 		 * @generated
 		 */
-		EClass GET_EXCEL_RANGE = eINSTANCE.getGetExcelRange();
+		EClass GET_TABLE_RANGE = eINSTANCE.getGetTableRange();
 
 		/**
 		 * The meta object literal for the '<em><b>Table</b></em>' reference feature.
@@ -644,7 +644,7 @@ public interface CommandsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GET_EXCEL_RANGE__TABLE = eINSTANCE.getGetExcelRange_Table();
+		EReference GET_TABLE_RANGE__TABLE = eINSTANCE.getGetTableRange_Table();
 
 		/**
 		 * The meta object literal for the '<em><b>Range</b></em>' attribute feature.
@@ -652,17 +652,17 @@ public interface CommandsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute GET_EXCEL_RANGE__RANGE = eINSTANCE.getGetExcelRange_Range();
+		EAttribute GET_TABLE_RANGE__RANGE = eINSTANCE.getGetTableRange_Range();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetExcelCellsImpl <em>Set Excel Cells</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetTableCellsImpl <em>Set Table Cells</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetExcelCellsImpl
-		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getSetExcelCells()
+		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetTableCellsImpl
+		 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.CommandsPackageImpl#getSetTableCells()
 		 * @generated
 		 */
-		EClass SET_EXCEL_CELLS = eINSTANCE.getSetExcelCells();
+		EClass SET_TABLE_CELLS = eINSTANCE.getSetTableCells();
 
 		/**
 		 * The meta object literal for the '<em><b>Table</b></em>' reference feature.
@@ -670,7 +670,7 @@ public interface CommandsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference SET_EXCEL_CELLS__TABLE = eINSTANCE.getSetExcelCells_Table();
+		EReference SET_TABLE_CELLS__TABLE = eINSTANCE.getSetTableCells_Table();
 
 		/**
 		 * The meta object literal for the '<em><b>Cells</b></em>' reference feature.
@@ -678,7 +678,7 @@ public interface CommandsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference SET_EXCEL_CELLS__CELLS = eINSTANCE.getSetExcelCells_Cells();
+		EReference SET_TABLE_CELLS__CELLS = eINSTANCE.getSetTableCells_Cells();
 
 	}
 

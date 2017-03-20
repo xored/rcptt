@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.rcptt.ecl.core.CorePackage;
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsFactory;
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange;
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.ReadExcelFile;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells;
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.WriteExcelFile;
 import org.eclipse.rcptt.ecl.data.objects.ObjectsPackage;
 
@@ -52,21 +52,21 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass getExcelCellsEClass = null;
+	private EClass getTableCellsEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass getExcelRangeEClass = null;
+	private EClass getTableRangeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass setExcelCellsEClass = null;
+	private EClass setTableCellsEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -201,8 +201,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGetExcelCells() {
-		return getExcelCellsEClass;
+	public EClass getGetTableCells() {
+		return getTableCellsEClass;
 	}
 
 	/**
@@ -210,8 +210,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGetExcelCells_Table() {
-		return (EReference)getExcelCellsEClass.getEStructuralFeatures().get(0);
+	public EReference getGetTableCells_Table() {
+		return (EReference)getTableCellsEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -219,8 +219,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGetExcelCells_Cells() {
-		return (EAttribute)getExcelCellsEClass.getEStructuralFeatures().get(1);
+	public EAttribute getGetTableCells_Cells() {
+		return (EAttribute)getTableCellsEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -228,8 +228,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGetExcelRange() {
-		return getExcelRangeEClass;
+	public EClass getGetTableRange() {
+		return getTableRangeEClass;
 	}
 
 	/**
@@ -237,8 +237,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGetExcelRange_Table() {
-		return (EReference)getExcelRangeEClass.getEStructuralFeatures().get(0);
+	public EReference getGetTableRange_Table() {
+		return (EReference)getTableRangeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -246,8 +246,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGetExcelRange_Range() {
-		return (EAttribute)getExcelRangeEClass.getEStructuralFeatures().get(1);
+	public EAttribute getGetTableRange_Range() {
+		return (EAttribute)getTableRangeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -255,8 +255,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getSetExcelCells() {
-		return setExcelCellsEClass;
+	public EClass getSetTableCells() {
+		return setTableCellsEClass;
 	}
 
 	/**
@@ -264,8 +264,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSetExcelCells_Table() {
-		return (EReference)setExcelCellsEClass.getEStructuralFeatures().get(0);
+	public EReference getSetTableCells_Table() {
+		return (EReference)setTableCellsEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -273,8 +273,8 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSetExcelCells_Cells() {
-		return (EReference)setExcelCellsEClass.getEStructuralFeatures().get(1);
+	public EReference getSetTableCells_Cells() {
+		return (EReference)setTableCellsEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -314,17 +314,17 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		createEAttribute(readExcelFileEClass, READ_EXCEL_FILE__URI);
 		createEAttribute(readExcelFileEClass, READ_EXCEL_FILE__SHEETS);
 
-		getExcelCellsEClass = createEClass(GET_EXCEL_CELLS);
-		createEReference(getExcelCellsEClass, GET_EXCEL_CELLS__TABLE);
-		createEAttribute(getExcelCellsEClass, GET_EXCEL_CELLS__CELLS);
+		getTableCellsEClass = createEClass(GET_TABLE_CELLS);
+		createEReference(getTableCellsEClass, GET_TABLE_CELLS__TABLE);
+		createEAttribute(getTableCellsEClass, GET_TABLE_CELLS__CELLS);
 
-		getExcelRangeEClass = createEClass(GET_EXCEL_RANGE);
-		createEReference(getExcelRangeEClass, GET_EXCEL_RANGE__TABLE);
-		createEAttribute(getExcelRangeEClass, GET_EXCEL_RANGE__RANGE);
+		getTableRangeEClass = createEClass(GET_TABLE_RANGE);
+		createEReference(getTableRangeEClass, GET_TABLE_RANGE__TABLE);
+		createEAttribute(getTableRangeEClass, GET_TABLE_RANGE__RANGE);
 
-		setExcelCellsEClass = createEClass(SET_EXCEL_CELLS);
-		createEReference(setExcelCellsEClass, SET_EXCEL_CELLS__TABLE);
-		createEReference(setExcelCellsEClass, SET_EXCEL_CELLS__CELLS);
+		setTableCellsEClass = createEClass(SET_TABLE_CELLS);
+		createEReference(setTableCellsEClass, SET_TABLE_CELLS__TABLE);
+		createEReference(setTableCellsEClass, SET_TABLE_CELLS__CELLS);
 	}
 
 	/**
@@ -362,9 +362,9 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		// Add supertypes to classes
 		writeExcelFileEClass.getESuperTypes().add(theCorePackage.getCommand());
 		readExcelFileEClass.getESuperTypes().add(theCorePackage.getCommand());
-		getExcelCellsEClass.getESuperTypes().add(theCorePackage.getCommand());
-		getExcelRangeEClass.getESuperTypes().add(theCorePackage.getCommand());
-		setExcelCellsEClass.getESuperTypes().add(theCorePackage.getCommand());
+		getTableCellsEClass.getESuperTypes().add(theCorePackage.getCommand());
+		getTableRangeEClass.getESuperTypes().add(theCorePackage.getCommand());
+		setTableCellsEClass.getESuperTypes().add(theCorePackage.getCommand());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(writeExcelFileEClass, WriteExcelFile.class, "WriteExcelFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -376,17 +376,17 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		initEAttribute(getReadExcelFile_Uri(), theEcorePackage.getEString(), "uri", null, 1, 1, ReadExcelFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getReadExcelFile_Sheets(), theEcorePackage.getEString(), "sheets", null, 0, -1, ReadExcelFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(getExcelCellsEClass, GetExcelCells.class, "GetExcelCells", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGetExcelCells_Table(), theObjectsPackage.getTable(), null, "table", null, 1, 1, GetExcelCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGetExcelCells_Cells(), theEcorePackage.getEString(), "cells", null, 1, -1, GetExcelCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(getTableCellsEClass, GetTableCells.class, "GetTableCells", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getGetTableCells_Table(), theObjectsPackage.getTable(), null, "table", null, 1, 1, GetTableCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGetTableCells_Cells(), theEcorePackage.getEString(), "cells", null, 1, -1, GetTableCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(getExcelRangeEClass, GetExcelRange.class, "GetExcelRange", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGetExcelRange_Table(), theObjectsPackage.getTable(), null, "table", null, 1, 1, GetExcelRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGetExcelRange_Range(), theEcorePackage.getEString(), "range", null, 1, 1, GetExcelRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(getTableRangeEClass, GetTableRange.class, "GetTableRange", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getGetTableRange_Table(), theObjectsPackage.getTable(), null, "table", null, 1, 1, GetTableRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGetTableRange_Range(), theEcorePackage.getEString(), "range", null, 1, 1, GetTableRange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(setExcelCellsEClass, SetExcelCells.class, "SetExcelCells", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSetExcelCells_Table(), theObjectsPackage.getTable(), null, "table", null, 1, 1, SetExcelCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSetExcelCells_Cells(), theCorePackage.getEclMap(), null, "cells", null, 1, 1, SetExcelCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(setTableCellsEClass, SetTableCells.class, "SetTableCells", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSetTableCells_Table(), theObjectsPackage.getTable(), null, "table", null, 1, 1, SetTableCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSetTableCells_Cells(), theCorePackage.getEclMap(), null, "cells", null, 1, 1, SetTableCells.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -447,61 +447,61 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 			 "description", "List of Excel sheet names to read data from"
 		   });	
 		addAnnotation
-		  (getExcelCellsEClass, 
+		  (getTableCellsEClass, 
 		   source, 
 		   new String[] {
 			 "description", "Gets cell values by excel names and writes them into the output pipe",
 			 "returns", "Cell values",
-			 "example", "read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| get-excel-cells A1 | eq \"Device Name\" | verify-true"
+			 "example", "read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| get-table-cells A1 | eq \"Device Name\" | verify-true"
 		   });	
 		addAnnotation
-		  (getGetExcelCells_Table(), 
+		  (getGetTableCells_Table(), 
 		   source, 
 		   new String[] {
 			 "description", "Table to get cells from"
 		   });	
 		addAnnotation
-		  (getGetExcelCells_Cells(), 
+		  (getGetTableCells_Cells(), 
 		   source, 
 		   new String[] {
 			 "description", "Cell names"
 		   });	
 		addAnnotation
-		  (getExcelRangeEClass, 
+		  (getTableRangeEClass, 
 		   source, 
 		   new String[] {
 			 "description", "Gets range by excel name and writes it into the output pipe",
 			 "returns", "<code>Table</code> EMF Object",
-			 "example", "read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| get-excel-range \"A2:B4\" | list [get rows] | each [val row] {\n\t\t$row | list [get values] | each [val value] {\n\t\t\tlog $value\n\t\t}\n}"
+			 "example", "read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| get-table-range \"A2:B4\" | list [get rows] | each [val row] {\n\t\t$row | list [get values] | each [val value] {\n\t\t\tlog $value\n\t\t}\n}"
 		   });	
 		addAnnotation
-		  (getGetExcelRange_Table(), 
+		  (getGetTableRange_Table(), 
 		   source, 
 		   new String[] {
 			 "description", "Table to get range from"
 		   });	
 		addAnnotation
-		  (getGetExcelRange_Range(), 
+		  (getGetTableRange_Range(), 
 		   source, 
 		   new String[] {
 			 "description", "Range name in the excel format (for example \"A1:B2\")"
 		   });	
 		addAnnotation
-		  (setExcelCellsEClass, 
+		  (setTableCellsEClass, 
 		   source, 
 		   new String[] {
 			 "description", "Sets cell values to the table",
 			 "returns", "The value of \'table\' argument",
-			 "example", "read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| set-excel-cells [map [entry \"A1\" \"New Device Name\"] [entry \"B1\" \"New Device Target\"]]\n\t| write-excel-file \"workspace:/excel/devices.xlsx\" -append"
+			 "example", "read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| set-table-cells [map [entry \"A1\" \"New Device Name\"] [entry \"B1\" \"New Device Target\"]]\n\t| write-excel-file \"workspace:/excel/devices.xlsx\" -append"
 		   });	
 		addAnnotation
-		  (getSetExcelCells_Table(), 
+		  (getSetTableCells_Table(), 
 		   source, 
 		   new String[] {
 			 "description", "Table to set cell values to"
 		   });	
 		addAnnotation
-		  (getSetExcelCells_Cells(), 
+		  (getSetTableCells_Cells(), 
 		   source, 
 		   new String[] {
 			 "description", "Map where key is cell name and value is cell value to set"
@@ -522,17 +522,17 @@ public class CommandsPackageImpl extends EPackageImpl implements CommandsPackage
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getGetExcelCells_Table(), 
+		  (getGetTableCells_Table(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getGetExcelRange_Table(), 
+		  (getGetTableRange_Table(), 
 		   source, 
 		   new String[] {
 		   });	
 		addAnnotation
-		  (getSetExcelCells_Table(), 
+		  (getSetTableCells_Table(), 
 		   source, 
 		   new String[] {
 		   });

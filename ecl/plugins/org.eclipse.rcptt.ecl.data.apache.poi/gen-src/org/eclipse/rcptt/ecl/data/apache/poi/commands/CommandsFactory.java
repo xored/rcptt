@@ -48,31 +48,31 @@ public interface CommandsFactory extends EFactory {
 	ReadExcelFile createReadExcelFile();
 
 	/**
-	 * Returns a new object of class '<em>Get Excel Cells</em>'.
+	 * Returns a new object of class '<em>Get Table Cells</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Get Excel Cells</em>'.
+	 * @return a new object of class '<em>Get Table Cells</em>'.
 	 * @generated
 	 */
-	GetExcelCells createGetExcelCells();
+	GetTableCells createGetTableCells();
 
 	/**
-	 * Returns a new object of class '<em>Get Excel Range</em>'.
+	 * Returns a new object of class '<em>Get Table Range</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Get Excel Range</em>'.
+	 * @return a new object of class '<em>Get Table Range</em>'.
 	 * @generated
 	 */
-	GetExcelRange createGetExcelRange();
+	GetTableRange createGetTableRange();
 
 	/**
-	 * Returns a new object of class '<em>Set Excel Cells</em>'.
+	 * Returns a new object of class '<em>Set Table Cells</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Set Excel Cells</em>'.
+	 * @return a new object of class '<em>Set Table Cells</em>'.
 	 * @generated
 	 */
-	SetExcelCells createSetExcelCells();
+	SetTableCells createSetTableCells();
 
 	/**
 	 * Returns the package supported by this factory.

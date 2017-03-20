@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,22 +16,22 @@ import org.eclipse.rcptt.ecl.data.objects.Table;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Set Excel Cells</b></em>'.
+ * A representation of the model object '<em><b>Set Table Cells</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getTable <em>Table</em>}</li>
- *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getCells <em>Cells</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getTable <em>Table</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getCells <em>Cells</em>}</li>
  * </ul>
  *
- * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage#getSetExcelCells()
- * @model annotation="http://www.eclipse.org/ecl/docs description='Sets cell values to the table' returns='The value of \'table\' argument' example='read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| set-excel-cells [map [entry \"A1\" \"New Device Name\"] [entry \"B1\" \"New Device Target\"]]\n\t| write-excel-file \"workspace:/excel/devices.xlsx\" -append'"
+ * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage#getSetTableCells()
+ * @model annotation="http://www.eclipse.org/ecl/docs description='Sets cell values to the table' returns='The value of \'table\' argument' example='read-excel-file \"workspace:/excel/devices.xlsx\" \"Supported devices\"\n\t| set-table-cells [map [entry \"A1\" \"New Device Name\"] [entry \"B1\" \"New Device Target\"]]\n\t| write-excel-file \"workspace:/excel/devices.xlsx\" -append'"
  * @generated
  */
-public interface SetExcelCells extends Command {
+public interface SetTableCells extends Command {
 	/**
 	 * Returns the value of the '<em><b>Table</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -42,7 +42,7 @@ public interface SetExcelCells extends Command {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Table</em>' reference.
 	 * @see #setTable(Table)
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage#getSetExcelCells_Table()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage#getSetTableCells_Table()
 	 * @model required="true"
 	 *        annotation="http://www.eclipse.org/ecl/docs description='Table to set cell values to'"
 	 * @generated
@@ -50,7 +50,7 @@ public interface SetExcelCells extends Command {
 	Table getTable();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getTable <em>Table</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getTable <em>Table</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Table</em>' reference.
@@ -69,7 +69,7 @@ public interface SetExcelCells extends Command {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Cells</em>' reference.
 	 * @see #setCells(EclMap)
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage#getSetExcelCells_Cells()
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage#getSetTableCells_Cells()
 	 * @model required="true"
 	 *        annotation="http://www.eclipse.org/ecl/docs description='Map where key is cell name and value is cell value to set'"
 	 * @generated
@@ -77,7 +77,7 @@ public interface SetExcelCells extends Command {
 	EclMap getCells();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells#getCells <em>Cells</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells#getCells <em>Cells</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Cells</em>' reference.
@@ -86,4 +86,4 @@ public interface SetExcelCells extends Command {
 	 */
 	void setCells(EclMap value);
 
-} // SetExcelCells
+} // SetTableCells

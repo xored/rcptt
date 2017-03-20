@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.ecl.core.Command;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange;
 import org.eclipse.rcptt.ecl.data.apache.poi.impl.internal.EclDataApachePOIImplPlugin;
 import org.eclipse.rcptt.ecl.data.objects.ObjectsFactory;
 import org.eclipse.rcptt.ecl.data.objects.Row;
@@ -23,13 +23,13 @@ import org.eclipse.rcptt.ecl.data.objects.Table;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 
-public class GetExcelRangeService implements ICommandService {
+public class GetTableRangeService implements ICommandService {
 
 	public IStatus service(Command command, IProcess context)
 			throws InterruptedException, CoreException {
-		GetExcelRange getExcelRange = (GetExcelRange) command;
-		Table table = getExcelRange.getTable();
-		String range = getExcelRange.getRange();
+		GetTableRange getTableRange = (GetTableRange) command;
+		Table table = getTableRange.getTable();
+		String range = getTableRange.getRange();
 
 		if (range.indexOf(":") == -1) {
 			return EclDataApachePOIImplPlugin.createErr(

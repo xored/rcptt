@@ -108,24 +108,24 @@ public class CommandsSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CommandsPackage.GET_EXCEL_CELLS: {
-				GetExcelCells getExcelCells = (GetExcelCells)theEObject;
-				T result = caseGetExcelCells(getExcelCells);
-				if (result == null) result = caseCommand(getExcelCells);
+			case CommandsPackage.GET_TABLE_CELLS: {
+				GetTableCells getTableCells = (GetTableCells)theEObject;
+				T result = caseGetTableCells(getTableCells);
+				if (result == null) result = caseCommand(getTableCells);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CommandsPackage.GET_EXCEL_RANGE: {
-				GetExcelRange getExcelRange = (GetExcelRange)theEObject;
-				T result = caseGetExcelRange(getExcelRange);
-				if (result == null) result = caseCommand(getExcelRange);
+			case CommandsPackage.GET_TABLE_RANGE: {
+				GetTableRange getTableRange = (GetTableRange)theEObject;
+				T result = caseGetTableRange(getTableRange);
+				if (result == null) result = caseCommand(getTableRange);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CommandsPackage.SET_EXCEL_CELLS: {
-				SetExcelCells setExcelCells = (SetExcelCells)theEObject;
-				T result = caseSetExcelCells(setExcelCells);
-				if (result == null) result = caseCommand(setExcelCells);
+			case CommandsPackage.SET_TABLE_CELLS: {
+				SetTableCells setTableCells = (SetTableCells)theEObject;
+				T result = caseSetTableCells(setTableCells);
+				if (result == null) result = caseCommand(setTableCells);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -164,47 +164,47 @@ public class CommandsSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Get Excel Cells</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Get Table Cells</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Get Excel Cells</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Get Table Cells</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGetExcelCells(GetExcelCells object) {
+	public T caseGetTableCells(GetTableCells object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Get Excel Range</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Get Table Range</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Get Excel Range</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Get Table Range</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGetExcelRange(GetExcelRange object) {
+	public T caseGetTableRange(GetTableRange object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Set Excel Cells</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Set Table Cells</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Set Excel Cells</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Set Table Cells</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSetExcelCells(SetExcelCells object) {
+	public T caseSetTableCells(SetTableCells object) {
 		return null;
 	}
 

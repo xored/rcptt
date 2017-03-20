@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,24 +17,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.rcptt.ecl.core.EclMap;
 import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells;
 import org.eclipse.rcptt.ecl.data.objects.Table;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Set Excel Cells</b></em>'.
+ * An implementation of the model object '<em><b>Set Table Cells</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetExcelCellsImpl#getTable <em>Table</em>}</li>
- *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetExcelCellsImpl#getCells <em>Cells</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetTableCellsImpl#getTable <em>Table</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.SetTableCellsImpl#getCells <em>Cells</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
+public class SetTableCellsImpl extends CommandImpl implements SetTableCells {
 	/**
 	 * The cached value of the '{@link #getTable() <em>Table</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -60,7 +60,7 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SetExcelCellsImpl() {
+	protected SetTableCellsImpl() {
 		super();
 	}
 
@@ -71,7 +71,7 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CommandsPackage.Literals.SET_EXCEL_CELLS;
+		return CommandsPackage.Literals.SET_TABLE_CELLS;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 			table = (Table)eResolveProxy(oldTable);
 			if (table != oldTable) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.SET_EXCEL_CELLS__TABLE, oldTable, table));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.SET_TABLE_CELLS__TABLE, oldTable, table));
 			}
 		}
 		return table;
@@ -109,7 +109,7 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 		Table oldTable = table;
 		table = newTable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.SET_EXCEL_CELLS__TABLE, oldTable, table));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.SET_TABLE_CELLS__TABLE, oldTable, table));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 			cells = (EclMap)eResolveProxy(oldCells);
 			if (cells != oldCells) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.SET_EXCEL_CELLS__CELLS, oldCells, cells));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.SET_TABLE_CELLS__CELLS, oldCells, cells));
 			}
 		}
 		return cells;
@@ -147,7 +147,7 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 		EclMap oldCells = cells;
 		cells = newCells;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.SET_EXCEL_CELLS__CELLS, oldCells, cells));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.SET_TABLE_CELLS__CELLS, oldCells, cells));
 	}
 
 	/**
@@ -158,10 +158,10 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CommandsPackage.SET_EXCEL_CELLS__TABLE:
+			case CommandsPackage.SET_TABLE_CELLS__TABLE:
 				if (resolve) return getTable();
 				return basicGetTable();
-			case CommandsPackage.SET_EXCEL_CELLS__CELLS:
+			case CommandsPackage.SET_TABLE_CELLS__CELLS:
 				if (resolve) return getCells();
 				return basicGetCells();
 		}
@@ -176,10 +176,10 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CommandsPackage.SET_EXCEL_CELLS__TABLE:
+			case CommandsPackage.SET_TABLE_CELLS__TABLE:
 				setTable((Table)newValue);
 				return;
-			case CommandsPackage.SET_EXCEL_CELLS__CELLS:
+			case CommandsPackage.SET_TABLE_CELLS__CELLS:
 				setCells((EclMap)newValue);
 				return;
 		}
@@ -194,10 +194,10 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.SET_EXCEL_CELLS__TABLE:
+			case CommandsPackage.SET_TABLE_CELLS__TABLE:
 				setTable((Table)null);
 				return;
-			case CommandsPackage.SET_EXCEL_CELLS__CELLS:
+			case CommandsPackage.SET_TABLE_CELLS__CELLS:
 				setCells((EclMap)null);
 				return;
 		}
@@ -212,12 +212,12 @@ public class SetExcelCellsImpl extends CommandImpl implements SetExcelCells {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.SET_EXCEL_CELLS__TABLE:
+			case CommandsPackage.SET_TABLE_CELLS__TABLE:
 				return table != null;
-			case CommandsPackage.SET_EXCEL_CELLS__CELLS:
+			case CommandsPackage.SET_TABLE_CELLS__CELLS:
 				return cells != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //SetExcelCellsImpl
+} //SetTableCellsImpl

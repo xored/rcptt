@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,24 +16,24 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.rcptt.ecl.core.impl.CommandImpl;
 import org.eclipse.rcptt.ecl.data.apache.poi.commands.CommandsPackage;
-import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange;
+import org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange;
 import org.eclipse.rcptt.ecl.data.objects.Table;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Get Excel Range</b></em>'.
+ * An implementation of the model object '<em><b>Get Table Range</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelRangeImpl#getTable <em>Table</em>}</li>
- *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetExcelRangeImpl#getRange <em>Range</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableRangeImpl#getTable <em>Table</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.impl.GetTableRangeImpl#getRange <em>Range</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
+public class GetTableRangeImpl extends CommandImpl implements GetTableRange {
 	/**
 	 * The cached value of the '{@link #getTable() <em>Table</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -69,7 +69,7 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GetExcelRangeImpl() {
+	protected GetTableRangeImpl() {
 		super();
 	}
 
@@ -80,7 +80,7 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CommandsPackage.Literals.GET_EXCEL_RANGE;
+		return CommandsPackage.Literals.GET_TABLE_RANGE;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 			table = (Table)eResolveProxy(oldTable);
 			if (table != oldTable) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.GET_EXCEL_RANGE__TABLE, oldTable, table));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CommandsPackage.GET_TABLE_RANGE__TABLE, oldTable, table));
 			}
 		}
 		return table;
@@ -118,7 +118,7 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 		Table oldTable = table;
 		table = newTable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.GET_EXCEL_RANGE__TABLE, oldTable, table));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.GET_TABLE_RANGE__TABLE, oldTable, table));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 		String oldRange = range;
 		range = newRange;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.GET_EXCEL_RANGE__RANGE, oldRange, range));
+			eNotify(new ENotificationImpl(this, Notification.SET, CommandsPackage.GET_TABLE_RANGE__RANGE, oldRange, range));
 	}
 
 	/**
@@ -150,10 +150,10 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CommandsPackage.GET_EXCEL_RANGE__TABLE:
+			case CommandsPackage.GET_TABLE_RANGE__TABLE:
 				if (resolve) return getTable();
 				return basicGetTable();
-			case CommandsPackage.GET_EXCEL_RANGE__RANGE:
+			case CommandsPackage.GET_TABLE_RANGE__RANGE:
 				return getRange();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -167,10 +167,10 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CommandsPackage.GET_EXCEL_RANGE__TABLE:
+			case CommandsPackage.GET_TABLE_RANGE__TABLE:
 				setTable((Table)newValue);
 				return;
-			case CommandsPackage.GET_EXCEL_RANGE__RANGE:
+			case CommandsPackage.GET_TABLE_RANGE__RANGE:
 				setRange((String)newValue);
 				return;
 		}
@@ -185,10 +185,10 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.GET_EXCEL_RANGE__TABLE:
+			case CommandsPackage.GET_TABLE_RANGE__TABLE:
 				setTable((Table)null);
 				return;
-			case CommandsPackage.GET_EXCEL_RANGE__RANGE:
+			case CommandsPackage.GET_TABLE_RANGE__RANGE:
 				setRange(RANGE_EDEFAULT);
 				return;
 		}
@@ -203,9 +203,9 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CommandsPackage.GET_EXCEL_RANGE__TABLE:
+			case CommandsPackage.GET_TABLE_RANGE__TABLE:
 				return table != null;
-			case CommandsPackage.GET_EXCEL_RANGE__RANGE:
+			case CommandsPackage.GET_TABLE_RANGE__RANGE:
 				return RANGE_EDEFAULT == null ? range != null : !RANGE_EDEFAULT.equals(range);
 		}
 		return super.eIsSet(featureID);
@@ -227,4 +227,4 @@ public class GetExcelRangeImpl extends CommandImpl implements GetExcelRange {
 		return result.toString();
 	}
 
-} //GetExcelRangeImpl
+} //GetTableRangeImpl

@@ -67,9 +67,9 @@ public class CommandsFactoryImpl extends EFactoryImpl implements CommandsFactory
 		switch (eClass.getClassifierID()) {
 			case CommandsPackage.WRITE_EXCEL_FILE: return createWriteExcelFile();
 			case CommandsPackage.READ_EXCEL_FILE: return createReadExcelFile();
-			case CommandsPackage.GET_EXCEL_CELLS: return createGetExcelCells();
-			case CommandsPackage.GET_EXCEL_RANGE: return createGetExcelRange();
-			case CommandsPackage.SET_EXCEL_CELLS: return createSetExcelCells();
+			case CommandsPackage.GET_TABLE_CELLS: return createGetTableCells();
+			case CommandsPackage.GET_TABLE_RANGE: return createGetTableRange();
+			case CommandsPackage.SET_TABLE_CELLS: return createSetTableCells();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -100,9 +100,9 @@ public class CommandsFactoryImpl extends EFactoryImpl implements CommandsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GetExcelCells createGetExcelCells() {
-		GetExcelCellsImpl getExcelCells = new GetExcelCellsImpl();
-		return getExcelCells;
+	public GetTableCells createGetTableCells() {
+		GetTableCellsImpl getTableCells = new GetTableCellsImpl();
+		return getTableCells;
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class CommandsFactoryImpl extends EFactoryImpl implements CommandsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GetExcelRange createGetExcelRange() {
-		GetExcelRangeImpl getExcelRange = new GetExcelRangeImpl();
-		return getExcelRange;
+	public GetTableRange createGetTableRange() {
+		GetTableRangeImpl getTableRange = new GetTableRangeImpl();
+		return getTableRange;
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class CommandsFactoryImpl extends EFactoryImpl implements CommandsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SetExcelCells createSetExcelCells() {
-		SetExcelCellsImpl setExcelCells = new SetExcelCellsImpl();
-		return setExcelCells;
+	public SetTableCells createSetTableCells() {
+		SetTableCellsImpl setTableCells = new SetTableCellsImpl();
+		return setTableCells;
 	}
 
 	/**

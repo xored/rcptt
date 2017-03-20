@@ -41,11 +41,11 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GetExcelCells" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
+  <eClassifiers xsi:type="ecore:EClass" name="GetTableCells" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
     <eAnnotations source="http://www.eclipse.org/ecl/docs">
       <details key="description" value="Gets cell values by excel names and writes them into the output pipe"/>
       <details key="returns" value="Cell values"/>
-      <details key="example" value="read-excel-file &quot;workspace:/excel/devices.xlsx&quot; &quot;Supported devices&quot;&#xA;&#x9;| get-excel-cells A1 | eq &quot;Device Name&quot; | verify-true"/>
+      <details key="example" value="read-excel-file &quot;workspace:/excel/devices.xlsx&quot; &quot;Supported devices&quot;&#xA;&#x9;| get-table-cells A1 | eq &quot;Device Name&quot; | verify-true"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="table" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.rcptt.ecl.data/model/objects.ecore#//Table">
       <eAnnotations source="http://www.eclipse.org/ecl/input"/>
@@ -60,11 +60,11 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GetExcelRange" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
+  <eClassifiers xsi:type="ecore:EClass" name="GetTableRange" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
     <eAnnotations source="http://www.eclipse.org/ecl/docs">
       <details key="description" value="Gets range by excel name and writes it into the output pipe"/>
       <details key="returns" value="&lt;code>Table&lt;/code> EMF Object"/>
-      <details key="example" value="read-excel-file &quot;workspace:/excel/devices.xlsx&quot; &quot;Supported devices&quot;&#xA;&#x9;| get-excel-range &quot;A2:B4&quot; | list [get rows] | each [val row] {&#xA;&#x9;&#x9;$row | list [get values] | each [val value] {&#xA;&#x9;&#x9;&#x9;log $value&#xA;&#x9;&#x9;}&#xA;}"/>
+      <details key="example" value="read-excel-file &quot;workspace:/excel/devices.xlsx&quot; &quot;Supported devices&quot;&#xA;&#x9;| get-table-range &quot;A2:B4&quot; | list [get rows] | each [val row] {&#xA;&#x9;&#x9;$row | list [get values] | each [val value] {&#xA;&#x9;&#x9;&#x9;log $value&#xA;&#x9;&#x9;}&#xA;}"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="table" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.rcptt.ecl.data/model/objects.ecore#//Table">
       <eAnnotations source="http://www.eclipse.org/ecl/input"/>
@@ -78,11 +78,11 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SetExcelCells" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
+  <eClassifiers xsi:type="ecore:EClass" name="SetTableCells" eSuperTypes="../../org.eclipse.rcptt.ecl.core/model/ecl.ecore#//Command">
     <eAnnotations source="http://www.eclipse.org/ecl/docs">
       <details key="description" value="Sets cell values to the table"/>
       <details key="returns" value="The value of 'table' argument"/>
-      <details key="example" value="read-excel-file &quot;workspace:/excel/devices.xlsx&quot; &quot;Supported devices&quot;&#xA;&#x9;| set-excel-cells [map [entry &quot;A1&quot; &quot;New Device Name&quot;] [entry &quot;B1&quot; &quot;New Device Target&quot;]]&#xA;&#x9;| write-excel-file &quot;workspace:/excel/devices.xlsx&quot; -append"/>
+      <details key="example" value="read-excel-file &quot;workspace:/excel/devices.xlsx&quot; &quot;Supported devices&quot;&#xA;&#x9;| set-table-cells [map [entry &quot;A1&quot; &quot;New Device Name&quot;] [entry &quot;B1&quot; &quot;New Device Target&quot;]]&#xA;&#x9;| write-excel-file &quot;workspace:/excel/devices.xlsx&quot; -append"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="table" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.rcptt.ecl.data/model/objects.ecore#//Table">
       <eAnnotations source="http://www.eclipse.org/ecl/input"/>

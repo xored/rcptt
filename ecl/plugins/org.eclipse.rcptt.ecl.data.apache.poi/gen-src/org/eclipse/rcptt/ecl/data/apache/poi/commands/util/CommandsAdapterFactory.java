@@ -85,16 +85,16 @@ public class CommandsAdapterFactory extends AdapterFactoryImpl {
 				return createReadExcelFileAdapter();
 			}
 			@Override
-			public Adapter caseGetExcelCells(GetExcelCells object) {
-				return createGetExcelCellsAdapter();
+			public Adapter caseGetTableCells(GetTableCells object) {
+				return createGetTableCellsAdapter();
 			}
 			@Override
-			public Adapter caseGetExcelRange(GetExcelRange object) {
-				return createGetExcelRangeAdapter();
+			public Adapter caseGetTableRange(GetTableRange object) {
+				return createGetTableRangeAdapter();
 			}
 			@Override
-			public Adapter caseSetExcelCells(SetExcelCells object) {
-				return createSetExcelCellsAdapter();
+			public Adapter caseSetTableCells(SetTableCells object) {
+				return createSetTableCellsAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -149,44 +149,44 @@ public class CommandsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells <em>Get Excel Cells</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells <em>Get Table Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelCells
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableCells
 	 * @generated
 	 */
-	public Adapter createGetExcelCellsAdapter() {
+	public Adapter createGetTableCellsAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange <em>Get Excel Range</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange <em>Get Table Range</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetExcelRange
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.GetTableRange
 	 * @generated
 	 */
-	public Adapter createGetExcelRangeAdapter() {
+	public Adapter createGetTableRangeAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells <em>Set Excel Cells</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells <em>Set Table Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetExcelCells
+	 * @see org.eclipse.rcptt.ecl.data.apache.poi.commands.SetTableCells
 	 * @generated
 	 */
-	public Adapter createSetExcelCellsAdapter() {
+	public Adapter createSetTableCellsAdapter() {
 		return null;
 	}
 
