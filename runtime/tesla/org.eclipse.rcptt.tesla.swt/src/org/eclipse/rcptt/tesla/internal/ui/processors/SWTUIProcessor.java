@@ -42,6 +42,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -165,6 +166,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
+import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
 import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
@@ -2743,7 +2745,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		} else if (lastCommand instanceof SelectCommand) {
 			element = ((SelectCommand) lastCommand).getData().getParent();
 		}
-		
 		// Required element hierarchy
 		SWTUIElement uiElement = null;
 		if (element != null) {

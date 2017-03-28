@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,6 +89,7 @@ import org.eclipse.ui.intro.IIntroPart;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
 
+@SuppressWarnings("restriction")
 public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 	private static <T> T as(Class<T> class_, Object object) {
@@ -119,7 +120,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return man.getMenu();
 	}
 
-	@SuppressWarnings("restriction")
+	@Override
 	public Control getToolbar(IWorkbenchPartReference reference) {
 		try {
 			return ((ToolBarManager) ((PartSite) ((WorkbenchPartReference) reference).getPart(false).getSite())
@@ -196,6 +197,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		return null;
 	}
 
+	@Override
 	public void processTabFolderButton(Widget widget, int buttonId) {
 		CTabFolder tabFolder = getCTabFolder(widget);
 		if (tabFolder == null)
@@ -510,7 +512,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 
 	@Override
 	public void applyContext(org.eclipse.rcptt.core.scenario.Context context) throws CoreException {
-	
+
 		final WorkbenchContext ctx = (WorkbenchContext) context;
 
 		final UIJobCollector collector = new UIJobCollector();

@@ -20,7 +20,7 @@ import org.eclipse.rcptt.tesla.internal.core.network.server.ITeslaNetworkClientP
 import org.eclipse.rcptt.tesla.internal.core.network.server.NetworkTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.network.server.TeslaNetworkClientConnection;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
-import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
+import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.widgets.Shell;
 
 public class Q7NetworkClientProcessor implements ITeslaNetworkClientProcessor {

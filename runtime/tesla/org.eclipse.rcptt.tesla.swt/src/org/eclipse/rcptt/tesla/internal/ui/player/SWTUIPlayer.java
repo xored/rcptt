@@ -1789,10 +1789,11 @@ public final class SWTUIPlayer {
 				// called from sleeping state
 				if (TeslaEventManager.getManager().isNoWaitForJob() || collector.isEmpty(context, info)) {
 					// collector.setNeedDisable();
-					if (result) {
-						return true;
-					}
+					debugProceed("Can proceed");
+					return true;
 				}
+			} else {
+				return false;
 			}
 			result = false;
 		}
