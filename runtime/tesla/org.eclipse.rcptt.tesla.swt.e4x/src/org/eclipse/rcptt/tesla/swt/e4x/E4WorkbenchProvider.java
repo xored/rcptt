@@ -316,7 +316,7 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	@Override
 	public boolean isSupported() {
 		Version version = TeslaCore.getPlatformVersion();
-		if (!TeslaCore.isE4() && version.getMajor() == 3 && version.getMinor() >= 103) {
+		if (TeslaCore.isE4() || version.getMajor() > 3 || (version.getMajor() == 3 && version.getMinor() >= 103)) {
 			return true;
 		}
 		return false;
