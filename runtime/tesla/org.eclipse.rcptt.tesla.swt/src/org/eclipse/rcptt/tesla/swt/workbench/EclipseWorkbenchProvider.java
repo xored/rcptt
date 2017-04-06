@@ -35,6 +35,7 @@ public class EclipseWorkbenchProvider {
 							.createExecutableExtension("class");
 					if (provider.isSupported()) {
 						currentProvider = provider;
+						break;
 					}
 				} catch (CoreException e) {
 					throw new RuntimeException("Failed to create " + cfg.getName(), e);
