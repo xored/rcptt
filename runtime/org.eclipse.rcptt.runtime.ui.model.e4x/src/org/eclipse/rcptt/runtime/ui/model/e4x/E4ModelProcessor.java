@@ -4,8 +4,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.internal.workbench.Activator;
@@ -18,6 +22,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
+import org.eclipse.rcptt.tesla.internal.core.ITeslaE4LifeCycleHandler;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -25,7 +30,10 @@ import org.osgi.framework.Bundle;
 
 @SuppressWarnings("restriction")
 public class E4ModelProcessor {
- 
+	private static final String STARTUP_EXTENSION_POINT = "org.eclipse.ui.startup"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_CLASS = "class"; //$NON-NLS-1$
+	private static final String STARTUP_CLASS_NAME = "org.eclipse.rcptt.internal.runtime.ui.Q7RuntimeStartup"; //$NON-NLS-1$
+
 	private static E4ModelProcessor INSTANCE = null;
 
 	@Inject
@@ -35,6 +43,8 @@ public class E4ModelProcessor {
 	private EPartService partService;
 	private EModelService modelService;
 
+	private ITeslaE4LifeCycleHandler teslaLifeCycleHandler;
+
 	@Execute
 	public void execute(Display display,
 			EModelService modelService,
@@ -43,6 +53,8 @@ public class E4ModelProcessor {
 		this.partService = partService;
 		this.modelService = modelService;
 		INSTANCE = this;
+
+		performRcpttStartup();
 	}
 
 	/**
@@ -122,4 +134,32 @@ public class E4ModelProcessor {
 		return INSTANCE.application.getContext().getActiveLeaf().get(Shell.class);
 	}
 
+	@PreDestroy
+	private void preDestroy() {
+		if (teslaLifeCycleHandler != null) {
+			teslaLifeCycleHandler.shutdown();
+		}
+	}
+
+	private void performRcpttStartup() {
+		IConfigurationElement[] elements = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(STARTUP_EXTENSION_POINT);
+		for (IConfigurationElement element : elements) {
+			try {
+				final String className = element.getAttribute(ATTRIBUTE_CLASS);
+				if (className.equals(STARTUP_CLASS_NAME)) {
+					teslaLifeCycleHandler = (ITeslaE4LifeCycleHandler) element
+						.createExecutableExtension(ATTRIBUTE_CLASS);
+					break;
+				}
+
+			} catch (CoreException e) {
+				E4ModelPlugin.error(e, "Failed to create startup extension object"); //$NON-NLS-1$
+			}
+		}
+
+		if (teslaLifeCycleHandler != null) {
+			teslaLifeCycleHandler.startup();
+		}
+	}
 }
