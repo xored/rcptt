@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,11 +33,11 @@ public class TeslaFeatures extends AbstractFeatureManager {
 	};
 
 	public static enum EscapeMode {
-		ExactString,
-		EscapedRegex
+		ExactString, EscapedRegex
 	}
 
 	public final static String ACTIVITY_LOGS = "com.xored.runtime.enable.activity.logs";
+	public final static String TESTENGINE_LOGS = "com.xored.testengine.logs";
 
 	public static final String ADV_OPTIONS = "adv.options";
 
@@ -55,6 +55,8 @@ public class TeslaFeatures extends AbstractFeatureManager {
 
 	public static String CAT_REPORTING = "Reporting";
 	public final static String REPORT_PASSED_TEST_DETAILS = "com.xored.reporting.passed.test.details";
+	public final static String REPORT_LOGGING_SIZE_OF_INITIAL_PART = "com.xored.reporting.logging.initial.size";
+	public final static String REPORT_LOGGING_SIZE_OF_ROTATION_PART = "com.xored.reporting.logging.rotation.size";
 	public final static String REPORT_INCLUDE_IGNORED_WAIT_DETAILS = "com.xored.reporting.include.ignored.wait.details";
 	public final static String REPORT_PASSED_WAIT_DETAILS = "com.xored.reporting.include.passed.wait.details";
 
@@ -111,6 +113,24 @@ public class TeslaFeatures extends AbstractFeatureManager {
 				.values(AbstractFeatureManager.BOOLEAN_VALUES)
 				.description(
 						"Command 'trace' and 'take-screenshot' can be used to add data into test report")
+				.editable(true).showIn(ADV_OPTIONS);
+
+		option(REPORT_LOGGING_SIZE_OF_INITIAL_PART).category(CAT_REPORTING)
+				.name("The size of log initial part(in MB)")
+				.value("5")
+				.defaultValue("5")
+				.values(AbstractFeatureManager.INT_VALUES)
+				.description(
+						"The initial part size of logs")
+				.editable(true).showIn(ADV_OPTIONS);
+
+		option(REPORT_LOGGING_SIZE_OF_ROTATION_PART).category(CAT_REPORTING)
+				.name("The size of log rotation part(in MB)")
+				.value("5")
+				.defaultValue("5")
+				.values(AbstractFeatureManager.INT_VALUES)
+				.description(
+						"The rotation size of log. At overflow works by the principle of queue.")
 				.editable(true).showIn(ADV_OPTIONS);
 
 		option(REPORT_INCLUDE_IGNORED_WAIT_DETAILS).category(CAT_REPORTING)
@@ -181,6 +201,15 @@ public class TeslaFeatures extends AbstractFeatureManager {
 				.values(AbstractFeatureManager.BOOLEAN_VALUES)
 				.description(
 						"Store RCPTT runtime activity events into .metadata/.plugins/org.eclipse.rcptt.logging")
+				.editable(true).showIn(ADV_OPTIONS);
+		option(TESTENGINE_LOGS)
+				.name("Enable Test Engine logging")
+				.category(CAT_LOGGING)
+				.value("false")
+				.defaultValue("false")
+				.values(AbstractFeatureManager.BOOLEAN_VALUES)
+				.description(
+						"Show Test Engines info messages in Error Log")
 				.editable(true).showIn(ADV_OPTIONS);
 	}
 

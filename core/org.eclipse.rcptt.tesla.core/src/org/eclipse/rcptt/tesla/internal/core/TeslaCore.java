@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -142,8 +142,11 @@ public class TeslaCore extends Plugin {
 		Version version = getPlatformVersion();
 		return version.getMajor() == 3 && version.getMinor() >= 103;
 	}
-	
-	
+	public static boolean isEclipse46() {
+		Version version = getPlatformVersion();
+		return version.getMajor() == 3 && version.getMinor() >= 107;
+	}
+
 	public static boolean isE4() {
 		Bundle bundle = Platform.getBundle("org.eclipse.e4.core.contexts");
 		boolean isE4ContextsBundleActive = bundle != null && Bundle.ACTIVE == bundle.getState();

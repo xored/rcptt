@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -501,6 +501,14 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseUpdateControlCommand(UpdateControlCommand object) {
 				return createUpdateControlCommandAdapter();
+			}
+			@Override
+			public Adapter caseRapDownloadFile(RapDownloadFile object) {
+				return createRapDownloadFileAdapter();
+			}
+			@Override
+			public Adapter caseRapUploadFile(RapUploadFile object) {
+				return createRapUploadFileAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -2011,6 +2019,34 @@ public class ProtocolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUpdateControlCommandAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile <em>Rap Download File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile
+	 * @generated
+	 */
+	public Adapter createRapDownloadFileAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.protocol.RapUploadFile <em>Rap Upload File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapUploadFile
+	 * @generated
+	 */
+	public Adapter createRapUploadFileAdapter() {
 		return null;
 	}
 

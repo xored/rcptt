@@ -1,5 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *  
+ * Contributors:
+ * 	Xored Software Inc - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.rcptt.launching.multiaut;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +37,7 @@ import org.eclipse.rcptt.internal.launching.Executable;
 import org.eclipse.rcptt.internal.launching.ExecutionSession;
 import org.eclipse.rcptt.internal.launching.PrepareExecutionWrapper;
 import org.eclipse.rcptt.internal.launching.Q7LaunchManager;
-import org.eclipse.rcptt.internal.launching.Q7LaunchManager.ExecutableFabric;
+import org.eclipse.rcptt.internal.launching.Q7LaunchManager.ExecutableFactory;
 import org.eclipse.rcptt.internal.launching.Q7LaunchManager.SessionRunnable;
 import org.eclipse.rcptt.internal.launching.Q7Process;
 import org.eclipse.rcptt.internal.launching.Q7TestLaunch;
@@ -63,8 +72,8 @@ public class MultiAutLaunchDelegate extends LaunchConfigurationDelegate implemen
 			Q7Process q7process = new Q7Process(launch, autLaunch);
 			processes.put(entry.aut, q7process);
 
-			ExecutableFabric f = new ExecutableFabric(autLaunch, null, q7process.getDebugger());
-			Executable[] testExecs = f.map(new IQ7NamedElement[] { entry.element }, null);
+			ExecutableFactory f = new ExecutableFactory(autLaunch, null, q7process.getDebugger());
+			Executable[] testExecs = f.map(new IQ7NamedElement[] { entry.element }, null, autLaunch.getCapability());
 			for (int i = 0; i < testExecs.length; i++) {
 				Executable e = testExecs[i];
 				if (e instanceof PrepareExecutionWrapper) {
@@ -290,7 +299,11 @@ public class MultiAutLaunchDelegate extends LaunchConfigurationDelegate implemen
 		public void handleAutEvent(org.eclipse.rcptt.core.launching.events.AutEvent autEvent) {
 			launch.handleAutEvent(autEvent);
 		}
-		
-		
+
+		@Override
+		public String getCapability() {
+			return launch.getCapability();
+		}
+
 	}
 }

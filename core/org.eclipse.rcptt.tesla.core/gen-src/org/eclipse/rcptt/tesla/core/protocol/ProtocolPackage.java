@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -2942,13 +2942,31 @@ public interface ProtocolPackage extends EPackage {
 	int ACTIVATE_CELL_EDITOR__COLUMN = ELEMENT_COMMAND_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVATE_CELL_EDITOR__TYPE = ELEMENT_COMMAND_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Button</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVATE_CELL_EDITOR__BUTTON = ELEMENT_COMMAND_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Activate Cell Editor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVATE_CELL_EDITOR_FEATURE_COUNT = ELEMENT_COMMAND_FEATURE_COUNT + 4;
+	int ACTIVATE_CELL_EDITOR_FEATURE_COUNT = ELEMENT_COMMAND_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.ApplyCellEditorImpl <em>Apply Cell Editor</em>}' class.
@@ -5420,6 +5438,107 @@ public interface ProtocolPackage extends EPackage {
 	int UPDATE_CONTROL_COMMAND_FEATURE_COUNT = RawPackage.COMMAND_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.RapDownloadFileImpl <em>Rap Download File</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.RapDownloadFileImpl
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getRapDownloadFile()
+	 * @generated
+	 */
+	int RAP_DOWNLOAD_FILE = 106;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_DOWNLOAD_FILE__ID = RawPackage.COMMAND__ID;
+
+	/**
+	 * The feature id for the '<em><b>Url</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_DOWNLOAD_FILE__URL = RawPackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_DOWNLOAD_FILE__HANDLER = RawPackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Content</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_DOWNLOAD_FILE__CONTENT = RawPackage.COMMAND_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Rap Download File</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_DOWNLOAD_FILE_FEATURE_COUNT = RawPackage.COMMAND_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.RapUploadFileImpl <em>Rap Upload File</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.RapUploadFileImpl
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getRapUploadFile()
+	 * @generated
+	 */
+	int RAP_UPLOAD_FILE = 107;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_UPLOAD_FILE__ID = RawPackage.COMMAND__ID;
+
+	/**
+	 * The feature id for the '<em><b>Base64file</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_UPLOAD_FILE__BASE64FILE = RawPackage.COMMAND_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_UPLOAD_FILE__PATH = RawPackage.COMMAND_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Rap Upload File</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAP_UPLOAD_FILE_FEATURE_COUNT = RawPackage.COMMAND_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5427,7 +5546,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getSWTDialogKind()
 	 * @generated
 	 */
-	int SWT_DIALOG_KIND = 106;
+	int SWT_DIALOG_KIND = 108;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.AssertKind <em>Assert Kind</em>}' enum.
@@ -5437,7 +5556,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getAssertKind()
 	 * @generated
 	 */
-	int ASSERT_KIND = 107;
+	int ASSERT_KIND = 109;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.DragKind <em>Drag Kind</em>}' enum.
@@ -5447,7 +5566,7 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getDragKind()
 	 * @generated
 	 */
-	int DRAG_KIND = 108;
+	int DRAG_KIND = 110;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.MouseEventKind <em>Mouse Event Kind</em>}' enum.
@@ -5457,7 +5576,18 @@ public interface ProtocolPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getMouseEventKind()
 	 * @generated
 	 */
-	int MOUSE_EVENT_KIND = 109;
+	int MOUSE_EVENT_KIND = 111;
+
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.protocol.ActivationEventType <em>Activation Event Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.core.protocol.ActivationEventType
+	 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getActivationEventType()
+	 * @generated
+	 */
+	int ACTIVATION_EVENT_TYPE = 112;
 
 
 	/**
@@ -6899,6 +7029,28 @@ public interface ProtocolPackage extends EPackage {
 	EAttribute getActivateCellEditor_Column();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor#getType()
+	 * @see #getActivateCellEditor()
+	 * @generated
+	 */
+	EAttribute getActivateCellEditor_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor#getButton <em>Button</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Button</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor#getButton()
+	 * @see #getActivateCellEditor()
+	 * @generated
+	 */
+	EAttribute getActivateCellEditor_Button();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.protocol.ApplyCellEditor <em>Apply Cell Editor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8303,6 +8455,81 @@ public interface ProtocolPackage extends EPackage {
 	EReference getUpdateControlCommand_Elements();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile <em>Rap Download File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Rap Download File</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile
+	 * @generated
+	 */
+	EClass getRapDownloadFile();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile#getUrl <em>Url</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Url</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile#getUrl()
+	 * @see #getRapDownloadFile()
+	 * @generated
+	 */
+	EAttribute getRapDownloadFile_Url();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Handler</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile#getHandler()
+	 * @see #getRapDownloadFile()
+	 * @generated
+	 */
+	EAttribute getRapDownloadFile_Handler();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile#getContent <em>Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Content</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapDownloadFile#getContent()
+	 * @see #getRapDownloadFile()
+	 * @generated
+	 */
+	EAttribute getRapDownloadFile_Content();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.protocol.RapUploadFile <em>Rap Upload File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Rap Upload File</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapUploadFile
+	 * @generated
+	 */
+	EClass getRapUploadFile();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.RapUploadFile#getBase64file <em>Base64file</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Base64file</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapUploadFile#getBase64file()
+	 * @see #getRapUploadFile()
+	 * @generated
+	 */
+	EAttribute getRapUploadFile_Base64file();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.protocol.RapUploadFile#getPath <em>Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Path</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.RapUploadFile#getPath()
+	 * @see #getRapUploadFile()
+	 * @generated
+	 */
+	EAttribute getRapUploadFile_Path();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8341,6 +8568,16 @@ public interface ProtocolPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getMouseEventKind();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.rcptt.tesla.core.protocol.ActivationEventType <em>Activation Event Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Activation Event Type</em>'.
+	 * @see org.eclipse.rcptt.tesla.core.protocol.ActivationEventType
+	 * @generated
+	 */
+	EEnum getActivationEventType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -9569,6 +9806,22 @@ public interface ProtocolPackage extends EPackage {
 		EAttribute ACTIVATE_CELL_EDITOR__COLUMN = eINSTANCE.getActivateCellEditor_Column();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACTIVATE_CELL_EDITOR__TYPE = eINSTANCE.getActivateCellEditor_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Button</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACTIVATE_CELL_EDITOR__BUTTON = eINSTANCE.getActivateCellEditor_Button();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.ApplyCellEditorImpl <em>Apply Cell Editor</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -10721,6 +10974,66 @@ public interface ProtocolPackage extends EPackage {
 		EReference UPDATE_CONTROL_COMMAND__ELEMENTS = eINSTANCE.getUpdateControlCommand_Elements();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.RapDownloadFileImpl <em>Rap Download File</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.RapDownloadFileImpl
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getRapDownloadFile()
+		 * @generated
+		 */
+		EClass RAP_DOWNLOAD_FILE = eINSTANCE.getRapDownloadFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RAP_DOWNLOAD_FILE__URL = eINSTANCE.getRapDownloadFile_Url();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RAP_DOWNLOAD_FILE__HANDLER = eINSTANCE.getRapDownloadFile_Handler();
+
+		/**
+		 * The meta object literal for the '<em><b>Content</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RAP_DOWNLOAD_FILE__CONTENT = eINSTANCE.getRapDownloadFile_Content();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.impl.RapUploadFileImpl <em>Rap Upload File</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.RapUploadFileImpl
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getRapUploadFile()
+		 * @generated
+		 */
+		EClass RAP_UPLOAD_FILE = eINSTANCE.getRapUploadFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Base64file</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RAP_UPLOAD_FILE__BASE64FILE = eINSTANCE.getRapUploadFile_Base64file();
+
+		/**
+		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RAP_UPLOAD_FILE__PATH = eINSTANCE.getRapUploadFile_Path();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind <em>SWT Dialog Kind</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -10759,6 +11072,16 @@ public interface ProtocolPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum MOUSE_EVENT_KIND = eINSTANCE.getMouseEventKind();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.protocol.ActivationEventType <em>Activation Event Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.core.protocol.ActivationEventType
+		 * @see org.eclipse.rcptt.tesla.core.protocol.impl.ProtocolPackageImpl#getActivationEventType()
+		 * @generated
+		 */
+		EEnum ACTIVATION_EVENT_TYPE = eINSTANCE.getActivationEventType();
 
 	}
 

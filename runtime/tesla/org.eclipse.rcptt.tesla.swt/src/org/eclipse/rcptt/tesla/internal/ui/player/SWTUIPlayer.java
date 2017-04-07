@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,9 +75,9 @@ import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager.TimerInfo;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IViewerItem;
+import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.util.swt.Bounds;
 import org.eclipse.rcptt.util.swt.Events;
-import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
 import org.eclipse.rcptt.util.swt.TabCTabUtil;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
@@ -151,7 +151,8 @@ import org.eclipse.ui.internal.registry.EditorRegistry;
 
 @SuppressWarnings("restriction")
 public final class SWTUIPlayer {
-
+	private static final boolean DEBUG_PROCEED = "true"
+			.equals(Platform.getDebugOption("org.eclipse.rcptt.tesla.swt/debug/proceed"));
 	final Display display;
 	private SWTUIElement[] ignoreWindows;
 	private Shell[] ignoredShells;
@@ -170,8 +171,7 @@ public final class SWTUIPlayer {
 
 	protected static Map<Class<?>, ElementKind> elementKinds = new LinkedHashMap<Class<?>, ElementKind>();
 	private final ITimerExecHelper timerListener;
-	static List<ISWTUIPlayerExtension> extensions = new ArrayList<ISWTUIPlayerExtension>();
-
+	private static List<ISWTUIPlayerExtension> extensions = new ArrayList<ISWTUIPlayerExtension>();
 	static {
 		elementKinds.put(Shell.class, ElementKind.Window);
 		elementKinds.put(CBanner.class, ElementKind.CBanner);
@@ -237,6 +237,7 @@ public final class SWTUIPlayer {
 
 	private ITimerExecHelper getTimerExecHelper() {
 		return new ITimerExecHelper() {
+			@Override
 			public boolean needNullify(Runnable run, int time) {
 				String clName = null;
 				if (run instanceof SherlockTimerRunnable) {
@@ -291,7 +292,7 @@ public final class SWTUIPlayer {
 	public SWTUIElement select(PlayerSelectionFilter filter) {
 		SWTUIElement result = null;
 
-		for (ISWTUIPlayerExtension ext : extensions) {
+		for (ISWTUIPlayerExtension ext : getExtensions()) {
 			result = ext.select(this, filter);
 			if (result != null) {
 				return result;
@@ -451,8 +452,8 @@ public final class SWTUIPlayer {
 			if (current != null) {
 				return wrap(current);
 			}
-		} else
-			if (parent != null && unwrapWidget(parent) instanceof Tree && f.indexes != null && f.indexes.length == 2) {
+		} else if (parent != null && unwrapWidget(parent) instanceof Tree && f.indexes != null
+				&& f.indexes.length == 2) {
 			// Select item with column
 			final Tree tree = (Tree) unwrapWidget(parent);
 			TreeItem[] items = getExpandedTreeItems(tree);
@@ -484,8 +485,8 @@ public final class SWTUIPlayer {
 				}
 			}
 
-		} else
-			if (parent != null && unwrapWidget(parent) instanceof Table && f.indexes != null && f.indexes.length == 2) {
+		} else if (parent != null && unwrapWidget(parent) instanceof Table && f.indexes != null
+				&& f.indexes.length == 2) {
 			Object current = unwrapWidget(parent);
 			TableItem[] items = ((Table) current).getItems();
 			if (items.length > f.indexes[1]) {
@@ -796,8 +797,8 @@ public final class SWTUIPlayer {
 	}
 
 	/**
-	 * Put the caret at the given position in the styled text widget by clicking there. This also clears the current
-	 * text selection.
+	 * Put the caret at the given position in the styled text widget by clicking
+	 * there. This also clears the current text selection.
 	 */
 	public void setTextOffset(final StyledText styledText, final int offset, final int line) {
 		exec("Set text offset", new Runnable() {
@@ -828,8 +829,9 @@ public final class SWTUIPlayer {
 
 	public void click(final SWTUIElement w, final boolean isDefault, final boolean doubleClick, final boolean arrow) {
 		exec("click", new Runnable() {
+			@Override
 			public void run() {
-				for (ISWTUIPlayerExtension ext : extensions) {
+				for (ISWTUIPlayerExtension ext : getExtensions()) {
 					if (ext.canClick(w, isDefault, doubleClick, arrow)) {
 						ext.click(w, isDefault, doubleClick, arrow);
 						return;
@@ -1139,6 +1141,7 @@ public final class SWTUIPlayer {
 		Viewers.selectItem(w, false);
 		final Point itemCenter = centerAbs(column >= 0 ? getItemBounds(item, column) : getItemBounds(item));
 		w.getPlayer().exec("click cell", new Runnable() {
+			@Override
 			public void run() {
 				if (doubleClick) {
 					getEvents().sendFocus(itemParent);
@@ -1232,12 +1235,12 @@ public final class SWTUIPlayer {
 	 * <p>
 	 * The functionality of this method can be extended by
 	 * {@link ISWTUIPlayerExtension#wrap(Object, SWTUIPlayer)} method.
-	 * 
+	 *
 	 * @see SWTUIElement
 	 */
 	public SWTUIElement wrap(Object s) {
 
-		for (ISWTUIPlayerExtension ext : extensions) {
+		for (ISWTUIPlayerExtension ext : getExtensions()) {
 			SWTUIElement result = ext.wrap(s, this);
 			if (result != null) {
 				return result;
@@ -1445,6 +1448,7 @@ public final class SWTUIPlayer {
 		final Widget widget = unwrapWidget(uiElement);
 		if (widget instanceof Control && !widget.isDisposed()) {
 			exec("setBackground", new Runnable() {
+				@Override
 				public void run() {
 					if (!widget.isDisposed()) {
 						((Control) widget).setBackground(((SWTUIColor) color).getColor());
@@ -1458,6 +1462,7 @@ public final class SWTUIPlayer {
 			final int hours, final int minutes, final int second) {
 		final Widget widget = unwrapWidget(uiElement);
 		exec("setDateTime", new Runnable() {
+			@Override
 			public void run() {
 				if (widget.isDisposed()) {
 					return;
@@ -1511,6 +1516,7 @@ public final class SWTUIPlayer {
 	public void setText(final SWTUIElement uiElement, final String text, final boolean select) {
 		final Widget widget = unwrapWidget(uiElement);
 		exec("setText", new Runnable() {
+			@Override
 			public void run() {
 				if (widget.isDisposed()) {
 					return;
@@ -1603,7 +1609,9 @@ public final class SWTUIPlayer {
 		}
 
 		if ((menu.getStyle() & SWT.BAR) == 0) { // Not a menu bar
-			shownMenus.add(new WeakReference<Menu>(menu));
+			synchronized (shownMenus) {
+				shownMenus.add(new WeakReference<Menu>(menu));
+			}
 		}
 
 		events.sendEvent(uiElement, SWT.Show, pos.x, pos.y, 0);
@@ -1631,7 +1639,7 @@ public final class SWTUIPlayer {
 		ElementKind kind = elementKinds.get(widget.getClass());
 		if (kind == null) {
 			// Try to find superclass for custom widget in extensions
-			for (ISWTUIPlayerExtension extension : extensions) {
+			for (ISWTUIPlayerExtension extension : getExtensions()) {
 				Class<?> searchableClass = extension.getSearchableClass(widget);
 				if (searchableClass != null) {
 					return searchableClass;
@@ -1652,7 +1660,7 @@ public final class SWTUIPlayer {
 		if (w == null)
 			return GenericElementKind.Unknown;
 
-		for (ISWTUIPlayerExtension extension : extensions) {
+		for (ISWTUIPlayerExtension extension : getExtensions()) {
 			GenericElementKind kind = extension.getKind(w);
 			if (kind != null) {
 				return kind;
@@ -1677,6 +1685,7 @@ public final class SWTUIPlayer {
 
 	public void close(final SWTUIElement uiElement) {
 		exec("close", new Runnable() {
+			@Override
 			public void run() {
 				if (uiElement instanceof WorkbenchUIElement) {
 					IWorkbenchPartReference reference = ((WorkbenchUIElement) uiElement).getReference();
@@ -1756,33 +1765,48 @@ public final class SWTUIPlayer {
 	}
 
 	public boolean canProceed(Context context, Q7WaitInfoRoot info) {
-		boolean result = true;
 		if (!display.equals(Display.getCurrent())) {
 			// Q7WaitUtils.updateInfo("display", "non current", info);
-			result = false;
+			debugProceed("Wrong display");
+			return false;
 		}
 		// Return false if we have SWT observable in timers
 		if (hasTimers(display, info)) {
-			result = false;
+			debugProceed("Timers active");
+			return false;
 		}
 		// Check for asyncs in synchronizer
 		if (!TeslaEventManager.getManager().isNoWaitForJob() && hasRunnables(display)) {
 			// Q7WaitUtils.updateInfo("display", "runnables", info);
-			result = false;
+			debugProceed("Display has runnables");
+			return false;
 		}
 		if (!BrowserManager.getInstance().isExecutionAllowed(info)) {
-			result = false;
+			debugProceed("Browser active");
+			return false;
 		}
 
 		// Check we don't have decoration object to perform
+		if (isHasDecorations(info)) {
+			debugProceed("Decorations in progress");
+			return false;
+		}
 		// e4 quick fix
 		if (!TeslaCore.isE4() && isHasDecorations(info)) {
-			result = false;
+			return false;
 		}
 
 		synchronized (runnables) {
 			this.context = context;
 			List<Runnable> runs = runnables.get(context);
+			if (runs != null && !runs.isEmpty()) {
+				debugProceed("Previous tsk is still pending");
+				return false;
+			}
+			if (!TeslaEventManager.getManager().isNoWaitForJob() && !collector.isEmpty(context, info)) {
+				debugProceed("There are active jobs");
+				return false;
+			}
 			if ((runs == null || runs.isEmpty())) {
 				// Put collector in need disable state, since this method could
 				// be only
@@ -1795,16 +1819,16 @@ public final class SWTUIPlayer {
 			} else {
 				return false;
 			}
-			result = false;
 		}
-		return result;
+
+		debugProceed("Can proceed");
+		return true;
 	}
 
 	private boolean isHasDecorations(Q7WaitInfoRoot info) {
 		DecoratorManager manager = WorkbenchPlugin.getDefault().getDecoratorManager();
 		DecorationScheduler scheduler = TeslaSWTAccess.getDecorationScheduler(manager);
 		Job[] decorstors = Job.getJobManager().find(DecoratorManager.FAMILY_DECORATE);
-		// TODO check jobs statuses e4
 		if (decorstors.length != 0) {
 			for (Job job : decorstors) {
 				Q7WaitUtils.updateInfo("decorator", job.getClass().getName(), info);
@@ -1984,6 +2008,7 @@ public final class SWTUIPlayer {
 
 	public void typeText(final SWTUIElement element, final String text, final int mask, final boolean fromDisplay) {
 		exec("typeText", new Runnable() {
+			@Override
 			public void run() {
 				switch (element.getKind().kind) {
 				default:
@@ -2060,6 +2085,7 @@ public final class SWTUIPlayer {
 
 	public void traverse(final SWTUIElement element, final int code, final char character, final int times) {
 		exec("traverse", new Runnable() {
+			@Override
 			public void run() {
 				Widget widget = unwrapWidget(element);
 				if (!(widget instanceof Control))
@@ -2127,6 +2153,7 @@ public final class SWTUIPlayer {
 	public void type(final SWTUIElement element, final int code, final int mask, final boolean fromDisplay,
 			final char character, final int times) {
 		exec("type", new Runnable() {
+			@Override
 			public void run() {
 				switch (element.getKind().kind) {
 				default:
@@ -2196,7 +2223,10 @@ public final class SWTUIPlayer {
 
 	public void typeAction(final SWTUIElement element, final String actionId) {
 		exec("typeAction", new Runnable() {
+			@Override
 			public void run() {
+				@SuppressWarnings("cast") // IServiceLocator.getService was not
+											// generic in Eclipse 4.4 and older.
 				IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
 						.getService(IHandlerService.class);
 				try {
@@ -2229,6 +2259,7 @@ public final class SWTUIPlayer {
 	public void save(final SWTUIElement w) {
 		exec("save", new Runnable() {
 
+			@Override
 			public void run() {
 				if (w.getKind().kind == ElementKind.Editor) {
 					IEditorReference editor = (IEditorReference) (((WorkbenchUIElement) w).reference);
@@ -2252,7 +2283,7 @@ public final class SWTUIPlayer {
 	}
 
 	private static Widget parentFromExtension(Widget current) {
-		for (ISWTUIPlayerExtension ext : extensions) {
+		for (ISWTUIPlayerExtension ext : getExtensions()) {
 			Widget result = ext.getIndirectParent(current);
 			if (result != null) {
 				return result;
@@ -2366,7 +2397,7 @@ public final class SWTUIPlayer {
 
 	public static SWTUIElement getShell(SWTUIElement element) {
 
-		for (ISWTUIPlayerExtension ext : extensions) {
+		for (ISWTUIPlayerExtension ext : getExtensions()) {
 			SWTUIElement result = ext.getShell(element);
 			if (result != null) {
 				return result;
@@ -2415,6 +2446,7 @@ public final class SWTUIPlayer {
 		TeslaEventManager.getManager().setLastWidget(canvas, x, y);
 		widgetToMouseForMenus.put(canvas, new Point(x, y));
 		canvas.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				widgetToMouseForMenus.remove(canvas);
 				try {
@@ -2604,6 +2636,7 @@ public final class SWTUIPlayer {
 	public void minimize(SWTUIElement uiElement) {
 		final Widget widget = unwrapWidget(uiElement);
 		exec("minimize", new Runnable() {
+			@Override
 			public void run() {
 				processTabFolderButton(widget, IWorkbenchPage.STATE_MINIMIZED);
 			}
@@ -2614,6 +2647,7 @@ public final class SWTUIPlayer {
 		final Widget widget = unwrapWidget(uiElement);
 
 		exec("maximize", new Runnable() {
+			@Override
 			public void run() {
 				if (widget instanceof Shell) {
 					((Shell) widget).setMaximized(true);
@@ -2631,6 +2665,7 @@ public final class SWTUIPlayer {
 	public void restore(SWTUIElement uiElement) {
 		final Widget widget = unwrapWidget(uiElement);
 		exec("restore", new Runnable() {
+			@Override
 			public void run() {
 				processTabFolderButton(widget, IWorkbenchPage.STATE_RESTORED);
 			}
@@ -2644,6 +2679,7 @@ public final class SWTUIPlayer {
 	public void showTabList(SWTUIElement uiElement) {
 		final Widget widget = unwrapWidget(uiElement);
 		exec("showTabList", new Runnable() {
+			@Override
 			public void run() {
 				processTabShowList(widget);
 			}
@@ -2656,6 +2692,7 @@ public final class SWTUIPlayer {
 
 	public void setPerspective(final String perspectiveId) {
 		exec("setPerspective", new Runnable() {
+			@Override
 			public void run() {
 				IPerspectiveDescriptor persectiveDescriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
 						.findPerspectiveWithId(perspectiveId);
@@ -2688,6 +2725,7 @@ public final class SWTUIPlayer {
 			return errorMethod;
 		}
 
+		@Override
 		public void run() {
 			// ReportBuilder builder = ReportManager.getBuilder();
 			// if (builder != null) {
@@ -2719,6 +2757,7 @@ public final class SWTUIPlayer {
 	}
 
 	private static class NotifyUINullRunnable implements Runnable {
+		@Override
 		public void run() {
 		}
 	};
@@ -2738,6 +2777,10 @@ public final class SWTUIPlayer {
 		extensions.remove(extension);
 	}
 
+	public static synchronized List<ISWTUIPlayerExtension> getExtensions() {
+		return new ArrayList<ISWTUIPlayerExtension>(extensions);
+	}
+
 	public boolean cleanMenus(final Q7WaitInfoRoot info) {
 		final boolean result[] = { false };
 
@@ -2746,24 +2789,37 @@ public final class SWTUIPlayer {
 		if (curDisplay == null || curDisplay.isDisposed()) {
 			return false;
 		}
-		curDisplay.syncExec(new Runnable() {
-			public void run() {
-				for (WeakReference<Menu> weakReference : shownMenus) {
-					Menu menu = weakReference.get();
-					if (menu == null) {
-						continue;
-					}
-					if (!menu.isDisposed()) {
-						events.sendEvent(menu, SWT.Hide);
-					}
-					Q7WaitUtils.updateInfo("menu", "hide", info);
+		final List<Menu> menusToProceed = new ArrayList<>();
 
+		synchronized (shownMenus) {
+			for (WeakReference<Menu> weakReference : shownMenus) {
+				Menu menu = weakReference.get();
+				if (menu == null) {
+					continue;
 				}
-				result[0] = !shownMenus.isEmpty();
-				shownMenus.clear();
-				// TODO Auto-generated method stub
+				menusToProceed.add(menu);
 			}
-		});
+			shownMenus.clear();
+		}
+		if (!menusToProceed.isEmpty()) {
+			Q7WaitUtils.updateInfo("menu", "hide", info);
+			curDisplay.syncExec(new Runnable() {
+				@Override
+				public void run() {
+					for (Menu menu : menusToProceed) {
+						// We also need to hide all parent menus.
+						while (menu != null && !menu.isDisposed()) {
+							events.sendEvent(menu, SWT.Hide);
+							menu = menu.getParentMenu();
+						}
+
+					}
+				}
+			});
+		}
+		synchronized (shownMenus) {
+			result[0] = !shownMenus.isEmpty();
+		}
 		return result[0];
 	}
 
@@ -2772,5 +2828,28 @@ public final class SWTUIPlayer {
 		getBrowserManager().clear();
 		cleanMenus(null);
 		error = null;
+	}
+
+	public boolean isCollectable(SWTUIElement element, Class<?>[] classes) {
+		if (element == null)
+			return false;
+
+		if (classes == null)
+			return true;
+
+		for (ISWTUIPlayerExtension extension : getExtensions()) {
+			if (extension.isCollectable(element, classes)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static void debugProceed(String message) {
+		if (DEBUG_PROCEED) {
+			System.out.println("SWTUIPlayer: " + message);
+			System.out.flush();
+		}
 	}
 }

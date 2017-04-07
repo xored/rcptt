@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.ecl.core.Command;
+import org.eclipse.rcptt.ecl.core.util.ISessionPropertyConstants;
 import org.eclipse.rcptt.ecl.internal.core.AbstractRootSession;
 import org.eclipse.rcptt.ecl.internal.core.AbstractSession;
 import org.eclipse.rcptt.ecl.internal.core.CorePlugin;
@@ -153,12 +154,16 @@ public class TeslaBridge {
 		lastControlUIElement = null;
 	}
 
+	public static Element find(ControlHandler handler) throws CoreException {
+		return find(handler, null);
+	}
+
 	/**
 	 * @param handler
 	 * @return element or null
 	 * @throws CoreException
 	 */
-	public static Element find(ControlHandler handler) throws CoreException {
+	public static Element find(ControlHandler handler, IProcess process) throws CoreException {
 		Assert.isNotNull(handler);
 
 		// Check if resolved already
@@ -197,14 +202,14 @@ public class TeslaBridge {
 		// Setup parent
 		ControlHandler parent = handler.getParent();
 		if (parent != null)
-			selector = selector.parent(find(parent));
+			selector = selector.parent(find(parent, process));
 		else
 			selector = selector.parent(eclipseWindow());
 
 		// Setup after
 		ControlHandler after = handler.getAfter();
 		if (after != null) {
-			selector = selector.after(find(after));
+			selector = selector.after(find(after, process));
 		}
 
 		// Setup path
@@ -243,7 +248,9 @@ public class TeslaBridge {
 			if (selector.getParent() != null) {
 				lastControlUIElement = new ControlUIElement(selector.getParent(), getPlayer());
 			}
-			TeslaBridge.makeScreenshot(true, teslaFailure.getMessage());
+			if (isAllowScreenshotOnError(process)) {
+				TeslaBridge.makeScreenshot(true, teslaFailure.getMessage());
+			}
 			throw new CoreException(teslaFailure);
 		}
 		String kindName = kind.name().toLowerCase();
@@ -258,7 +265,9 @@ public class TeslaBridge {
 		if (selector.getParent() != null) {
 			lastControlUIElement = new ControlUIElement(selector.getParent(), getPlayer());
 		}
-		TeslaBridge.makeScreenshot(true, message.toString());
+		if (isAllowScreenshotOnError(process)) {
+			TeslaBridge.makeScreenshot(true, message.toString());
+		}
 		throw new CoreException(TeslaImplPlugin.err(message.toString()));
 	}
 
@@ -443,8 +452,7 @@ public class TeslaBridge {
 			try {
 				IStatus status = result.waitFor();
 				if (!status.isOK())
-					throw new CoreException(
-							new Status(Status.ERROR, TeslaImplPlugin.PLUGIN_ID, "Unable to resolve widget."));
+					throw new CoreException(status);
 			} catch (InterruptedException e) {
 				throw new CoreException(
 						new Status(Status.ERROR, TeslaImplPlugin.PLUGIN_ID, "Unable to resolve widget (timeout)."));
@@ -456,7 +464,7 @@ public class TeslaBridge {
 						"Unable to resolve widget (not a ControlHandler)."));
 
 			ControlHandler controlHandler = (ControlHandler) wannabeControlHandler;
-			Element element = TeslaBridge.find(controlHandler);
+			Element element = TeslaBridge.find(controlHandler, process);
 
 			SWTUIElement swtuiElement = TeslaBridge.getClient().getProcessor(SWTUIProcessor.class).getMapper()
 					.get(element);
@@ -466,5 +474,15 @@ public class TeslaBridge {
 			if (doShutdown)
 				shutdown();
 		}
+	}
+
+	public static boolean isAllowScreenshotOnError(IProcess context) {
+		if (context == null) {
+			return true;
+		}
+		Object noScreenshot = context.getSession().getProperty(ISessionPropertyConstants.NO_SCREENSHOT);
+
+		boolean allowScreenshot = (noScreenshot == null);
+		return allowScreenshot;
 	}
 }

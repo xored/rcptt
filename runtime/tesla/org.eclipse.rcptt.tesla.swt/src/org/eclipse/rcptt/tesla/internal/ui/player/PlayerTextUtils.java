@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,6 +15,7 @@ import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapW
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -22,6 +23,13 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil.EqualityHelper;
+import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
+import org.eclipse.rcptt.tesla.core.ui.UiPackage;
+import org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl;
+import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
@@ -187,7 +195,7 @@ public class PlayerTextUtils {
 		}
 
 		if (result == null) {
-			for (ISWTUIPlayerExtension ext : SWTUIPlayer.extensions) {
+			for (ISWTUIPlayerExtension ext : SWTUIPlayer.getExtensions()) {
 				String text = ext.getRawText(uiElement);
 				if (text != null) {
 					result = text;
@@ -265,7 +273,7 @@ public class PlayerTextUtils {
 		return null;
 	}
 
-	private static Map<String, Pattern> matchersCache = new HashMap<String, Pattern>();
+	private static Map<String, Pattern> matchersCache = new HashMap<>();
 	private static final int MATCHERS_CACHE_SIZE = 500;
 	private static final boolean DEBUG = false;
 
@@ -313,8 +321,52 @@ public class PlayerTextUtils {
 		return "" + dt.getYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDay();
 	}
 
+	private static final class RangeEquality extends EqualityHelper {
+		private static final long serialVersionUID = 290959129375407943L;
+		
+		private static final EStructuralFeature[] ignoredFields;
+		static {
+			UiPackage pkg = UiPackageImpl.init();
+			ignoredFields = new EStructuralFeature[] {
+				pkg.getStyleRangeEntry_Start(),
+				pkg.getStyleRangeEntry_Length(),
+				pkg.getStyleRangeEntry_StartPos(),
+				pkg.getStyleRangeEntry_EndPos()
+			};
+		}
+		
+		@Override
+		protected boolean haveEqualFeature(EObject eObject1, EObject eObject2, EStructuralFeature featureArg) {
+			for (EStructuralFeature feature: ignoredFields) {
+				if (equals(feature, featureArg))
+					return true;
+			}
+			return super.haveEqualFeature(eObject1, eObject2, featureArg);
+		}		
+	}
+	
+	public static void squashRanges(List<StyleRangeEntry> ranges) {
+		Iterator<StyleRangeEntry> i = ranges.iterator();
+		StyleRangeEntry next = null;
+		while (i.hasNext()) {
+			StyleRangeEntry prev = next;
+			next = i.next();
+			if (prev == null)
+				continue;
+			if (next.getStart() == prev.getStart() + prev.getLength()) {
+				RangeEquality rangeEquality = new RangeEquality();
+				if (rangeEquality.equals(prev, next)) {
+					prev.setLength(prev.getLength() + next.getLength());
+					prev.setEndPos(next.getEndPos());
+					i.remove();
+				}
+			}
+		}
+
+	}
+	
 	public static List<StyleRangeEntry> captureStyleRanges(StyledText widget) {
-		List<StyleRangeEntry> result = new ArrayList<StyleRangeEntry>();
+		List<StyleRangeEntry> result = new ArrayList<>();
 		StyledText styledText = widget;
 		int totalDelta = 0;
 		for (StyleRange r : styledText.getStyleRanges()) {

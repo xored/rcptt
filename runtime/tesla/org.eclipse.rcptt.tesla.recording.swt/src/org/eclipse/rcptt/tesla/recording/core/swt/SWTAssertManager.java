@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2016 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,8 +47,8 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
-import org.eclipse.rcptt.util.swt.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -443,6 +443,7 @@ public class SWTAssertManager implements IRecordingProcessor, IAssertSWTEventLis
 			SWTEventManager.setShouldProceed(false);
 		}
 	}
+
 
 	public boolean isShortcutRequest(Event e, String[] shortcuts) {
 		if (shortcuts == null) {

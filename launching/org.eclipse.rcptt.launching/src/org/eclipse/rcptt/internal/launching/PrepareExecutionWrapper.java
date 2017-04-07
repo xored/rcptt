@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -139,6 +139,13 @@ public class PrepareExecutionWrapper extends Executable {
 			createReport();
 		} catch (CoreException e) {
 			return e.getStatus();
+		}
+		if (executable instanceof GroupExecutable) {
+			IExecutable rootExecutable = ((GroupExecutable) executable).getRoot();
+			if (rootExecutable instanceof EclScenarioExecutable) {
+				EclScenarioExecutable scenario = (EclScenarioExecutable) rootExecutable;
+				TestEngineManager.getInstance().fireExecutionStarted(scenario);
+			}
 		}
 		return executable.execute();
 	}
@@ -291,6 +298,13 @@ public class PrepareExecutionWrapper extends Executable {
 			return rv;
 		} finally {
 			Preconditions.checkNotNull(resultReport);
+			if (executable instanceof GroupExecutable) {
+				IExecutable rootExecutable = ((GroupExecutable) executable).getRoot();
+				if (rootExecutable instanceof EclScenarioExecutable) {
+					EclScenarioExecutable scenario = (EclScenarioExecutable) rootExecutable;
+					TestEngineManager.getInstance().fireExecutionCompleted(scenario, resultReport);
+				}
+			}
 			if (this.reportSession != null) {
 				resultReportID = this.reportSession.write(resultReport);
 			}

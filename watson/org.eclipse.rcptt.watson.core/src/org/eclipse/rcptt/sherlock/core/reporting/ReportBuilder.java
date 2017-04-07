@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -114,8 +114,19 @@ public class ReportBuilder implements IReportBuilder {
 				node.getProperties().put(key, copy);
 			}
 		}
-
 		
+		@Override
+		public EObject getProperty(String key) {
+			synchronized (report) {
+				return node.getProperties().get(key);
+			}
+		}
+
+		@Override
+		public NodeBuilder getParent() {
+			return parent;
+		}
+
 		@Override
 		public void addSnapshot(Snaphot snapshot) {
 			Snaphot copy = EcoreUtil.copy(snapshot);
@@ -130,6 +141,11 @@ public class ReportBuilder implements IReportBuilder {
 			synchronized (report) {
 				runnable.apply(node);
 			}
+		}
+
+		@Override
+		public String getName() {
+			return node.getName();
 		}
 
 		@Override

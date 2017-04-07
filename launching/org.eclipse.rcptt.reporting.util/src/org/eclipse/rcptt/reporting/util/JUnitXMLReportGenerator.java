@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2015 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -106,11 +106,12 @@ public class JUnitXMLReportGenerator {
 			writer.writeStartElement("failure");
 
 			writer.writeAttribute("type", "testcase");
-			writer.writeAttribute("message", ReportUtils.getFailMessage(item));
+			String msg = ReportUtils.getFailMessage(item);
+			writer.writeAttribute("message", msg);
 
 			String data = ReportUtils.getDetails(item).trim();
 			if (data != null && !data.trim().isEmpty()) {
-				writer.writeCData(data);
+				writer.writeCData(msg + data);
 			}
 
 			writer.writeEndElement();
