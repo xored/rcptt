@@ -47,8 +47,8 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -102,11 +102,13 @@ public class SWTAssertManager implements IRecordingProcessor, IAssertSWTEventLis
 
 	private Control beforeFreezeFocus = null;
 
+	@Override
 	public void clear() {
 		lastFocusedWidget = null;
 		freezedCtrl = null;
 	}
 
+	@Override
 	public void initialize(TeslaRecorder teslaRecorder) {
 		if (TeslaFeatures.isActivityLogging()) {
 			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "");
@@ -116,10 +118,12 @@ public class SWTAssertManager implements IRecordingProcessor, IAssertSWTEventLis
 		SWTEventManager.addListener(this);
 	}
 
+	@Override
 	public int getInitLevel() {
 		return 300;
 	};
 
+	@Override
 	public void setFreeze(final boolean value, SetMode command) {
 		widgetClasses.clear();
 		if (command != null)

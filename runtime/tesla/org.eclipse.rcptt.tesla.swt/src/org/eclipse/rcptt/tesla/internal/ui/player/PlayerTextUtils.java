@@ -30,10 +30,6 @@ import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
 import org.eclipse.rcptt.tesla.core.ui.UiPackage;
 import org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
-import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
@@ -320,6 +316,48 @@ public class PlayerTextUtils {
 	public static String getDateValue(DateTime dt) {
 		return "" + dt.getYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDay();
 	}
+
+	private static final class RangeEquality extends EqualityHelper {
+		private static final long serialVersionUID = 290959129375407943L;
+		
+		private static final EStructuralFeature[] ignoredFields;
+		static {
+			UiPackage pkg = UiPackageImpl.init();
+			ignoredFields = new EStructuralFeature[] {
+				pkg.getStyleRangeEntry_Start(),
+				pkg.getStyleRangeEntry_Length(),
+				pkg.getStyleRangeEntry_StartPos(),
+				pkg.getStyleRangeEntry_EndPos()
+			};
+		}
+		
+		@Override
+		protected boolean haveEqualFeature(EObject eObject1, EObject eObject2, EStructuralFeature featureArg) {
+			for (EStructuralFeature feature: ignoredFields) {
+				if (equals(feature, featureArg))
+					return true;
+			}
+			return super.haveEqualFeature(eObject1, eObject2, featureArg);
+		}		
+	}
+	
+	public static void squashRanges(List<StyleRangeEntry> ranges) {
+		Iterator<StyleRangeEntry> i = ranges.iterator();
+		StyleRangeEntry next = null;
+		while (i.hasNext()) {
+			StyleRangeEntry prev = next;
+			next = i.next();
+			if (prev == null)
+				continue;
+			if (next.getStart() == prev.getStart() + prev.getLength()) {
+				RangeEquality rangeEquality = new RangeEquality();
+				if (rangeEquality.equals(prev, next)) {
+					prev.setLength(prev.getLength() + next.getLength());
+					prev.setEndPos(next.getEndPos());
+					i.remove();
+				}
+			}
+		}
 
 	private static final class RangeEquality extends EqualityHelper {
 		private static final long serialVersionUID = 290959129375407943L;

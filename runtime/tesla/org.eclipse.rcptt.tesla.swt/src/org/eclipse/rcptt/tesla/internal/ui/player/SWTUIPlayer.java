@@ -529,7 +529,6 @@ public final class SWTUIPlayer {
 	}
 
 	private SWTUIElement selectEclipseWindow(Integer index) {
-
 		// e4 support
 		if (TeslaCore.isE4()) {
 			return wrap(EclipseWorkbenchProvider.getProvider().getActiveShell());
@@ -699,6 +698,8 @@ public final class SWTUIPlayer {
 			return wrap(EclipseWorkbenchProvider.getProvider().selectPart(f));
 		}
 
+		// IViewDescriptor[] views =
+		// PlatformUI.getWorkbench().getViewRegistry().getViews();
 		IViewReference[] views = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.getViewReferences();
 		int currIdx = 0;
@@ -1805,18 +1806,6 @@ public final class SWTUIPlayer {
 			}
 			if (!TeslaEventManager.getManager().isNoWaitForJob() && !collector.isEmpty(context, info)) {
 				debugProceed("There are active jobs");
-				return false;
-			}
-			if ((runs == null || runs.isEmpty())) {
-				// Put collector in need disable state, since this method could
-				// be only
-				// called from sleeping state
-				if (TeslaEventManager.getManager().isNoWaitForJob() || collector.isEmpty(context, info)) {
-					// collector.setNeedDisable();
-					debugProceed("Can proceed");
-					return true;
-				}
-			} else {
 				return false;
 			}
 		}

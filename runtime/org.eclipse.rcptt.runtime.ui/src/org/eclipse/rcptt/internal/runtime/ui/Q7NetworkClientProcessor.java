@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class Q7NetworkClientProcessor implements ITeslaNetworkClientProcessor {
 
+	@Override
 	public void activateMode(SetMode command, TeslaMode oldMode) {
 		final Shell shell = EclipseWorkbenchProvider.getProvider().getActiveShell();
 		if (shell != null && !shell.isDisposed()) {

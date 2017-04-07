@@ -21,8 +21,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.ui.internal.Workbench;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
@@ -87,7 +85,6 @@ public class AspectManager {
 		}
 	}
 
-	@SuppressWarnings("restriction")
 	public static IStatus initialize() {
 		Bundle bundle = Platform.getBundle("org.eclipse.rcptt.tesla.swt.aspects");
 		if (bundle != null && bundle.getState() != Bundle.ACTIVE) {

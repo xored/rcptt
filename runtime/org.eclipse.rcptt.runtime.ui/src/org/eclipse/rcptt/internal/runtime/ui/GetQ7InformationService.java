@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class GetQ7InformationService implements ICommandService {
 
+	@Override
 	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
 		IPipe output = context.getOutput();
 		final Q7Information info = Q7CoreFactory.eINSTANCE.createQ7Information();
