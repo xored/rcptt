@@ -17,18 +17,18 @@ import java.util.regex.Pattern;
 
 public class TableTreeItemPathUtil {
 	private static final Pattern columnItemPattern = Pattern
-			.compile("(.*?)\\#(.*)\\#");
+			.compile("(.*?)\\#@(.*)\\#@");
 
 	public static String appendSegmentColumnName(String segment, String columnName) {
 		if (findColumnName(segment) == null && columnName != null) {
-			return segment + "#" + columnName + "#";
+			return segment + "#@" + columnName + "#@";
 		}
 		return segment;
 	}
 
 	public static String getAppendingColumnName(String columnName) {
 		if (columnName != null) {
-			return "#" + columnName + "#";
+			return "#@" + columnName + "#@";
 		} else {
 			return "";
 		}
