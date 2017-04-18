@@ -14,8 +14,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.rcptt.ecl.core.Command;
+import org.eclipse.rcptt.ecl.core.CoreFactory;
 import org.eclipse.rcptt.ecl.core.Foreach;
+import org.eclipse.rcptt.ecl.core.Let;
 import org.eclipse.rcptt.ecl.core.Val;
 import org.eclipse.rcptt.ecl.runtime.CoreUtils;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
@@ -45,7 +48,7 @@ public class ForeachService implements ICommandService {
 			IPipe out = session.createPipe();
 			Command doCommand = foreach.getDo();
 
-			status = session.execute(doCommand, in, out).waitFor();
+			status = session.execute(wrapBody(doCommand), in, out).waitFor();
 			if (status.getSeverity() != IStatus.OK) {
 				break;
 			}
@@ -55,4 +58,11 @@ public class ForeachService implements ICommandService {
 		}
 		return status;
 	}
+
+	private static Command wrapBody(Command body) {
+		Let let = CoreFactory.eINSTANCE.createLet();
+		let.setBody(EcoreUtil.copy(body));
+		return let;
+	}
+
 }

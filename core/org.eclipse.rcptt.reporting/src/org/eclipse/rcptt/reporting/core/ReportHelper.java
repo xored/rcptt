@@ -16,8 +16,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.rcptt.ecl.core.BoxedValue;
 import org.eclipse.rcptt.ecl.core.ProcessStatus;
 import org.eclipse.rcptt.ecl.internal.core.ProcessStatusConverter;
+import org.eclipse.rcptt.ecl.runtime.BoxedValues;
 import org.eclipse.rcptt.reporting.Q7Info;
 import org.eclipse.rcptt.reporting.ReportingFactory;
 import org.eclipse.rcptt.sherlock.core.INodeBuilder;
@@ -158,4 +160,21 @@ public class ReportHelper {
 	public static void takeSnapshot(INodeBuilder node) {
 		EventProviderManager.getInstance().takeSnapshot(node);
 	}
+
+	public static boolean isIterable(INodeBuilder node) {
+		EObject eIsIterable = node.getProperty(IQ7ReportConstants.ITERABLE);
+		if (eIsIterable == null) {
+			return false;
+		}
+		assert eIsIterable instanceof BoxedValue;
+		Object oIsIterable = BoxedValues.unbox((BoxedValue) eIsIterable);
+
+		assert oIsIterable instanceof Boolean;
+		return ((Boolean) oIsIterable).booleanValue();
+	}
+
+	public static void markIterable(INodeBuilder node) {
+		node.setProperty(IQ7ReportConstants.ITERABLE, BoxedValues.box(true));
+	}
+
 }

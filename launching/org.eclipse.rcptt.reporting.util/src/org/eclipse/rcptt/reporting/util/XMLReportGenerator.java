@@ -107,7 +107,7 @@ public class XMLReportGenerator {
 		// nodeElement.setAttribute("terminateTime",
 		// Long.toString(infoNode.getEndTime()));
 		nodeElement.setAttribute("totalTime",
-				Long.toString(infoNode.getEndTime() - infoNode.getStartTime()));
+				Long.toString(infoNode.getDuration()));
 
 		processAttributes(nodeElement, infoNode.getProperties());
 		if (!infoNode.getChildren().isEmpty()) {

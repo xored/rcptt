@@ -298,7 +298,7 @@ public class RcpttReportGenerator {
 			writer.
 					append(" ")
 					.append("time: " +
-							TimeFormatHelper.format(infoNode.getEndTime() - infoNode.getStartTime()))
+							TimeFormatHelper.format(infoNode.getDuration()))
 					.println();
 			writeResult(tabs + 1, q7Info.getResult());
 		}

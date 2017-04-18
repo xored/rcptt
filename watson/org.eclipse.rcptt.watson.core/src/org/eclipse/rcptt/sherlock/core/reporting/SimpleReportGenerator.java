@@ -53,8 +53,7 @@ public class SimpleReportGenerator {
 		appendTabs(stream, tabs);
 		stream.append(infoNode.getName())
 				.append(" ")
-				.append(Long.toString(infoNode.getEndTime()
-						- infoNode.getStartTime()));
+				.append(Long.toString(infoNode.getDuration()));
 		stream.append(" {").append(LINE_SEPARATOR);
 
 		EMap<String, EObject> list = infoNode.getProperties();
