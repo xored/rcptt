@@ -126,7 +126,9 @@ public class SelectorService implements ICommandService {
 				path += "%" + index + "%";
 			}
 			if (column != null) {
-				path += "#@" + column + "#@";
+				path += TableTreeItemPathUtil.COLUMN_DELIMITER
+						+ column
+						+ TableTreeItemPathUtil.COLUMN_DELIMITER;
 			}
 			handler.setKind(ElementKind.Item);
 			handler.setParent(parent.getParent());
