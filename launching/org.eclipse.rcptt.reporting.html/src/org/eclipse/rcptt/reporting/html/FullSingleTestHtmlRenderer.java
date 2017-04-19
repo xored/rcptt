@@ -427,7 +427,7 @@ public class FullSingleTestHtmlRenderer {
 	};
 
 	private static float durationSeconds(Node node) {
-		long millseconds = node.getEndTime() - node.getStartTime();
+		long millseconds = node.getDuration();
 		return (millseconds) / 1000f;
 	}
 
