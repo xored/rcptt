@@ -122,7 +122,17 @@ public class RcpttReportGenerator {
 	}
 
 	private void writeEvent(Event event, int tabs) throws IOException {
-		writeTabs(tabs + 1).println("Event " + TimeFormatHelper.format(event.getTime() - startTime));
+		if (event.getCount() == 1) {
+			writeTabs(tabs + 1)
+					.append("Event at ")
+					.println(TimeFormatHelper.format(event.getTime() - startTime));
+		} else {
+			writeTabs(tabs + 1).append("Event: ")
+					.append(String.valueOf(event.getCount()))
+					.append(" times, first at ")
+					.append(TimeFormatHelper.format(event.getTime() - startTime))
+					.println();
+		}
 		printObject(event.getData(), tabs + 2);
 	}
 

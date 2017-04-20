@@ -187,7 +187,15 @@ public class FullSingleTestHtmlRenderer {
 			return;
 		renderHeader(2, "Events", "");
 		for (Event e : events) {
-			renderHeader(3, dateFormat.format(e.getTime()), "");
+			if (e.getCount() == 1) {
+				renderHeader(3, "Event at " + dateFormat.format(e.getTime()), "");
+			} else {
+				String header = "Event: "
+						+ e.getCount()
+						+ " times, first at "
+						+ dateFormat.format(e.getTime());
+				renderHeader(3, header, "");
+			}
 			renderEvent(e.getData());
 		}
 	}

@@ -127,13 +127,26 @@ public class ReportBuilder implements IReportBuilder {
 		@Override
 		public void createEvent(Event event) {
 			synchronized (report) {
+				Event childEvent = findChildEvent(event);
+				if (childEvent != null) {
+					childEvent.setCount(childEvent.getCount() + 1);
+					return;
+				}
 				Event copy = EcoreUtil.copy(event);
 				copy.setTime(getTime());
 				node.getEvents().add(copy);
 			}
 		}
-		
-		
+
+		private Event findChildEvent(Event event) {
+			for (Event childEvent : node.getEvents()) {
+				if (EcoreUtil.equals(event.getData(), childEvent.getData())) {
+					return childEvent;
+				}
+			}
+			return null;
+		}
+
 		/*
 		 * Add or append existing log entry into current node.
 		 */

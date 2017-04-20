@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.rcptt.sherlock.core.model.sherlock.report.Event#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.rcptt.sherlock.core.model.sherlock.report.Event#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.rcptt.sherlock.core.model.sherlock.report.Event#getColor <em>Color</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.sherlock.core.model.sherlock.report.Event#getCount <em>Count</em>}</li>
  * </ul>
  *
  * @see org.eclipse.rcptt.sherlock.core.model.sherlock.report.ReportPackage#getEvent()
@@ -185,5 +186,32 @@ public interface Event extends EObject {
 	 * @generated
 	 */
 	void setColor(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Count</b></em>' attribute.
+	 * The default value is <code>"1"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Count</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Count</em>' attribute.
+	 * @see #setCount(int)
+	 * @see org.eclipse.rcptt.sherlock.core.model.sherlock.report.ReportPackage#getEvent_Count()
+	 * @model default="1"
+	 * @generated
+	 */
+	int getCount();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.sherlock.core.model.sherlock.report.Event#getCount <em>Count</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Count</em>' attribute.
+	 * @see #getCount()
+	 * @generated
+	 */
+	void setCount(int value);
 
 } // Event

@@ -414,6 +414,15 @@ public class ReportPackageImpl extends EPackageImpl implements ReportPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getEvent_Count() {
+		return (EAttribute)eventEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getEventSource() {
 		return eventSourceEClass;
 	}
@@ -688,6 +697,7 @@ public class ReportPackageImpl extends EPackageImpl implements ReportPackage {
 		createEReference(eventEClass, EVENT__SOURCE);
 		createEAttribute(eventEClass, EVENT__KIND);
 		createEAttribute(eventEClass, EVENT__COLOR);
+		createEAttribute(eventEClass, EVENT__COUNT);
 
 		eventSourceEClass = createEClass(EVENT_SOURCE);
 		createEAttribute(eventSourceEClass, EVENT_SOURCE__NAME);
@@ -780,6 +790,7 @@ public class ReportPackageImpl extends EPackageImpl implements ReportPackage {
 		initEReference(getEvent_Source(), this.getEventSource(), null, "source", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEvent_Kind(), this.getEventKind(), "kind", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEvent_Color(), ecorePackage.getEString(), "color", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEvent_Count(), ecorePackage.getEInt(), "count", "1", 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eventSourceEClass, EventSource.class, "EventSource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getEventSource_Name(), ecorePackage.getEString(), "name", null, 0, 1, EventSource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

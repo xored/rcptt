@@ -139,6 +139,7 @@ public class XMLReportGenerator {
 		childrenElement.appendChild(eventElement);
 
 		eventElement.setAttribute("time", Long.toString(child.getTime()));
+		eventElement.setAttribute("count", Integer.toString(child.getCount()));
 		if (child.getSource() != null) {
 			eventElement.setAttribute(
 					"source",
