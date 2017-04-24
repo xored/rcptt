@@ -68,7 +68,6 @@ public class ReportHelper {
 			if (value == null && create) {
 				value = InfoFactory.eINSTANCE.createQ7WaitInfoRoot();
 				value.setStartTime(System.currentTimeMillis());
-				value.setTick(0); // Indicated current object index
 				node.getProperties().put(IQ7ReportConstants.ROOT_WAIT, value);
 			}
 			return (Q7WaitInfoRoot) value;
@@ -109,6 +108,14 @@ public class ReportHelper {
 
 	public static Q7Info createInfo() {
 		return ReportingFactory.eINSTANCE.createQ7Info();
+	}
+
+	public static void startWaitInfo(INodeBuilder node, final String kind, final String className) {
+		Q7WaitUtils.startInfo(kind, className, getWaitInfo(node));
+	}
+
+	public static void finishWaitInfo(INodeBuilder node, final String kind, final String className) {
+		Q7WaitUtils.finishInfo(kind, className, getWaitInfo(node));
 	}
 
 	public static void updateWaitInfo(INodeBuilder node, final String kind, final String className) {

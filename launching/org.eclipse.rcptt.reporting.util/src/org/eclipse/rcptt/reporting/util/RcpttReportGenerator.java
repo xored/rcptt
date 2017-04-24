@@ -241,42 +241,45 @@ public class RcpttReportGenerator {
 		if (infos.size() == 0) {
 			return;
 		}
-		long endTime = info.getStartTime();
+		long totalWaitTime = 0;
 		int total = 0;
 		for (Q7WaitInfo q7WaitInfo : infos) {
 			if (getType(info, q7WaitInfo) == null) {
 				continue;
 			}
-			if (endTime < q7WaitInfo.getEndTime()) {
-				endTime = q7WaitInfo.getEndTime();
+			if (!TeslaFeatures.isIncludeEclipseMethodsWaitDetails()
+					&& SimpleReportGenerator.getClassName(info, q7WaitInfo).startsWith("org.eclipse")) { //$NON-NLS-1$
+				continue;
 			}
+			totalWaitTime += q7WaitInfo.getDuration();
 			total++;
 		}
 		if (total == 0) {
 			return;
 		}
 		writeTabs(tabs + 4).append("--> q7 wait details <-- total wait time: ")
-				.append(Long.toString(endTime - info.getStartTime()))
+				.append(Long.toString(totalWaitTime))
 				.println();
 		for (Q7WaitInfo i : infos) {
-			long totalTime = i.getEndTime() - i.getStartTime();
-			String className = SimpleReportGenerator.getClassName(info, i);
+			long totalTime = i.getDuration();
 			String type = getType(info, i);
+			String className = SimpleReportGenerator.getClassName(info, i);
 			if (type == null) {
+				continue;
+			}
+			if (!TeslaFeatures.isIncludeEclipseMethodsWaitDetails()
+					&& className.startsWith("org.eclipse")) { //$NON-NLS-1$
 				continue;
 			}
 			writeTabs(tabs + 8).append(type).append(": ")
 					.append(className);
-			// writer.append(" time: ").append(Long.toString(i.getStartTime())).append(" - ").append(i.getEndTime());
+
 			if (totalTime != 0)
 				writer.append(", total time: ").append(Long.toString(totalTime));
-			if (i.getLastTick() > 0) {
-				// writer.append(", total ticks: ").append(Long.toString(i.getTicks()));
-				writer.append(", ticks: ").append(Long.toString(i.getLastTick() - i.getTicks() + 1));
-				writer.append(" to ").append(Long.toString(i.getLastTick()));
+			if (i.getTicks() > 1) {
+				writer.append(", total ticks: ").append(Long.toString(i.getTicks()));
 			}
-			// if( i.getLastTick() != 0) {
-			// }
+
 			writer.println();
 			addWaitTime(type, className, totalTime);
 		}
@@ -371,7 +374,8 @@ public class RcpttReportGenerator {
 		if (!(type.equals("job") || type.equals("sync") || type.equals("async"))) { //$NON-NLS-1$
 			return;
 		}
-		if (className.startsWith("org.eclipse")) { //$NON-NLS-1$
+		if (!TeslaFeatures.isIncludeEclipseMethodsWaitDetails()
+				&& className.startsWith("org.eclipse")) { //$NON-NLS-1$
 			return;
 		}
 
@@ -395,6 +399,9 @@ public class RcpttReportGenerator {
 		String totalWaitTimeTable = "Total wait time:"; //$NON-NLS-1$
 		String methodNameColumn = "Method name"; //$NON-NLS-1$
 		String totalTimeColumn = "Time"; //$NON-NLS-1$
+		String noWaitInfoMessage = TeslaFeatures.isIncludeEclipseMethodsWaitDetails()
+				? "There were no methods RCPTT was waiting for"
+				: "There were no third-party methods RCPTT was waiting for";
 
 		int methodNameLength = methodNameColumn.length();
 		if (methodNameLength > maxMethodNameLength) {
@@ -410,7 +417,7 @@ public class RcpttReportGenerator {
 		
 		if (totalWaitTime.isEmpty()) {
 			writer.append("  ")
-					.append("There were no third-party methods RCPTT was waiting for") //$NON-NLS-1$
+					.append(noWaitInfoMessage) // $NON-NLS-1$
 					.println();
 			return;
 		}

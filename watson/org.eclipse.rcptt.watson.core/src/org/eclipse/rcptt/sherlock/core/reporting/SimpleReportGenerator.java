@@ -107,42 +107,45 @@ public class SimpleReportGenerator {
 		if (infos.size() == 0) {
 			return;
 		}
-		long endTime = info.getStartTime();
+		long totalWaitTime = 0;
 		int total = 0;
 		for (Q7WaitInfo q7WaitInfo : infos) {
 			if (getType(info, q7WaitInfo) == null) {
 				continue;
 			}
-			if (endTime < q7WaitInfo.getEndTime()) {
-				endTime = q7WaitInfo.getEndTime();
+			if (!TeslaFeatures.isIncludeEclipseMethodsWaitDetails()
+					&& getClassName(info, q7WaitInfo).startsWith("org.eclipse")) { //$NON-NLS-1$
+				continue;
 			}
+			totalWaitTime += q7WaitInfo.getDuration();
 			total++;
 		}
 		if (total == 0) {
 			return;
 		}
 		appendTabs(stream, tabs + 4).append("--> q7 wait details <-- total wait time: ")
-				.append(Long.toString(endTime - info.getStartTime()))
+				.append(Long.toString(totalWaitTime))
 				.append(LINE_SEPARATOR);
 		for (Q7WaitInfo i : infos) {
-			long totalTime = i.getEndTime() - i.getStartTime();
-			String className = getClassName(value, i);
+			long totalTime = i.getDuration();
 			String type = getType(info, i);
+			String className = getClassName(value, i);
 			if (type == null) {
+				continue;
+			}
+			if (!TeslaFeatures.isIncludeEclipseMethodsWaitDetails()
+					&& className.startsWith("org.eclipse")) { //$NON-NLS-1$
 				continue;
 			}
 			appendTabs(stream, tabs + 8).append(type).append(": ")
 					.append(className);
-			// stream.append(" time: ").append(Long.toString(i.getStartTime())).append(" - ").append(i.getEndTime());
+
 			if (totalTime != 0)
 				stream.append(", total time: ").append(Long.toString(totalTime));
-			if (i.getLastTick() > 0) {
-				// stream.append(", total ticks: ").append(Long.toString(i.getTicks()));
-				stream.append(", ticks: ").append(Long.toString(i.getLastTick() - i.getTicks() + 1));
-				stream.append(" to ").append(Long.toString(i.getLastTick()));
+			if (i.getTicks() > 1) {
+				stream.append(", total ticks: ").append(Long.toString(i.getTicks()));
 			}
-			// if( i.getLastTick() != 0) {
-			// }
+
 			stream.append(LINE_SEPARATOR);
 		}
 	}
