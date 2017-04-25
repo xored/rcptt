@@ -59,7 +59,7 @@ public class Q7WaitUtils {
 				return;
 			}
 			info = createInfo(kind, className, root);
-			info.setStartTime(currentTime);
+			info.setStartTime(root.getStartTime());
 			info.setLastStartTime(currentTime);
 			info.setEndTime(currentTime);
 		}

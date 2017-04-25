@@ -95,20 +95,20 @@ public class SimpleReportGenerator {
 		}
 	}
 
-	public void printWaitInfo(StringBuilder stream, int tabs, String key, Q7WaitInfoRoot value) {
-		Q7WaitInfoRoot info = (Q7WaitInfoRoot) value;
+	public void printWaitInfo(StringBuilder stream, int tabs, String key, Q7WaitInfoRoot info) {
 		List<Q7WaitInfo> infos = new ArrayList<Q7WaitInfo>(info.getInfos());
-		Collections.sort(infos, new Comparator<Q7WaitInfo>() {
-			@Override
-			public int compare(Q7WaitInfo o1, Q7WaitInfo o2) {
-				return Long.valueOf(o1.getLastTick()).compareTo(Long.valueOf(o2.getLastTick()));
-			}
-		});
 		if (infos.size() == 0) {
 			return;
 		}
-		long endTime = info.getStartTime();
-		int total = 0;
+		Comparator<Q7WaitInfo> comparator = new Comparator<Q7WaitInfo>() {
+			@Override
+			public int compare(Q7WaitInfo info1, Q7WaitInfo info2) {
+				return Long.compare(info1.getDuration(), info2.getDuration());
+			}
+		};
+		Collections.sort(infos, Collections.reverseOrder(comparator));
+
+		boolean isEmpty = true;
 		for (Q7WaitInfo q7WaitInfo : infos) {
 			if (getType(info, q7WaitInfo) == null) {
 				continue;
@@ -117,21 +117,21 @@ public class SimpleReportGenerator {
 					&& getClassName(info, q7WaitInfo).startsWith("org.eclipse")) { //$NON-NLS-1$
 				continue;
 			}
-			if (endTime < q7WaitInfo.getEndTime()) {
-				endTime = q7WaitInfo.getEndTime();
+			if (q7WaitInfo.getDuration() == 0) {
+				continue;
 			}
-			total++;
+			isEmpty = false;
+			break;
 		}
-		if (total == 0) {
+		if (isEmpty) {
 			return;
 		}
-		appendTabs(stream, tabs + 4).append("--> q7 wait details <-- total wait time: ")
-				.append(Long.toString(endTime - info.getStartTime()))
+		appendTabs(stream, tabs + 4).append("--> Wait details <--")
 				.append(LINE_SEPARATOR);
 		for (Q7WaitInfo i : infos) {
 			long totalTime = i.getDuration();
 			String type = getType(info, i);
-			String className = getClassName(value, i);
+			String className = getClassName(info, i);
 			if (type == null) {
 				continue;
 			}
@@ -139,14 +139,14 @@ public class SimpleReportGenerator {
 					&& className.startsWith("org.eclipse")) { //$NON-NLS-1$
 				continue;
 			}
+			if (totalTime == 0) {
+				continue;
+			}
 			appendTabs(stream, tabs + 8).append(type).append(": ")
 					.append(className);
 
 			if (totalTime != 0)
 				stream.append(", total time: ").append(Long.toString(totalTime));
-			if (i.getTicks() > 1) {
-				stream.append(", total ticks: ").append(Long.toString(i.getTicks()));
-			}
 
 			stream.append(LINE_SEPARATOR);
 		}
