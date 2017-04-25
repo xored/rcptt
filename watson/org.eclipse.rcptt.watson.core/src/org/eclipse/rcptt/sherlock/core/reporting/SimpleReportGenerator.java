@@ -107,7 +107,7 @@ public class SimpleReportGenerator {
 		if (infos.size() == 0) {
 			return;
 		}
-		long totalWaitTime = 0;
+		long endTime = info.getStartTime();
 		int total = 0;
 		for (Q7WaitInfo q7WaitInfo : infos) {
 			if (getType(info, q7WaitInfo) == null) {
@@ -117,14 +117,16 @@ public class SimpleReportGenerator {
 					&& getClassName(info, q7WaitInfo).startsWith("org.eclipse")) { //$NON-NLS-1$
 				continue;
 			}
-			totalWaitTime += q7WaitInfo.getDuration();
+			if (endTime < q7WaitInfo.getEndTime()) {
+				endTime = q7WaitInfo.getEndTime();
+			}
 			total++;
 		}
 		if (total == 0) {
 			return;
 		}
 		appendTabs(stream, tabs + 4).append("--> q7 wait details <-- total wait time: ")
-				.append(Long.toString(totalWaitTime))
+				.append(Long.toString(endTime - info.getStartTime()))
 				.append(LINE_SEPARATOR);
 		for (Q7WaitInfo i : infos) {
 			long totalTime = i.getDuration();
