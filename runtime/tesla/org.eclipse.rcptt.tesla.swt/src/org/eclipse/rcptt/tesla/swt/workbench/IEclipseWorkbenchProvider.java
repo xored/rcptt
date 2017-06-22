@@ -13,17 +13,24 @@ package org.eclipse.rcptt.tesla.swt.workbench;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.rcptt.core.scenario.Context;
+import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
+import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.IWorkbenchWindow;
 
 public interface IEclipseWorkbenchProvider {
 
@@ -58,4 +65,23 @@ public interface IEclipseWorkbenchProvider {
 	void updateActiveSelection(List<Object> selectionData, SWTUIElement parent);
 
 	String getViewId(Widget widget);
+
+	GenericElementKind getWidgetKind(Widget widget);
+
+	String getWidgetRawText(Widget widget);
+
+	void activatePart(SWTUIElement element);
+
+	Widget selectPart(PlayerSelectionFilter f);
+
+	IWorkbenchWindow[] getWorkbenchWindows();
+
+	Display getDisplay();
+
+	int getWorkbenchWindowCount();
+
+	Shell getActiveShell();
+
+	void applyContext(Context context) throws CoreException;
+
 }

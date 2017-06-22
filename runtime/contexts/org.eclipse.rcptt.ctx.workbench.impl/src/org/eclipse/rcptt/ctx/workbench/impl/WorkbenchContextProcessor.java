@@ -31,6 +31,7 @@ import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
 import org.eclipse.rcptt.tesla.ecl.impl.Utils;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -47,6 +48,8 @@ import org.eclipse.ui.intro.IIntroPart;
 import org.osgi.framework.Bundle;
 
 public class WorkbenchContextProcessor implements IContextProcessor {
+
+	@Override
 	public boolean isApplied(final Context context) {
 		return UIRunnable.safeExec(new UIRunnable<Boolean>() {
 			@Override
@@ -101,7 +104,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	private UIRunnable<Object> clearClipboard = new UIRunnable<Object>() {
 		@Override
 		public Object run() throws CoreException {
-			Clipboard clipboard = new Clipboard(PlatformUI.getWorkbench().getDisplay());
+			Clipboard clipboard = new Clipboard(EclipseWorkbenchProvider.getProvider().getDisplay());
 			// First put something into clipboard, to force our
 			// clipboard became owner of system clipboard
 			clipboard.setContents(new Object[] { " " }, new Transfer[] { TextTransfer.getInstance() });
@@ -118,14 +121,14 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 		final UIJobCollector collector = new UIJobCollector();
 		Job.getJobManager().addJobChangeListener(collector);
 		try {
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			EclipseWorkbenchProvider.getProvider().getDisplay().asyncExec(new Runnable() {
 				public void run() {
 					collector.enable();
 				}
 			});
 			if (ctx.isNoModalDialogs()) {
-				PlatformUI.getWorkbench().getDisplay().asyncExec(closeModalDialogsAsync);
-				PlatformUI.getWorkbench().getDisplay().asyncExec(closeModalDialogsAsync);
+				EclipseWorkbenchProvider.getProvider().getDisplay().asyncExec(closeModalDialogsAsync);
+				EclipseWorkbenchProvider.getProvider().getDisplay().asyncExec(closeModalDialogsAsync);
 				IStatus status = UIRunnable.exec(closeModalDialogs);
 				if (!status.isOK())
 					throw new CoreException(status);
@@ -176,7 +179,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 	}
 
 	private void updateSelection(WorkbenchContext ctx) {
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		IWorkbenchWindow[] windows = EclipseWorkbenchProvider.getProvider().getWorkbenchWindows();
 		for (IWorkbenchWindow win : windows) {
 			IWorkbenchPage[] pages = win.getPages();
 			for (IWorkbenchPage page0 : pages) {
@@ -312,6 +315,7 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 		}
 	}
 
+	@Override
 	public Context create(EObject param) throws CoreException {
 		return UIRunnable.exec(new UIRunnable<WorkbenchContext>() {
 			@Override

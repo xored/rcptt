@@ -16,21 +16,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolderEvent;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -47,20 +60,31 @@ import org.eclipse.ui.internal.WorkbenchPartReference;
 import org.eclipse.ui.internal.presentations.PaneFolder;
 import org.eclipse.ui.internal.presentations.PaneFolderButtonListener;
 import org.eclipse.ui.internal.presentations.defaultpresentation.DefaultTabFolder;
+import org.eclipse.ui.intro.IIntroManager;
+import org.eclipse.ui.intro.IIntroPart;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
-
+import org.eclipse.rcptt.core.scenario.WorkbenchContext;
+import org.eclipse.rcptt.ctx.workbench.impl.Activator;
+import org.eclipse.rcptt.ctx.workbench.impl.ResourcesSupport;
+import org.eclipse.rcptt.internal.core.RcpttPlugin;
+import org.eclipse.rcptt.tesla.core.TeslaLimits;
+import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
+import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
+import org.eclipse.rcptt.tesla.ecl.impl.Utils;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
+import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.swt.workbench.IEclipseWorkbenchProvider;
 
 @SuppressWarnings("restriction")
-public class ClassicEclipseWorkbenchProvider implements
-		IEclipseWorkbenchProvider {
+public class ClassicEclipseWorkbenchProvider implements IEclipseWorkbenchProvider {
 
-	public Menu getViewMenu(IWorkbenchPart workbenchPart,
-			IWorkbenchPartReference reference, boolean create) {
+	public Menu getViewMenu(IWorkbenchPart workbenchPart, IWorkbenchPartReference reference, boolean create) {
 		if (workbenchPart.getSite() == null) {
 			return null;
 		}
@@ -88,7 +112,7 @@ public class ClassicEclipseWorkbenchProvider implements
 		return menuManager.getMenu();
 	}
 
-	public List<?> getPaneFolderButtonListeners(Object paneFolder) {
+	private List<?> getPaneFolderButtonListeners(Object paneFolder) {
 		try {
 			Field field = PaneFolder.class.getDeclaredField("buttonListeners");
 			field.setAccessible(true);
@@ -116,10 +140,8 @@ public class ClassicEclipseWorkbenchProvider implements
 	}
 
 	public Map<Control, SWTUIElement> getWorkbenchReference(SWTUIPlayer player) {
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
-				.getWorkbenchWindows();
-		if (!Display.getCurrent()
-				.equals(PlatformUI.getWorkbench().getDisplay())) {
+		IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		if (!Display.getCurrent().equals(PlatformUI.getWorkbench().getDisplay())) {
 			return new HashMap<Control, SWTUIElement>();
 		}
 		Map<Control, SWTUIElement> references = new HashMap<Control, SWTUIElement>();
@@ -166,8 +188,7 @@ public class ClassicEclipseWorkbenchProvider implements
 						if (data instanceof PartStack) {
 							PartStack stack = (PartStack) data;
 							PartPane selection = stack.getSelection();
-							if (selection != null
-									&& selection.getControl() == widget)
+							if (selection != null && selection.getControl() == widget)
 								widget = c;
 						}
 					}
@@ -179,14 +200,12 @@ public class ClassicEclipseWorkbenchProvider implements
 
 		// --
 
-		PaneFolder paneFolder = TeslaSWTAccess.getThis(PaneFolder.class,
-				widget, SWT.Dispose);
+		PaneFolder paneFolder = TeslaSWTAccess.getThis(PaneFolder.class, widget, SWT.Dispose);
 		if (paneFolder != null) {
 			List<?> listenters = getPaneFolderButtonListeners(paneFolder);
 			for (Object listener : listenters) {
 				if (listener instanceof PaneFolderButtonListener) {
-					((PaneFolderButtonListener) listener)
-							.stateButtonPressed(buttonId);
+					((PaneFolderButtonListener) listener).stateButtonPressed(buttonId);
 				}
 			}
 		}
@@ -204,8 +223,7 @@ public class ClassicEclipseWorkbenchProvider implements
 						if (data instanceof PartStack) {
 							PartStack stack = (PartStack) data;
 							PartPane selection = stack.getSelection();
-							if (selection != null
-									&& selection.getControl() == widget)
+							if (selection != null && selection.getControl() == widget)
 								widget = c;
 						}
 					}
@@ -217,14 +235,12 @@ public class ClassicEclipseWorkbenchProvider implements
 
 		// --
 
-		PaneFolder paneFolder = TeslaSWTAccess.getThis(PaneFolder.class,
-				widget, SWT.Dispose);
+		PaneFolder paneFolder = TeslaSWTAccess.getThis(PaneFolder.class, widget, SWT.Dispose);
 		if (paneFolder != null) {
 			List<?> listenters = getPaneFolderButtonListeners(paneFolder);
 			for (Object listener : listenters) {
 				if (listener instanceof PaneFolderButtonListener) {
-					CTabFolderEvent event = TeslaSWTAccess
-							.createCTabFolderEvent(widget);
+					CTabFolderEvent event = TeslaSWTAccess.createCTabFolderEvent(widget);
 					((PaneFolderButtonListener) listener).showList(event);
 				}
 			}
@@ -232,12 +248,10 @@ public class ClassicEclipseWorkbenchProvider implements
 	}
 
 	public boolean isVisible(IWorkbenchPartReference reference) {
-		return reference instanceof WorkbenchPartReference
-				&& ((WorkbenchPartReference) reference).getVisible();
+		return reference instanceof WorkbenchPartReference && ((WorkbenchPartReference) reference).getVisible();
 	}
 
-	public boolean isActiveContainsView(IWorkbenchPage page,
-			IWorkbenchPartReference reference) {
+	public boolean isActiveContainsView(IWorkbenchPage page, IWorkbenchPartReference reference) {
 		Perspective perspective = ((WorkbenchPage) page).getActivePerspective();
 		IWorkbenchPart part = reference.getPart(true);
 		if (part != null && part instanceof IViewPart) {
@@ -255,8 +269,7 @@ public class ClassicEclipseWorkbenchProvider implements
 		return major == 3 && minor > 4 && minor < 9;
 	}
 
-	private static final List<String> viewTooltips = Arrays.asList("View Menu",
-			"Maximize", "Minimize", "Restore");
+	private static final List<String> viewTooltips = Arrays.asList("View Menu", "Maximize", "Minimize", "Restore");
 
 	public boolean isViewOrEditorButton(Widget widget) {
 		if (!(widget instanceof ToolItem))
@@ -268,8 +281,7 @@ public class ClassicEclipseWorkbenchProvider implements
 		}
 
 		// view menu
-		if (TeslaSWTAccess.getThis(DefaultTabFolder.class, item.getParent(),
-				SWT.MouseDown) != null)
+		if (TeslaSWTAccess.getThis(DefaultTabFolder.class, item.getParent(), SWT.MouseDown) != null)
 			return true;
 
 		// restore button
@@ -301,8 +313,7 @@ public class ClassicEclipseWorkbenchProvider implements
 		return null;
 	}
 
-	public void updateActiveSelection(List<Object> selectionData,
-			SWTUIElement parent) {
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement parent) {
 	}
 
 	public String getViewId(Widget widget) {
@@ -312,5 +323,404 @@ public class ClassicEclipseWorkbenchProvider implements
 					return ((ViewPane) l).getID();
 
 		return null;
+	}
+
+	@Override
+	public GenericElementKind getWidgetKind(Widget w) {
+		// not supported for now
+		return null;
+	}
+
+	@Override
+	public String getWidgetRawText(Widget widget) {
+		// not supported for now
+		return null;
+	}
+
+	@Override
+	public void activatePart(SWTUIElement element) {
+		// not supported for now
+	}
+
+	@Override
+	public Widget selectPart(PlayerSelectionFilter f) {
+		// not supported for now
+		return null;
+	}
+
+	@Override
+	public IWorkbenchWindow[] getWorkbenchWindows() {
+		return PlatformUI.getWorkbench().getWorkbenchWindows();
+	}
+
+	@Override
+	public Display getDisplay() {
+		return PlatformUI.getWorkbench().getDisplay();
+	}
+
+	@Override
+	public int getWorkbenchWindowCount() {
+		return PlatformUI.getWorkbench().getWorkbenchWindowCount();
+	}
+
+	@Override
+	public Shell getActiveShell() {
+		// Focus on AUT
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (window == null) {
+			IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+			if (windows.length > 0) {
+				window = windows[0];
+			} else {
+				return null;
+			}
+		}
+		return window.getShell();
+	}
+
+	@Override
+	public void applyContext(org.eclipse.rcptt.core.scenario.Context context) throws CoreException {
+	
+		final WorkbenchContext ctx = (WorkbenchContext) context;
+
+		
+		final UIJobCollector collector = new UIJobCollector();
+		Job.getJobManager().addJobChangeListener(collector);
+		try {
+			Display display = PlatformUI.getWorkbench().getDisplay();
+			display.asyncExec(new Runnable() {
+				public void run() {
+					collector.enable();
+				}
+			});
+			if (ctx.isNoModalDialogs()) {
+				display.asyncExec(closeModalDialogsAsync);
+				display.asyncExec(closeModalDialogsAsync);
+				IStatus status = UIRunnable.exec(closeModalDialogs);
+				if (!status.isOK())
+					throw new CoreException(status);
+			}
+			UIRunnable.exec(closeIntro);
+			final IWorkbenchPage page = UIRunnable.exec(activatePerspective(ctx));
+			if (ctx.isCloseEditors()) {
+				if (page != null) {
+					UIRunnable.exec(closeAllEditors(page));
+				}
+			}
+			if (ctx.isClearClipboard()) {
+				UIRunnable.exec(clearClipboard);
+			}
+			String perspectiveId = getPerspectiveId(ctx);
+			if (page != null && perspectiveId != null && perspectiveId.length() > 0 && ctx.isResetPerspective()) {
+
+				List<IPerspectiveDescriptor> descriptors = Arrays.asList(page.getSortedPerspectives());
+
+				// Close all perspectives
+
+				// Wait until some jobs to finish, before trying to close
+				// perspective
+				// collector.addAllJobs(10 * 1000);
+				for (final IPerspectiveDescriptor desc : descriptors) {
+					setPageInput(page, getDefaultPageInput());
+					UIRunnable.exec(closePerspective(page, desc));
+				}
+
+				UIRunnable.exec(cleanOtherPerspectives(page));
+			}
+
+			UIRunnable.exec(setPerspective(ctx, page));
+
+			openParts(ctx);
+
+			updateSelection(ctx);
+			UIRunnable.exec(new UIRunnable<Object>() {
+				@Override
+				public Object run() throws CoreException {
+					collector.setNeedDisable();
+					return null;
+				}
+			});
+			collector.join(TeslaLimits.getContextJoinTimeout());
+		} catch (Exception e) {
+			CoreException ee = new CoreException(RcpttPlugin
+					.createStatus("Failed to execute context: " + ctx.getName() + " Cause: " + e.getMessage(), e));
+			RcpttPlugin.log(e);
+			throw ee;
+		} finally {
+			Job.getJobManager().removeJobChangeListener(collector);
+		}
+
+	}
+	
+	private UIRunnable<IStatus> closeModalDialogs = new UIRunnable<IStatus>() {
+		@Override
+		public IStatus run() throws CoreException {
+			try {
+				return Utils.closeDialogs();
+			} catch (Throwable e) {
+				return RcpttPlugin.createStatus(e);
+			}
+		}
+	};
+	private Runnable closeModalDialogsAsync = new Runnable() {
+		public void run() {
+			Utils.closeDialogs();
+		}
+	};
+	private UIRunnable<Object> closeIntro = new UIRunnable<Object>() {
+		@Override
+		public Object run() throws CoreException {
+			// e4 support
+			if (TeslaCore.isE4()) {
+				return null;
+			}
+			
+			IIntroManager manager = PlatformUI.getWorkbench().getIntroManager();
+			if (manager != null) {
+				IIntroPart intro = manager.getIntro();
+				if (intro != null) {
+					manager.closeIntro(intro);
+				}
+			}
+			return null;
+		}
+	};
+	private UIRunnable<Object> clearClipboard = new UIRunnable<Object>() {
+		@Override
+		public Object run() throws CoreException {
+			Display display = EclipseWorkbenchProvider.getProvider().getDisplay();
+			Clipboard clipboard = new Clipboard(display);
+			// First put something into clipboard, to force our
+			// clipboard became owner of system clipboard
+			clipboard.setContents(new Object[] { " " }, new Transfer[] { TextTransfer.getInstance() });
+
+			// clipboard.clearContents(DND.CLIPBOARD);
+			// clipboard.clearContents(DND.SELECTION_CLIPBOARD);
+			clipboard.clearContents();
+			return null;
+		}
+	};
+	
+	private UIRunnable<Object> setSelection(final ISelectionProvider provider) {
+		return new UIRunnable<Object>() {
+			@Override
+			public Object run() throws CoreException {
+				provider.setSelection(new StructuredSelection());
+				return null;
+			}
+		};
+	}
+
+	private UIRunnable<Object> setPerspective(final WorkbenchContext ctx, final IWorkbenchPage page) {
+		return new UIRunnable<Object>() {
+			@Override
+			public Object run() throws CoreException {
+				showPerspective(ctx);
+				if (page != null && page.getSortedPerspectives().length == 0) {
+					String defaultPerspectiveId = PlatformUI.getWorkbench().getPerspectiveRegistry()
+							.getDefaultPerspective();
+					IPerspectiveDescriptor perspectiveDesc = PlatformUI.getWorkbench().getPerspectiveRegistry()
+							.findPerspectiveWithId(defaultPerspectiveId);
+					page.setPerspective(perspectiveDesc);
+				}
+				return null;
+			}
+		};
+	}
+
+	private UIRunnable<Object> cleanOtherPerspectives(final IWorkbenchPage page) {
+		return new UIRunnable<Object>() {
+			@Override
+			public Object run() throws CoreException {
+				// Clean other perspectives
+				for (final IPerspectiveDescriptor persp : page.getWorkbenchWindow().getWorkbench()
+						.getPerspectiveRegistry().getPerspectives()) {
+					// if (descriptors.contains(persp)) {
+					Bundle bundle = Platform.getBundle("org.eclipse.osgi");
+					bundle.getVersion();
+
+					IPreferenceStore store = org.eclipse.ui.internal.WorkbenchPlugin.getDefault().getPreferenceStore();
+
+					store.setToDefault(persp.getId() + "_persp");
+				}
+				return null;
+			}
+		};
+	}
+
+	private UIRunnable<Object> closePerspective(final IWorkbenchPage page, final IPerspectiveDescriptor desc) {
+		return new UIRunnable<Object>() {
+			@Override
+			public Object run() throws CoreException {
+				try {
+					page.closePerspective(desc, false, false);
+				} catch (Throwable e) {
+					RcpttPlugin.log(e);
+				}
+				return null;
+			}
+		};
+	}
+
+	private UIRunnable<Object> closeAllEditors(final IWorkbenchPage page) {
+		return new UIRunnable<Object>() {
+			@Override
+			public Object run() throws CoreException {
+				page.closeAllEditors(false);
+				return null;
+			}
+		};
+	}
+
+	private UIRunnable<IWorkbenchPage> activatePerspective(final WorkbenchContext ctx) {
+		return new UIRunnable<IWorkbenchPage>() {
+			@Override
+			public IWorkbenchPage run() throws CoreException {
+				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+				IWorkbenchPage lpage = window.getActivePage();
+				if (lpage == null) {
+					lpage = showPerspective(ctx);
+				}
+				return lpage;
+			}
+		};
+	}
+
+	private Object getDefaultPageInput() {
+		try {
+			return ResourcesSupport.getWorkspaceRoot();
+		} catch (Throwable e) {
+		}
+		return null;
+	}
+
+	protected void setPageInput(IWorkbenchPage page, Object value) {
+		try {
+			Field field = org.eclipse.ui.internal.WorkbenchPage.class.getDeclaredField("input");
+			field.setAccessible(true);
+			field.set(page, value);
+		} catch (SecurityException e) {
+			Activator.log(e);
+		} catch (NoSuchFieldException e) {
+			Activator.log(e);
+		} catch (IllegalArgumentException e) {
+			Activator.log(e);
+		} catch (IllegalAccessException e) {
+			Activator.log(e);
+		}
+	}
+	
+	private String getPerspectiveId(org.eclipse.rcptt.core.scenario.Context context) {
+		WorkbenchContext pContext = (WorkbenchContext) context;
+		return pContext.getPerspectiveId();
+	}
+	
+	private void openParts(WorkbenchContext context) throws CoreException {
+		final IWorkbench workbench = PlatformUI.getWorkbench();
+
+		final IWorkbenchPage page = UIRunnable.exec(new UIRunnable<IWorkbenchPage>() {
+			@Override
+			public IWorkbenchPage run() throws CoreException {
+				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+				if (window == null) {
+					window = workbench.getWorkbenchWindows()[0];
+				}
+				IWorkbenchPage activePage = window.getActivePage();
+				if (activePage == null) {
+					IWorkbenchPage[] pages = window.getPages();
+					if (pages.length > 0) {
+						activePage = pages[0];
+					}
+				}
+				return activePage;
+			}
+		});
+		if (page != null) {
+			// show views
+			for (final String viewId : context.getViews()) {
+				IViewReference[] references = page.getViewReferences();
+				boolean found = false;
+				for (IViewReference iViewReference : references) {
+					if (viewId.equals(iViewReference.getId())) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					UIRunnable.exec(new UIRunnable<Object>() {
+						@Override
+						public Object run() throws CoreException {
+							page.showView(viewId);
+							return null;
+						}
+					});
+				}
+			}
+			// close opened editors
+			if (context.isCloseEditors()) {
+				UIRunnable.exec(new UIRunnable<Object>() {
+					@Override
+					public Object run() throws CoreException {
+						page.closeAllEditors(false);
+						return null;
+					}
+				});
+			}
+			// open editors
+			try {
+				ResourcesSupport.openEditors(page, context);
+			} catch (CoreException e) {
+				throw e;
+			} catch (Throwable e) {
+
+			}
+		}
+	}
+	
+	private void updateSelection(WorkbenchContext ctx) {
+		IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		for (IWorkbenchWindow win : windows) {
+			IWorkbenchPage[] pages = win.getPages();
+			for (IWorkbenchPage page0 : pages) {
+				IViewReference[] references = page0.getViewReferences();
+				for (IViewReference ref : references) {
+					if (!ctx.getViews().contains(ref.getId())) {
+						continue;
+					}
+					IWorkbenchPart part = ref.getPart(false);
+					if (part != null) {
+						final ISelectionProvider provider = part.getSite().getSelectionProvider();
+						if (provider != null) {
+							try {
+								UIRunnable.exec(setSelection(provider));
+							} catch (Throwable e) {
+								RcpttPlugin.log(e);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private IWorkbenchPage showPerspective(WorkbenchContext context) throws CoreException {
+		// open perspective
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		String perspective = getPerspectiveId(context);
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (perspective != null && perspective.length() > 0) {
+			return workbench.showPerspective(perspective, window);
+		}
+		if (window == null) {
+			window = workbench.getWorkbenchWindows()[0];
+		}
+		IWorkbenchPage activePage = window.getActivePage();
+		if (activePage == null) {
+			IWorkbenchPage[] pages = window.getPages();
+			for (IWorkbenchPage page : pages) {
+				activePage = page;
+			}
+		}
+		return activePage;
 	}
 }

@@ -24,6 +24,7 @@ import org.eclipse.rcptt.tesla.internal.ui.IBasicMappingNode;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.jface.ControlDecoratorRecordingHolder;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -35,7 +36,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Instances of this class are used mainly as convenience wraps for SWT widgets
@@ -79,10 +79,10 @@ public class SWTUIElement implements IBasicMappingNode {
 	}
 
 	public boolean isSuitableForKind(GenericElementKind kind) {
-		
+
 		if (getKind().is(ElementKind.PropertyTab) && kind.is(ElementKind.Canvas))
 			return true;
-					
+
 		return getKind().is(kind);
 	}
 
@@ -118,8 +118,7 @@ public class SWTUIElement implements IBasicMappingNode {
 	@Override
 	public String toString() {
 		if (widget != null && widget.isDisposed()) {
-			return NLS.bind(TeslaSWTMessages.SWTUIElement_ControlDisposed,
-					widget.getClass().getSimpleName());
+			return NLS.bind(TeslaSWTMessages.SWTUIElement_ControlDisposed, widget.getClass().getSimpleName());
 		}
 		return widget == null ? TeslaSWTMessages.SWTUIElement_ControlNull
 				: widget.getClass().getSimpleName() + ":" + getText();
@@ -205,13 +204,11 @@ public class SWTUIElement implements IBasicMappingNode {
 	/**
 	 * Such selection kind are valid mostly for trees
 	 */
-	public boolean setSelection(java.util.List<String[]> selection,
-			boolean selectAll) {
+	public boolean setSelection(java.util.List<String[]> selection, boolean selectAll) {
 		return Viewers.setSelection(this, selection, selectAll);
 	}
 
-	public boolean setSelection(String[] selection, String pattern,
-			Integer index, boolean selectAll) {
+	public boolean setSelection(String[] selection, String pattern, Integer index, boolean selectAll) {
 		return Viewers.setSelection(this, selection, pattern, index, selectAll);
 	}
 
@@ -240,8 +237,7 @@ public class SWTUIElement implements IBasicMappingNode {
 	}
 
 	public boolean isSupportMultipleSelections() {
-		if (widget instanceof Tree || widget instanceof Table
-				|| widget instanceof List) {
+		if (widget instanceof Tree || widget instanceof Table || widget instanceof List) {
 			int style = widget.getStyle();
 			return (style & SWT.MULTI) != 0;
 		}
@@ -254,8 +250,7 @@ public class SWTUIElement implements IBasicMappingNode {
 
 	public org.eclipse.rcptt.tesla.core.ui.Widget getModel() {
 		if (TeslaFeatures.isActivityLogging()) {
-			Q7LoggingManager.logMessage(IQ7ActivityLogs.PROPERTIES,
-					"begin property mapping for: " + getClassName());
+			Q7LoggingManager.logMessage(IQ7ActivityLogs.PROPERTIES, "begin property mapping for: " + getClassName());
 		}
 		return SWTModelMapper.map(this);
 	}
@@ -266,8 +261,7 @@ public class SWTUIElement implements IBasicMappingNode {
 
 	public boolean isWorkbenchWindow() {
 		if (getKind().is(ElementKind.Window)) {
-			return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getShell().equals(widget);
+			return EclipseWorkbenchProvider.getProvider().getActiveShell().equals(widget);
 		}
 		return false;
 	}

@@ -288,6 +288,7 @@ public final class SWTUIPlayer {
 	 * Can be extended by
 	 * {@link ISWTUIPlayerExtension#select(SWTUIPlayer, PlayerSelectionFilter)}
 	 */
+	@SuppressWarnings("incomplete-switch")
 	public SWTUIElement select(PlayerSelectionFilter filter) {
 		SWTUIElement result = null;
 
@@ -528,6 +529,11 @@ public final class SWTUIPlayer {
 	}
 
 	private SWTUIElement selectEclipseWindow(Integer index) {
+		// e4 support
+		if (TeslaCore.isE4()) {
+			return wrap(EclipseWorkbenchProvider.getProvider().getActiveShell());
+		}
+
 		IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
 		if (index == null) {
 			return wrap(windows[0].getShell());
@@ -678,14 +684,19 @@ public final class SWTUIPlayer {
 	// stable view is a view that do not change its title, so
 	// we can skip it while gathering actual titles of views
 	private static final Set<String> stableViews = new HashSet<String>();
+
 	static {
 		stableViews.add("org.eclipse.ui.views.PropertySheet");
 		stableViews.add("org.eclipse.ui.views.ProblemView");
 	}
 
-	// @SuppressWarnings("restriction")
 	public SWTUIElement selectView(PlayerSelectionFilter f) {
 		final String pattern = f.pattern;
+
+		// e4 support
+		if (TeslaCore.isE4()) {
+			return wrap(EclipseWorkbenchProvider.getProvider().selectPart(f));
+		}
 
 		// IViewDescriptor[] views =
 		// PlatformUI.getWorkbench().getViewRegistry().getViews();
@@ -748,13 +759,16 @@ public final class SWTUIPlayer {
 		if (type != null && type.length() == 0)
 			type = null;
 
-		//
+		if (f.index != null && f.index < 0)
+			return null;
+
+		// e4 support
+		if (TeslaCore.isE4()) {
+			return wrap(EclipseWorkbenchProvider.getProvider().selectPart(f));
+		}
 
 		IEditorReference[] refs = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.getEditorReferences();
-
-		if (f.index != null && f.index < 0)
-			return null;
 
 		// -- old style
 
@@ -829,13 +843,12 @@ public final class SWTUIPlayer {
 					failClick(w);
 				}
 
-				IWorkbenchPage page = getTargetPage();
 				switch (w.getKind().kind) {
 				case View:
-					clickView(w, page);
+					clickView(w, getTargetPage());
 					break;
 				case Editor:
-					clickEditor(w, page);
+					clickEditor(w, getTargetPage());
 					break;
 				case TabItem:
 					clickTabItem(w, isDefault);
@@ -1061,6 +1074,11 @@ public final class SWTUIPlayer {
 	}
 
 	private void clickView(final SWTUIElement w, IWorkbenchPage page) {
+		// e4 support
+		if (TeslaCore.isE4()) {
+			EclipseWorkbenchProvider.getProvider().activatePart(w);
+		}
+
 		IViewReference view = (IViewReference) (((WorkbenchUIElement) w).reference);
 
 		IWorkbenchPart part = view.getPart(true);
@@ -1089,6 +1107,10 @@ public final class SWTUIPlayer {
 	}
 
 	private void clickEditor(final SWTUIElement w, IWorkbenchPage page) {
+		// e4 support
+		if (TeslaCore.isE4()) {
+			EclipseWorkbenchProvider.getProvider().activatePart(w);
+		}
 		IEditorReference editor = (IEditorReference) (((WorkbenchUIElement) w).reference);
 		IWorkbenchPart editorPart = editor.getPart(true);
 		page.bringToTop(editorPart);
@@ -1647,16 +1669,17 @@ public final class SWTUIPlayer {
 		}
 
 		ElementKind kind = elementKinds.get(w.getClass());
-		if (kind == null) {
-			for (Map.Entry<Class<?>, ElementKind> entry : elementKinds.entrySet()) {
-				Class<?> key = entry.getKey();
-				if (key.isInstance(w)) {
-					return new GenericElementKind(entry.getValue());
-				}
-			}
-		}
 		if (kind != null) {
 			return new GenericElementKind(kind);
+		}
+		if (TeslaCore.isE4() && w instanceof Widget) {
+			return EclipseWorkbenchProvider.getProvider().getWidgetKind((Widget) w);
+		}
+		for (Map.Entry<Class<?>, ElementKind> entry : elementKinds.entrySet()) {
+			Class<?> key = entry.getKey();
+			if (key.isInstance(w)) {
+				return new GenericElementKind(entry.getValue());
+			}
 		}
 		return GenericElementKind.Unknown;
 	}
@@ -1763,9 +1786,14 @@ public final class SWTUIPlayer {
 			debugProceed("Browser active");
 			return false;
 		}
+
 		// Check we don't have decoration object to perform
 		if (isHasDecorations(info)) {
 			debugProceed("Decorations in progress");
+			return false;
+		}
+		// e4 quick fix
+		if (!TeslaCore.isE4() && isHasDecorations(info)) {
 			return false;
 		}
 
@@ -2579,7 +2607,8 @@ public final class SWTUIPlayer {
 	}
 
 	public synchronized static SWTUIPlayer getPlayer() {
-		return SWTUIPlayer.getPlayer(PlatformUI.getWorkbench().getDisplay());
+		Display display = EclipseWorkbenchProvider.getProvider().getDisplay();
+		return SWTUIPlayer.getPlayer(display);
 	}
 
 	public synchronized static void shutdown(SWTUIPlayer internalPlayer) {
@@ -2670,6 +2699,7 @@ public final class SWTUIPlayer {
 		private final Context currentContext;
 		private final Runnable runnable;
 		private final String errorMethod;
+		@SuppressWarnings("unused")
 		private String msg;
 
 		private ExecRunnable(String msg, Context currentContext, Runnable runnable, String errorMethod) {
@@ -2743,7 +2773,8 @@ public final class SWTUIPlayer {
 	public boolean cleanMenus(final Q7WaitInfoRoot info) {
 		final boolean result[] = { false };
 
-		Display curDisplay = PlatformUI.getWorkbench().getDisplay();
+		Display curDisplay = EclipseWorkbenchProvider.getProvider().getDisplay();
+
 		if (curDisplay == null || curDisplay.isDisposed()) {
 			return false;
 		}

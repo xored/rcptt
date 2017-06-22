@@ -68,6 +68,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.CoolItem;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -89,6 +90,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -1063,6 +1065,7 @@ public final class SWTWidgetLocator {
 		SWTUIElement wrappedShell = player.wrap(shell);
 		ElementEntry window = SWTRecordingHelper.getHelper().get(wrappedShell);
 		window = checkTextFieldChange(wrappedShell, window);
+		//TODO e4 return to this
 		if (window == null || alwaysFindLeaf) {
 			// Check this is SDK window and only one window.
 			IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();

@@ -29,7 +29,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil.EqualityHelper;
 import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
 import org.eclipse.rcptt.tesla.core.ui.UiPackage;
 import org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl;
+import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.rcptt.util.StringUtils;
 import org.eclipse.swt.SWT;
@@ -185,6 +187,12 @@ public class PlayerTextUtils {
 			result = Double.toString(((Spinner) widget).getSelection()
 					/ Math.pow(10, ((Spinner) widget).getDigits()));
 		}
+
+		// e4 support
+		if (result == null && TeslaCore.isE4()) {
+			result = EclipseWorkbenchProvider.getProvider().getWidgetRawText(widget);
+		}
+
 		if (result == null) {
 			for (ISWTUIPlayerExtension ext : SWTUIPlayer.getExtensions()) {
 				String text = ext.getRawText(uiElement);

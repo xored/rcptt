@@ -10,22 +10,24 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.core;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.service.debug.DebugOptions;
+import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
+import org.eclipse.ui.internal.Workbench;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
 
-import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
-
 /**
  * The activator class controls the plug-in life cycle
  */
+@SuppressWarnings("restriction")
 public class TeslaCore extends Plugin {
 
 	// The plug-in ID
@@ -51,13 +53,13 @@ public class TeslaCore extends Plugin {
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "unchecked", "rawtypes" }) // ServiceReference was not generic in Eclipse 4.4 and earlier.
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		DebugOptions service = null;
-		final ServiceReference reference = context
-				.getServiceReference(DebugOptions.class.getName());
+		final ServiceReference reference = context.getServiceReference(DebugOptions.class.getName());
 		if (reference != null)
 			service = (DebugOptions) context.getService(reference);
 		if (service == null)
@@ -78,6 +80,7 @@ public class TeslaCore extends Plugin {
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
@@ -102,12 +105,12 @@ public class TeslaCore extends Plugin {
 		// Check if Eclipse is being restarted
 		if (TeslaCore.getDefault() != null) {
 			getDefault().getLog().log(
-					new Status(Status.ERROR, PLUGIN_ID, t.getMessage(), t));
+					new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
 		}
 	}
 
 	public static void log(String message) {
-		getDefault().getLog().log(new Status(Status.ERROR, PLUGIN_ID, message));
+		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, message));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -142,5 +145,12 @@ public class TeslaCore extends Plugin {
 	public static boolean isEclipse46() {
 		Version version = getPlatformVersion();
 		return version.getMajor() == 3 && version.getMinor() >= 107;
+	}
+
+	public static boolean isE4() {
+		Bundle bundle = Platform.getBundle("org.eclipse.e4.core.contexts");
+		boolean isE4ContextsBundleActive = bundle != null && Bundle.ACTIVE == bundle.getState();
+		boolean isCompatibilityLayerDisabled = Workbench.getInstance() == null;
+		return isCompatibilityLayerDisabled && isEclipse4() && isE4ContextsBundleActive;
 	}
 }

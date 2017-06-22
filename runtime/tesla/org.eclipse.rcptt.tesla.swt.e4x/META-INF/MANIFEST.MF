@@ -17,6 +17,11 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
  org.eclipse.e4.core.contexts,
  org.eclipse.e4.ui.services,
  org.eclipse.rcptt.util;bundle-version="[2.2.0,3.0.0)",
- org.eclipse.rcptt.tesla.swt.aspects;bundle-version="[2.2.0,3.0.0)"
+ org.eclipse.rcptt.tesla.swt.aspects;bundle-version="[2.2.0,3.0.0)",
+ org.eclipse.rcptt.core.scenario;bundle-version="[2.2.0,3.0.0)",
+ org.eclipse.rcptt.core;bundle-version="[2.2.0,3.0.0)",
+ org.eclipse.rcptt.ctx.workbench.impl;bundle-version="[2.2.0,3.0.0)",
+ org.eclipse.rcptt.tesla.ecl.impl;bundle-version="[2.2.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.rcptt.tesla.swt.e4x

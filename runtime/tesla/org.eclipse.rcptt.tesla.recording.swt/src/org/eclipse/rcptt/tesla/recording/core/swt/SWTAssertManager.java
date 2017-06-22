@@ -47,6 +47,7 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -74,8 +75,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 
-public class SWTAssertManager implements IRecordingProcessor,
-		IAssertSWTEventListener, ISkipAwareEventListener {
+public class SWTAssertManager implements IRecordingProcessor, IAssertSWTEventListener, ISkipAwareEventListener {
 
 	private Set<String> widgetClasses = new HashSet<String>();
 
@@ -102,11 +102,13 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 	private Control beforeFreezeFocus = null;
 
+	@Override
 	public void clear() {
 		lastFocusedWidget = null;
 		freezedCtrl = null;
 	}
 
+	@Override
 	public void initialize(TeslaRecorder teslaRecorder) {
 		if (TeslaFeatures.isActivityLogging()) {
 			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "");
@@ -116,20 +118,21 @@ public class SWTAssertManager implements IRecordingProcessor,
 		SWTEventManager.addListener(this);
 	}
 
+	@Override
 	public int getInitLevel() {
 		return 300;
 	};
 
+	@Override
 	public void setFreeze(final boolean value, SetMode command) {
 		widgetClasses.clear();
 		if (command != null)
 			widgetClasses.addAll(command.getWidgetClasses());
 
 		if (TeslaFeatures.isActivityLogging()) {
-			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-					"set freeze mode to: " + value);
+			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "set freeze mode to: " + value);
 		}
-		final Display display = PlatformUI.getWorkbench().getDisplay();
+		final Display display = EclipseWorkbenchProvider.getProvider().getDisplay();
 		boolean oldValue = SWTEventManager.getFreeze();
 		if (display.isDisposed()) {
 			SWTEventManager.setFreeze(false);
@@ -165,10 +168,8 @@ public class SWTAssertManager implements IRecordingProcessor,
 								// beforeFreezeFocus = null;
 								Shell[] shells = display.getShells();
 								for (Shell s : shells) {
-									String creationMethod = TeslaEventManager
-											.getManager().getShellCreationMethod(s);
-									if ("AbstractTableInformationControl.<init>()"
-											.equals(creationMethod)) {
+									String creationMethod = TeslaEventManager.getManager().getShellCreationMethod(s);
+									if ("AbstractTableInformationControl.<init>()".equals(creationMethod)) {
 										try {
 											ShellUtilsProvider.getShellUtils().forceActive(s);
 										} catch (CoreException e) {
@@ -199,8 +200,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 	private void disposeMenuPopups() {
 		if (TeslaFeatures.isActivityLogging()) {
-			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-					"dispose popup menus");
+			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "dispose popup menus");
 		}
 		for (Shell menuShell : menuShells) {
 			if (menuShell != null) {
@@ -231,15 +231,12 @@ public class SWTAssertManager implements IRecordingProcessor,
 		return parent;
 	}
 
-	public synchronized boolean handleEventInFreeze(Widget widget, int type,
-			Event event) {
+	public synchronized boolean handleEventInFreeze(Widget widget, int type, Event event) {
 		if (TeslaFeatures.isActivityLogging()) {
 			try {
-				RecordedEvent toRecording = new RecordedEvent(
-						recorder.getProcessor(SWTUIProcessor.class).getPlayer(),
+				RecordedEvent toRecording = new RecordedEvent(recorder.getProcessor(SWTUIProcessor.class).getPlayer(),
 						event, type, widget);
-				Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS
-						+ ".events", "event: " + toRecording.toString());
+				Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS + ".events", "event: " + toRecording.toString());
 			} catch (Throwable e) {
 				// ignore
 			}
@@ -260,16 +257,13 @@ public class SWTAssertManager implements IRecordingProcessor,
 			if (type == SWT.KeyUp && event != null) {
 				if (isShortcutRequest(event, recorder.getRecordModeShortcuts())) {
 					if (TeslaFeatures.isActivityLogging()) {
-						Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-								"send record mode request");
+						Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "send record mode request");
 					}
-					recorder.executeCommand(ProtocolFactory.eINSTANCE
-							.createRecordingModeRequest());
+					recorder.executeCommand(ProtocolFactory.eINSTANCE.createRecordingModeRequest());
 				}
 				if (isShortcutRequest(event, recorder.getStopRecordShortcuts())) {
 					if (TeslaFeatures.isActivityLogging()) {
-						Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-								"send stop record request");
+						Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "send stop record request");
 					}
 					Type stopType = ProtocolFactory.eINSTANCE.createType();
 					stopType.setState(event.stateMask);
@@ -282,13 +276,10 @@ public class SWTAssertManager implements IRecordingProcessor,
 				Control ctrl = (Control) widget;
 				if (selectionShell != null) {
 					if (ctrl.getShell().equals(selectionShell)) {
-						if (Platform.getOS().equals(Platform.OS_MACOSX)
-								&& lastFocusedWidget != null
-								&& lastFocusedWidget.getWidget() != null
-								&& type == SWT.MouseMove) {
+						if (Platform.getOS().equals(Platform.OS_MACOSX) && lastFocusedWidget != null
+								&& lastFocusedWidget.getWidget() != null && type == SWT.MouseMove) {
 
-							widget = getChild(lastFocusedWidget.getWidget(),
-									event.x, event.y);
+							widget = getChild(lastFocusedWidget.getWidget(), event.x, event.y);
 						} else {
 							return true;
 						}
@@ -317,16 +308,14 @@ public class SWTAssertManager implements IRecordingProcessor,
 				}
 			}
 
-			IRecordingDescriber assertDescr = selectAllowedParent(RecordingDescriberManager
-					.getDescriber(widget, event.x, event.y, true));
+			IRecordingDescriber assertDescr = selectAllowedParent(
+					RecordingDescriberManager.getDescriber(widget, event.x, event.y, true));
 			if (type == SWT.Selection && widget instanceof MenuItem) {
 				if (TeslaFeatures.isActivityLogging()) {
 					Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-							"assertion target locked for menu item: "
-									+ ((MenuItem) widget).getText());
+							"assertion target locked for menu item: " + ((MenuItem) widget).getText());
 				}
-				seachForElement(assertDescr.searchForElement(recorder), true,
-						assertDescr);
+				seachForElement(assertDescr.searchForElement(recorder), true, assertDescr);
 				freezedCtrl = assertDescr;
 			}
 			if (type == SWT.KeyDown) {
@@ -334,36 +323,30 @@ public class SWTAssertManager implements IRecordingProcessor,
 					switch (event.keyCode) {
 					case SWT.ARROW_UP:
 						if (TeslaFeatures.isActivityLogging()) {
-							Q7LoggingManager
-									.logMessage(IQ7ActivityLogs.ASSERTIONS,
-											"switch assertion target lock to control parent");
+							Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
+									"switch assertion target lock to control parent");
 						}
 						freezedCtrl = freezedCtrl.getParent();
-						updateHoverAccordingTo(freezedCtrl, freezedPoint.x,
-								freezedPoint.y);
+						updateHoverAccordingTo(freezedCtrl, freezedPoint.x, freezedPoint.y);
 						break;
 					case SWT.ARROW_DOWN:
 						if (TeslaFeatures.isActivityLogging()) {
-							Q7LoggingManager.logMessage(
-									IQ7ActivityLogs.ASSERTIONS,
+							Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
 									"switch assertion target lock to child");
 						}
-						IRecordingDescriber child = RecordingDescriberManager
-								.getDescriber(freezedCtrlWidget,
-										freezedPoint.x, freezedPoint.y, true);
+						IRecordingDescriber child = RecordingDescriberManager.getDescriber(freezedCtrlWidget,
+								freezedPoint.x, freezedPoint.y, true);
 						if (!child.equals(freezedCtrl)) {
 							while (true) {
 								IRecordingDescriber parent = child.getParent();
 								if (freezedCtrl.equals(parent)) {
 									freezedCtrl = child;
-									updateHoverAccordingTo(freezedCtrl,
-											freezedPoint.x, freezedPoint.y);
+									updateHoverAccordingTo(freezedCtrl, freezedPoint.x, freezedPoint.y);
 									break;
 								}
 								if (parent.equals(child)) {
 									freezedCtrl = child;
-									updateHoverAccordingTo(freezedCtrl,
-											freezedPoint.x, freezedPoint.y);
+									updateHoverAccordingTo(freezedCtrl, freezedPoint.x, freezedPoint.y);
 									break;
 								}
 								child = parent;
@@ -376,9 +359,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 			if (type == SWT.MouseUp) {
 				for (Shell menuShell : menuShells) {
 					if (menuShell != null) {
-						if (widget instanceof Control
-								&& !((Control) widget).getShell().equals(
-										menuShell)) {
+						if (widget instanceof Control && !((Control) widget).getShell().equals(menuShell)) {
 							menuShells.remove(menuShell);
 							menuShell.dispose();
 							// return false;
@@ -388,9 +369,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 				if (event.button == 1) {
 					if (freezedCtrl == null) {
 						if (TeslaFeatures.isActivityLogging()) {
-							Q7LoggingManager.logMessage(
-									IQ7ActivityLogs.ASSERTIONS,
-									"assertion target locked");
+							Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "assertion target locked");
 						}
 						freezedCtrl = assertDescr;
 						freezedPoint = new Point(event.x, event.y);
@@ -398,9 +377,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 						updateHoverAccordingTo(freezedCtrl, event.x, event.y);
 					} else {
 						if (TeslaFeatures.isActivityLogging()) {
-							Q7LoggingManager.logMessage(
-									IQ7ActivityLogs.ASSERTIONS,
-									"unlock assertion target");
+							Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "unlock assertion target");
 						}
 						IRecordingDescriber lastFreezed = freezedCtrl;
 						freezedCtrl = null;
@@ -415,17 +392,14 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 					if (widget instanceof Control) {
 						if (TeslaFeatures.isActivityLogging()) {
-							Q7LoggingManager.logMessage(
-									IQ7ActivityLogs.ASSERTIONS,
-									"show popup menu");
+							Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "show popup menu");
 						}
 						showPopupMenu(event, (Control) widget, assertDescr);
 					}
 				}
 			}
-			if ((type == SWT.MouseMove || type == SWT.MouseEnter
-					|| type == SWT.MouseExit || type == SWT.Arm || type == SWT.MeasureItem)
-					&& freezedCtrl == null) {
+			if ((type == SWT.MouseMove || type == SWT.MouseEnter || type == SWT.MouseExit || type == SWT.Arm
+					|| type == SWT.MeasureItem) && freezedCtrl == null) {
 				synchronized (widgetsOnMove) {
 					widgetsOnMove.add(assertDescr);
 				}
@@ -436,16 +410,11 @@ public class SWTAssertManager implements IRecordingProcessor,
 							synchronized (widgetsOnMove) {
 								if (widgetsOnMove.size() > 0) {
 									if (freezedCtrl == null) {
-										IRecordingDescriber lastWidget = widgetsOnMove
-												.get(widgetsOnMove.size() - 1);
-										if (!lastWidget
-												.equals(lastFocusedWidget)
-												|| !selectionShell.isVisible()) {
+										IRecordingDescriber lastWidget = widgetsOnMove.get(widgetsOnMove.size() - 1);
+										if (!lastWidget.equals(lastFocusedWidget) || !selectionShell.isVisible()) {
 											Widget w = lastWidget.getWidget();
 											if (!w.isDisposed()) {
-												updateHoverAccordingTo(
-														lastWidget, fevent.x,
-														fevent.y);
+												updateHoverAccordingTo(lastWidget, fevent.x, fevent.y);
 											}
 										}
 										lastFocusedWidget = lastWidget;
@@ -457,21 +426,16 @@ public class SWTAssertManager implements IRecordingProcessor,
 					});
 				}
 			}
-			if (type == SWT.MouseDown || type == SWT.MouseHover
-					|| type == SWT.MouseMove || type == SWT.MouseUp
-					|| type == SWT.KeyDown || type == SWT.KeyUp
-					|| type == SWT.Selection || type == SWT.MouseDoubleClick
-					|| type == SWT.MouseWheel || type == 38/*
-															 * SWT.
-															 * MouseVerticalWheel
-															 */
-					|| type == SWT.Deactivate || type == SWT.FocusIn
-					|| type == SWT.DefaultSelection || type == SWT.Activate
-					|| type == SWT.Expand || type == SWT.Collapse
-					|| type == SWT.Iconify || type == SWT.Deiconify
-					|| type == SWT.Deactivate || type == SWT.Modify
-					|| type == SWT.MenuDetect || type == SWT.MouseEnter
-					|| type == SWT.MouseExit || type == SWT.FocusOut
+			if (type == SWT.MouseDown || type == SWT.MouseHover || type == SWT.MouseMove || type == SWT.MouseUp
+					|| type == SWT.KeyDown || type == SWT.KeyUp || type == SWT.Selection || type == SWT.MouseDoubleClick
+					|| type == SWT.MouseWheel
+					|| type == 38/*
+									 * SWT. MouseVerticalWheel
+									 */
+					|| type == SWT.Deactivate || type == SWT.FocusIn || type == SWT.DefaultSelection
+					|| type == SWT.Activate || type == SWT.Expand || type == SWT.Collapse || type == SWT.Iconify
+					|| type == SWT.Deiconify || type == SWT.Deactivate || type == SWT.Modify || type == SWT.MenuDetect
+					|| type == SWT.MouseEnter || type == SWT.MouseExit || type == SWT.FocusOut
 					|| type == SWT.Traverse) {
 				return false;
 			}
@@ -490,8 +454,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 			return false;
 		}
 		int accelerator = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
-		KeySequence sequence = KeySequence.getInstance(SWTKeySupport
-				.convertAcceleratorToKeyStroke(accelerator));
+		KeySequence sequence = KeySequence.getInstance(SWTKeySupport.convertAcceleratorToKeyStroke(accelerator));
 		if (shortcuts != null) {
 			for (String formatted : shortcuts) {
 				try {
@@ -507,15 +470,12 @@ public class SWTAssertManager implements IRecordingProcessor,
 		return false;
 	}
 
-	private void showPopupMenu(Event event, Control c,
-			IRecordingDescriber describer) {
+	private void showPopupMenu(Event event, Control c, IRecordingDescriber describer) {
 		if (TeslaFeatures.isActivityLogging()) {
-			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-					"show popup menu for: " + c.getClass().toString());
+			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "show popup menu for: " + c.getClass().toString());
 		}
 		Menu menu = null;
-		player.getEvents().sendEvent(c, SWT.MenuDetect, event.x, event.y,
-				SWT.BUTTON2);
+		player.getEvents().sendEvent(c, SWT.MenuDetect, event.x, event.y, SWT.BUTTON2);
 		menu = c.getMenu();
 		if (menu != null && !menu.isDisposed()) {
 			player.getEvents().sendEvent(menu, SWT.Show);
@@ -548,8 +508,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 	private void copyMenuTo(Menu menu, Menu popupMenu) {
 		if (TeslaFeatures.isActivityLogging()) {
-			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-					"copy popup menu");
+			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "copy popup menu");
 		}
 		for (MenuItem i : menu.getItems()) {
 			MenuItem copy = new MenuItem(popupMenu, i.getStyle());
@@ -562,11 +521,10 @@ public class SWTAssertManager implements IRecordingProcessor,
 				text2 = text.substring(tabIndex + 1);
 				text = text.substring(0, tabIndex);
 			}
-			copy.setText(text + (!i.getEnabled() ? " (disabled)" : "") + "\t"
-					+ text2);
+			copy.setText(text + (!i.getEnabled() ? " (disabled)" : "") + "\t" + text2);
 			if (i.getImage() != null) {
-				copy.setImage(new Image(i.getDisplay(), i.getImage(), i
-						.getEnabled() ? SWT.IMAGE_COPY : SWT.IMAGE_DISABLE));
+				copy.setImage(
+						new Image(i.getDisplay(), i.getImage(), i.getEnabled() ? SWT.IMAGE_COPY : SWT.IMAGE_DISABLE));
 			}
 			copy.setSelection(i.getSelection());
 			if ((copy.getStyle() & SWT.CASCADE) != 0) {
@@ -583,8 +541,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 	@SuppressWarnings("unused")
 	private void showMenuAt(Event event, Control c, Menu menu) {
-		Shell menuShell = new Shell(getShell(c), SWT.NO_TRIM | SWT.TOOL
-				| SWT.MODELESS);
+		Shell menuShell = new Shell(getShell(c), SWT.NO_TRIM | SWT.TOOL | SWT.MODELESS);
 		menuShells.add(menuShell);
 		menuShell.setLayout(new FillLayout());
 		bar = new Composite(menuShell, SWT.BORDER);
@@ -595,8 +552,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 		for (MenuItem i : menu.getItems()) {
 			if (i.getStyle() == SWT.SEPARATOR) {
 				Label l = new Label(bar, SWT.SEPARATOR | SWT.HORIZONTAL);
-				GridDataFactory.fillDefaults().grab(true, false).span(1, 1)
-						.applyTo(l);
+				GridDataFactory.fillDefaults().grab(true, false).span(1, 1).applyTo(l);
 				continue;
 			}
 			Composite line = new Composite(bar, SWT.NONE);
@@ -667,12 +623,9 @@ public class SWTAssertManager implements IRecordingProcessor,
 		return null;
 	}
 
-	private synchronized void updateHover(Rectangle bounds, Point point,
-			boolean controlEquals, boolean inactive) {
-		if (selectionShell == null
-				|| selectionShell.isDisposed()
-				|| (selectionShell.getParent() != null && selectionShell
-						.getParent().isDisposed())) {
+	private synchronized void updateHover(Rectangle bounds, Point point, boolean controlEquals, boolean inactive) {
+		if (selectionShell == null || selectionShell.isDisposed()
+				|| (selectionShell.getParent() != null && selectionShell.getParent().isDisposed())) {
 			selectionShell = null;
 			freezedCtrl = null;
 			return;
@@ -724,8 +677,8 @@ public class SWTAssertManager implements IRecordingProcessor,
 			region.add(bounds.width - 2, 0, 2, bounds.height);
 		}
 
-		selectionShell.setBackground(selectionShell.getDisplay()
-				.getSystemColor(!inactive ? SWT.COLOR_RED : SWT.COLOR_BLACK));
+		selectionShell
+				.setBackground(selectionShell.getDisplay().getSystemColor(!inactive ? SWT.COLOR_RED : SWT.COLOR_BLACK));
 		// define the shape of the shell using setRegion
 		Region oldRegion = selectionShell.getRegion();
 		if (oldRegion != null && !oldRegion.isDisposed())
@@ -788,8 +741,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 			selectionShell = new Shell(SWT.NO_TRIM | SWT.ON_TOP | SWT.TOOL);
 			// }
 
-			selectionShell.setBackground(selectionShell.getDisplay()
-					.getSystemColor(SWT.COLOR_RED));
+			selectionShell.setBackground(selectionShell.getDisplay().getSystemColor(SWT.COLOR_RED));
 			selectionShell.setText("Hover");
 			// selectionShell.addMouseMoveListener(new MouseMoveListener() {
 			// public void mouseMove(MouseEvent e) {
@@ -846,8 +798,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 		return widgetClasses.contains(descr.getWidget().getClass().getCanonicalName());
 	}
 
-	private void seachForElement(Element element, boolean fixed,
-			IRecordingDescriber descr) {
+	private void seachForElement(Element element, boolean fixed, IRecordingDescriber descr) {
 		if (element != null) {
 			AssertionFocus focus = RawFactory.eINSTANCE.createAssertionFocus();
 			// eclipse 3.4 compatibility:
@@ -856,8 +807,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 			focus.setPointFixed(fixed);
 			if (fixed) {
 				if (TeslaFeatures.isActivityLogging()) {
-					Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-							"assert properties of element: ");
+					Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "assert properties of element: ");
 				}
 				if (TeslaFeatures.getInstance().isTrue(IMLFeatures.USE_IMAGING)) {
 					Image img = descr.captureImage();
@@ -871,8 +821,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 
 	public void resetAssertSelection() {
 		if (TeslaFeatures.isActivityLogging()) {
-			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
-					"reset assert target lock");
+			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS, "reset assert target lock");
 		}
 		freezedCtrl = null;
 		lastFocusedWidget = null;
@@ -884,8 +833,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 					selectionShell = null;
 				}
 				selectionShell = new Shell(SWT.NO_TRIM | SWT.ON_TOP | SWT.TOOL);
-				selectionShell.setBackground(selectionShell.getDisplay()
-						.getSystemColor(SWT.COLOR_RED));
+				selectionShell.setBackground(selectionShell.getDisplay().getSystemColor(SWT.COLOR_RED));
 				selectionShell.setText("Hover");
 				disposeMenuPopups();
 				clearPopupMenus();
@@ -898,8 +846,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 		return null;
 	}
 
-	public boolean isSkipEvent(Widget widget, int type, Event event,
-			boolean send) {
+	public boolean isSkipEvent(Widget widget, int type, Event event, boolean send) {
 		if (event != null && type == SWT.KeyDown) {
 			return isShortcutRequest(event, recorder.getAssertModeShortcuts());
 		}

@@ -51,10 +51,8 @@ public class AspectManager {
 
 	public static synchronized Collection<BundleAspects> getAspects() {
 		List<BundleAspects> result = new ArrayList<BundleAspects>();
-		for (Entry<String, List<String>> e : aspectBundleActivationState
-				.entrySet()) {
-			result.add(new BundleAspects(e.getKey(), new ArrayList<String>(e
-					.getValue())));
+		for (Entry<String, List<String>> e : aspectBundleActivationState.entrySet()) {
+			result.add(new BundleAspects(e.getKey(), new ArrayList<String>(e.getValue())));
 		}
 		return result;
 	}
@@ -116,10 +114,7 @@ public class AspectManager {
 			}
 		}
 		if (bundle != null && bundle.getState() != Bundle.ACTIVE) {
-			Status st = new Status(
-					Status.ERROR,
-					Activator.PLUGIN_ID,
-					700,
+			Status st = new Status(Status.ERROR, Activator.PLUGIN_ID, 700,
 					"RCPTT aspects plugin \"org.eclipse.rcptt.tesla.swt.aspects\" could not be activated. Could not continue...",
 					null);
 			Activator.getDefault().getLog().log(st);
@@ -128,10 +123,7 @@ public class AspectManager {
 
 		// Check aspectj weaving are initialized correctly
 		if (!isAspectsInitialized()) {
-			Status st = new Status(
-					Status.ERROR,
-					Activator.PLUGIN_ID,
-					700,
+			Status st = new Status(Status.ERROR, Activator.PLUGIN_ID, 700,
 					"RCPTT aspects plugin \"org.eclipse.rcptt.tesla.swt.aspects\" is not initialized. Could not continue...",
 					null);
 			Activator.getDefault().getLog().log(st);
@@ -146,8 +138,7 @@ public class AspectManager {
 	}
 
 	private static synchronized boolean isAspectsInitialized() {
-		List<String> swtAspectBundle = aspectBundleActivationState
-				.get("org.eclipse.rcptt.tesla.swt.aspects");
+		List<String> swtAspectBundle = aspectBundleActivationState.get("org.eclipse.rcptt.tesla.swt.aspects");
 		return swtAspectBundle != null && !swtAspectBundle.isEmpty();
 	}
 }

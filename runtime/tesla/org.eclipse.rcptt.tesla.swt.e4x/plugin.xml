@@ -18,5 +18,5 @@
             class="org.eclipse.rcptt.tesla.swt.e4x.E4WorkbenchProvider">
       </workbenchProvider>
    </extension>
-
+  
 </plugin>
