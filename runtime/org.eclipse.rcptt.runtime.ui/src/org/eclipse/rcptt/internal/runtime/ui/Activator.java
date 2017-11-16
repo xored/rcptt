@@ -12,6 +12,7 @@ package org.eclipse.rcptt.internal.runtime.ui;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.core.launching.events.AutEventLocation;
 import org.eclipse.rcptt.core.launching.events.EventsFactory;
@@ -20,13 +21,12 @@ import org.eclipse.rcptt.runtime.ui.AutEventManager;
 import org.eclipse.rcptt.runtime.ui.Q7Monitor;
 import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager;
 import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager.IUIIDEListener;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime.ui";
@@ -44,7 +44,7 @@ public class Activator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext
 	 * )
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class Activator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext
 	 * )
 	 */
 	@Override

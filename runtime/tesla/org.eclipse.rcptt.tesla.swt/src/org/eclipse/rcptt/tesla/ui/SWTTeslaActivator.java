@@ -11,12 +11,12 @@
 package org.eclipse.rcptt.tesla.ui;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.rcptt.reporting.core.ReportManager;
 import org.eclipse.rcptt.sherlock.core.INodeBuilder;
 import org.eclipse.rcptt.sherlock.core.model.sherlock.report.LoggingCategory;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -24,7 +24,7 @@ import org.osgi.framework.ServiceReference;
  * The activator class controls the plug-in life cycle
  */
 
-public class SWTTeslaActivator extends AbstractUIPlugin {
+public class SWTTeslaActivator extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.swt";
@@ -44,7 +44,7 @@ public class SWTTeslaActivator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext
 	 * )
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -72,7 +72,7 @@ public class SWTTeslaActivator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
