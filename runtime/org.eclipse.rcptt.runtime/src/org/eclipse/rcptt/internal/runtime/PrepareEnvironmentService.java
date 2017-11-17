@@ -8,24 +8,23 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.runtime.ui;
+package org.eclipse.rcptt.internal.runtime;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 
-import org.eclipse.rcptt.core.launching.events.AutReconnect;
+import org.eclipse.rcptt.tesla.core.am.AspectManager;
 
-public class AutReconnectService implements ICommandService {
-	@Override
-	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
-		AutReconnect cmd = (AutReconnect) command;
-		AutEventManager.reconnect(cmd.getId(), cmd.getQ7EclPort());
-		AutEventManager.getInstance().sendInit();
-		AutEventManager.getInstance().sendStartup();
-		return Status.OK_STATUS;
+public class PrepareEnvironmentService implements ICommandService {
+
+	public IStatus service(Command command, IProcess context)
+			throws InterruptedException, CoreException {
+		// HandleStore.getStore().printInfo();
+
+		// Be sure tesla is active
+		return AspectManager.initialize();
 	}
 }

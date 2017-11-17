@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.internal.runtime.ui;
+package org.eclipse.rcptt.internal.runtime;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -17,8 +17,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.core.launching.events.AutEventLocation;
 import org.eclipse.rcptt.core.launching.events.EventsFactory;
 import org.eclipse.rcptt.reporting.core.ReportManager;
-import org.eclipse.rcptt.runtime.ui.AutEventManager;
-import org.eclipse.rcptt.runtime.ui.Q7Monitor;
+import org.eclipse.rcptt.runtime.AutEventManager;
+import org.eclipse.rcptt.runtime.Q7Monitor;
 import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager;
 import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager.IUIIDEListener;
 import org.osgi.framework.BundleContext;
@@ -29,7 +29,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime.ui";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime";
 
 	// The shared instance
 	private static Activator plugin;

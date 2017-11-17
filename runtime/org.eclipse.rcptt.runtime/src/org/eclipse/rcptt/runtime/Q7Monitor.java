@@ -8,11 +8,11 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.runtime.ui;
+package org.eclipse.rcptt.runtime;
 
 import org.eclipse.rcptt.core.launching.events.AutEventPingResponse;
 import org.eclipse.rcptt.core.launching.events.EventsFactory;
-import org.eclipse.rcptt.internal.runtime.ui.Activator;
+import org.eclipse.rcptt.internal.runtime.Activator;
 
 public class Q7Monitor extends Thread {
 

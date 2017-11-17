@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.runtime.ui;
+package org.eclipse.rcptt.runtime;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -17,8 +17,7 @@ import org.eclipse.rcptt.ecl.client.tcp.EclTcpSession;
 import org.eclipse.rcptt.ecl.debug.runtime.SuspendListener;
 import org.eclipse.rcptt.ecl.debug.runtime.SuspendManager;
 import org.eclipse.rcptt.ecl.server.tcp.EclTcpServerManager;
-
-import org.eclipse.rcptt.internal.runtime.ui.Activator;
+import org.eclipse.rcptt.internal.runtime.Activator;
 import org.eclipse.rcptt.util.NetworkUtils;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;

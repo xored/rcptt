@@ -8,11 +8,11 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.internal.runtime.ui;
+package org.eclipse.rcptt.internal.runtime;
 
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.rcptt.runtime.ui.AutEventManager;
-import org.eclipse.rcptt.runtime.ui.Q7ServerStarter;
+import org.eclipse.rcptt.runtime.AutEventManager;
+import org.eclipse.rcptt.runtime.Q7ServerStarter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;

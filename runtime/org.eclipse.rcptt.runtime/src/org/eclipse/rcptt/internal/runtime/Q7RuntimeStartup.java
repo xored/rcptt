@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.internal.runtime.ui;
+package org.eclipse.rcptt.internal.runtime;
 
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
@@ -19,8 +19,8 @@ import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.rcptt.reporting.core.ReportManager;
-import org.eclipse.rcptt.runtime.ui.AutEventManager;
-import org.eclipse.rcptt.runtime.ui.Q7ServerStarter;
+import org.eclipse.rcptt.runtime.AutEventManager;
+import org.eclipse.rcptt.runtime.Q7ServerStarter;
 
 public class Q7RuntimeStartup implements IStartup {
 	public void earlyStartup() {

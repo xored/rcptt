@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.runtime.ui;
+package org.eclipse.rcptt.runtime;
 
 import java.net.InetAddress;
 
@@ -33,7 +33,7 @@ import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.IPipe;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.ecl.runtime.ISession;
-import org.eclipse.rcptt.internal.runtime.ui.Activator;
+import org.eclipse.rcptt.internal.runtime.Activator;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.swt.SWT;
