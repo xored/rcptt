@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.internal.runtime;
+package org.eclipse.rcptt.runtime.internal.ui;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.rcptt.runtime.AutEventManager;

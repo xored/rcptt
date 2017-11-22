@@ -38,16 +38,6 @@
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.GetPerspectivesService"
-            name="GetPerspectives"
-            namespace="http://eclipse.org/rcptt/core/ecl">
-      </scriptlet>
-      <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.GetViewsService"
-            name="GetViews"
-            namespace="http://eclipse.org/rcptt/core/ecl">
-      </scriptlet>
-      <scriptlet
             class="org.eclipse.rcptt.internal.runtime.SetOptionService"
             name="SetQ7Option"
             namespace="http://eclipse.org/rcptt/core/ecl">
@@ -62,20 +52,6 @@
             name="SetOption"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="org.eclipse.rcptt.internal.runtime.Q7RuntimePreferencePage"
-            id="org.eclipse.rcptt.ui.preferences.runtime"
-            name="RCPTT Runtime">
-      </page>
-   </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="org.eclipse.rcptt.internal.runtime.Q7RuntimeStartup">
-      </startup>
    </extension>
 
 </plugin>

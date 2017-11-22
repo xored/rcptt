@@ -8,29 +8,20 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.internal.runtime;
+package org.eclipse.rcptt.runtime.internal.ui;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.rcptt.core.launching.events.AutEventLocation;
-import org.eclipse.rcptt.core.launching.events.EventsFactory;
-import org.eclipse.rcptt.reporting.core.ReportManager;
-import org.eclipse.rcptt.runtime.AutEventManager;
-import org.eclipse.rcptt.runtime.Q7Monitor;
-import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager;
-import org.eclipse.rcptt.tesla.ui.ide.events.UIIDEManager.IUIIDEListener;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-// TODO (e4 support): remove 'optional' from manifest file
 public class Activator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime.ui";
 
 	// The shared instance
 	private static Activator plugin;
@@ -52,30 +43,6 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-
-		if (AutEventManager.getQ7EclPort() != -1) {
-			new Q7Monitor().start();
-			sendInitialState();
-			UIIDEManager.addListener(new IUIIDEListener() {
-				public void handleNewWorkspaceLocation(String path) {
-					AutEventLocation location = EventsFactory.eINSTANCE
-							.createAutEventLocation();
-					location.setLocation(path);
-					try {
-						AutEventManager.getInstance().sendEvent(location);
-					} catch (CoreException e) {
-						log(e.getMessage(), e);
-					} catch (InterruptedException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			});
-		}
-		ReportManager.reload();
-	}
-
-	private void sendInitialState() {
-		AutEventManager.getInstance().sendInit();
 	}
 
 	/*
@@ -131,4 +98,5 @@ public class Activator extends Plugin {
 	public static IStatus createStatus(String message, Throwable t) {
 		return new Status(Status.ERROR, PLUGIN_ID, message, t);
 	}
+
 }

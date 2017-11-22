@@ -11,8 +11,8 @@
  -->
 
 <feature
-      id="org.eclipse.rcptt.runtime"
-      label="RCPTT Runtime Core"
+      id="org.eclipse.rcptt.runtime.e4x"
+      label="RCPTT Runtime Core 4.x"
       version="2.3.0.qualifier"
       provider-name="%providerName">
 
@@ -61,6 +61,20 @@
 
    <plugin
          id="org.eclipse.rcptt.runtime.ui"
+         download-size="0"
+         install-size="0"
+         version="2.3.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.runtime.e4.ui"
+         download-size="0"
+         install-size="0"
+         version="2.3.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.runtime.e4.ui.aspects"
          download-size="0"
          install-size="0"
          version="2.3.0.qualifier"

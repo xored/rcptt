@@ -23,7 +23,6 @@ import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 
 public class GetQ7InformationService implements ICommandService {
 
@@ -39,6 +38,17 @@ public class GetQ7InformationService implements ICommandService {
 		if (info.isTeslaActive()) {
 			info.setTeslaPort(TeslaServerManager.getServer().getPort());
 		}
+		// TODO (e4 support): remove quickfix
+		final Display display = Display.getDefault();
+		if (display != null) {
+			display.syncExec(new Runnable() {
+				@Override
+				public void run() {
+					info.setWindowCount(display.getShells().length);
+				}
+			});
+		}
+		/*
 		info.setWindowCount(PlatformUI.getWorkbench().getWorkbenchWindowCount());
 		if (info.getWindowCount() == 0) {
 			Display display = PlatformUI.getWorkbench().getDisplay();
@@ -55,6 +65,7 @@ public class GetQ7InformationService implements ICommandService {
 				});
 			}
 		}
+		*/
 
 		output.write(info);
 		return result;
