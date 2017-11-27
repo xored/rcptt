@@ -118,7 +118,7 @@ public class WorkbenchTexteditorProcessor implements ITeslaCommandProcessor,
 		}
 
 		public String getRawText(SWTUIElement element) {
-			return getTextEditorRulerText(element.unwrap());
+			return getTextEditorRulerText(element.unwrapWidget());
 		}
 	};
 

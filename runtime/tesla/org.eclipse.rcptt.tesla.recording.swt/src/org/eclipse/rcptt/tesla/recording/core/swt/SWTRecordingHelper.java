@@ -62,8 +62,8 @@ public class SWTRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
 		Set<SWTUIElement> keySet = new HashSet<SWTUIElement>(
 				this.elements.keySet());
 		for (SWTUIElement e : keySet) {
-			if (e.unwrap() != null && !e.unwrap().isDisposed()
-					&& !e.unwrap().getDisplay().equals(Display.getCurrent())) {
+			if (e.unwrapWidget() != null && !e.unwrapWidget().isDisposed()
+					&& !e.unwrapWidget().getDisplay().equals(Display.getCurrent())) {
 				continue;
 			}
 			List<SWTUIElement> list = getPlayer().getParentsList(e);
@@ -109,7 +109,7 @@ public class SWTRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
 	public String getWidgetDetails(Element element) {
 		SWTUIElement swtUiElement = findByElement(element);
 		if (swtUiElement != null) {
-			Widget widget = swtUiElement.unwrap();
+			Widget widget = swtUiElement.unwrapWidget();
 			return new WidgetDetailsProvider().getDetails(widget, getPlayer());
 		}
 		return null;

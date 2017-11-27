@@ -42,7 +42,7 @@ public class ExpandBarPlayerExtension extends AbstractSWTUIPlayerExtension {
 		}
 
 		if (f.kind.is(ElementKind.Item)) {
-			Widget parent = f.parent.unwrap();
+			Widget parent = f.parent.unwrapWidget();
 			if (!(parent instanceof ExpandBar)) {
 				return null;
 			}
@@ -90,7 +90,7 @@ public class ExpandBarPlayerExtension extends AbstractSWTUIPlayerExtension {
 				if (s.w == null) {
 					return;
 				}
-				Widget widget = s.w.unwrap();
+				Widget widget = s.w.unwrapWidget();
 				if (!(widget instanceof ExpandItem)) {
 					return;
 				}

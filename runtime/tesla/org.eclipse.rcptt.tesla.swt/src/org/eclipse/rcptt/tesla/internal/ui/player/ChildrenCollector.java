@@ -20,9 +20,7 @@ import java.util.List;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.ui.internal.WorkbenchPartReference;
 
-@SuppressWarnings("restriction")
 public class ChildrenCollector {
 
 	private final SWTUIPlayer player;
@@ -35,11 +33,8 @@ public class ChildrenCollector {
 
 	public SWTUIElement[] collectFor(SWTUIElement w, SWTUIElement[] ignores,
 			boolean goIntoComposites, Class<?>[] classes, SWTUIElement after) {
-		if (after instanceof WorkbenchUIElement) {
-			after = player.wrap(((WorkbenchPartReference) (((WorkbenchUIElement) after).reference))
-					.getPane().getControl());
-
-		}
+		// for WorkbenchUIElement
+		after = player.wrap(after.unwrapWidget());
 		if (after == null) {
 			return collectFor(w, ignores, goIntoComposites, classes);
 		}

@@ -44,7 +44,7 @@ public class ExpandBarWidgetLocatorExtension implements IWidgetLocatorExtension 
 		BasicUIElement found = null;
 
 		// Actual finding code
-		Widget realWidget = widget.unwrap();
+		Widget realWidget = widget.unwrapWidget();
 		if (realWidget instanceof ExpandItem) {
 			found = findExpandItem((ExpandItem) realWidget);
 		}

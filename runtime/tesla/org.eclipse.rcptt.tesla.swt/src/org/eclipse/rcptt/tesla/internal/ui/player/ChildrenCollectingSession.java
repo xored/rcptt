@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -45,9 +44,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.internal.WorkbenchPartReference;
 
-@SuppressWarnings("restriction")
 public class ChildrenCollectingSession {
 
 	public final SWTUIPlayer player;
@@ -102,13 +99,6 @@ public class ChildrenCollectingSession {
 			}
 		}
 
-		if (w instanceof WorkbenchUIElement && w.isView()) {
-			WorkbenchUIElement wbelement = (WorkbenchUIElement) w;
-			if (needToCollectMenuItems()) {
-				collectMenuItems(wbelement.getViewMenu(), null);
-			}
-		}
-
 		Widget widget = unwrapWidget(w);
 		if (widget != null && widget.isDisposed()) {
 			return new SWTUIElement[0];
@@ -118,19 +108,6 @@ public class ChildrenCollectingSession {
 			for (Shell shell : shells) {
 				addItem(wrap(shell));
 			}
-		}
-		if (w instanceof WorkbenchUIElement) {
-			WorkbenchPartReference reference = (WorkbenchPartReference) ((WorkbenchUIElement) w)
-					.getReference();
-			Control toolBar = EclipseWorkbenchProvider.getProvider()
-					.getToolbar(reference);
-			if (toolBar != null) {
-				addItem(wrap(toolBar));
-				SWTUIElement[] children = collector.collectFor(wrap(toolBar), ignores,
-						goIntoComposites, classes);
-				results.addAll(Arrays.asList(children));
-			}
-
 		}
 
 		if ((widget instanceof TreeColumn || widget instanceof TableColumn)
@@ -309,7 +286,7 @@ public class ChildrenCollectingSession {
 
 	//
 
-	private SWTUIElement wrap(Object s) {
+	public SWTUIElement wrap(Object s) {
 		return player.wrap(s);
 	}
 
@@ -366,6 +343,10 @@ public class ChildrenCollectingSession {
 			if (point != null) // only if we have set the location
 				TeslaSWTAccess.setHasLocation(menu, oldHasLocation);
 		}
+	}
+
+	public void addResults(List<SWTUIElement> results) {
+		this.results.addAll(results);
 	}
 
 }

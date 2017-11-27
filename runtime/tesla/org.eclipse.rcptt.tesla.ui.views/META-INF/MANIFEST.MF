@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCPTT Runtime UI Views Support
+Bundle-SymbolicName: org.eclipse.rcptt.tesla.ui.views;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: org.eclipse.rcptt.tesla.ui.views.Activator
+Bundle-Vendor: Eclipse RCP Testing Tool Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.jface,
+ org.eclipse.osgi,
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.views,
+ org.eclipse.core.runtime,
+ org.eclipse.rcptt.tesla.core
+Export-Package: org.eclipse.rcptt.tesla.ui.views

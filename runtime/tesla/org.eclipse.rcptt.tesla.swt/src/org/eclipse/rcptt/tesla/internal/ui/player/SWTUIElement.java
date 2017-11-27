@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Instances of this class are used mainly as convenience wraps for SWT widgets
@@ -260,16 +259,12 @@ public class SWTUIElement implements IBasicMappingNode {
 		return SWTModelMapper.map(this);
 	}
 
-	public Widget unwrap() {
-		return PlayerWrapUtils.unwrapWidget(this);
+	public Object unwrap() {
+		return widget;
 	}
 
-	public boolean isWorkbenchWindow() {
-		if (getKind().is(ElementKind.Window)) {
-			return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getShell().equals(widget);
-		}
-		return false;
+	public Widget unwrapWidget() {
+		return widget;
 	}
 
 	public Rectangle getBounds() {

@@ -47,7 +47,7 @@ public class NebulaUIPlayerExtension extends AbstractSWTUIPlayerExtension {
 		case ColumnHeader:
 			return selectColumnHeader(p, f);
 		case Item:
-			Widget parentWidget = f.parent.unwrap();
+			Widget parentWidget = f.parent.unwrapWidget();
 			if (f.path != null && parentWidget instanceof Grid) {
 				GridItem item = (GridItem) NebulaViewers.searchGridItem(
 						(NebulaUIElement) f.parent, f.path);

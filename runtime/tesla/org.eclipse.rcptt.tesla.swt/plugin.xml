@@ -33,11 +33,6 @@
              class="org.eclipse.rcptt.tesla.internal.ui.TeslaReplayNetworkClientProcessor">
        </provider>
     </extension>
-    <extension
-          point="org.eclipse.ui.startup">
-       <startup
-             class="org.eclipse.rcptt.tesla.ui.SWTTeslaStartup"></startup>
-    </extension>
      <extension
          point="org.eclipse.rcptt.watson.core.eventProvider">
       <provider

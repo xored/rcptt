@@ -11,5 +11,6 @@ Require-Bundle: org.eclipse.debug.core,
  org.eclipse.jface,
  org.eclipse.rcptt.ecl.core;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.rcptt.core.ecl.core;bundle-version="[2.3.0,3.0.0)",
- org.eclipse.rcptt.runtime;bundle-version="[2.3.0,3.0.0)"
+ org.eclipse.rcptt.runtime;bundle-version="[2.3.0,3.0.0)",
+ org.eclipse.rcptt.util
 Bundle-Activator: org.eclipse.rcptt.runtime.internal.ui.Activator

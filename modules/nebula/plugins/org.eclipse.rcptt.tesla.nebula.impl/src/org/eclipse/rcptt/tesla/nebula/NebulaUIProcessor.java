@@ -502,7 +502,7 @@ public class NebulaUIProcessor extends SWTUIProcessor implements
 
 	public static org.eclipse.rcptt.tesla.core.ui.Widget mapWidget(
 			SWTUIElement element, org.eclipse.rcptt.tesla.core.ui.Widget result) {
-		Widget widget = element.unwrap();
+		Widget widget = element.unwrapWidget();
 		if (widget instanceof Grid) {
 			Grid grid = (Grid) widget;
 

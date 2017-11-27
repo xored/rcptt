@@ -31,7 +31,7 @@ public class RecordingWidgetDescriber extends WidgetDescriber implements
 	}
 
 	public RecordingWidgetDescriber(SWTUIElement element) {
-		super(element.unwrap());
+		super(element.unwrapWidget());
 		uiElement = element;
 	}
 

@@ -47,7 +47,6 @@ import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -584,7 +583,8 @@ public class UIJobCollector implements IJobChangeListener {
 									if (jobContext.contains("org.eclipse.ui.internal.UISynchronizer", "syncExec")
 											&& (jobContext.contains("org.eclipse.ui.internal.Semaphore", "acquire")||
 													jobContext.contains("org.eclipse.ui.internal.PendingSyncExec", "waitUntilExecuted"))) {
-										if (!SWTUIPlayer.hasRunnables(PlatformUI.getWorkbench().getDisplay())) {
+										// TODO (e4 support): remove quickfix
+										if (!SWTUIPlayer.hasRunnables(Display.getDefault())) {
 											List<Context> execs = TeslaEventManager.getManager().getSyncExecs();
 											boolean toContinue = true;
 											for (Context context2 : execs) {
@@ -636,7 +636,8 @@ public class UIJobCollector implements IJobChangeListener {
 				if ((flags & 0xFF) == 0x08) {
 					return logReturnResult(true, realJobs, jobsInUI, info);
 				}
-				final Display display = PlatformUI.getWorkbench().getDisplay();
+				// TODO (e4 support): remove quickfix
+				final Display display = Display.getDefault();
 				final boolean value[] = { false };
 				display.syncExec(new Runnable() {
 

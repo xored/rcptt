@@ -10,30 +10,15 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.internal.WorkbenchPartReference;
 
-@SuppressWarnings("restriction")
 public class PlayerWrapUtils {
 
 	public static Object unwrap(SWTUIElement element) {
 		if (element == null) {
 			return null;
-		} else if (element instanceof WorkbenchUIElement) {
-			return ((WorkbenchUIElement) element).reference;
 		}
-		try {
-			if (element instanceof FormTextLinkUIElement) {
-				Object result = ((FormTextLinkUIElement) element).segment;
-				if (result != null) {
-					return result;
-				}
-			}
-		} catch (Throwable e) {
-			TeslaCore.log(e);
-		}
-		return (element).widget;
+		return element.unwrap();
 	}
 
 	/**
@@ -45,12 +30,7 @@ public class PlayerWrapUtils {
 	public static Widget unwrapWidget(SWTUIElement widget) {
 		if (widget == null) {
 			return null;
-		} else if (widget instanceof WorkbenchUIElement) {
-			return ((WorkbenchPartReference) (((WorkbenchUIElement) widget).reference))
-					.getPane().getControl();
-
-		} else {
-			return widget.widget;
 		}
+		return widget.unwrapWidget();
 	}
 }

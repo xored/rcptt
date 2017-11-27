@@ -12,7 +12,7 @@ package org.eclipse.rcptt.tesla.ui;
 
 import org.eclipse.ui.IStartup;
 
-public class SWTTeslaStartup implements IStartup {
+public class UITeslaStartup implements IStartup {
 
 	public void earlyStartup() {
 		Q7KeyFormatter.installQ7Formatter();

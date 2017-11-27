@@ -5,7 +5,7 @@
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
-     
+
     Contributors:
     	Xored Software Inc - initial API and implementation and/or initial documentation
  -->
@@ -56,14 +56,16 @@
     <module>org.eclipse.rcptt.tesla.swt.aspects</module>
     <module>org.eclipse.rcptt.tesla.swt.fragment</module>
     <module>org.eclipse.rcptt.tesla.swt</module>
+    <module>org.eclipse.rcptt.tesla.ui</module>
     <module>org.eclipse.rcptt.tesla.ui.ide</module>
     <module>org.eclipse.rcptt.tesla.ui.ide.aspects</module>
+    <module>org.eclipse.rcptt.tesla.ui.views</module>
     <module>org.eclipse.rcptt.tesla.workbench.texteditor</module>
     <module>org.eclipse.rcptt.tesla.workbench.texteditor.aspects</module>
     <module>org.eclipse.rcptt.tesla.variables</module>
     <module>org.eclipse.rcptt.tesla.properties.view</module>
   </modules>
-  
+
   <profiles>
     <profile>
       <id>runtime3x</id>

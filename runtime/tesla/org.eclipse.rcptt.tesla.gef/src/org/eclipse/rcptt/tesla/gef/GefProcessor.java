@@ -128,11 +128,12 @@ import org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.processors.IModelMapperHelper;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.swt.util.IdentifyObjectUtil;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.ui.WorkbenchUIProcessor;
 import org.eclipse.rcptt.util.Function;
 import org.eclipse.rcptt.util.ListUtil;
 import org.eclipse.rcptt.util.Predicate;
@@ -196,6 +197,10 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 		return client.getProcessor(SWTUIProcessor.class);
 	}
 
+	private WorkbenchUIProcessor getWorkbenchUIProcessor() {
+		return client.getProcessor(WorkbenchUIProcessor.class);
+	}
+
 	@Override
 	public PreExecuteStatus preExecute(Command command,
 			PreExecuteStatus previousStatus, Q7WaitInfoRoot info) {
@@ -205,7 +210,7 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 			Element element = data.getParent();
 			DiagramViewerUIElement diagram = getDiagram(element);
 			if (diagram != null) {
-				if (!getSWTProcessor().activateViewEditor(
+				if (!getWorkbenchUIProcessor().activateViewEditor(
 						getPlayer().wrap(diagram.getCanvas()), false, info)) {
 					return new PreExecuteStatus(false);
 				}
@@ -219,7 +224,7 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 			Element element = cmd.getElement();
 			DiagramViewerUIElement diagram = getDiagram(element);
 			if (diagram != null) {
-				if (!getSWTProcessor().activateViewEditor(
+				if (!getWorkbenchUIProcessor().activateViewEditor(
 						getPlayer().wrap(diagram.getCanvas()), false, info)) {
 					return new PreExecuteStatus(false);
 				}
@@ -2423,7 +2428,7 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 			SWTUIElement canvasElement = SWTElementMapper.getMapper(id).get(
 					parent);
 			if (canvasElement != null) {
-				if (!(canvasElement.unwrap() instanceof FigureCanvas)) {
+				if (!(canvasElement.unwrapWidget() instanceof FigureCanvas)) {
 					return createFailedSelect(TeslaGefMessages.GefProcessor_CannotSelect);
 				}
 				return selectCanvasFigure(data, canvasElement);
@@ -2727,7 +2732,7 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 
 	private SelectResponse selectCanvasFigure(SelectData data,
 			SWTUIElement canvasElement) {
-		FigureCanvas figureCanvas = (FigureCanvas) canvasElement.unwrap();
+		FigureCanvas figureCanvas = (FigureCanvas) canvasElement.unwrapWidget();
 		IFigure figure = getFigure(data.getIndexes(),
 				figureCanvas.getContents(), null);
 		if (figure != null) {
@@ -2821,7 +2826,7 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 			// Filter out non graphical viewer canvases
 			for (Iterator<SWTUIElement> iterator = children.iterator(); iterator.hasNext();) {
 				SWTUIElement swtuiElement = iterator.next();
-				Widget widget = swtuiElement.unwrap();
+				Widget widget = swtuiElement.unwrapWidget();
 				if (!(widget instanceof FigureCanvas)) {
 					GraphicalViewer vv = TeslaSWTAccess.getThis(GraphicalViewer.class, widget,
 							SWT.Dispose);

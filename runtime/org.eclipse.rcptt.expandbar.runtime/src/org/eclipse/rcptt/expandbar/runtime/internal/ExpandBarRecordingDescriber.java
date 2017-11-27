@@ -33,7 +33,7 @@ public class ExpandBarRecordingDescriber extends ExpandBarDescriber implements I
 	}
 
 	public ExpandBarRecordingDescriber(SWTUIElement element) {
-		super((ExpandBar) element.unwrap());
+		super((ExpandBar) element.unwrapWidget());
 		this.element = element;
 	}
 

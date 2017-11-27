@@ -56,10 +56,10 @@ public class NebulaWidgetLocatorExtension implements IWidgetLocatorExtension {
 		//
 
 		BasicUIElement found = null;
-		if (widget.unwrap() instanceof GridItem)
-			found = findGridItem(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
-		else if (widget.unwrap() instanceof GridColumn)
-			found = findGridColumn(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
+		if (widget.unwrapWidget() instanceof GridItem)
+			found = findGridItem(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
+		else if (widget.unwrapWidget() instanceof GridColumn)
+			found = findGridColumn(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
 		else if (widget instanceof NebulaPartUIElement)
 			found = findGridPart(((NebulaPartUIElement) widget).part, alwaysFindLeaf, supportEclipseWorkbench);
 

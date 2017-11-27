@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.ui.describers;
 
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -26,9 +27,6 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
-
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 
 public class WidgetDescriber implements IWidgetDescriber {
 
@@ -107,7 +105,8 @@ public class WidgetDescriber implements IWidgetDescriber {
 			return new Point(bounds.x, bounds.y);
 		}
 		if (display == null) {
-			display = PlatformUI.getWorkbench().getDisplay();
+			// TODO (e4 support): remove quickfix
+			display = Display.getDefault();
 		}
 		// for menu item bounds can be null
 		if (bounds != null) {

@@ -15,12 +15,10 @@ import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.safeMat
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.unifyMultilines;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.validateRegex;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.canClick;
-import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.canClickView;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.getModalChild;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.isDisabled;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrap;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;
-import static org.eclipse.rcptt.tesla.swt.util.GetWindowUtil.getShellCreationMethodName;
 import static org.eclipse.rcptt.util.swt.Bounds.centerAbs;
 import static org.eclipse.rcptt.util.swt.Bounds.centerRel;
 
@@ -29,9 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,15 +40,12 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.osgi.util.NLS;
@@ -75,10 +68,8 @@ import org.eclipse.rcptt.tesla.core.protocol.Check;
 import org.eclipse.rcptt.tesla.core.protocol.CheckItem;
 import org.eclipse.rcptt.tesla.core.protocol.Children;
 import org.eclipse.rcptt.tesla.core.protocol.Click;
-import org.eclipse.rcptt.tesla.core.protocol.ClickAboutMenu;
 import org.eclipse.rcptt.tesla.core.protocol.ClickColumn;
 import org.eclipse.rcptt.tesla.core.protocol.ClickLink;
-import org.eclipse.rcptt.tesla.core.protocol.ClickPreferencesMenu;
 import org.eclipse.rcptt.tesla.core.protocol.ClickText;
 import org.eclipse.rcptt.tesla.core.protocol.Close;
 import org.eclipse.rcptt.tesla.core.protocol.Collapse;
@@ -110,12 +101,9 @@ import org.eclipse.rcptt.tesla.core.protocol.GoToTextLine;
 import org.eclipse.rcptt.tesla.core.protocol.HoverAtTextOffset;
 import org.eclipse.rcptt.tesla.core.protocol.IElementProcessorMapper;
 import org.eclipse.rcptt.tesla.core.protocol.IntResponse;
-import org.eclipse.rcptt.tesla.core.protocol.IsDirty;
 import org.eclipse.rcptt.tesla.core.protocol.IsDisposed;
 import org.eclipse.rcptt.tesla.core.protocol.IsEnabled;
 import org.eclipse.rcptt.tesla.core.protocol.LinkUIElement;
-import org.eclipse.rcptt.tesla.core.protocol.Maximize;
-import org.eclipse.rcptt.tesla.core.protocol.Minimize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.MultiSelectionItem;
@@ -124,8 +112,6 @@ import org.eclipse.rcptt.tesla.core.protocol.PasteTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
 import org.eclipse.rcptt.tesla.core.protocol.ReplaceTextSelection;
-import org.eclipse.rcptt.tesla.core.protocol.Restore;
-import org.eclipse.rcptt.tesla.core.protocol.Save;
 import org.eclipse.rcptt.tesla.core.protocol.SelectCommand;
 import org.eclipse.rcptt.tesla.core.protocol.SelectData;
 import org.eclipse.rcptt.tesla.core.protocol.SelectResponse;
@@ -144,7 +130,6 @@ import org.eclipse.rcptt.tesla.core.protocol.ShowSelection;
 import org.eclipse.rcptt.tesla.core.protocol.ShowTabList;
 import org.eclipse.rcptt.tesla.core.protocol.TextSelectionResponse;
 import org.eclipse.rcptt.tesla.core.protocol.Type;
-import org.eclipse.rcptt.tesla.core.protocol.TypeAction;
 import org.eclipse.rcptt.tesla.core.protocol.TypeText;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
@@ -154,15 +139,11 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.ResponseStatus;
 import org.eclipse.rcptt.tesla.core.utils.TeslaUtils;
 import org.eclipse.rcptt.tesla.internal.core.AbstractTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.SimpleCommandPrinter;
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.rcptt.tesla.internal.core.info.InfoUtils;
-import org.eclipse.rcptt.tesla.internal.core.info.InfoUtils.Node;
 import org.eclipse.rcptt.tesla.internal.core.processing.ElementGenerator;
 import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
 import org.eclipse.rcptt.tesla.internal.ui.SWTElementMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.ItemUIElement;
-import org.eclipse.rcptt.tesla.internal.ui.player.PerspectiveUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTEvents;
@@ -170,8 +151,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
-import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
@@ -181,7 +160,6 @@ import org.eclipse.rcptt.tesla.swt.dnd.LocalClipboard;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.IUnhandledNativeDialogHandler;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IImageAssertSupport;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.rcptt.tesla.ui.describers.IWidgetDescriber;
@@ -214,17 +192,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.handlers.IHandlerService;
 
 public class SWTUIProcessor implements ITeslaCommandProcessor,
 		IModelMapperHelper {
@@ -253,7 +220,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ProtocolPackage.Literals.CLOSE,
 			ProtocolPackage.Literals.TYPE_TEXT,
 			ProtocolPackage.Literals.TYPE,
-			ProtocolPackage.Literals.TYPE_ACTION,
 			ProtocolPackage.Literals.SHOW,
 			ProtocolPackage.Literals.GET_ITEMS,
 
@@ -272,15 +238,10 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ProtocolPackage.Literals.DRAG_COMMAND,
 			ProtocolPackage.Literals.CELL_CLICK,
 			ProtocolPackage.Literals.GET_REGION_TEXT,
-			ProtocolPackage.Literals.CLICK_ABOUT_MENU,
-			ProtocolPackage.Literals.CLICK_PREFERENCES_MENU,
 			ProtocolPackage.Literals.SET_STATUS_DIALOG_MODE,
 			ProtocolPackage.Literals.SET_FOCUS,
 			ProtocolPackage.Literals.CLICK_TEXT,
 
-			// Editor commands
-			ProtocolPackage.Literals.SAVE,
-			ProtocolPackage.Literals.IS_DIRTY,
 			// Text commands
 			ProtocolPackage.Literals.SET_TEXT_SELECTION,
 			ProtocolPackage.Literals.SHOW_SELECTION,
@@ -302,9 +263,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ProtocolPackage.Literals.CLICK_COLUMN,
 			ProtocolPackage.Literals.MOUSE_EVENT };
 
-	private static final Set<String> SKIP_ACTIVATION_FOR_SHELLS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-			"ContextInformationPopup.createContextInfoPopup()")));
-
+	private Display display;
 	protected static ProtocolFactory factory = ProtocolFactory.eINSTANCE;
 	private AbstractTeslaClient client;
 	private String id;
@@ -340,14 +299,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	@Override
 	public PreExecuteStatus preExecute(final Command command,
 			final PreExecuteStatus previousStatus, Q7WaitInfoRoot info) {
-		if (command instanceof ElementCommand) {
-			if (!(command instanceof GetPropertyValue)) {
-				final ElementCommand cmd = (ElementCommand) command;
-				if (!activateViewEditor(cmd.getElement(), false, info)) {
-					return new PreExecuteStatus(false);
-				}
-			}
-		}
 		PreExecuteStatus resultStatus = preExecuteAssert(command,
 				previousStatus, info);
 		if (resultStatus != null) {
@@ -376,20 +327,12 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			// XXX no need activate parent part if kind is window
 			if (data.getParent() != null
 					&& !data.getKind().equals(ElementKind.Window.name())) {
-				boolean onlyOpen = true;
 				// Issue: Menu is not accessible if view is not activated
 				if (data.getKind().equals(ElementKind.Menu.name())) {
-					onlyOpen = false;
 					if (getPlayer().cleanMenus(info)) {
 						return new PreExecuteStatus(false); // Clean previous
 															// menus.
 					}
-				}
-				if (data.getKind().equals(ElementKind.Item.name())) {
-					onlyOpen = false;
-				}
-				if (!activateViewEditor(data.getParent(), onlyOpen, info)) {
-					return new PreExecuteStatus(false);
 				}
 			}
 			if (data.getKind().equals(ElementKind.Item.name())) {
@@ -485,7 +428,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final Control tableOrTree = (Control) unwrapWidget(element);
 		if (!(tableOrTree instanceof Tree || tableOrTree instanceof Table))
 			return null;
-		if (!TableTreeUtil.isVirtual(element.unwrap())) {
+		if (!TableTreeUtil.isVirtual(element.unwrapWidget())) {
 			return null;
 		}
 
@@ -493,7 +436,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		Set<Item> selection = Viewers.findItems(new String[][] { itemPath },
 				tableOrTree, false, prevPos);
 		if (selection.isEmpty()) {
-			int newpos = Viewers.updateVirtualTableTree(element.unwrap(), prevPos);
+			int newpos = Viewers.updateVirtualTableTree(element.unwrapWidget(), prevPos);
 			if (newpos == -1) {
 				return null;
 			}
@@ -599,6 +542,8 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 	@Override
 	public void initialize(final AbstractTeslaClient client, final String id) {
+		// TODO (e4 support): move up
+		this.display = Display.getCurrent();
 		this.client = client;
 		this.id = id;
 		dragSupport.initialize(client, id);
@@ -695,8 +640,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleTypeText((TypeText) command);
 			case ProtocolPackage.TYPE:
 				return handleType((Type) command);
-			case ProtocolPackage.TYPE_ACTION:
-				return handleTypeAction((TypeAction) command);
 			case ProtocolPackage.SHOW:
 				return handleShow((Show) command);
 			case ProtocolPackage.DRAG_COMMAND:
@@ -725,16 +668,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleGetSelection((GetSelection) command);
 			case ProtocolPackage.CELL_CLICK:
 				return handleCellClick((CellClick) command);
-			case ProtocolPackage.CLICK_ABOUT_MENU:
-				return handleClickAboutMenu((ClickAboutMenu) command);
-			case ProtocolPackage.CLICK_PREFERENCES_MENU:
-				return handleClickPreferencesMenu((ClickPreferencesMenu) command);
-			case ProtocolPackage.MINIMIZE:
-				return handleMinimize((Minimize) command);
-			case ProtocolPackage.MAXIMIZE:
-				return handleMaximize((Maximize) command);
-			case ProtocolPackage.RESTORE:
-				return handleRestore((Restore) command);
 			case ProtocolPackage.SHOW_TAB_LIST:
 				return handleShowTabList((ShowTabList) command);
 			case ProtocolPackage.SET_STATUS_DIALOG_MODE:
@@ -747,10 +680,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleClickText((ClickText) command);
 			case ProtocolPackage.DOUBLE_CLICK_TEXT:
 				return handleDoubleClickText((DoubleClickText) command);
-			case ProtocolPackage.SAVE:
-				return handleSave((Save) command);
-			case ProtocolPackage.IS_DIRTY:
-				return handleIsDirty((IsDirty) command);
 			case ProtocolPackage.SHOW_SELECTION:
 				return handleShowSelection((ShowSelection) command);
 			case ProtocolPackage.SET_TEXT_SELECTION:
@@ -1218,69 +1147,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		return response;
 	}
 
-	private Response handleRestore(Restore command) {
-		SWTUIElement element = getMapper().get(command.getElement());
-		Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null) {
-			getPlayer().restore(element);
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
-		return response;
-	}
-
-	private Response handleMaximize(Maximize command) {
-		SWTUIElement element = getMapper().get(command.getElement());
-		Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null) {
-			if (element instanceof WorkbenchUIElement) {
-				getPlayer().click(element);
-			}
-			getPlayer().maximize(element);
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
-		return response;
-	}
-
-	private Response handleMinimize(Minimize command) {
-		SWTUIElement element = getMapper().get(command.getElement());
-		Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null) {
-			getPlayer().minimize(element);
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
-		return response;
-	}
-
-	protected Response handleSave(Save command) {
-		SWTUIElement element = getMapper().get(command.getElement());
-		Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null) {
-			getPlayer().save(element);
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
-		return response;
-	}
-
-	protected Response handleIsDirty(IsDirty command) {
-		SWTUIElement element = getMapper().get(command.getElement());
-		BooleanResponse response = factory.createBooleanResponse();
-		if (element != null) {
-			response.setResult(getPlayer().isDirty(element));
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
-		return response;
-	}
-
 	private Response handleGetRegionText(GetRegionText command) {
 		final Element element = command.getElement();
 		final SWTUIElement uiElement = getMapper().get(element);
@@ -1288,7 +1154,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			return assertResponse(ResponseStatus.FAILED,
 					TeslaSWTMessages.CommandProcessor_CannotFindWidget);
 		}
-		IWidgetDescriber descr = new WidgetDescriber(uiElement.unwrap());
+		IWidgetDescriber descr = new WidgetDescriber(uiElement.unwrapWidget());
 		return handleGetRegionText(command, descr);
 	}
 
@@ -1492,127 +1358,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		return result;
 	}
 
-	public boolean activateViewEditor(final Element cmdElement,
-			boolean onlyOpen, Q7WaitInfoRoot info) {
-		final SWTUIElement element = getMapper().get(cmdElement);
-		if (element != null) {
-			return activateViewEditor(element, onlyOpen, info);
-		}
-		return true;
-	}
-
-	public boolean activateViewEditor(final SWTUIElement element,
-			boolean onlyOpen, Q7WaitInfoRoot info) {
-		// final SWTUIPlayer player = element.getPlayer();
-		// final Widget widget = unwrapWidget(element);
-
-		SWTUIElement sh = SWTUIPlayer.getShell(element);
-		if (sh == null || sh.widget == null) {
-			TeslaCore.log("Failed to locate shell for:"
-					+ ((element != null) ? element.toString() : ""));
-			return true;
-		}
-		final Shell shell = (Shell) sh.widget;
-		if (SKIP_ACTIVATION_FOR_SHELLS.contains(getShellCreationMethodName(shell))) {
-			return true;
-		}
-		Shell activeShell = TeslaEventManager.getActiveShell();
-		if (activeShell != shell) {
-			Q7WaitUtils.updateInfo("shell.activate",
-					shell.getClass().getName(), info);
-			getPlayer().exec("Activate shell", new Runnable() {
-				@Override
-				public void run() {
-					// Do deactivate for all other shells
-
-					Display display = shell.getDisplay();
-					Shell[] shells = display.getShells();
-					for (Shell sh : shells) {
-						if (!shell.equals(sh)) {
-							if (sh.isVisible()) {
-								// getPlayer().getEvents().sendEvent(sh,
-								// SWT.FocusOut);
-								getPlayer().getEvents().sendEvent(sh,
-										SWT.Deactivate);
-							}
-						}
-					}
-
-					shell.setActive();
-					// shell.forceActive();
-					TeslaEventManager.setActiveShell(shell);
-
-					// seems like for linux systems event triggered by shell.setActive().
-					// the following code prevent triggering of the same event twice.
-					if (!org.eclipse.jface.util.Util.isLinux()) {
-						getPlayer().getEvents().sendEvent(shell, SWT.Activate);
-					}
-
-				}
-			});
-			return false;
-		}
-
-		List<SWTUIElement> parentsList = getPlayer().getParentsList(element);
-		parentsList.add(element);
-		for (SWTUIElement e : parentsList) {
-			final GenericElementKind kind = e.getKind();
-			if (kind.is(ElementKind.View) || kind.is(ElementKind.Editor)) {
-				if (e instanceof WorkbenchUIElement) {
-					final IWorkbenchPartReference reference = ((WorkbenchUIElement) e)
-							.getReference();
-					final boolean visible = EclipseWorkbenchProvider
-							.getProvider().isVisible(reference);
-					if (!visible) {
-						IWorkbenchPage page = reference.getPage();
-						if (!EclipseWorkbenchProvider.getProvider()
-								.isActiveContainsView(page, reference)) {
-							return true;
-						}
-						Q7WaitUtils.updateInfo("view.activate",
-								reference.getId(), info);
-						e.click();
-						return false;
-					}
-					if (!onlyOpen) {
-						IWorkbenchPart part = reference.getPart(true);
-						if (part != null) {
-							IWorkbenchPage page = reference.getPage();
-							IWorkbenchPart activePart = page.getActivePart();
-							if (!(part.equals(activePart))) {
-								page.activate(part);
-								part.setFocus();
-								break;
-							}
-							final CellEditor[] editors = TeslaCellEditorManager
-									.getInstance().getEditors();
-							if (editors.length == 0) {
-								if (part != null && !part.equals(activePart)) {
-									if (!(part.equals(activePart))) {
-										try {
-											page.activate(part);
-											part.setFocus();
-										}
-										catch (RuntimeException re) {
-											TeslaCore.log(re);
-											return true;
-										}
-									}
-									Q7WaitUtils.updateInfo("editor.activate",
-											reference.getId(), info);
-									return false; // lets do it in next
-									// cycle
-								}
-							}
-						}
-					}
-				}
-				break;
-			}
-		}
-		return true;
-	}
-
 	private Response handleSetSWTDialogInfo(final SetSWTDialogInfo command) {
 		final boolean isCanceled = command.getPath() == null || command.getPath().size() == 0;
 		switch (command.getKind()) {
@@ -1792,7 +1537,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		if (assertCmd.getKind().equals(AssertKind.CONTAINS_IMAGE)
 				|| assertCmd.getKind().equals(AssertKind.IMAGE_CONTAINS_TEXT)) {
 			return doImageAssert(assertCmd,
-					new WidgetDescriber(uiElement.unwrap()));
+					new WidgetDescriber(uiElement.unwrapWidget()));
 		}
 		String attrValue = assertCmd.getValue();
 		if (attrValue == null) {
@@ -2202,29 +1947,12 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 						indexes.toArray(new Integer[data.getIndexes().size()]),
 						data.getClassPattern()));
 
-		PerspectiveUIElement perspective = null;
-		if (result == null && parent != null && parent.isWorkbenchWindow()
-				&& data.getKind().equals(ElementKind.Button.toString())
-				&& data.getPattern() != null
-				&& data.getPattern().endsWith(" perspective")) {
-			String perspectiveName = data.getPattern().substring(0,
-					data.getPattern().lastIndexOf(" perspective"));
-			perspective = new PerspectiveUIElement(perspectiveName);
-		}
-
 		SelectResponse response = ProtocolFactory.eINSTANCE
 				.createSelectResponse();
 
 		if (result != null) {
 			response.getElements().add(getMapper().get(result));
-		}
-		else if (perspective != null && perspective.isPerspeciveFind()) {
-			Element element = RawFactory.eINSTANCE.createElement();
-			element.setKind(perspective.getGenerationKind());
-			element.setId(perspective.getPerspectiveId());
-			response.getElements().add(element);
-		}
-		else {
+		} else {
 			response.setMessage(NLS.bind(
 					TeslaSWTMessages.SWTUIProcessor_CannotFindControl,
 					data.getKind(),
@@ -2384,28 +2112,16 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			if (!canClick(element)) {
-				if (!canClickView(element)) {
-					response.setMessage(NLS
-							.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_PerspectiveNotContainsView,
-									element.getText()));
-				}
-				else {
-					response.setMessage(NLS
-							.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_ControlDisabledDisposedOrInvisible,
-									element.getText()));
-				}
+				response.setMessage(NLS
+						.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_ControlDisabledDisposedOrInvisible,
+								element.getText()));
 				response.setStatus(ResponseStatus.FAILED);
 			}
 			else {
 				getPlayer().click(element, command.isDefault(), false,
 						command.isArrow());
 			}
-		}
-		else if (ElementKind.Perspective.toString().equals(
-				command.getElement().getKind())) {
-			getPlayer().setPerspective(command.getElement().getId());
-		}
-		else {
+		} else {
 			response.setStatus(ResponseStatus.FAILED);
 		}
 		return response;
@@ -2658,33 +2374,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		return response;
 	}
 
-	protected Response handleClickPreferencesMenu(ClickPreferencesMenu command) {
-		runCommand(ActionFactory.PREFERENCES);
-		return RawFactory.eINSTANCE.createResponse();
-	}
-
-	protected Response handleClickAboutMenu(ClickAboutMenu command) {
-		runCommand(ActionFactory.ABOUT);
-		return RawFactory.eINSTANCE.createResponse();
-	}
-
-	private void runCommand(final ActionFactory action) {
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				IWorkbench workbench = PlatformUI.getWorkbench();
-				IHandlerService service = (IHandlerService) workbench
-						.getService(IHandlerService.class);
-				try {
-					service.executeCommand(action.getCommandId(), null);
-				}
-				catch (Exception e) {
-					SWTTeslaActivator.log(e);
-				}
-			}
-		});
-	}
-
 	protected Response handleType(final Type command) {
 		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
@@ -2707,18 +2396,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				getPlayer().traverse(element, command.getCode(),
 						command.getCharacter(), command.getTimes());
 			}
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
-		return response;
-	}
-
-	protected Response handleTypeAction(final TypeAction command) {
-		final SWTUIElement element = getMapper().get(command.getElement());
-		final Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null) {
-			getPlayer().typeAction(element, command.getActionId());
 		}
 		else {
 			response.setStatus(ResponseStatus.FAILED);
@@ -2754,8 +2431,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 
 	public synchronized SWTUIPlayer getPlayer() {
 		if (internalPlayer == null) {
-			internalPlayer = SWTUIPlayer.getPlayer(PlatformUI.getWorkbench()
-					.getDisplay());
+			internalPlayer = SWTUIPlayer.getPlayer(display);
 		}
 		return internalPlayer;
 	}
@@ -2822,7 +2498,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	public boolean callMasterProcess(final Context currentContext) {
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				client.processNext(currentContext, null);
@@ -2860,156 +2536,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	@Override
 	public void collectInformation(AdvancedInformation information,
 			Command lastCommand) {
-		Node root = InfoUtils.newNode("swt.info").add(information);
-		Element element = null;
-		if (lastCommand instanceof ElementCommand) {
-			element = ((ElementCommand) lastCommand).getElement();
-		}
-		else if (lastCommand instanceof Assert) {
-			element = ((Assert) lastCommand).getElement();
-		}
-		else if (lastCommand instanceof SelectCommand) {
-			element = ((SelectCommand) lastCommand).getData().getParent();
-		}
-		// Required element hierarchy
-		SWTUIElement uiElement = null;
-		if (element != null) {
-			uiElement = getMapper().get(element);
-		}
-		if (uiElement != null) {
-			processChildren(uiElement, root, new HashSet<SWTUIElement>());
-		}
-		Node root2 = root.child("eclipse.windows");
-
-		// Use all eclipse windows as roots
-		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
-				.getWorkbenchWindows();
-		for (IWorkbenchWindow win : windows) {
-			Set<SWTUIElement> processed = new HashSet<>();
-			processChildren(win, root2, processed);
-		}
-
-		Node player = InfoUtils.newNode("swt.player").add(information);
-		SWTUIPlayer swtuiPlayer = getPlayer();
-		UIJobCollector collector = swtuiPlayer.getCollector();
-		List<Job> jobs = collector.getJobs();
-		if (jobs.size() > 0) {
-			Node jobsNode = player.child("ui.job.collector.jobs");
-			for (Job job : jobs) {
-				Node child = jobsNode.child("job:" + job.getName());
-				child.property("job.class", job.getClass().getName());
-			}
-		}
-	}
-
-	private void processChildren(IWorkbenchWindow win, Node root2,
-			Set<SWTUIElement> processed) {
-		IWorkbenchPage[] pages = win.getPages();
-		processed.add(getPlayer().wrap(win.getShell()));
-		for (IWorkbenchPage page : pages) {
-			Node pageNode = root2.child("page:" + page.getLabel());
-			IEditorReference[] references = page.getEditorReferences();
-			if (references.length > 0) {
-				Node editorsNode = pageNode.child("editors");
-				for (IEditorReference ref : references) {
-					processEditor(editorsNode, ref, processed);
-				}
-			}
-
-			IViewReference[] viewReferences = page.getViewReferences();
-			if (viewReferences.length > 0) {
-				Node viewsNode = pageNode.child("views");
-				for (IViewReference ref : viewReferences) {
-					processView(viewsNode, ref, processed);
-				}
-			}
-		}
-		Shell[] shells = win.getShell().getShells();
-		for (Shell shell : shells) {
-			Node shellNode = root2.child("shells");
-			processChildren(getPlayer().wrap(shell), shellNode, processed);
-		}
-	}
-
-	private void processEditor(Node editorsNode, IEditorReference ref,
-			Set<SWTUIElement> processed) {
-		Node child = editorsNode.child("editor:" + ref.getName());
-		child.property("id", ref.getId());
-		child.property("dirty", ref.isDirty());
-		child.property("pinned", ref.isPinned());
-		try {
-			IEditorInput editorInput = ref.getEditorInput();
-			if (editorInput != null) {
-				child.property("editorInput.name", editorInput.getName());
-			}
-		}
-		catch (Throwable t) {
-			// Ignore
-		}
-		processChildren(getPlayer().wrap(ref), child, processed);
-	}
-
-	private void processView(Node editorsNode, IViewReference ref,
-			Set<SWTUIElement> processed) {
-		String refName = "";
-		try {
-			refName = ref.getPartName();
-		}
-		catch (Exception e) {
-			// seems disposed
-			return;
-		}
-		Node child = editorsNode.child("view:" + refName);
-		child.property("id", ref.getId());
-		child.property("dirty", isViewDirty(ref));
-		child.property("fastView", ref.isFastView());
-		processChildren(getPlayer().wrap(ref), child, processed);
-	}
-
-	/**
-	 * Added because of QS-2489: CommonNavigator#isDirty() was throwing a NPE
-	 *
-	 * @return boolean or error message
-	 */
-	private static Object isViewDirty(IViewReference ref) {
-		try {
-			return ref.isDirty();
-		}
-		catch (NullPointerException e) {
-			return e.toString();
-		}
-	}
-
-	private void processChildren(SWTUIElement uiElement, Node root,
-			Set<SWTUIElement> processed) {
-		if (processed.contains(uiElement)) {
-			return;
-		}
-		processed.add(uiElement);
-		if (uiElement.isDisposed()) {
-			return;
-		}
-		String text = uiElement.getText();
-		Node nde = root;
-		if (!uiElement.getKind().is(ElementKind.Unknown)) {
-			nde = root.child(uiElement.getKind().name() + "("
-					+ (text != null ? text.trim() : "") + ")");
-			// Adds decorators
-			for (ControlDecoration decorator : uiElement.getDecorators()) {
-				if (decorator.isVisible())
-					nde.child("ControlDecoration(" + decorator.getDescriptionText() + ")");
-			}
-		}
-		try {
-			SWTUIElement[] children = getPlayer().children.collectFor(
-					uiElement, null, false, null, null);
-			for (SWTUIElement swtuiElement : children) {
-				processChildren(swtuiElement, nde, processed);
-			}
-		}
-		catch (Throwable e) {
-			nde.property("ERROR", e.getMessage());
-		}
 	}
 
 	// Text commands

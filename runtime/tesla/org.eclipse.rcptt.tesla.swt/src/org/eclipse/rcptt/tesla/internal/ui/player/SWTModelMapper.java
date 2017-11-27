@@ -28,7 +28,6 @@ import org.eclipse.rcptt.tesla.core.ui.Combo;
 import org.eclipse.rcptt.tesla.core.ui.Control;
 import org.eclipse.rcptt.tesla.core.ui.ControlDecorator;
 import org.eclipse.rcptt.tesla.core.ui.DateTime;
-import org.eclipse.rcptt.tesla.core.ui.Editor;
 import org.eclipse.rcptt.tesla.core.ui.Group;
 import org.eclipse.rcptt.tesla.core.ui.Label;
 import org.eclipse.rcptt.tesla.core.ui.PropertyNodeList;
@@ -45,7 +44,6 @@ import org.eclipse.rcptt.tesla.core.ui.ToolItem;
 import org.eclipse.rcptt.tesla.core.ui.Tree;
 import org.eclipse.rcptt.tesla.core.ui.TreeItem;
 import org.eclipse.rcptt.tesla.core.ui.UiFactory;
-import org.eclipse.rcptt.tesla.core.ui.View;
 import org.eclipse.rcptt.tesla.core.ui.ViewerColumn;
 import org.eclipse.rcptt.tesla.core.ui.Widget;
 import org.eclipse.rcptt.tesla.core.ui.Window;
@@ -79,7 +77,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TreeColumn;
-import org.eclipse.ui.IWorkbenchPartReference;
 
 public class SWTModelMapper {
 
@@ -123,9 +120,10 @@ public class SWTModelMapper {
 	}
 
 	private static Object getMappedSource(SWTUIElement element) {
-		if (element instanceof WorkbenchUIElement
-				&& ((WorkbenchUIElement) element).reference != null) {
-			return ((WorkbenchUIElement) element).reference;
+		// FormTextLinkUIElement has its own implementation of unwrap()
+		// TODO: check if we can use unwrap() for FormTextLinkUIElement here
+		if (element instanceof FormTextLinkUIElement) {
+			return element.unwrapWidget();
 		}
 		return element.unwrap();
 	}
@@ -200,10 +198,6 @@ public class SWTModelMapper {
 			if (widget instanceof MenuItem) {
 				return fillMenuItem((MenuItem) widget);
 			}
-		case Editor:
-			return fillEditor(element);
-		case View:
-			return fillView(element);
 		case Window:
 			return fillWindow(element);
 		default:
@@ -219,7 +213,7 @@ public class SWTModelMapper {
 	}
 
 	private static Widget fillWindow(SWTUIElement element) {
-		Shell shell = (Shell) element.unwrap();
+		Shell shell = (Shell) element.unwrapWidget();
 		Window window = UiFactory.eINSTANCE.createWindow();
 		fillControl(window, shell);
 		window.setTitle(unify(shell.getText()));
@@ -235,33 +229,6 @@ public class SWTModelMapper {
 		window.setHasBorder((shell.getStyle() & SWT.BORDER) != 0);
 
 		return window;
-	}
-
-	private static Widget fillView(SWTUIElement element) {
-		View view = UiFactory.eINSTANCE.createView();
-		if (element instanceof WorkbenchUIElement) {
-			IWorkbenchPartReference reference = ((WorkbenchUIElement) element)
-					.getReference();
-			view.setTitle(unify(reference.getPartName()));
-			fillControl(view,
-					((org.eclipse.swt.widgets.Control) element.unwrap()));
-		}
-		return view;
-	}
-
-	private static Widget fillEditor(SWTUIElement element) {
-		Editor editor = UiFactory.eINSTANCE.createEditor();
-		if (element instanceof WorkbenchUIElement) {
-			IWorkbenchPartReference reference = ((WorkbenchUIElement) element)
-					.getReference();
-			editor.setTitle(unify(reference.getPartName()));
-			editor.setDirty(reference.isDirty());
-			editor.setActive(reference.getPage().getActivePartReference() == reference);
-			fillControl(editor,
-					((org.eclipse.swt.widgets.Control) element.unwrap()));
-
-		}
-		return editor;
 	}
 
 	private static Widget fillMenuItem(MenuItem widget) {

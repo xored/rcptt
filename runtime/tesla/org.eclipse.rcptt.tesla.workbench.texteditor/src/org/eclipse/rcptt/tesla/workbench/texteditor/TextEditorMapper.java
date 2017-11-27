@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Widget;
 public class TextEditorMapper {
 	public static org.eclipse.rcptt.tesla.core.ui.Widget mapExtraValues(
 			SWTUIElement element, org.eclipse.rcptt.tesla.core.ui.Widget result) {
-		Widget unwrap = element.unwrap();
+		Widget unwrap = element.unwrapWidget();
 		if (!(unwrap instanceof StyledText) || !isTextEditorStyledText(unwrap)
 				|| !(result instanceof Text)) {
 			return result;

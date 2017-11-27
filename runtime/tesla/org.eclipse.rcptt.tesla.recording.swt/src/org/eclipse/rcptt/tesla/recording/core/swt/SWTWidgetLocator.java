@@ -42,7 +42,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessorExtension;
@@ -51,6 +50,7 @@ import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEn
 import org.eclipse.rcptt.tesla.swt.util.GetWindowUtil;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -201,8 +201,8 @@ public final class SWTWidgetLocator {
 
 		//
 
-		if (widget.unwrap() instanceof Canvas) {
-			Canvas canvas = (Canvas) widget.unwrap();
+		if (widget.unwrapWidget() instanceof Canvas) {
+			Canvas canvas = (Canvas) widget.unwrapWidget();
 			FindResult result = tryFindDiagram(canvas);
 			if (result != null) {
 				return result;
@@ -218,13 +218,13 @@ public final class SWTWidgetLocator {
 			}
 		}
 		if (widget.getKind().is(ElementKind.Window)) {
-			WindowUIElement shellObject = getShell((Shell) widget.unwrap(), alwaysFindLeaf);
+			WindowUIElement shellObject = getShell((Shell) widget.unwrapWidget(), alwaysFindLeaf);
 			if (shellObject != null) {
 				return new FindResult(player.wrap(widget), shellObject.getElement());
 			}
 		}
-		if (widget.unwrap() instanceof Control) {
-			Control control = (Control) widget.unwrap();
+		if (widget.unwrapWidget() instanceof Control) {
+			Control control = (Control) widget.unwrapWidget();
 			Shell shell = control.getShell();
 
 			if (checkSkipWorkbenchTabs(supportEclipseWorkbench, control, shell)) {
@@ -286,28 +286,28 @@ public final class SWTWidgetLocator {
 					}
 					return null;
 				}
-				return findGenericElement(widget.unwrap(), control, uiElement, kind, parentElement,
+				return findGenericElement(widget.unwrapWidget(), control, uiElement, kind, parentElement,
 						parentResult.element);
 			}
-		} else if (widget.unwrap() instanceof MenuItem) {
-			return findMenuItem(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
-		} else if (widget.unwrap() instanceof ToolItem) {
-			return findToolItem(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
-		} else if (widget.unwrap() instanceof CoolItem) {
-			return findCoolItem(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
-		} else if (widget.unwrap() instanceof TreeItem || widget.unwrap() instanceof TableItem) {
-			return findTableOrTreeItem(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
-		} else if (widget.unwrap() instanceof TreeColumn) {
-			return findTreeColumn(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
-		} else if (widget.unwrap() instanceof TableColumn) {
-			return findTableColumn(widget.unwrap(), alwaysFindLeaf, supportEclipseWorkbench);
+		} else if (widget.unwrapWidget() instanceof MenuItem) {
+			return findMenuItem(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
+		} else if (widget.unwrapWidget() instanceof ToolItem) {
+			return findToolItem(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
+		} else if (widget.unwrapWidget() instanceof CoolItem) {
+			return findCoolItem(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
+		} else if (widget.unwrapWidget() instanceof TreeItem || widget.unwrapWidget() instanceof TableItem) {
+			return findTableOrTreeItem(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
+		} else if (widget.unwrapWidget() instanceof TreeColumn) {
+			return findTreeColumn(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
+		} else if (widget.unwrapWidget() instanceof TableColumn) {
+			return findTableColumn(widget.unwrapWidget(), alwaysFindLeaf, supportEclipseWorkbench);
 		}
 
 		return null;
 	}
 
 	private void updateControl(FindResult result, SWTUIElement widget) {
-		Control control = (Control) widget.unwrap();
+		Control control = (Control) widget.unwrapWidget();
 		recorder.setControls(SWTModelMapper.map(player.wrap(control)));
 		GenericElementKind kind = SWTUIPlayer.getKind(control);
 		UISelector<BasicUIElement> selector = new UISelector<BasicUIElement>(kind, recorder, BasicUIElement.class)
@@ -629,7 +629,7 @@ public final class SWTWidgetLocator {
 		SWTUIElement realAfter = null;
 		SWTUIElement[] realChildren = player.children.collectFor(lowerParent, null, true, getSearchClasses(control));
 		// don't try search -after for top level tab folders
-		boolean isTopLevelTabFolder = widget instanceof CTabFolder && lowerParent.isWorkbenchWindow();
+		boolean isTopLevelTabFolder = widget instanceof CTabFolder && isWorkbenchWindow(lowerParent);
 		// Search for widget
 		for (SWTUIElement i : realChildren) {
 			String text = i.getText();
@@ -648,7 +648,7 @@ public final class SWTWidgetLocator {
 				if (afterParent != null && afterParent.equals(lowerParent)) {
 					boolean isPartOfParent = false;
 					for (IRecordingProcessorExtension extension : getRecorderExtensions()) {
-						if (extension.isPartOfParent(i.unwrap(), afterParent.unwrap())) {
+						if (extension.isPartOfParent(i.unwrapWidget(), afterParent.unwrapWidget())) {
 							isPartOfParent = true;
 							break;
 						}
@@ -667,6 +667,15 @@ public final class SWTWidgetLocator {
 			return selectRequiredElementToBeFocused(realElement, widget, kind, realAfter, parentElement, widgetIndex);
 		}
 		return null;
+	}
+
+	// TODO (e4 support): remove
+	private boolean isWorkbenchWindow(SWTUIElement element) {
+		if (element.getKind().is(ElementKind.Window)) {
+			return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell().equals(element.widget);
+		}
+		return false;
 	}
 
 	private FindResult selectRequiredElementToBeFocused(SWTUIElement realElement, Widget widget,
@@ -757,8 +766,8 @@ public final class SWTWidgetLocator {
 	@SuppressWarnings("unused")
 	private boolean isAfterBetween(SWTUIElement realElement, SWTUIElement realAfter) {
 		SWTUIElement p = player.getParentElement(realElement);
-		Widget realWidget = realElement.unwrap();
-		Widget realAfterWidget = realAfter.unwrap();
+		Widget realWidget = realElement.unwrapWidget();
+		Widget realAfterWidget = realAfter.unwrapWidget();
 		List<SWTUIElement> elements = new ArrayList<SWTUIElement>(Arrays.asList(player.children.collectFor(p, null,
 				true, getSearchableClass(realWidget), getSearchableClass(realAfterWidget))));
 		GenericElementKind kind = realElement.getKind();
@@ -798,7 +807,7 @@ public final class SWTWidgetLocator {
 					if (afterParent != null && afterParent.equals(lowerParent)) {
 						boolean isPartOfParent = false;
 						for (IRecordingProcessorExtension extension : getRecorderExtensions()) {
-							if (extension.isPartOfParent(realChildren[i].unwrap(), afterParent.unwrap())) {
+							if (extension.isPartOfParent(realChildren[i].unwrapWidget(), afterParent.unwrapWidget())) {
 								isPartOfParent = true;
 								break;
 							}

@@ -17,12 +17,11 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.rcptt.tesla.core.ui.DiagramItem;
 import org.eclipse.rcptt.tesla.core.ui.PropertyNodeList;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.rcptt.tesla.swt.properties.PropertySourceSupport;
+import org.eclipse.rcptt.tesla.ui.views.PropertySourceSupport;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
-@SuppressWarnings("restriction")
 public class PropertySourceBasedModelMapper {
 
 	public static boolean map(IWorkbenchPart part, Object selection,

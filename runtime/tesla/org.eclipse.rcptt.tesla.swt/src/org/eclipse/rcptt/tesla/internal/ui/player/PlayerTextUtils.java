@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
-import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrap;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;
 
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IWorkbenchPartReference;
 
 public class PlayerTextUtils {
 	// for static utility methods only
@@ -118,12 +116,7 @@ public class PlayerTextUtils {
 	}
 
 	public static String getRawText(SWTUIElement uiElement) {
-		Object rawElement = unwrap(uiElement);
 		String result = null;
-		if (rawElement instanceof IWorkbenchPartReference) {
-			return ((IWorkbenchPartReference) rawElement).getPartName();
-		}
-
 		Widget widget = unwrapWidget(uiElement);
 		if (widget == null || widget.isDisposed()) {
 			return TeslaSWTMessages.SWTUIPlayer_DisposedControl_RawText;

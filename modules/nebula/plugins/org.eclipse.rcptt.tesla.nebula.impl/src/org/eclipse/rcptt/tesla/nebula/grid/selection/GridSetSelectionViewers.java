@@ -29,11 +29,11 @@ import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTEvents;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
-import org.eclipse.rcptt.tesla.internal.ui.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.nebula.NebulaUIElement;
 import org.eclipse.rcptt.tesla.nebula.grid.parts.ItemPart;
 import org.eclipse.rcptt.tesla.nebula.viewers.NebulaViewers;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
 
 public class GridSetSelectionViewers {
 

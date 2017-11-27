@@ -10,9 +10,8 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
-import org.eclipse.swt.widgets.Control;
-
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
+import org.eclipse.swt.widgets.Control;
 
 @SuppressWarnings("all")
 public class FormTextLinkUIElement extends SWTUIElement {
@@ -64,6 +63,11 @@ public class FormTextLinkUIElement extends SWTUIElement {
 
 	public String getClassName() {
 		return segment == null ? "null" : segment.getClass().getSimpleName();
+	}
+
+	@Override
+	public Object unwrap() {
+		return segment;
 	}
 
 }

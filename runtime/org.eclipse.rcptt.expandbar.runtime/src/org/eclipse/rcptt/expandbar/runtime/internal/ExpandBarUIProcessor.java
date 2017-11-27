@@ -79,7 +79,7 @@ public class ExpandBarUIProcessor implements ISWTModelMapperExtension, ITeslaCom
 	}
 
 	public static Widget mapWidget(SWTUIElement element, Widget result) {
-		org.eclipse.swt.widgets.Widget widget = element.unwrap();
+		org.eclipse.swt.widgets.Widget widget = element.unwrapWidget();
 		if (widget instanceof ExpandItem) {
 			return mapItem((ExpandItem) widget);
 		} else if (widget instanceof ExpandBar) {
@@ -139,7 +139,7 @@ public class ExpandBarUIProcessor implements ISWTModelMapperExtension, ITeslaCom
 		if (swtElement == null) {
 			return;
 		}
-		org.eclipse.swt.widgets.Widget widget = swtElement.unwrap();
+		org.eclipse.swt.widgets.Widget widget = swtElement.unwrapWidget();
 		if (widget instanceof ExpandItem) {
 			processorMapper.map(element, this);
 		}

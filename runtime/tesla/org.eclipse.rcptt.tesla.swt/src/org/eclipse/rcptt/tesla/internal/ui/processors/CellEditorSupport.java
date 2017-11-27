@@ -332,7 +332,7 @@ public class CellEditorSupport {
 				getPlayer().exec("Deactivate cell edit", new Runnable() {
 					public void run() {
 						cellEditor.deactivate();
-						getPlayer().getEvents().sendFocus(uiElement.unwrap());
+						getPlayer().getEvents().sendFocus(uiElement.unwrapWidget());
 						cellEditorActivations.remove(uiElement.widget);
 					}
 				});

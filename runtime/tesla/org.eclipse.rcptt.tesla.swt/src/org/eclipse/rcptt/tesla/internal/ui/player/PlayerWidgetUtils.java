@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
-import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrap;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;
 
 import org.eclipse.swt.SWT;
@@ -24,8 +23,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 
 public class PlayerWidgetUtils {
 
@@ -37,30 +34,13 @@ public class PlayerWidgetUtils {
 	}
 
 	public static boolean canClick(SWTUIElement w) {
-		if (unwrap(w) instanceof IWorkbenchPartReference) {
-			if (!canClickView(w)) {
-				return false;
-			}
-			return true;
-		} else {
-			boolean visible = true;
-			Widget control = unwrapWidget(w);
-			if (control instanceof Control) {
-				visible = !control.isDisposed() && isVisible((Control) control);
-			}
-
-			return !isDisabled(w) && visible;
+		boolean visible = true;
+		Widget control = unwrapWidget(w);
+		if (control instanceof Control) {
+			visible = !control.isDisposed() && isVisible((Control) control);
 		}
-	}
 
-	public static boolean canClickView(SWTUIElement w) {
-		if (w instanceof WorkbenchUIElement) {
-			IWorkbenchPartReference reference = ((WorkbenchUIElement) w)
-					.getReference();
-			return EclipseWorkbenchProvider.getProvider().canClickView(
-					reference);
-		}
-		return true;
+		return !isDisabled(w) && visible;
 	}
 
 	public static boolean isDisabled(SWTUIElement uiElement) {

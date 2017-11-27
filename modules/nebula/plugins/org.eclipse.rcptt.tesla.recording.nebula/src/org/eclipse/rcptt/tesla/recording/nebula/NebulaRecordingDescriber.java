@@ -36,7 +36,7 @@ public class NebulaRecordingDescriber extends NebulaDescriber implements
 	}
 
 	public NebulaRecordingDescriber(SWTUIElement element) {
-		super(element.unwrap());
+		super(element.unwrapWidget());
 		uiElement = element;
 	}
 

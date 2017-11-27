@@ -8,17 +8,20 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.internal.ui.player;
+package org.eclipse.rcptt.tesla.ui;
 
+import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
+import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
-
-import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 
 public class WorkbenchUIElement extends SWTUIElement {
 	public IWorkbenchPartReference reference;
@@ -88,6 +91,17 @@ public class WorkbenchUIElement extends SWTUIElement {
 		return null;
 	}
 
+	@Override
+	public Object unwrap() {
+		return reference;
+	}
+
+	@SuppressWarnings("restriction")
+	@Override
+	public Widget unwrapWidget() {
+		return ((org.eclipse.ui.internal.WorkbenchPartReference) reference).getPane().getControl();
+	}
+
 	@SuppressWarnings("restriction")
 	@Override
 	public Rectangle getBounds() {
@@ -107,4 +121,5 @@ public class WorkbenchUIElement extends SWTUIElement {
 		}
 		return super.getBounds();
 	}
+
 }

@@ -476,7 +476,8 @@ public aspect RecordingAspect {
 		&& target(shell) && args(visible) {
 		if (!visible) {
 			try {
-				SWTUIElement wrappedShell = SWTUIPlayer.getPlayer().wrap(shell);
+				// TODO (e4 support): check 'is disposed' error
+				SWTUIElement wrappedShell = SWTUIPlayer.getPlayer(shell.getDisplay()).wrap(shell);
 				SWTEventManager.removeClosedShell(wrappedShell);
 			} catch (Throwable e) {
 				RecordingSWTActivator.log(e);

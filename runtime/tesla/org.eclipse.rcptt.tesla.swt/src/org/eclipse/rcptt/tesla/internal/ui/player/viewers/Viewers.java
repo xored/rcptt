@@ -880,10 +880,10 @@ public class Viewers {
 		for (CellEditor cellEditor : editors) {
 			Control ctrl = cellEditor.getControl();
 			if (cellEditor.isActivated() && ctrl != null && !ctrl.isDisposed()) {
-				if (element.unwrap() instanceof Control) {
+				if (element.unwrapWidget() instanceof Control) {
 					List<Widget> parents = SWTUIPlayer.collectParents(ctrl, null,
-							((Control) element.unwrap()).getParent());
-					if (parents.contains(element.unwrap())) {
+							((Control) element.unwrapWidget()).getParent());
+					if (parents.contains(element.unwrapWidget())) {
 						checkForSameSelection = true;
 						// Yes cell editor are active
 						break;

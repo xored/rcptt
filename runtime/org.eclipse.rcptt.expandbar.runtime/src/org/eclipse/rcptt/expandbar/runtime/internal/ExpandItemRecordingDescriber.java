@@ -34,7 +34,7 @@ public class ExpandItemRecordingDescriber extends ExpandItemDescriber implements
 	}
 
 	public ExpandItemRecordingDescriber(SWTUIElement element) {
-		super((ExpandItem) element.unwrap());
+		super((ExpandItem) element.unwrapWidget());
 		this.element = element;
 	}
 
