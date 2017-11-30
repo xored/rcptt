@@ -23,7 +23,7 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
 import org.eclipse.rcptt.tesla.core.TeslaVariables;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.tesla.ui.Q7KeyFormatter;
+import org.eclipse.rcptt.tesla.workbench.Q7KeyFormatter;
 
 public class SetQ7FeaturesService implements ICommandService {
 

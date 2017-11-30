@@ -33,7 +33,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.swt.workbench.IEclipseWorkbenchProvider;
-import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
 import org.eclipse.rcptt.util.ReflectionUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -431,5 +431,13 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 	public String getViewId(Widget widget) {
 		// not supported for now
 		return null;
+	}
+
+	@Override
+	public boolean isInternalWorkbenchElement(Widget widget) {
+		if (widget instanceof CTabFolder) {
+			return extractViewOrEditorControl((CTabFolder) widget) != null;
+		}
+		return false;
 	}
 }

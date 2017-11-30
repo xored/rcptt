@@ -47,7 +47,6 @@ import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.progress.UIJob;
 
 /**
  * Manages jobs information and statuses.
@@ -719,7 +718,9 @@ public class UIJobCollector implements IJobChangeListener {
 		// Add all current jobs to wait queue
 		Job[] find = Job.getJobManager().find(null);
 		for (Job job : find) {
-			if ((job instanceof UIJob && job.getState() != Job.SLEEPING) || job.belongsTo(getFamilyAutoBuild())
+			if ((TeslaSWTAccess.isInstanceOf(job.getClass(), "org.eclipse.ui.progress.UIJob")
+					&& job.getState() != Job.SLEEPING)
+					|| job.belongsTo(getFamilyAutoBuild())
 					|| job.isUser()) {
 				JobStatus status = calcJobStatus(job, (long) 0);
 				if (JobStatus.REQUIRED.equals(status)) {

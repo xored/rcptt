@@ -1,4 +1,4 @@
-package org.eclipse.rcptt.tesla.ui;
+package org.eclipse.rcptt.tesla.workbench;
 
 import static org.eclipse.rcptt.tesla.swt.util.GetWindowUtil.getShellCreationMethodName;
 
@@ -67,6 +67,7 @@ import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -119,7 +120,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	@Override
 	public String getFeatureID() {
-		return "org.eclipse.rcptt.tesla.ui";
+		return "org.eclipse.rcptt.tesla.workbench";
 	}
 
 	@Override
@@ -729,7 +730,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	@Override
 	public void postSelect(Element element, IElementProcessorMapper mapper) {
-		
+
 	}
 
 	@Override

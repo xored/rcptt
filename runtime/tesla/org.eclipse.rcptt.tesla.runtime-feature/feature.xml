@@ -98,6 +98,13 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.rcptt.tesla.recording.workbench"
+         download-size="0"
+         install-size="0"
+         version="2.3.0.qualifier"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.rcptt.tesla.swt"
          download-size="0"
          install-size="0"
@@ -177,13 +184,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.rcptt.tesla.ui"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.qualifier"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.rcptt.tesla.ui.ide"
          download-size="0"
          install-size="0"
@@ -234,6 +234,13 @@
 
    <plugin
          id="org.eclipse.rcptt.tesla.core.am"
+         download-size="0"
+         install-size="0"
+         version="2.3.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcptt.tesla.workbench"
          download-size="0"
          install-size="0"
          version="2.3.0.qualifier"

@@ -10,14 +10,11 @@
  *******************************************************************************/
 package org.eclipse.rcptt.expandbar.runtime.internal;
 
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Widget;
-
 import org.eclipse.rcptt.tesla.core.protocol.BasicUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.ItemUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.UISelector;
+import org.eclipse.rcptt.tesla.core.protocol.WindowUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
@@ -25,6 +22,12 @@ import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEn
 import org.eclipse.rcptt.tesla.recording.core.swt.IWidgetClassifierExtension;
 import org.eclipse.rcptt.tesla.recording.core.swt.IWidgetLocatorExtension;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 
 public class ExpandBarWidgetLocatorExtension implements IWidgetLocatorExtension {
 	private SWTWidgetLocator locator;
@@ -77,6 +80,31 @@ public class ExpandBarWidgetLocatorExtension implements IWidgetLocatorExtension 
 	@Override
 	public IWidgetClassifierExtension getWidgetClassifierExtension() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isSkippedControl(boolean supportEclipseWorkbench, Control control, Shell shell) {
+		return false;
+	}
+
+	@Override
+	public boolean isAfterSkippedForWidget(Widget widget, SWTUIElement lowerParent) {
+		return false;
+	}
+
+	@Override
+	public boolean isMenuSourceFiltered(Widget widget, Menu upperMenu) {
+		return false;
+	}
+
+	@Override
+	public Object findMenuSource(Menu menu) {
+		return null;
+	}
+
+	@Override
+	public WindowUIElement getShell(Shell shell, boolean alwaysFindLeaf) {
 		return null;
 	}
 

@@ -72,7 +72,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
 
 public class SWTAssertManager implements IRecordingProcessor,
 		IAssertSWTEventListener, ISkipAwareEventListener {
@@ -129,7 +128,8 @@ public class SWTAssertManager implements IRecordingProcessor,
 			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
 					"set freeze mode to: " + value);
 		}
-		final Display display = PlatformUI.getWorkbench().getDisplay();
+		// TODO (e4 support): remove quickfix
+		final Display display = Display.getDefault();
 		boolean oldValue = SWTEventManager.getFreeze();
 		if (display.isDisposed()) {
 			SWTEventManager.setFreeze(false);
@@ -876,7 +876,8 @@ public class SWTAssertManager implements IRecordingProcessor,
 		}
 		freezedCtrl = null;
 		lastFocusedWidget = null;
-		Display display = PlatformUI.getWorkbench().getDisplay();
+		// TODO (e4 support): remove quickfix
+		Display display = Display.getDefault();
 		display.asyncExec(new Runnable() {
 			public void run() {
 				if (selectionShell != null) {

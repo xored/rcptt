@@ -15,12 +15,12 @@
     <extension
           point="org.eclipse.ui.startup">
        <startup
-             class="org.eclipse.rcptt.tesla.ui.UITeslaStartup"></startup>
+             class="org.eclipse.rcptt.tesla.workbench.UITeslaStartup"></startup>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
-            class="org.eclipse.rcptt.tesla.ui.WorkbenchUIProcessor">
+            class="org.eclipse.rcptt.tesla.workbench.WorkbenchUIProcessor">
       </provider>
    </extension>
    <extension

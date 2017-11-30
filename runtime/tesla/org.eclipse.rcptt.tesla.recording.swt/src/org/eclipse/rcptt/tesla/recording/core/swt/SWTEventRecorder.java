@@ -27,8 +27,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.bindings.Binding;
-import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
@@ -46,7 +44,6 @@ import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.LinkUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
-import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.SWTDialogKind;
 import org.eclipse.rcptt.tesla.core.protocol.SelectCommand;
@@ -63,7 +60,6 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.RawEvent;
 import org.eclipse.rcptt.tesla.core.protocol.raw.RawFactory;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.core.utils.TeslaUtils;
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
@@ -133,17 +129,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.TypedListener;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPageListener;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWindowListener;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.WorkbenchPage;
-import org.eclipse.ui.keys.IBindingService;
 import org.osgi.framework.Bundle;
 
 /**
@@ -159,9 +144,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	private LastEvents lastEvents = new LastEvents();
 
 	private boolean enabled = true;
-	private final IPartListener listener;
-	private final IPageListener pageListener;
-	private final IWindowListener windowListener;
 	private String beforeTextState = null;
 	private DNDSupport dragSupport;
 	private final Map<Widget, String> lastTabItemSelection = new HashMap<Widget, String>();
@@ -169,116 +151,8 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	private boolean inStyledTextAction = false;
 	private Event currentEvent;
 
-	private final class PartListener implements IPartListener {
-
-		public void partOpened(IWorkbenchPart part) {
-		}
-
-		public void partDeactivated(IWorkbenchPart part) {
-		}
-
-		public void partClosed(IWorkbenchPart part) {
-			if (getLocator().getRecorder() == null) {
-				return;
-			}
-			if (!getRecorder().hasListeners()) {
-				return;
-			}
-			Context context = ContextManagement.currentContext();
-			// TODO: This is Eclipse version dependent test
-			if (!context.contains("org.eclipse.swt.custom.CTabFolder", "onMouse")) {
-				return;
-			}
-			if (!TeslaCore.isEclipse4()) {
-				// Skip for editors, will be done from different place.
-				if (part instanceof IEditorPart) {
-					return;
-				}
-			}
-			Display display = PlatformUI.getWorkbench().getDisplay();
-			Shell[] shells = display.getShells();
-			for (Shell shell : shells) {
-				if (isModal(shell)) {
-					return;
-				}
-			}
-			PartUIElement resultPart = getLocator().findPartElement(part, false);
-			if (resultPart != null) {
-				resultPart.close();
-			}
-		}
-
-		public void partBroughtToTop(IWorkbenchPart part) {
-		}
-
-		public void partActivated(IWorkbenchPart part) {
-			if (getRecorder() == null) {
-				return;
-			}
-			if (!getRecorder().hasListeners()) {
-				return;
-			}
-			boolean hashMouseUp = false;
-			Context context = ContextManagement.currentContext();
-
-			if (context.contains("org.eclipse.swt.custom.CTabFolder", "onMouse")) {
-				hashMouseUp = true;
-			}
-			if (!hashMouseUp) {
-				StackTraceElement[] stack = context.getStackTrace();
-				for (StackTraceElement e : stack) {
-					if (e.getMethodName().equals("mouseUp") || e.getMethodName().equals("handleEvent")
-							|| e.getMethodName().equals("activate")) {
-						String className = e.getClassName();
-						int dollarPos = className.indexOf('$');
-						if (dollarPos > 0)
-							className = className.substring(0, dollarPos);
-						if ("org.eclipse.e4.ui.workbench.renderers.swt.StackRenderer".equals(className)) {
-							hashMouseUp = true;
-							break;
-						}
-					}
-				}
-			}
-			if (!hashMouseUp) {
-				return;// Skip, because not used click
-			}
-
-			if (context.contains("org.eclipse.ui.internal.WorkbenchPage", "hideView"))
-
-			{
-				// View was activated programmatically, so ignore.
-				return;
-			}
-			Display display = PlatformUI.getWorkbench().getDisplay();
-			Shell[] shells = display.getShells();
-			for (Shell shell : shells) {
-				if (isModal(shell)) {
-					return;
-				}
-			}
-
-			PartUIElement resultPart = getLocator().findPartElement(part, false);
-			if (resultPart != null) {
-				resultPart.click();
-			}
-		}
-
-	}
-
 	public SWTWidgetLocator getLocator() {
 		return SWTRecordingHelper.getHelper().getLocator();
-	}
-
-	public static boolean isModal(Shell shell) {
-		int style = shell.getStyle();
-		int mask = SWT.SYSTEM_MODAL | SWT.APPLICATION_MODAL | SWT.PRIMARY_MODAL | SWT.MODELESS;
-		String text = shell.getText();
-		if (text != null && (text.trim().equalsIgnoreCase("problem occurred")
-				|| text.trim().equalsIgnoreCase("Operation failed"))) {
-			return true;
-		}
-		return (style & mask) > 0;
 	}
 
 	public TeslaRecorder getRecorder() {
@@ -288,51 +162,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	public SWTEventRecorder() {
 		super();
 		dragSupport = new DNDSupport();
-		listener = new PartListener();
-
-		pageListener = new IPageListener() {
-
-			public void pageOpened(IWorkbenchPage page) {
-				page.addPartListener(listener);
-			}
-
-			public void pageClosed(IWorkbenchPage page) {
-			}
-
-			public void pageActivated(IWorkbenchPage page) {
-				page.addPartListener(listener);
-			}
-		};
-		windowListener = new IWindowListener() {
-
-			public void windowOpened(IWorkbenchWindow window) {
-				window.addPageListener(pageListener);
-				IWorkbenchPage[] pages = window.getPages();
-				for (IWorkbenchPage page : pages) {
-					page.addPartListener(listener);
-				}
-			}
-
-			public void windowDeactivated(IWorkbenchWindow window) {
-			}
-
-			public void windowClosed(IWorkbenchWindow window) {
-			}
-
-			public void windowActivated(IWorkbenchWindow window) {
-				window.addPageListener(pageListener);
-			}
-		};
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		workbench.addWindowListener(windowListener);
-		IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
-		for (IWorkbenchWindow win : windows) {
-			win.addPageListener(pageListener);
-			IWorkbenchPage[] pages = win.getPages();
-			for (IWorkbenchPage page : pages) {
-				page.addPartListener(listener);
-			}
-		}
 
 		SWTEventManager.addListener(this);
 		// JFaceEventManager.addListener(this);
@@ -937,26 +766,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 				|| widget instanceof org.eclipse.swt.widgets.List);
 		boolean clean = true;
 
-		if (EclipseWorkbenchProvider.getProvider().isViewOrEditorButton(widget)) {
-			ToolItem button = (ToolItem) widget;
-			String tip = button.getToolTipText();
-			CTabFolder ctabFolder = EclipseWorkbenchProvider.getProvider().getTabFolderFromButton(button);
-			if (ctabFolder != null && tip != null) {
-				if (tip.equals("Maximize")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_MAXIMIZE);
-				} else if (tip.equals("Minimize")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_MINIMIZE);
-				} else if (tip.equals("Restore")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_RESTORE);
-				} else if (tip.equals("View Menu")) {
-					// do nothing
-				} else if (tip.equals("Show List")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_SHOW_LIST);
-				}
-				return;
-			}
-		}
-
 		if (isIgnoreSelection(widget, event, type, ctx)) {
 			return;
 		}
@@ -1484,7 +1293,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 				menuSource = findMenuSource(parent, widget);
 
 				if (menuSource == null) {
-					menuSource = SWTWidgetLocator.findViewMenuSource(widget);
+					menuSource = getLocator().findMenuSource((Menu) widget);
 				}
 			}
 		}
@@ -1707,18 +1516,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		}
 
 		return meta;
-	}
-
-	@SuppressWarnings("unused")
-	private String checkForActionCommand(int mask, int keyCode) {
-		KeyStroke hotKey = KeyStroke.getInstance(mask, Character.toUpperCase(keyCode));
-		IBindingService bindingService = (IBindingService) PlatformUI.getWorkbench().getService(IBindingService.class);
-		Binding binding = bindingService.getPerfectMatch(KeySequence.getInstance(hotKey));
-		if (binding != null && binding.getParameterizedCommand() != null
-				&& binding.getParameterizedCommand().getId() != null) {
-			return binding.getParameterizedCommand().getId();
-		}
-		return null;
 	}
 
 	private void processMouseUp(Widget widget, Event event, RecordedEvent toRecording) {
@@ -2009,34 +1806,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	private void processMouseDown(Widget widget, Event event, RecordedEvent toRecording) {
 		if ((widget instanceof TabFolder || widget instanceof CTabFolder)) {
 			// Check for workbench internal element click
-			boolean skip = false;
-			if (!TeslaCore.isEclipse4()) {
-				// eclipse 3.x
-
-				IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-				Control ctrl = (Control) widget;
-				Shell shell = ctrl.getShell();
-				for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
-					Shell wshell = iWorkbenchWindow.getShell();
-
-					if (wshell == shell) {
-						WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
-						Composite composite = page.getClientComposite();
-						Composite p1 = ctrl.getParent();
-						if (p1.equals(composite) || p1.getParent().equals(composite)) {
-							// Skip click on views/editors tab folder
-							// hasViewEditorCTabFolderClick = true;
-							skip = true;
-							break;
-						}
-					}
-				}
-			} else if (widget instanceof CTabFolder) {
-				// eclipse 4.x
-				skip = EclipseWorkbenchProvider.getProvider().extractViewOrEditorControl((CTabFolder) widget) != null;
-			}
-
-			if (!skip) {
+			if (!EclipseWorkbenchProvider.getProvider().isInternalWorkbenchElement(widget)) {
 				FindResult result = getLocator().findElement(widget, true, false, false);
 				if (result != null && result.realElement.getKind().is(ElementKind.TabFolder)) {
 					String tabName = null;

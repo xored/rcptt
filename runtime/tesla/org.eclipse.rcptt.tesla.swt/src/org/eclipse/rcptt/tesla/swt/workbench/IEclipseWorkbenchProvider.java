@@ -58,4 +58,6 @@ public interface IEclipseWorkbenchProvider {
 	void updateActiveSelection(List<Object> selectionData, SWTUIElement parent);
 
 	String getViewId(Widget widget);
+
+	boolean isInternalWorkbenchElement(Widget widget);
 }

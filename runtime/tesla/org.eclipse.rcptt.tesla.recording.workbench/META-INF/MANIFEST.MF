@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCPTT Runtime Workbench Recording Support
+Bundle-SymbolicName: org.eclipse.rcptt.tesla.recording.workbench;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: org.eclipse.rcptt.tesla.recording.workbench.Activator
+Bundle-Vendor: Eclipse RCP Testing Tool Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.rcptt.tesla.recording.workbench
+Require-Bundle: org.eclipse.swt,
+ org.eclipse.ui.workbench,
+ org.eclipse.ui,
+ org.eclipse.rcptt.tesla.recording.core,
+ org.eclipse.rcptt.tesla.recording.aspects.workbench,
+ org.eclipse.rcptt.tesla.core,
+ org.eclipse.osgi,
+ org.eclipse.core.runtime,
+ org.eclipse.rcptt.tesla.recording.aspects.swt,
+ org.eclipse.rcptt.tesla.recording.swt,
+ org.eclipse.rcptt.tesla.swt,
+ org.eclipse.rcptt.tesla.workbench

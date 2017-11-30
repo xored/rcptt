@@ -11,16 +11,6 @@
 package org.eclipse.rcptt.tesla.properties.view;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.internal.WorkbenchPartReference;
-import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyList;
-import org.osgi.framework.Bundle;
-
 import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
@@ -32,7 +22,17 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
-import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.recording.workbench.WorkbenchRecordingProcessor;
+import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.internal.WorkbenchPartReference;
+import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyList;
+import org.osgi.framework.Bundle;
 
 @SuppressWarnings("restriction")
 public class PropertiesViewRecorder implements IRecordingProcessor,
@@ -42,6 +42,7 @@ public class PropertiesViewRecorder implements IRecordingProcessor,
 	private SWTUIPlayer internalPlayer;
 	private TeslaRecorder teslaRecorder;
 	private SWTEventRecorder swtRecorder;
+	private WorkbenchRecordingProcessor workbenchRecorder;
 
 	public PropertiesViewRecorder() {
 		SWTEventManager.addListener(this);
@@ -134,7 +135,7 @@ public class PropertiesViewRecorder implements IRecordingProcessor,
 		if (control == null || !(control instanceof Composite))
 			return;
 
-		PartUIElement partUIElement = getSWTRecorder().getLocator()
+		PartUIElement partUIElement = getWorkbenchRecorder().getLocator()
 				.findPartElement(workbenchPartReference.getPart(true), false);
 		partUIElement.propertyTab(listElement.getTabItem().getText()).click();
 	}
@@ -146,6 +147,13 @@ public class PropertiesViewRecorder implements IRecordingProcessor,
 			swtRecorder = teslaRecorder.getProcessor(SWTEventRecorder.class);
 		}
 		return swtRecorder;
+	}
+
+	private WorkbenchRecordingProcessor getWorkbenchRecorder() {
+		if (workbenchRecorder == null) {
+			workbenchRecorder = teslaRecorder.getProcessor(WorkbenchRecordingProcessor.class);
+		}
+		return workbenchRecorder;
 	}
 
 }

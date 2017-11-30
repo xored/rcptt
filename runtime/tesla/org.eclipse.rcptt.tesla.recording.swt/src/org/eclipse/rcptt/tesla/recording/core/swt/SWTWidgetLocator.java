@@ -30,7 +30,6 @@ import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.IWindowProvider;
 import org.eclipse.rcptt.tesla.core.protocol.ItemUIElement;
-import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.UISelector;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.WindowUIElement;
@@ -50,7 +49,6 @@ import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEn
 import org.eclipse.rcptt.tesla.swt.util.GetWindowUtil;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil;
 import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
-import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -85,25 +83,11 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.PartSite;
-import org.eclipse.ui.internal.PerspectiveBarContributionItem;
-import org.eclipse.ui.internal.WorkbenchPage;
-import org.eclipse.ui.internal.WorkbenchPartReference;
-import org.eclipse.ui.part.WorkbenchPart;
 
-@SuppressWarnings("restriction")
 public final class SWTWidgetLocator {
 
-	private static final String ELEMENT_TEXT = "element_text";
-	private static final String ATTR_TEXT = "text";
+	public static final String ELEMENT_TEXT = "element_text";
+	public static final String ATTR_TEXT = "text";
 
 	private final SWTUIPlayer player;
 	private TeslaRecorder recorder;
@@ -208,15 +192,6 @@ public final class SWTWidgetLocator {
 				return result;
 			}
 		}
-
-		if (widget instanceof WorkbenchUIElement) {
-			WorkbenchUIElement ee = (WorkbenchUIElement) widget;
-			IWorkbenchPart part = ee.reference.getPart(true);
-			PartUIElement element = findPartElement(part, alwaysFindLeaf);
-			if (element != null) {
-				return new FindResult(widget, element.getElement());
-			}
-		}
 		if (widget.getKind().is(ElementKind.Window)) {
 			WindowUIElement shellObject = getShell((Shell) widget.unwrapWidget(), alwaysFindLeaf);
 			if (shellObject != null) {
@@ -227,8 +202,9 @@ public final class SWTWidgetLocator {
 			Control control = (Control) widget.unwrapWidget();
 			Shell shell = control.getShell();
 
-			if (checkSkipWorkbenchTabs(supportEclipseWorkbench, control, shell)) {
-				return null;
+			for (IWidgetLocatorExtension ext : extensions) {
+				if (ext.isSkippedControl(supportEclipseWorkbench, control, shell))
+					return null;
 			}
 
 			// SWTUIElement realWindow = player.wrap(shell);
@@ -276,10 +252,6 @@ public final class SWTWidgetLocator {
 			// Search in top level components, like editor, view
 
 			if (parentResult != null && parentResult.element != null) {
-				// Check for editor/view element itself
-				if (checkForViewEditor(control, shell, parentElement)) {
-					return new FindResult(parentElement, parentResult.element);
-				}
 				if (kind.is(ElementKind.Unknown)) {
 					if (unknownAllowed) {
 						return findUnknownElement(control, parentElement, parentResult.element);
@@ -583,11 +555,13 @@ public final class SWTWidgetLocator {
 		// update loweParent
 		SWTUIElement element = getPlayer().wrap(SWTEventManager.getMenuSource(upperMenu));
 
-		// Filter toolbars as menu source for menu from toolbar buttons with
-		// drop down arrows
-		if (element != null && element.widget instanceof ToolBar
-				&& !upperMenu.equals(((ToolBar) element.widget).getMenu()) && isParentEclipseWindow(upperMenu)) {
-			element = null;
+		if (element != null) {
+			for (IWidgetLocatorExtension ext : extensions) {
+				if (ext.isMenuSourceFiltered(element.widget, upperMenu)) {
+					element = null;
+					break;
+				}
+			}
 		}
 
 		if (element != null) {
@@ -628,8 +602,6 @@ public final class SWTWidgetLocator {
 		int widgetIndex = -1;
 		SWTUIElement realAfter = null;
 		SWTUIElement[] realChildren = player.children.collectFor(lowerParent, null, true, getSearchClasses(control));
-		// don't try search -after for top level tab folders
-		boolean isTopLevelTabFolder = widget instanceof CTabFolder && isWorkbenchWindow(lowerParent);
 		// Search for widget
 		for (SWTUIElement i : realChildren) {
 			String text = i.getText();
@@ -641,8 +613,14 @@ public final class SWTWidgetLocator {
 				break;
 			}
 			GenericElementKind iKind = i.getKind();
+
+			boolean isAfterSkippedForWidget = false;
+			for (IWidgetLocatorExtension ext : extensions) {
+				isAfterSkippedForWidget = isAfterSkippedForWidget || ext.isAfterSkippedForWidget(widget, lowerParent);
+			}
+
 			if (iKind != null && iKind.isLabel() && text != null && couldBeAfterItem(text.trim())
-					&& !isTopLevelTabFolder) {
+					&& !isAfterSkippedForWidget) {
 				SWTUIElement afterParent = player.getParentElement(i);
 				// after could be only on same level as control itself
 				if (afterParent != null && afterParent.equals(lowerParent)) {
@@ -667,15 +645,6 @@ public final class SWTWidgetLocator {
 			return selectRequiredElementToBeFocused(realElement, widget, kind, realAfter, parentElement, widgetIndex);
 		}
 		return null;
-	}
-
-	// TODO (e4 support): remove
-	private boolean isWorkbenchWindow(SWTUIElement element) {
-		if (element.getKind().is(ElementKind.Window)) {
-			return PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getShell().equals(element.widget);
-		}
-		return false;
 	}
 
 	private FindResult selectRequiredElementToBeFocused(SWTUIElement realElement, Widget widget,
@@ -859,67 +828,6 @@ public final class SWTWidgetLocator {
 		return null;
 	}
 
-	private boolean checkForViewEditor(Control control, Shell shell, SWTUIElement lowerParent) {
-		IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-		if (lowerParent instanceof WorkbenchUIElement) {
-			IWorkbenchPage lowerParentPage = ((WorkbenchUIElement) lowerParent).getReference().getPage();
-			for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
-				Shell wshell = iWorkbenchWindow.getShell();
-				if (wshell == shell) {
-					WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
-					if (page.equals(lowerParentPage)) {
-						IViewReference[] views = page.getViewReferences();
-						for (IViewReference iViewPart : views) {
-							Control composite = ((WorkbenchPartReference) iViewPart).getPane().getControl();
-							if (control.equals(composite)) {
-								return true;
-							}
-						}
-						IEditorReference[] editors = page.getEditorReferences();
-						for (IEditorReference iEditorPart : editors) {
-							Control composite = ((WorkbenchPartReference) iEditorPart).getPane().getControl();
-							if (control.equals(composite)) {
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean checkSkipWorkbenchTabs(boolean supportEclipseWorkbench, Control control, Shell shell) {
-		if (control instanceof CTabFolder) {
-			// Check for tab folder activation(click) for Workbench.
-			// List<Widget> parents = SWTUIPlayer.collectParents(widget);
-			// Check for workbench internal element click
-			IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-			for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
-				Shell wshell = iWorkbenchWindow.getShell();
-				if (wshell == shell) {
-					WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
-					Composite composite = page.getClientComposite();
-					if (control.getParent().equals(composite)) {
-						// Skip click on views/editors tab folder
-						// hasViewEditorCTabFolderClick = true;
-						if (!supportEclipseWorkbench) {
-							return true;
-						}
-					}
-					// e46 checks.
-					Object o = control.getData("modelElement");
-					if (o != null && o.getClass().getName()
-							.contains("org.eclipse.e4.ui.model.application.ui.basic.impl.PartStackImpl")) {
-						return true;
-					}
-					break;
-				}
-			}
-		}
-		return false;
-	}
-
 	@SuppressWarnings("rawtypes")
 	private Class[] getSearchClasses(Control control) {
 		List<Class> classes = new ArrayList<Class>();
@@ -1090,6 +998,15 @@ public final class SWTWidgetLocator {
 		return new CompositeUIElement(window, recorder);
 	}
 
+	public Object findMenuSource(Menu menu) {
+		for (IWidgetLocatorExtension ext : extensions) {
+			Object result = ext.findMenuSource(menu);
+			if (result != null)
+				return result;
+		}
+		return null;
+	}
+
 	public WindowUIElement getShell(Shell shell, boolean alwaysFindLeaf) {
 		if (shell == null) {
 			return null;
@@ -1097,98 +1014,84 @@ public final class SWTWidgetLocator {
 		if (!shell.isVisible()) {
 			return null;
 		}
-		String pattern = shell.getText();
+
 		SWTUIElement wrappedShell = player.wrap(shell);
 		ElementEntry window = SWTRecordingHelper.getHelper().get(wrappedShell);
 		window = checkTextFieldChange(wrappedShell, window);
+
 		if (window == null || alwaysFindLeaf) {
-			// Check this is SDK window and only one window.
-			IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
-			int ind = 0;
-			boolean found = false;
-			for (IWorkbenchWindow iWorkbenchWindow : windows) {
-				if (shell.equals(iWorkbenchWindow.getShell())) {
-					int sdkIndex = pattern.indexOf("- Eclipse SDK");
-					if (sdkIndex != -1) {
-						pattern = ".*- Eclipse SDK";
-					}
-					found = true;
-					break;// We found correct window
-				}
-				ind++;
+			for (IWidgetLocatorExtension ext : extensions) {
+				WindowUIElement result = ext.getShell(shell, alwaysFindLeaf);
+				if (result != null)
+					return result;
 			}
+
 			// Iterate shell parents
 			Composite parent = shell.getParent();
-			pattern = pattern.trim();
+			IWindowProvider parentWindow = getShell((Shell) parent, alwaysFindLeaf);
+			if (parentWindow == null) {
+				parentWindow = recorder;
+			}
+			recorder.setControls(wrappedShell.getModel());
+
 			WindowUIElement win = null;
-			if (found && parent == null) {
-				recorder.setControls(wrappedShell.getModel());
-				win = ind == 0 ? recorder.eclipseWindow() : recorder.eclipseWindow(ind);
-			} else {
-				IWindowProvider parentWindow = getShell((Shell) parent, alwaysFindLeaf);
-				if (parentWindow == null) {
-					parentWindow = recorder;
+			// by title text
+			String pattern = shell.getText().trim();
+			if (pattern.length() != 0) {
+				int i = calculateIndex(wrappedShell, null);
+				if (i != 0) {
+					win = parentWindow.window(pattern, i);
+				} else {
+					win = parentWindow.window(pattern);
 				}
-				recorder.setControls(wrappedShell.getModel());
+			}
 
-				// by title text
-				if (pattern.length() != 0) {
-					int i = calculateIndex(wrappedShell, null);
-					if (i != 0) {
-						win = parentWindow.window(pattern, i);
+			// by -class
+			if (win == null) {
+				String className = GetWindowUtil.getWindowClassName(shell);
+				if (className != null) {
+					SWTUIElement[] children = player.children.collectFor(getPlayer().wrap(parent), null, true,
+							Shell.class);
+					int index = IndexUtil.calcIndexFor(shell, children, GetWindowUtil.byClass(className));
+
+					if (index != 0) {
+						win = parentWindow.classedWindow(className, index);
 					} else {
-						win = parentWindow.window(pattern);
+						win = parentWindow.classedWindow(className);
 					}
 				}
+			}
 
-				// by -class
-				if (win == null) {
-					String className = GetWindowUtil.getWindowClassName(shell);
-					if (className != null) {
-						SWTUIElement[] children = player.children.collectFor(getPlayer().wrap(parent), null, true,
-								Shell.class);
-						int index = IndexUtil.calcIndexFor(shell, children, GetWindowUtil.byClass(className));
+			// by -from
+			if (win == null) {
+				String methodName = GetWindowUtil.getShellCreationMethodName(shell);
+				if (methodName != null) {
+					SWTUIElement[] children = player.children.collectFor(getPlayer().wrap(parent), null, true,
+							Shell.class);
+					int index = IndexUtil.calcIndexFor(shell, children, GetWindowUtil.byFrom(methodName));
 
-						if (index != 0) {
-							win = parentWindow.classedWindow(className, index);
-						} else {
-							win = parentWindow.classedWindow(className);
-						}
+					if (index != 0) {
+						win = parentWindow.fromedWindow(methodName, index);
+					} else {
+						win = parentWindow.fromedWindow(methodName);
 					}
 				}
+			}
 
-				// by -from
-				if (win == null) {
-					String methodName = GetWindowUtil.getShellCreationMethodName(shell);
-					if (methodName != null) {
-						SWTUIElement[] children = player.children.collectFor(getPlayer().wrap(parent), null, true,
-								Shell.class);
-						int index = IndexUtil.calcIndexFor(shell, children, GetWindowUtil.byFrom(methodName));
-
-						if (index != 0) {
-							win = parentWindow.fromedWindow(methodName, index);
-						} else {
-							win = parentWindow.fromedWindow(methodName);
-						}
-					}
-				}
-
-				if (win == null) {
-					throw new RuntimeException("Failed to locate shell element:" + shell.toString());
-				}
+			if (win == null) {
+				throw new RuntimeException("Failed to locate shell element:" + shell.toString());
 			}
 
 			window = new ElementEntry(win.getElement());
-			if (!(found && parent == null)) {
-				window.set(ATTR_TEXT, pattern);
-			}
+			window.set(ATTR_TEXT, pattern);
 			window.getElement().setDescription(pattern);
 			SWTRecordingHelper.getHelper().put(wrappedShell, window);
 		}
 		return new WindowUIElement(window.getElement(), recorder);
 	}
 
-	private ElementEntry checkTextFieldChange(SWTUIElement uiElement, ElementEntry element) {
+	// TODO (e4 support): revert to private?
+	public ElementEntry checkTextFieldChange(SWTUIElement uiElement, ElementEntry element) {
 		if (element == null) {
 			return null;
 		}
@@ -1215,130 +1118,6 @@ public final class SWTWidgetLocator {
 			}
 		}
 		return false;
-	}
-
-	public PartUIElement findPartElement(IWorkbenchPart part, boolean alwaysFindLeaf) {
-		SWTUIElement wrap = player.wrap(part);
-		ElementEntry result = SWTRecordingHelper.getHelper().get(wrap);
-		result = checkTextFieldChange(wrap, result);
-		if (result != null && !alwaysFindLeaf) {
-			return new PartUIElement(result.getElement(), recorder);
-		}
-		IWorkbenchWindow window = part.getSite().getWorkbenchWindow();
-		if (part instanceof IViewPart) {
-			IViewPart viewPart = (IViewPart) part;
-			String title = ((WorkbenchPart) viewPart).getPartName();
-			WindowUIElement shellElement = getShell(window.getShell(), false);
-			if (shellElement == null) {
-				return null;
-			}
-			getRecorder().setControls(SWTModelMapper.map(wrap));
-			int ViewIdx = calcViewIndex(part);
-			if (ViewIdx > 0) {
-				result = new ElementEntry(shellElement.view(title, ViewIdx).getElement());
-			} else {
-				result = new ElementEntry(shellElement.view(title).getElement());
-			}
-			result.set(ATTR_TEXT, title);
-		}
-		if (part instanceof IEditorPart) {
-			IEditorPart editorPart = (IEditorPart) part;
-			String title = ((WorkbenchPart) editorPart).getPartName();
-			FindResult element = findElement(getPlayer().wrap(window.getShell()), false, false, false);
-			WindowUIElement windowElement = new WindowUIElement(element.element, recorder);
-			getRecorder().setControls(SWTModelMapper.map(wrap));
-
-			EditorLocation location = getEditorLocation(editorPart);
-			result = new ElementEntry(
-					windowElement.editor(location.title, location.label, location.index).getElement());
-
-			result.set(ATTR_TEXT, title);
-		}
-		if (result != null) {
-			SWTRecordingHelper.getHelper().put(wrap, result);
-			return new PartUIElement(result.getElement(), recorder);
-		}
-		return null;
-	}
-
-	private static class EditorLocation {
-		public String title;
-		public String label;
-		public Integer index;
-
-		public EditorLocation(String title, String label, Integer index) {
-			this.title = title;
-			this.label = label;
-			this.index = index;
-		}
-	}
-
-	private EditorLocation getEditorLocation(IEditorPart editor) {
-		IEditorReference[] refs = editor.getSite().getWorkbenchWindow().getActivePage().getEditorReferences();
-
-		String name = ((WorkbenchPart) editor).getPartName();
-		String id = editor.getSite().getId();
-		String label = editor.getSite().getWorkbenchWindow().getWorkbench().getEditorRegistry().findEditor(id)
-				.getLabel();
-
-		// -- locate by name only
-
-		int counter = 0;
-		for (IEditorReference ref : refs) {
-			if (ref.getPartName() != null && ref.getPartName().equals(name))
-				++counter;
-		}
-		if (counter < 2) {
-			return new EditorLocation(name, null, null);
-		}
-
-		// -- by name, editor type and maybe by index
-
-		counter = 0;
-		int index = 0; // this will select first editor
-		int globalIndex = 0;
-		boolean typeDiversity = false;
-		for (int i = 0; i < refs.length; ++i) {
-			IEditorReference ref = refs[i];
-			if (ref.getPartName() != null && ref.getPartName().equals(name)) {
-				if (ref.getId() != null && ref.getId().equals(id)) {
-					if (editor == ref.getEditor(false)) {
-						index = counter;
-						globalIndex = i;
-					}
-					++counter;
-				} else
-					typeDiversity = true;
-			}
-		}
-		if (counter < 2)
-			return new EditorLocation(name, label, null);
-
-		// if all editors of a resource are of same type, use only name and
-		// index
-		if (!typeDiversity)
-			return new EditorLocation(name, null, index == 0 ? null : index);
-
-		return new EditorLocation(name, globalIndex == 0 ? null : label, index == 0 || globalIndex == 0 ? null : index);
-	}
-
-	private int calcViewIndex(IWorkbenchPart part) {
-
-		String title = ((WorkbenchPart) part).getPartName();
-		int currIdx = 0;
-		IViewReference[] views = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-				.getViewReferences();
-
-		for (IViewReference iViewRef : views) {
-			String label = iViewRef.getPartName();
-
-			if (label != null && label.equals(title)) {
-				if (iViewRef.getPart(false).equals(part))
-					return currIdx;
-				currIdx++;
-			}
-		}
-		return -1;
 	}
 
 	public int getColumnFromCellEditor(Object cellEditorObj, ControlEditor editor, CellEditor cellEditor) {
@@ -1415,32 +1194,6 @@ public final class SWTWidgetLocator {
 		return null;
 	}
 
-	public static IWorkbenchPart findViewMenuSource(Widget widget) {
-		IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-		for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
-			WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
-			IViewReference[] viewReferences = page.getViewReferences();
-			for (IViewReference viewReference : viewReferences) {
-				IWorkbenchPart workbenchPart = viewReference.getPart(false);
-				if (workbenchPart != null) {
-					PartSite site = (PartSite) workbenchPart.getSite();
-					if (site != null) {
-						Menu menu = EclipseWorkbenchProvider.getProvider().getViewMenu(workbenchPart, viewReference,
-								false);
-						if (menu != null && menu.equals(widget)) {
-							return workbenchPart;
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	public static boolean isOpenPespectiveButton(ToolItem item) {
-		return TeslaSWTAccess.getThis(PerspectiveBarContributionItem.class, item, SWT.Selection) != null;
-	}
-
 	public static boolean isCTabFolderListMenuItem(MenuItem menuItem) {
 		CTabFolder tabFolder = getCTabFolder(menuItem);
 		if (tabFolder != null) {
@@ -1452,10 +1205,6 @@ public final class SWTWidgetLocator {
 
 	public static CTabFolder getCTabFolder(MenuItem menuItem) {
 		return TeslaSWTAccess.getThis(CTabFolder.class, menuItem, SWT.Selection);
-	}
-
-	private static boolean isParentEclipseWindow(Menu menu) {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().equals(menu.getParent());
 	}
 
 	// extensions stuff

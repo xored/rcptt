@@ -52,14 +52,15 @@
     <module>org.eclipse.rcptt.tesla.recording.swt</module>
     <module>org.eclipse.rcptt.tesla.recording.canvas</module>
     <module>org.eclipse.rcptt.tesla.recording.jface.text</module>
+    <module>org.eclipse.rcptt.tesla.recording.workbench</module>
     <module>org.eclipse.rcptt.tesla.recording.workbench.texteditor</module>
     <module>org.eclipse.rcptt.tesla.swt.aspects</module>
     <module>org.eclipse.rcptt.tesla.swt.fragment</module>
     <module>org.eclipse.rcptt.tesla.swt</module>
-    <module>org.eclipse.rcptt.tesla.ui</module>
     <module>org.eclipse.rcptt.tesla.ui.ide</module>
     <module>org.eclipse.rcptt.tesla.ui.ide.aspects</module>
     <module>org.eclipse.rcptt.tesla.ui.views</module>
+    <module>org.eclipse.rcptt.tesla.workbench</module>
     <module>org.eclipse.rcptt.tesla.workbench.texteditor</module>
     <module>org.eclipse.rcptt.tesla.workbench.texteditor.aspects</module>
     <module>org.eclipse.rcptt.tesla.variables</module>

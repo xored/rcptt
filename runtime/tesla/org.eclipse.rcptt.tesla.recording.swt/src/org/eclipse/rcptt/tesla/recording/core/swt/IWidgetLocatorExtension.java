@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.core.swt;
 
-import org.eclipse.swt.widgets.Widget;
-
+import org.eclipse.rcptt.tesla.core.protocol.WindowUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 
 public interface IWidgetLocatorExtension {
 
@@ -36,5 +39,24 @@ public interface IWidgetLocatorExtension {
 	 * See {@link WidgetClassifier} class for details.
 	 */
 	IWidgetClassifierExtension getWidgetClassifierExtension();
+
+	/**
+	 * Checks if processed control should be skipped
+	 * Is called from SWTWidgetLocator#findElement
+	 * 
+	 * @param supportEclipseWorkbench
+	 * @param control
+	 * @param shell
+	 * @return
+	 */
+	boolean isSkippedControl(boolean supportEclipseWorkbench, Control control, Shell shell);
+
+	boolean isAfterSkippedForWidget(Widget widget, SWTUIElement lowerParent);
+
+	boolean isMenuSourceFiltered(Widget widget, Menu upperMenu);
+
+	Object findMenuSource(Menu menu);
+
+	WindowUIElement getShell(Shell shell, boolean alwaysFindLeaf);
 
 }

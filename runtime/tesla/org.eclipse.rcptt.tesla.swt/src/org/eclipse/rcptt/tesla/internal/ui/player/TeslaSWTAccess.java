@@ -13,7 +13,6 @@ package org.eclipse.rcptt.tesla.internal.ui.player;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
@@ -32,6 +31,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.swt.events.TimerUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CTabFolder;
@@ -53,11 +54,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.TypedListener;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.part.PageBook;
-import org.eclipse.ui.progress.DeferredTreeContentManager;
-
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.rcptt.tesla.swt.events.TimerUtils;
 
 @SuppressWarnings("rawtypes")
 public class TeslaSWTAccess {
@@ -370,7 +366,7 @@ public class TeslaSWTAccess {
 			Field field = class1.getDeclaredField("this$0");
 			field.setAccessible(true);
 			Object object = field.get(job);
-			if (object instanceof DeferredTreeContentManager) {
+			if (isInstanceOf(object.getClass(), "org.eclipse.ui.progress.DeferredTreeContentManager")) {
 				return true;
 			}
 			return false;
@@ -464,18 +460,6 @@ public class TeslaSWTAccess {
 		} catch (Throwable e) {
 			// Ignore
 			// TeslaCore.log(e);
-		}
-		return null;
-	}
-
-	public static Control getBookPage(PageBook book) {
-		Class<? extends PageBook> class1 = book.getClass();
-		try {
-			Field field = class1.getDeclaredField("currentPage");
-			field.setAccessible(true);
-			return (Control) field.get(book);
-		} catch (Throwable e) {
-			TeslaCore.log(e);
 		}
 		return null;
 	}
@@ -582,33 +566,17 @@ public class TeslaSWTAccess {
 	}
 
 	@SuppressWarnings("restriction")
-	public static org.eclipse.ui.internal.decorators.DecorationScheduler getDecorationScheduler(
-			org.eclipse.ui.internal.decorators.DecoratorManager manager) {
-		try {
-			Field field = org.eclipse.ui.internal.decorators.DecoratorManager.class.getDeclaredField("scheduler");
-			field.setAccessible(true);
-			return (org.eclipse.ui.internal.decorators.DecorationScheduler) field.get(manager);
-		} catch (Throwable e) {
-			TeslaCore.log(e);
-		}
-		return null;
-	}
-
-	@SuppressWarnings("restriction")
-	public static Map getDecorationResultMap(org.eclipse.ui.internal.decorators.DecorationScheduler manager) {
-		try {
-			Field field = org.eclipse.ui.internal.decorators.DecorationScheduler.class.getDeclaredField("resultCache");
-			field.setAccessible(true);
-			return (Map) field.get(manager);
-		} catch (Throwable e) {
-			TeslaCore.log(e);
-		}
-		return null;
-	}
-
-	@SuppressWarnings("restriction")
 	public static Object getDecoratorManagerFamily() {
-		return org.eclipse.ui.internal.decorators.DecoratorManager.FAMILY_DECORATE;
+		try {
+			Class<?> decoratorManager = Class.forName("org.eclipse.ui.internal.decorators.DecoratorManager");
+			Field familyField = decoratorManager.getField("FAMILY_DECORATE");
+			familyField.setAccessible(true);
+			return familyField.get(decoratorManager);
+
+		} catch (Throwable e) {
+			TeslaCore.log(e);
+		}
+		return null;
 	}
 
 	@SuppressWarnings("restriction")
@@ -638,4 +606,25 @@ public class TeslaSWTAccess {
 		return null;
 
 	}
+
+	public static boolean isInstanceOf(Class clazz, String className) {
+		if (clazz == null || clazz.getName().equals("java.lang.Object")) {
+			return false;
+		}
+		if (clazz.getName().equals(className)) {
+			return true;
+		}
+		// go through interfaces
+		for (Class interfaze : clazz.getInterfaces()) {
+			if (isInstanceOf(interfaze, className)) {
+				return true;
+			}
+		}
+		// go through super classes
+		if (isInstanceOf(clazz.getSuperclass(), className)) {
+			return true;
+		}
+		return false;
+	}
+
 }

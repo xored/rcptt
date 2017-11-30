@@ -36,8 +36,8 @@ import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
-import org.eclipse.rcptt.tesla.ui.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
+import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
 import org.eclipse.ui.IWorkbenchPart;
 
 public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {

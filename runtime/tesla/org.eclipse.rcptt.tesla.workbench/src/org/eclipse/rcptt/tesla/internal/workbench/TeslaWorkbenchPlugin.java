@@ -8,26 +8,29 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.internal.ui;
+package org.eclipse.rcptt.tesla.internal.workbench;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+// TODO (e4 support): organize plugin classes
+public class TeslaWorkbenchPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ui";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.workbench";
 
 	// The shared instance
-	private static Activator plugin;
+	private static TeslaWorkbenchPlugin plugin;
 
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public TeslaWorkbenchPlugin() {
 	}
 
 	/*
@@ -53,8 +56,30 @@ public class Activator extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static TeslaWorkbenchPlugin getDefault() {
 		return plugin;
+	}
+
+	public static void log(Throwable t) {
+		log(t.getMessage(), t);
+	}
+
+	public static void log(String message, Throwable t) {
+		log(createStatus(message, t));
+	}
+
+	public static void log(IStatus status) {
+		if (getDefault() != null) {
+			getDefault().getLog().log(status);
+		}
+	}
+
+	public static IStatus createStatus(String message, Throwable t) {
+		return createStatus(Status.ERROR, message, t);
+	}
+
+	public static IStatus createStatus(int state, String message, Throwable t) {
+		return new Status(state, PLUGIN_ID, message, t);
 	}
 
 }

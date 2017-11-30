@@ -13,10 +13,9 @@ package org.eclipse.rcptt.tesla.recording.nebula;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
-import org.eclipse.swt.widgets.Widget;
-
 import org.eclipse.rcptt.tesla.core.protocol.BasicUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ViewerUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.WindowUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.nebula.NebulaGridUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.nebula.NebulaItemUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
@@ -34,6 +33,10 @@ import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEn
 import org.eclipse.rcptt.tesla.recording.core.swt.IWidgetClassifierExtension;
 import org.eclipse.rcptt.tesla.recording.core.swt.IWidgetLocatorExtension;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 
 public class NebulaWidgetLocatorExtension implements IWidgetLocatorExtension {
 
@@ -140,6 +143,31 @@ public class NebulaWidgetLocatorExtension implements IWidgetLocatorExtension {
 	@Override
 	public IWidgetClassifierExtension getWidgetClassifierExtension() {
 		return new NebulaWidgetClassifierExtension();
+	}
+
+	@Override
+	public boolean isSkippedControl(boolean supportEclipseWorkbench, Control control, Shell shell) {
+		return false;
+	}
+
+	@Override
+	public boolean isAfterSkippedForWidget(Widget widget, SWTUIElement lowerParent) {
+		return false;
+	}
+
+	@Override
+	public boolean isMenuSourceFiltered(Widget widget, Menu upperMenu) {
+		return false;
+	}
+
+	@Override
+	public Object findMenuSource(Menu menu) {
+		return null;
+	}
+
+	@Override
+	public WindowUIElement getShell(Shell shell, boolean alwaysFindLeaf) {
+		return null;
 	}
 
 }

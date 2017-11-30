@@ -22,6 +22,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.tesla.workbench.WorkbenchAccess;
 
 
 @SuppressWarnings("all")
@@ -52,7 +53,7 @@ public aspect WorkbenchAspect {
 			Object object = TeslaSWTAccess.getThis(layout);
 			if (object != null) {
 				PageBook book = (PageBook) object;
-				Control page = TeslaSWTAccess.getBookPage(book);
+				Control page = WorkbenchAccess.getBookPage(book);
 				if (page != null && page.isDisposed()) {
 					return null; // Ignore layout if page is disposed.
 				}

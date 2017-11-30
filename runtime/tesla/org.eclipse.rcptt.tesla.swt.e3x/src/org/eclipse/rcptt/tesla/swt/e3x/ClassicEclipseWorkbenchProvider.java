@@ -17,6 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
+import org.eclipse.rcptt.tesla.swt.workbench.IEclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolderEvent;
@@ -25,6 +30,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
@@ -48,12 +54,6 @@ import org.eclipse.ui.internal.presentations.PaneFolder;
 import org.eclipse.ui.internal.presentations.PaneFolderButtonListener;
 import org.eclipse.ui.internal.presentations.defaultpresentation.DefaultTabFolder;
 import org.osgi.framework.Version;
-
-import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
-import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.swt.workbench.IEclipseWorkbenchProvider;
 
 @SuppressWarnings("restriction")
 public class ClassicEclipseWorkbenchProvider implements
@@ -312,5 +312,27 @@ public class ClassicEclipseWorkbenchProvider implements
 					return ((ViewPane) l).getID();
 
 		return null;
+	}
+
+	@Override
+	public boolean isInternalWorkbenchElement(Widget widget) {
+		IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		Control ctrl = (Control) widget;
+		Shell shell = ctrl.getShell();
+		for (IWorkbenchWindow iWorkbenchWindow : workbenchWindows) {
+			Shell wshell = iWorkbenchWindow.getShell();
+
+			if (wshell == shell) {
+				WorkbenchPage page = (WorkbenchPage) iWorkbenchWindow.getActivePage();
+				Composite composite = page.getClientComposite();
+				Composite p1 = ctrl.getParent();
+				if (p1.equals(composite) || p1.getParent().equals(composite)) {
+					// Skip click on views/editors tab folder
+					// hasViewEditorCTabFolderClick = true;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

@@ -15,10 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.logging.IQ7ActivityLogs;
 import org.eclipse.rcptt.logging.Q7LoggingManager;
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
@@ -28,6 +24,8 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Widget;
 
 public class SWTRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
 	private SWTUIPlayer player;
@@ -44,8 +42,8 @@ public class SWTRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
 
 	public synchronized SWTUIPlayer getPlayer() {
 		if (player == null) {
-			player = SWTUIPlayer.getPlayer(PlatformUI.getWorkbench()
-					.getDisplay());
+			// TODO (e4 support): remove quickfix
+			player = SWTUIPlayer.getPlayer(Display.getDefault());
 		}
 		return player;
 	}
