@@ -28,7 +28,6 @@ import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -303,15 +302,6 @@ public class ClassicEclipseWorkbenchProvider implements
 
 	public void updateActiveSelection(List<Object> selectionData,
 			SWTUIElement parent) {
-	}
-
-	public String getViewId(Widget widget) {
-		if (widget instanceof Composite)
-			for (Listener l : widget.getListeners(SWT.Activate))
-				if (l instanceof ViewPane)
-					return ((ViewPane) l).getID();
-
-		return null;
 	}
 
 	@Override

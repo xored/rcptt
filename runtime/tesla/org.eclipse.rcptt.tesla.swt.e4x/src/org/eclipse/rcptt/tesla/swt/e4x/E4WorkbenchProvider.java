@@ -428,11 +428,6 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 	}
 
-	public String getViewId(Widget widget) {
-		// not supported for now
-		return null;
-	}
-
 	@Override
 	public boolean isInternalWorkbenchElement(Widget widget) {
 		if (widget instanceof CTabFolder) {

@@ -28,6 +28,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
+import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
+import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
+import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.dnd.DND;
@@ -36,11 +39,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
-
-import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
-import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
 
 public class SwtEventLog {
 
@@ -581,30 +579,4 @@ public class SwtEventLog {
 				DND.DropAccept };
 	}
 
-	@SuppressWarnings("unused")
-	private static class ViewFilter implements IFilter {
-
-		private final String viewId;
-
-		public ViewFilter(String viewId) {
-			this.viewId = viewId;
-		}
-
-		public boolean filter(Widget widget, int type, Event event, boolean send) {
-			if (!send)
-				return true;
-
-			while (widget != null) {
-				String id = EclipseWorkbenchProvider.getProvider().getViewId(
-						widget);
-				if (viewId.equalsIgnoreCase(id))
-					return false;
-
-				widget = widget instanceof Control ? ((Control) widget)
-						.getParent() : null;
-			}
-
-			return true;
-		}
-	}
 }
