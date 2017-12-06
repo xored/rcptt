@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.swt.e4x;
+package org.eclipse.rcptt.tesla.workbench.e4x;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

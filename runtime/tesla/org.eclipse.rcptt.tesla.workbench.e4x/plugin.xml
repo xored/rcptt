@@ -15,7 +15,7 @@
    <extension
          point="org.eclipse.rcptt.tesla.swt.workbenchProvider">
       <workbenchProvider
-            class="org.eclipse.rcptt.tesla.swt.e4x.E4WorkbenchProvider">
+            class="org.eclipse.rcptt.tesla.workbench.e4x.E4WorkbenchProvider">
       </workbenchProvider>
    </extension>
 

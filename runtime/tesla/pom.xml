@@ -71,17 +71,17 @@
     <profile>
       <id>runtime3x</id>
       <modules>
-	<module>org.eclipse.rcptt.tesla.runtime-feature</module>
-	<module>org.eclipse.rcptt.tesla.swt.e3x</module>
-	<module>org.eclipse.rcptt.tesla.workbench.aspects</module>
+				<module>org.eclipse.rcptt.tesla.runtime-feature</module>
+				<module>org.eclipse.rcptt.tesla.workbench.aspects</module>
+				<module>org.eclipse.rcptt.tesla.workbench.e3x</module>
       </modules>
     </profile>
     <profile>
       <id>runtime4x</id>
       <modules>
-	<module>org.eclipse.rcptt.tesla.runtime.e4x-feature</module>
-	<module>org.eclipse.rcptt.tesla.swt.e4x</module>
-	<module>org.eclipse.rcptt.tesla.workbench.aspects.e4x</module>
+				<module>org.eclipse.rcptt.tesla.runtime.e4x-feature</module>
+				<module>org.eclipse.rcptt.tesla.workbench.aspects.e4x</module>
+				<module>org.eclipse.rcptt.tesla.workbench.e4x</module>
       </modules>
     </profile>
   </profiles>
