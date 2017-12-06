@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.rcptt.forms.impl;
 
-import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;
 import static org.eclipse.rcptt.forms.impl.internal.Plugin.UTILS;
+import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -87,7 +87,7 @@ public class EclipseFormsPlayerExtension extends AbstractSWTUIPlayerExtension {
 	}
 
 	@Override
-	public Widget getIndirectParent(Widget widget) {
+	public Object getIndirectParent(Widget widget) {
 		if (widget instanceof Hyperlink) {
 			return ((Hyperlink) widget).getParent();
 		} else if (widget instanceof AbstractHyperlink) {

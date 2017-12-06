@@ -127,7 +127,6 @@ import org.eclipse.rcptt.tesla.core.protocol.SetTextOffset;
 import org.eclipse.rcptt.tesla.core.protocol.SetTextSelection;
 import org.eclipse.rcptt.tesla.core.protocol.Show;
 import org.eclipse.rcptt.tesla.core.protocol.ShowSelection;
-import org.eclipse.rcptt.tesla.core.protocol.ShowTabList;
 import org.eclipse.rcptt.tesla.core.protocol.TextSelectionResponse;
 import org.eclipse.rcptt.tesla.core.protocol.Type;
 import org.eclipse.rcptt.tesla.core.protocol.TypeText;
@@ -205,7 +204,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 			ElementKind.EclipseWindow, ElementKind.Any, ElementKind.Item,
 			ElementKind.Canvas, ElementKind.Browser, ElementKind.Editor,
 			ElementKind.Text, ElementKind.DateTime, ElementKind.Slider,
-			ElementKind.QuickAccess, ElementKind.ColumnHeader };
+			ElementKind.ColumnHeader };
 	private static final EClass[] supportedCommands = {
 			ProtocolPackage.Literals.GET_BOUNDS,
 			ProtocolPackage.Literals.COUNT_ITEMS,
@@ -668,8 +667,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleGetSelection((GetSelection) command);
 			case ProtocolPackage.CELL_CLICK:
 				return handleCellClick((CellClick) command);
-			case ProtocolPackage.SHOW_TAB_LIST:
-				return handleShowTabList((ShowTabList) command);
 			case ProtocolPackage.SET_STATUS_DIALOG_MODE:
 				return handleSetStatusDialogMode((SetStatusDialogMode) command);
 			case ProtocolPackage.CLICK_LINK:
@@ -1132,18 +1129,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		Response response = RawFactory.eINSTANCE.createResponse();
 		TeslaEventManager.getManager().setStatusDialogModeAllowed(
 				command.isEnabled());
-		return response;
-	}
-
-	private Response handleShowTabList(ShowTabList command) {
-		SWTUIElement element = getMapper().get(command.getElement());
-		Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null) {
-			getPlayer().showTabList(element);
-		}
-		else {
-			response.setStatus(ResponseStatus.FAILED);
-		}
 		return response;
 	}
 

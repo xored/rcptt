@@ -39,6 +39,7 @@ import org.eclipse.rcptt.tesla.core.protocol.Save;
 import org.eclipse.rcptt.tesla.core.protocol.SelectCommand;
 import org.eclipse.rcptt.tesla.core.protocol.SelectData;
 import org.eclipse.rcptt.tesla.core.protocol.SelectResponse;
+import org.eclipse.rcptt.tesla.core.protocol.ShowTabList;
 import org.eclipse.rcptt.tesla.core.protocol.TypeAction;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
@@ -66,8 +67,8 @@ import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -99,7 +100,8 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 			ProtocolPackage.Literals.SAVE,
 			ProtocolPackage.Literals.IS_DIRTY,
 			ProtocolPackage.Literals.CLICK_ABOUT_MENU,
-			ProtocolPackage.Literals.CLICK_PREFERENCES_MENU
+			ProtocolPackage.Literals.CLICK_PREFERENCES_MENU,
+			ProtocolPackage.Literals.SHOW_TAB_LIST
 	};
 
 	private static final Set<String> SKIP_ACTIVATION_FOR_SHELLS = Collections
@@ -330,6 +332,8 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 				return handleClickAboutMenu((ClickAboutMenu) command);
 			case ProtocolPackage.CLICK_PREFERENCES_MENU:
 				return handleClickPreferencesMenu((ClickPreferencesMenu) command);
+			case ProtocolPackage.SHOW_TAB_LIST:
+				return handleShowTabList((ShowTabList) command);
 			}
 		}
 		return null;
@@ -435,6 +439,17 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			getWorkbenchPlayer().typeAction(element, command.getActionId());
+		} else {
+			response.setStatus(ResponseStatus.FAILED);
+		}
+		return response;
+	}
+
+	private Response handleShowTabList(ShowTabList command) {
+		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		Response response = RawFactory.eINSTANCE.createResponse();
+		if (element != null) {
+			getWorkbenchPlayer().showTabList(element);
 		} else {
 			response.setStatus(ResponseStatus.FAILED);
 		}

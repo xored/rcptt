@@ -8,7 +8,7 @@ import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
@@ -138,6 +138,20 @@ public class WorkbenchUIPlayer {
 
 	private void processTabFolderButton(Widget widget, int buttonId) {
 		EclipseWorkbenchProvider.getProvider().processTabFolderButton(widget, buttonId);
+	}
+
+	public void showTabList(SWTUIElement uiElement) {
+		final Widget widget = unwrapWidget(uiElement);
+		getSWTPlayer().exec("showTabList", new Runnable() {
+			@Override
+			public void run() {
+				processTabShowList(widget);
+			}
+		});
+	}
+
+	private void processTabShowList(Widget widget) {
+		EclipseWorkbenchProvider.getProvider().processTabShowList(widget);
 	}
 
 	public void setPerspective(final String perspectiveId) {

@@ -18,10 +18,8 @@ import java.util.Map;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.swt.workbench.IEclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.workbench.provider.IEclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolderEvent;
@@ -114,14 +112,14 @@ public class ClassicEclipseWorkbenchProvider implements
 		return true;
 	}
 
-	public Map<Control, SWTUIElement> getWorkbenchReference(SWTUIPlayer player) {
+	public Map<Control, Object> getWorkbenchReference() {
 		IWorkbenchWindow[] windows = PlatformUI.getWorkbench()
 				.getWorkbenchWindows();
 		if (!Display.getCurrent()
 				.equals(PlatformUI.getWorkbench().getDisplay())) {
-			return new HashMap<Control, SWTUIElement>();
+			return new HashMap<Control, Object>();
 		}
-		Map<Control, SWTUIElement> references = new HashMap<Control, SWTUIElement>();
+		Map<Control, Object> references = new HashMap<Control, Object>();
 		for (IWorkbenchWindow iWorkbenchWindow : windows) {
 			// This is workbench window
 			IWorkbenchPage page = iWorkbenchWindow.getActivePage();
@@ -131,10 +129,10 @@ public class ClassicEclipseWorkbenchProvider implements
 				WorkbenchPartReference ref = ((WorkbenchPartReference) iViewReference);
 				if (ref.getVisible()) {
 					Control control = ref.getPane().getControl();
-					references.put(control, player.wrap(ref));
+					references.put(control, ref);
 					Control toolBar = ref.getPane().getToolBar();
 					if (toolBar != null) {
-						references.put(toolBar, player.wrap(ref));
+						references.put(toolBar, ref);
 					}
 				}
 			}
@@ -142,10 +140,10 @@ public class ClassicEclipseWorkbenchProvider implements
 				WorkbenchPartReference ref = ((WorkbenchPartReference) iEditorReference);
 				if (ref.getVisible()) {
 					Control control = ref.getPane().getControl();
-					references.put(control, player.wrap(ref));
+					references.put(control, ref);
 					Control toolBar = ref.getPane().getToolBar();
 					if (toolBar != null) {
-						references.put(toolBar, player.wrap(ref));
+						references.put(toolBar, ref);
 					}
 				}
 			}
@@ -298,10 +296,6 @@ public class ClassicEclipseWorkbenchProvider implements
 	public Text getQuickAccess() {
 		// no quick access on e3
 		return null;
-	}
-
-	public void updateActiveSelection(List<Object> selectionData,
-			SWTUIElement parent) {
 	}
 
 	@Override

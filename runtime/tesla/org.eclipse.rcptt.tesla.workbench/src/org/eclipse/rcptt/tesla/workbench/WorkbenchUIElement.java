@@ -14,7 +14,7 @@ import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;

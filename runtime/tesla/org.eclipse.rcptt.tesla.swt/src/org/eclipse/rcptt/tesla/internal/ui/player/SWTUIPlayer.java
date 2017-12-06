@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,6 @@ import org.eclipse.rcptt.tesla.swt.events.ITimerExecHelper;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaTimerExecManager.TimerInfo;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IViewerItem;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.util.swt.Bounds;
@@ -281,9 +281,6 @@ public final class SWTUIPlayer {
 		case Unknown:
 			result = null;
 			break;
-		case QuickAccess:
-			result = selectQuickAccess();
-			break;
 		case Window:
 			result = new GetWindowPlayer(this, ignoreWindows).selectShell(filter);
 			break;
@@ -490,11 +487,6 @@ public final class SWTUIPlayer {
 			}
 		}
 		return items;
-	}
-
-	private SWTUIElement selectQuickAccess() {
-		Text quickAccess = EclipseWorkbenchProvider.getProvider().getQuickAccess();
-		return quickAccess == null ? null : wrap(quickAccess);
 	}
 
 	// private IScreenCapturer screenCapturer = null;
@@ -1955,9 +1947,9 @@ public final class SWTUIPlayer {
 		// TODO Auto-generated method stub
 	}
 
-	private static Widget parentFromExtension(Widget current) {
+	private static Object parentFromExtension(Widget current) {
 		for (ISWTUIPlayerExtension ext : getExtensions()) {
-			Widget result = ext.getIndirectParent(current);
+			Object result = ext.getIndirectParent(current);
 			if (result != null) {
 				return result;
 			}
@@ -1965,32 +1957,23 @@ public final class SWTUIPlayer {
 		return null;
 	}
 
-	public static List<Widget> collectParents(Widget widget, Map<Control, SWTUIElement> references, Widget... stopAt) {
-		List<Widget> parents = new ArrayList<Widget>();
+	public List<SWTUIElement> collectParents(Widget widget, Widget... stopAt) {
+		List<SWTUIElement> parents = new ArrayList<SWTUIElement>();
 		if (widget == null || widget.isDisposed()) {
 			return parents;
 		}
 		Widget current = widget;
 		Widget prev = null;
+		SWTUIElement currentParent = null;
 		while (current != null) {
 			prev = current;
-			Widget indirectParent = parentFromExtension(current);
+			currentParent = null;
+			Object indirectParent = parentFromExtension(current);
 			if (indirectParent != null) {
-				current = indirectParent;
+				currentParent = wrap(indirectParent);
+				current = currentParent.unwrapWidget();
 			} else if (current instanceof Control) {
-				if (current instanceof ToolBar) {
-					/*
-					 * Check work view/editor toolbars, they have different
-					 * parent
-					 */
-					if (references != null && references.containsKey(current)) {
-						current = references.get(current).unwrapWidget();
-					} else {
-						current = ((Control) current).getParent();
-					}
-				} else {
-					current = ((Control) current).getParent();
-				}
+				current = ((Control) current).getParent();
 			} else if (current instanceof TreeItem) {
 				current = ((TreeItem) current).getParent();
 			} else if (current instanceof TableItem) {
@@ -2021,7 +2004,7 @@ public final class SWTUIPlayer {
 						if (coolItem != null) {
 							Control control = coolItem.getControl();
 							if (control != null && control.equals(prev)) {
-								parents.add(coolItem);
+								parents.add(wrap(coolItem));
 							}
 						}
 					}
@@ -2038,7 +2021,11 @@ public final class SWTUIPlayer {
 						break;
 					}
 				}
-				parents.add(current);
+				if (currentParent != null) {
+					parents.add(currentParent);
+				} else {
+					parents.add(wrap(current));
+				}
 			}
 		}
 		return parents;
@@ -2135,29 +2122,23 @@ public final class SWTUIPlayer {
 	}
 
 	public List<SWTUIElement> getParentsList(SWTUIElement swtuiElement) {
-		Map<Control, SWTUIElement> references = EclipseWorkbenchProvider.getProvider().getWorkbenchReference(this);
-		List<Widget> parents = collectParents(unwrapWidget(swtuiElement), references);
-		List<SWTUIElement> elements = new ArrayList<SWTUIElement>();
-		for (Widget widget : parents) {
-			SWTUIElement e = null;
-			if (references.containsKey(widget)) {
-				e = references.get(widget);
-			} else {
-				e = wrap(widget);
-			}
+		List<SWTUIElement> parents = collectParents(unwrapWidget(swtuiElement));
+		Iterator<SWTUIElement> iterator = parents.iterator();
+		while (iterator.hasNext()) {
+			SWTUIElement e = iterator.next();
 			if (e != null) {
 				GenericElementKind kind = e.getKind();
 				if (kind.is(ElementKind.Any) || kind.is(ElementKind.Unknown) || kind.is(ElementKind.Toolbar)
 						|| kind.is(ElementKind.CoolBar) || kind.is(ElementKind.CBanner)
 						|| kind.is(ElementKind.TabFolder) || kind.is(ElementKind.Canvas)
 						|| kind.is(ElementKind.Combo)) {
-					continue;
+					iterator.remove();
+				} else if (!isVisible(e)) {
+					iterator.remove();
 				}
-				if (isVisible(e))
-					elements.add(e);
 			}
 		}
-		return elements;
+		return parents;
 	}
 
 	public UIJobCollector getCollector() {
@@ -2279,20 +2260,6 @@ public final class SWTUIPlayer {
 
 	public Display getDisplay() {
 		return display;
-	}
-
-	public void showTabList(SWTUIElement uiElement) {
-		final Widget widget = unwrapWidget(uiElement);
-		exec("showTabList", new Runnable() {
-			@Override
-			public void run() {
-				processTabShowList(widget);
-			}
-		});
-	}
-
-	private void processTabShowList(Widget widget) {
-		EclipseWorkbenchProvider.getProvider().processTabShowList(widget);
 	}
 
 	public void wakeup() {

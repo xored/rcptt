@@ -53,7 +53,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.ui.IViewerItem;
 import org.eclipse.rcptt.util.TableTreeItemPathUtil;
 import org.eclipse.rcptt.util.swt.Events;
@@ -454,7 +453,7 @@ public class Viewers {
 				}
 				parent.getPlayer().exec("Update selection", new Runnable() {
 					public void run() {
-						EclipseWorkbenchProvider.getProvider().updateActiveSelection(selectionData, parent);
+						updateActiveSelection(selectionData, parent);
 					}
 				});
 			}
@@ -881,13 +880,19 @@ public class Viewers {
 			Control ctrl = cellEditor.getControl();
 			if (cellEditor.isActivated() && ctrl != null && !ctrl.isDisposed()) {
 				if (element.unwrapWidget() instanceof Control) {
-					List<Widget> parents = SWTUIPlayer.collectParents(ctrl, null,
+					List<SWTUIElement> parentElements = element.getPlayer().collectParents(ctrl,
 							((Control) element.unwrapWidget()).getParent());
-					if (parents.contains(element.unwrapWidget())) {
-						checkForSameSelection = true;
-						// Yes cell editor are active
-						break;
+
+					for (SWTUIElement parentElement : parentElements) {
+						Widget parent = parentElement.unwrapWidget();
+						if (parent.equals(element.unwrapWidget())) {
+							checkForSameSelection = true;
+							// Yes cell editor are active
+							break;
+						}
 					}
+					if (checkForSameSelection)
+						break;
 				}
 			}
 		}

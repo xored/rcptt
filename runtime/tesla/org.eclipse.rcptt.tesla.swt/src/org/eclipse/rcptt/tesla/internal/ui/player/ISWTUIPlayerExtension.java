@@ -75,7 +75,7 @@ public interface ISWTUIPlayerExtension {
 	 * @param current
 	 * @return
 	 */
-	Widget getIndirectParent(Widget current);
+	Object getIndirectParent(Widget current);
 
 	/**
 	 * Returns real class for supported widget

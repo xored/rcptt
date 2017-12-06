@@ -8,13 +8,10 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.swt.workbench;
+package org.eclipse.rcptt.tesla.workbench.provider;
 
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -34,7 +31,7 @@ public interface IEclipseWorkbenchProvider {
 
 	boolean canClickView(IWorkbenchPartReference reference);
 
-	Map<Control, SWTUIElement> getWorkbenchReference(SWTUIPlayer player);
+	Map<Control, Object> getWorkbenchReference();
 
 	void processTabFolderButton(Widget widget, int buttonId);
 
@@ -55,7 +52,6 @@ public interface IEclipseWorkbenchProvider {
 
 	Text getQuickAccess();
 
-	void updateActiveSelection(List<Object> selectionData, SWTUIElement parent);
-
 	boolean isInternalWorkbenchElement(Widget widget);
+
 }

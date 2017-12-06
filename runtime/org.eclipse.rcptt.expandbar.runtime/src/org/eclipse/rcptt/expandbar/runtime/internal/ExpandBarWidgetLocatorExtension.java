@@ -108,4 +108,8 @@ public class ExpandBarWidgetLocatorExtension implements IWidgetLocatorExtension 
 		return null;
 	}
 
+	@Override
+	public void fillElementEntry(ElementEntry result, Widget widget) {
+	}
+
 }

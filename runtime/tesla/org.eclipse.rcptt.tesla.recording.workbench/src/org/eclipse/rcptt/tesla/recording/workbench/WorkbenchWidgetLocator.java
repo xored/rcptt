@@ -16,13 +16,14 @@ import org.eclipse.rcptt.tesla.recording.core.swt.SWTRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
 import org.eclipse.rcptt.tesla.swt.util.GetWindowUtil;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorPart;
@@ -169,6 +170,13 @@ public class WorkbenchWidgetLocator implements IWidgetLocatorExtension {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void fillElementEntry(ElementEntry result, Widget widget) {
+		if (widget instanceof Text && widget == EclipseWorkbenchProvider.getProvider().getQuickAccess()) {
+			result.getElement().setDescription("quick-access");
+		}
 	}
 
 	@Override

@@ -23,8 +23,10 @@ import org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorReference;
@@ -179,6 +181,9 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 		case Editor:
 			result = selectEditor(player, filter);
 			break;
+		case QuickAccess:
+			result = selectQuickAccess(player);
+			break;
 		}
 		return result;
 	}
@@ -301,6 +306,11 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 		return pattern == null || (value != null && value.equals(pattern));
 	}
 
+	private SWTUIElement selectQuickAccess(SWTUIPlayer player) {
+		Text quickAccess = EclipseWorkbenchProvider.getProvider().getQuickAccess();
+		return quickAccess == null ? null : player.wrap(quickAccess);
+	}
+
 	@Override
 	public IChildrenCollectingExtension getChildrenCollectingExtension(final ChildrenCollectingSession session) {
 		return new IChildrenCollectingExtension() {
@@ -338,17 +348,25 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 	}
 
 	@Override
+	public Object getIndirectParent(Widget current) {
+		if (current instanceof ToolBar) {
+			// Check work view/editor toolbars, they have different parent
+			Map<Control, Object> references = EclipseWorkbenchProvider.getProvider()
+					.getWorkbenchReference();
+			if (references != null && references.containsKey(current)) {
+				return references.get(current);
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public GenericElementKind getKind(Object w) {
 		return null;
 	}
 
 	@Override
 	public SWTUIElement getShell(SWTUIElement element) {
-		return null;
-	}
-
-	@Override
-	public Widget getIndirectParent(Widget current) {
 		return null;
 	}
 

@@ -78,7 +78,6 @@ import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.peg.CommandPostProcessor;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.LastEvents;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.swt.StringLines;
 import org.eclipse.rcptt.util.swt.TableTreeUtil;
 import org.eclipse.swt.SWT;
@@ -93,7 +92,6 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.SWTEventListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
@@ -789,13 +787,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 					e.clickLink(event.text);
 				}
 			}
-			return;
-		}
-
-		if ((widget instanceof MenuItem) && SWTWidgetLocator.isCTabFolderListMenuItem((MenuItem) widget)) {
-			CTabFolder miTabFolder = SWTWidgetLocator.getCTabFolder((MenuItem) widget);
-			FindResult result = getLocator().findElement(miTabFolder, true, false, false);
-			ProcessCTabFolderItemSelection(miTabFolder, result, ((MenuItem) widget).getText());
 			return;
 		}
 
@@ -1804,57 +1795,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	}
 
 	private void processMouseDown(Widget widget, Event event, RecordedEvent toRecording) {
-		if ((widget instanceof TabFolder || widget instanceof CTabFolder)) {
-			// Check for workbench internal element click
-			if (!EclipseWorkbenchProvider.getProvider().isInternalWorkbenchElement(widget)) {
-				FindResult result = getLocator().findElement(widget, true, false, false);
-				if (result != null && result.realElement.getKind().is(ElementKind.TabFolder)) {
-					String tabName = null;
-					boolean closeAction = false;
-					if (widget instanceof TabFolder) {
-						TabItem[] items = ((TabFolder) widget).getItems();
-						for (TabItem tabItem : items) {
-							Rectangle bounds = tabItem.getBounds();
-							if (bounds.contains(event.x, event.y)) {
-								// Set selection on selected widget.
-								tabName = PlayerTextUtils.removeAcceleratorFromText(tabItem.getText());
-								break;
-							}
-						}
-
-					} else if (widget instanceof CTabFolder) {
-						CTabItem[] items = ((CTabFolder) widget).getItems();
-						for (CTabItem tabItem : items) {
-							Rectangle bounds = tabItem.getBounds();
-							if (bounds.contains(event.x, event.y)) {
-								// Check for tab item close rect and record
-								// close command for tab item.
-								// Set selection on selected widget.
-								tabName = PlayerTextUtils.removeAcceleratorFromText(tabItem.getText());
-								Rectangle rect = TeslaSWTAccess.getCTabItemCloseRect(tabItem);
-								if (rect != null) {
-									if (rect.contains(event.x, event.y)) {
-										closeAction = true;
-									}
-								}
-								break;
-							}
-						}
-					}
-					if (tabName != null) {
-						if (!closeAction) {
-							if (widget instanceof CTabFolder) {
-								ProcessCTabFolderItemSelection((CTabFolder) widget, result, tabName);
-							}
-						} else {
-							CompositeUIElement v = new CompositeUIElement(result.element, getRecorder());
-							ControlUIElement tabItem = v.tabItem(tabName);
-							tabItem.close();
-						}
-					}
-				}
-			}
-		}
 		recordTextSetFocus(widget, event.button);
 
 		if (widget instanceof org.eclipse.swt.widgets.List && ((Control) widget).isVisible())
@@ -1879,7 +1819,7 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		lastEvents.add(toRecording);
 	}
 
-	private void ProcessCTabFolderItemSelection(CTabFolder tabFolder, FindResult result, String tabName) {
+	public void processCTabFolderItemSelection(CTabFolder tabFolder, FindResult result, String tabName) {
 		boolean needSelection = true;
 		if (lastTabItemSelection.containsKey(tabFolder)) {
 			String v = lastTabItemSelection.get(tabFolder);
@@ -2124,6 +2064,9 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		inStyledTextAction = true;
 	}
 
+	public void recordTabFolderEvent(Control tabControl, int eventId) {
+	}
+
 	private TeslaRecorder recorder = null;
 
 	public void initialize(final TeslaRecorder teslaRecorder) {
@@ -2152,48 +2095,6 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 		RecordingModeFeature.setRecordingModeActive(inRecording);
 	}
 
-	public void recordTabFolderEvent(Control tabControl, int eventId) {
-		if (getRecorder() == null || !getRecorder().hasListeners()) {
-			return;
-		}
-
-		FindResult result = null;
-
-		if (tabControl instanceof CTabFolder) {
-			CTabFolder tabFolder = (CTabFolder) tabControl;
-			Widget w = EclipseWorkbenchProvider.getProvider().extractViewOrEditorControl(tabFolder);
-			if (w != null) {
-				Map<Control, SWTUIElement> references = EclipseWorkbenchProvider.getProvider()
-						.getWorkbenchReference(getPlayer());
-				SWTUIElement element = references.get(w);
-
-				result = getLocator().findElement(element, false, false, true);
-			}
-		}
-
-		if (result == null)
-			result = getLocator().findElement(tabControl, false, false, true);
-
-		if (result != null) {
-			ControlUIElement ctrl = new ControlUIElement(result.element, getRecorder());
-			switch (eventId) {
-			case SWTEventManager.EVENT_TAB_MINIMIZE:
-				ctrl.minimize();
-				break;
-			case SWTEventManager.EVENT_TAB_MAXIMIZE:
-				ctrl.maximize();
-				break;
-			case SWTEventManager.EVENT_TAB_RESTORE:
-				ctrl.restore();
-				break;
-			case SWTEventManager.EVENT_TAB_SHOW_LIST:
-				ctrl.showTabList();
-				break;
-			}
-
-		}
-	}
-
 	public void resetAssertSelection() {
 	}
 
@@ -2218,4 +2119,5 @@ public class SWTEventRecorder implements IRecordingProcessor, IExtendedSWTEventL
 	public void removeClosedShell(SWTUIElement wrappedShell) {
 		SWTRecordingHelper.getHelper().remove(wrappedShell);		
 	}
+
 }

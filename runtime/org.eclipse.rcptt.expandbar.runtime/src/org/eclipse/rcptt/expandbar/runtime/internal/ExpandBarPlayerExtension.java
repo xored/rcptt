@@ -12,12 +12,6 @@ package org.eclipse.rcptt.expandbar.runtime.internal;
 
 import static org.eclipse.rcptt.expandbar.ExpandBarConstants.EXPAND_BAR_KIND;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Widget;
-
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.ui.player.AbstractSWTUIPlayerExtension;
@@ -26,6 +20,11 @@ import org.eclipse.rcptt.tesla.internal.ui.player.IChildrenCollectingExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Widget;
 
 public class ExpandBarPlayerExtension extends AbstractSWTUIPlayerExtension {
 	@Override
@@ -55,7 +54,7 @@ public class ExpandBarPlayerExtension extends AbstractSWTUIPlayerExtension {
 	}
 
 	@Override
-	public Widget getIndirectParent(Widget current) {
+	public Object getIndirectParent(Widget current) {
 		if (current instanceof ExpandItem) {
 			return ((ExpandItem) current).getParent();
 		}

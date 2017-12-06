@@ -48,7 +48,6 @@ import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEntry;
 import org.eclipse.rcptt.tesla.swt.util.GetWindowUtil;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -102,9 +101,13 @@ public final class SWTWidgetLocator {
 			if (widget == null) {
 				return "";
 			}
-			List<Widget> parents = SWTUIPlayer.collectParents(widget,
-					EclipseWorkbenchProvider.getProvider().getWorkbenchReference(getPlayer()));
+
+			List<Widget> parents = new ArrayList<Widget>();
+			for (SWTUIElement parentElement : getPlayer().collectParents(widget)) {
+				parents.add(parentElement.unwrapWidget());
+			}
 			Collections.reverse(parents);
+
 			StringBuilder builder = new StringBuilder();
 			for (Widget w : parents) {
 				builder.append(getWidgetIdentifier(w)).append('/');
@@ -691,9 +694,9 @@ public final class SWTWidgetLocator {
 			result.set(ELEMENT_TEXT, text);
 		}
 
-		if (widget instanceof Text && widget == EclipseWorkbenchProvider.getProvider().getQuickAccess())
-			result.getElement().setDescription("quick-access");
-
+		for (IWidgetLocatorExtension ext : extensions) {
+			ext.fillElementEntry(result, widget);
+		}
 		SWTRecordingHelper.getHelper().put(realElement, result);
 		return new FindResult(realElement, result.getElement());
 	}

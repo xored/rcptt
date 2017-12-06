@@ -19,16 +19,11 @@ import org.eclipse.rcptt.ecl.debug.model.Variable;
 import org.eclipse.rcptt.ecl.debug.model.VariableKind;
 import org.eclipse.rcptt.ecl.debug.runtime.IEclDebugExtension;
 import org.eclipse.rcptt.ecl.internal.debug.runtime.EclStackSupport;
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
-import org.eclipse.rcptt.tesla.core.ui.Widget;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
-import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
-import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.processors.IModelMapperHelper;
-import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
+import org.eclipse.swt.widgets.Display;
 
 public class Q7EclDebug implements IEclDebugExtension {
 
@@ -77,7 +72,8 @@ public class Q7EclDebug implements IEclDebugExtension {
 					final List<IModelMapperHelper> helpers = TeslaBridge.getClient().getProcessors(
 							IModelMapperHelper.class);
 					if (!helpers.isEmpty()) {
-						PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+						// TODO (e4 support): remove quickfix
+						Display.getCurrent().syncExec(new Runnable() {
 							@Override
 							public void run() {
 								for (IModelMapperHelper helper : helpers) {

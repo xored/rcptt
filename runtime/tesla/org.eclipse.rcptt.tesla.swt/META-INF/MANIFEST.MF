@@ -5,8 +5,9 @@ Bundle-SymbolicName: org.eclipse.rcptt.tesla.swt;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.eclipse.rcptt.tesla.ui.SWTTeslaActivator
 Bundle-Vendor: Eclipse RCP Testing Tool Project
-Require-Bundle: org.eclipse.ui;visibility:=reexport,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.swt;visibility:=reexport,
+ org.eclipse.jface,
  org.eclipse.rcptt.tesla.core;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.emf.ecore,
  org.eclipse.rcptt.tesla.jface.aspects;bundle-version="[2.3.0,3.0.0)",
@@ -14,7 +15,6 @@ Require-Bundle: org.eclipse.ui;visibility:=reexport,
  org.eclipse.rcptt.tesla.jobs.aspects;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.rcptt.tesla.core.am;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.core.resources;resolution:=optional;x-installation:=greedy,
- org.eclipse.ui.views.properties.tabbed;resolution:=optional;x-installation:=greedy,
  org.eclipse.jface.text;resolution:=optional;x-installation:=greedy,
  org.eclipse.rcptt.watson.core;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.rcptt.reporting;bundle-version="[2.3.0,3.0.0)",

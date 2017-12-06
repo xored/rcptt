@@ -47,7 +47,7 @@ public abstract class AbstractSWTUIPlayerExtension implements
 	}
 
 	@Override
-	public Widget getIndirectParent(Widget current) {
+	public Object getIndirectParent(Widget current) {
 		return null;
 	}
 

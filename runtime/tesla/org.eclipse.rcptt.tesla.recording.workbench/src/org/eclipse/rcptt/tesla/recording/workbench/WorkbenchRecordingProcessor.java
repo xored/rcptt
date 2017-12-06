@@ -10,16 +10,25 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.recording.workbench;
 
+import java.util.Map;
+
 import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
+import org.eclipse.rcptt.tesla.core.protocol.CompositeUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.ControlUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.PartUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolFactory;
 import org.eclipse.rcptt.tesla.core.protocol.SetStatusDialogMode;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
 import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
+import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
+import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.recording.aspects.ActionType;
-import org.eclipse.rcptt.tesla.recording.aspects.IBasicSWTEventListener;
+import org.eclipse.rcptt.tesla.recording.aspects.IExtendedSWTEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.IWorkbenchEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
 import org.eclipse.rcptt.tesla.recording.aspects.WorkbenchEventManager;
@@ -28,12 +37,21 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTRecordingHelper;
-import org.eclipse.rcptt.tesla.swt.workbench.EclipseWorkbenchProvider;
+import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
+import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorPart;
@@ -50,7 +68,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 
 public class WorkbenchRecordingProcessor
-		implements IRecordingProcessor, IBasicSWTEventListener, IWorkbenchEventListener {
+		implements IRecordingProcessor, IWorkbenchEventListener, IExtendedSWTEventListener {
 
 	private final class PartListener implements IPartListener {
 
@@ -249,6 +267,8 @@ public class WorkbenchRecordingProcessor
 	public void recordEvent(Widget widget, int type, Event event) {
 		if (type == SWT.Selection || type == SWT.DefaultSelection) {
 			processSelection(widget, event, type);
+		} else if (type == SWT.MouseDown) {
+			processMouseDown(widget, event);
 		}
 	}
 
@@ -259,19 +279,145 @@ public class WorkbenchRecordingProcessor
 			CTabFolder ctabFolder = EclipseWorkbenchProvider.getProvider().getTabFolderFromButton(button);
 			if (ctabFolder != null && tip != null) {
 				if (tip.equals("Maximize")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_MAXIMIZE);
+					recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_MAXIMIZE);
 				} else if (tip.equals("Minimize")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_MINIMIZE);
+					recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_MINIMIZE);
 				} else if (tip.equals("Restore")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_RESTORE);
+					recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_RESTORE);
 				} else if (tip.equals("View Menu")) {
 					// do nothing
 				} else if (tip.equals("Show List")) {
-					SWTEventManager.recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_SHOW_LIST);
+					recordTabFolderEvent(ctabFolder, SWTEventManager.EVENT_TAB_SHOW_LIST);
 				}
 				return;
 			}
 		}
+
+		if ((widget instanceof MenuItem) && SWTWidgetLocator.isCTabFolderListMenuItem((MenuItem) widget)) {
+			CTabFolder miTabFolder = SWTWidgetLocator.getCTabFolder((MenuItem) widget);
+			FindResult result = getSWTRecorder().getLocator().findElement(miTabFolder, true, false, false);
+			getSWTRecorder().processCTabFolderItemSelection(miTabFolder, result, ((MenuItem) widget).getText());
+			return;
+		}
+	}
+
+	private void processMouseDown(Widget widget, Event event) {
+		if ((widget instanceof TabFolder || widget instanceof CTabFolder)) {
+			// Check for workbench internal element click
+			if (!EclipseWorkbenchProvider.getProvider().isInternalWorkbenchElement(widget)) {
+				FindResult result = getSWTRecorder().getLocator().findElement(widget, true, false, false);
+				if (result != null && result.realElement.getKind().is(ElementKind.TabFolder)) {
+					String tabName = null;
+					boolean closeAction = false;
+					if (widget instanceof TabFolder) {
+						TabItem[] items = ((TabFolder) widget).getItems();
+						for (TabItem tabItem : items) {
+							Rectangle bounds = tabItem.getBounds();
+							if (bounds.contains(event.x, event.y)) {
+								// Set selection on selected widget.
+								tabName = PlayerTextUtils.removeAcceleratorFromText(tabItem.getText());
+								break;
+							}
+						}
+
+					} else if (widget instanceof CTabFolder) {
+						CTabItem[] items = ((CTabFolder) widget).getItems();
+						for (CTabItem tabItem : items) {
+							Rectangle bounds = tabItem.getBounds();
+							if (bounds.contains(event.x, event.y)) {
+								// Check for tab item close rect and record
+								// close command for tab item.
+								// Set selection on selected widget.
+								tabName = PlayerTextUtils.removeAcceleratorFromText(tabItem.getText());
+								Rectangle rect = TeslaSWTAccess.getCTabItemCloseRect(tabItem);
+								if (rect != null) {
+									if (rect.contains(event.x, event.y)) {
+										closeAction = true;
+									}
+								}
+								break;
+							}
+						}
+					}
+					if (tabName != null) {
+						if (!closeAction) {
+							if (widget instanceof CTabFolder) {
+								getSWTRecorder().processCTabFolderItemSelection((CTabFolder) widget, result, tabName);
+							}
+						} else {
+							CompositeUIElement v = new CompositeUIElement(result.element, getRecorder());
+							ControlUIElement tabItem = v.tabItem(tabName);
+							tabItem.close();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void recordTabFolderEvent(Control tabControl, int eventId) {
+		FindResult result = null;
+
+		if (tabControl instanceof CTabFolder) {
+			CTabFolder tabFolder = (CTabFolder) tabControl;
+			Widget w = EclipseWorkbenchProvider.getProvider().extractViewOrEditorControl(tabFolder);
+			if (w != null) {
+				Map<Control, Object> references = EclipseWorkbenchProvider.getProvider()
+						.getWorkbenchReference();
+				SWTUIElement element = getSWTRecorder().getPlayer().wrap(references.get(w));
+				result = getSWTRecorder().getLocator().findElement(element, false, false, true);
+			}
+		}
+
+		if (result == null)
+			result = getSWTRecorder().getLocator().findElement(tabControl, false, false, true);
+
+		if (result != null) {
+			ControlUIElement ctrl = new ControlUIElement(result.element, getRecorder());
+			switch (eventId) {
+			case SWTEventManager.EVENT_TAB_MINIMIZE:
+				ctrl.minimize();
+				break;
+			case SWTEventManager.EVENT_TAB_MAXIMIZE:
+				ctrl.maximize();
+				break;
+			case SWTEventManager.EVENT_TAB_RESTORE:
+				ctrl.restore();
+				break;
+			case SWTEventManager.EVENT_TAB_SHOW_LIST:
+				ctrl.showTabList();
+				break;
+			}
+		}
+	}
+
+	@Override
+	public void recordDragEvent(Event event) {
+	}
+
+	@Override
+	public void recordSWTDialog(Dialog dialog, Object result) {
+	}
+
+	@Override
+	public void recordStyledTextOffset(StyledText text) {
+	}
+
+	@Override
+	public void recordStyledTextActionBefore(StyledText text, int action) {
+	}
+
+	@Override
+	public void recordStyledTextActionAfter(StyledText text, int action) {
+	}
+
+	@Override
+	public void setCurrentEvent(Event event) {
+	}
+
+	@Override
+	public void removeClosedShell(SWTUIElement wrappedShell) {
 	}
 
 	public void restartEclipse() {
@@ -288,7 +434,6 @@ public class WorkbenchRecordingProcessor
 	};
 
 	public void clear() {
-
 	}
 
 	public void setFreeze(boolean value, SetMode command) {
