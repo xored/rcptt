@@ -7,6 +7,7 @@ import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapW
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -206,7 +207,6 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 		stableViews.add("org.eclipse.ui.views.ProblemView");
 	}
 
-	// @SuppressWarnings("restriction")
 	public SWTUIElement selectView(SWTUIPlayer player, PlayerSelectionFilter f) {
 		final String pattern = f.pattern;
 
@@ -358,6 +358,11 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
+		EclipseWorkbenchProvider.getProvider().updateActiveSelection(selectionData, element);
 	}
 
 	@Override

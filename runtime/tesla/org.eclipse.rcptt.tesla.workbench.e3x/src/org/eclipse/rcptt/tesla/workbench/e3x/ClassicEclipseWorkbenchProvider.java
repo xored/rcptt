@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.workbench.provider.IEclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
@@ -319,4 +320,9 @@ public class ClassicEclipseWorkbenchProvider implements
 		}
 		return false;
 	}
+
+	@Override
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
+	}
+
 }

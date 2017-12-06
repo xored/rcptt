@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
+import java.util.List;
+
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.swt.widgets.Widget;
 
@@ -70,6 +72,10 @@ public abstract class AbstractSWTUIPlayerExtension implements
 	@Override
 	public boolean isCollectable(SWTUIElement element, Class<?>[] collectableTypes) {
 		return false;
+	}
+
+	@Override
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
 	}
 
 }

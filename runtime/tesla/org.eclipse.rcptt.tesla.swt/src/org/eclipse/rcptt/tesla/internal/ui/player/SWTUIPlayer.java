@@ -130,7 +130,6 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
-@SuppressWarnings("restriction")
 public final class SWTUIPlayer {
 	private static final boolean DEBUG_PROCEED = "true"
 			.equals(Platform.getDebugOption("org.eclipse.rcptt.tesla.swt/debug/proceed"));
@@ -2409,4 +2408,11 @@ public final class SWTUIPlayer {
 			System.out.flush();
 		}
 	}
+
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
+		for (ISWTUIPlayerExtension extension : getExtensions()) {
+			extension.updateActiveSelection(selectionData, element);
+		}
+	}
+
 }

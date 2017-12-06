@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.internal.ui.player;
 
+import java.util.List;
+
 import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.swt.widgets.ExpandBar;
@@ -110,4 +112,13 @@ public interface ISWTUIPlayerExtension {
      * @return return <code>true</code> if this element is collectable, <code>false</code> otherwise.
      */
     boolean isCollectable(SWTUIElement element, Class<?>[] collectableTypes);
+
+	/**
+	 * Updates active selection
+	 * 
+	 * @param selectionData
+	 * @param element
+	 */
+	void updateActiveSelection(List<Object> selectionData, SWTUIElement element);
+
 }

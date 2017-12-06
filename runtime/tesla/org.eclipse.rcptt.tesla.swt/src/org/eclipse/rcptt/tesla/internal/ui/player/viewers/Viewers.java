@@ -453,7 +453,7 @@ public class Viewers {
 				}
 				parent.getPlayer().exec("Update selection", new Runnable() {
 					public void run() {
-						updateActiveSelection(selectionData, parent);
+						parent.getPlayer().updateActiveSelection(selectionData, parent);
 					}
 				});
 			}

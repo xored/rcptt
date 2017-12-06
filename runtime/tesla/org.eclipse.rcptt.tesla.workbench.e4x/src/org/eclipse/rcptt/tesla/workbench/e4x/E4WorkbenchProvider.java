@@ -12,6 +12,7 @@ package org.eclipse.rcptt.tesla.workbench.e4x;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -25,8 +26,12 @@ import org.eclipse.e4.ui.workbench.addons.minmax.TrimStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
+import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
+import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.workbench.provider.IEclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.ReflectionUtil;
 import org.eclipse.swt.SWT;
@@ -41,6 +46,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -52,6 +58,7 @@ import org.eclipse.ui.internal.ViewSite;
 import org.eclipse.ui.internal.WorkbenchPartReference;
 import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.internal.e4.compatibility.ActionBars;
+import org.eclipse.ui.internal.e4.compatibility.SelectionService;
 import org.eclipse.ui.internal.quickaccess.SearchField;
 import org.osgi.framework.Version;
 
@@ -404,4 +411,26 @@ public class E4WorkbenchProvider implements IEclipseWorkbenchProvider {
 		}
 		return false;
 	}
+
+	@SuppressWarnings("restriction")
+	@Override
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
+		List<SWTUIElement> parentsList = element.getPlayer().getParentsList(element);
+		parentsList.add(element);
+		for (SWTUIElement e : parentsList) {
+			final GenericElementKind kind = e.getKind();
+			if (kind.is(ElementKind.View) || kind.is(ElementKind.Editor)) {
+				if (e instanceof WorkbenchUIElement) {
+					final IWorkbenchPartReference reference = ((WorkbenchUIElement) e)
+							.getReference();
+					IWorkbenchWindow window = reference.getPage().getWorkbenchWindow();
+					IWorkbenchPart part = reference.getPart(true);
+
+					ISelectionService selectionService = window.getSelectionService();
+					((SelectionService) selectionService).updateSelection(part);
+				}
+			}
+		}
+	}
+
 }

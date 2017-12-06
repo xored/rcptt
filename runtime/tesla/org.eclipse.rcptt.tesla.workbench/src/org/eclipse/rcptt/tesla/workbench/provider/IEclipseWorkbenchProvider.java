@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.rcptt.tesla.workbench.provider;
 
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -53,5 +55,7 @@ public interface IEclipseWorkbenchProvider {
 	Text getQuickAccess();
 
 	boolean isInternalWorkbenchElement(Widget widget);
+
+	void updateActiveSelection(List<Object> selectionData, SWTUIElement element);
 
 }
