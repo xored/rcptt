@@ -15,10 +15,12 @@ import java.io.InputStream;
 import java.util.zip.ZipInputStream;
 
 import org.eclipse.rcptt.core.Q7Features;
+import org.eclipse.rcptt.resources.WSUtils;
+import org.eclipse.rcptt.resources.ImportUtils.Importer;
 import org.eclipse.rcptt.workspace.WSFile;
 import org.eclipse.rcptt.workspace.WorkspaceContext;
 
-public class WorkspaceContextImporter {
+public class WorkspaceContextImporter implements Importer {
 
 	private WorkspaceContext context;
 
@@ -26,6 +28,7 @@ public class WorkspaceContextImporter {
 		this.context = context;
 	}
 
+	@Override
 	public InputStream getContents(Object element) {
 		try {
 			WSFile file = (WSFile) element;

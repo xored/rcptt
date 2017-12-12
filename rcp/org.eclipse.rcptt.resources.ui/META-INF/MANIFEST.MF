@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCPTT Resources UI
+Bundle-SymbolicName: org.eclipse.rcptt.resources.ui;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: org.eclipse.rcptt.resources.internal.ui.RCPTTResourcesUI
+Bundle-Vendor: Eclipse RCP Testing Tool Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.rcptt.resources.ui.actions,
+ org.eclipse.rcptt.resources.ui.imports,
+ org.eclipse.rcptt.resources.ui.wizards
+Require-Bundle: org.eclipse.jface,
+ org.eclipse.rcptt.resources,
+ org.eclipse.ui.workbench,
+ org.eclipse.core.resources,
+ org.eclipse.rcptt.core,
+ org.eclipse.rcptt.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.rcptt.util

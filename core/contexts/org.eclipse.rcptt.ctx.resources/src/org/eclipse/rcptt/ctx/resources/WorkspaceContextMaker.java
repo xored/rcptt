@@ -33,6 +33,8 @@ import org.eclipse.rcptt.core.persistence.IPersistenceModel;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.ctx.internal.resources.Activator;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
+import org.eclipse.rcptt.resources.ImportUtils;
+import org.eclipse.rcptt.resources.WSUtils;
 import org.eclipse.rcptt.workspace.WSFile;
 import org.eclipse.rcptt.workspace.WSFileLink;
 import org.eclipse.rcptt.workspace.WSFolder;

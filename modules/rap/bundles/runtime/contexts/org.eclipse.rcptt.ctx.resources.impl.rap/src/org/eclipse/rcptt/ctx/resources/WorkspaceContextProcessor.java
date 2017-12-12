@@ -52,6 +52,7 @@ import org.eclipse.rcptt.core.Q7Features;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.ctx.impl.internal.resources.Activator;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
+import org.eclipse.rcptt.resources.WSUtils;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.rap.UIRunnable;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;

@@ -12,8 +12,7 @@ package org.eclipse.rcptt.ui.resources.viewers;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-
-import org.eclipse.rcptt.ctx.resources.WSUtils;
+import org.eclipse.rcptt.resources.WSUtils;
 import org.eclipse.rcptt.workspace.WSFolder;
 import org.eclipse.rcptt.workspace.WSResource;
 import org.eclipse.rcptt.workspace.WorkspaceContext;
