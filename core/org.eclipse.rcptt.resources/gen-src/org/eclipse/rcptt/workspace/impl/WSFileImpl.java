@@ -25,12 +25,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFileImpl#getContentURI <em>Content URI</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFileImpl#getContent <em>Content</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFileImpl#isExecutable <em>Executable</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

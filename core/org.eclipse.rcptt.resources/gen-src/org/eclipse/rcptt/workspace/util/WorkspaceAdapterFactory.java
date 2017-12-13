@@ -13,6 +13,7 @@ package org.eclipse.rcptt.workspace.util;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.core.scenario.NamedElement;
 
+import org.eclipse.rcptt.core.scenario.Verification;
 import org.eclipse.rcptt.workspace.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -79,8 +80,16 @@ public class WorkspaceAdapterFactory extends AdapterFactoryImpl {
 	protected WorkspaceSwitch<Adapter> modelSwitch =
 		new WorkspaceSwitch<Adapter>() {
 			@Override
+			public Adapter caseWorkspaceData(WorkspaceData object) {
+				return createWorkspaceDataAdapter();
+			}
+			@Override
 			public Adapter caseWorkspaceContext(WorkspaceContext object) {
 				return createWorkspaceContextAdapter();
+			}
+			@Override
+			public Adapter caseWorkspaceVerification(WorkspaceVerification object) {
+				return createWorkspaceVerificationAdapter();
 			}
 			@Override
 			public Adapter caseWSResource(WSResource object) {
@@ -131,6 +140,10 @@ public class WorkspaceAdapterFactory extends AdapterFactoryImpl {
 				return createContextAdapter();
 			}
 			@Override
+			public Adapter caseVerification(Verification object) {
+				return createVerificationAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -149,6 +162,20 @@ public class WorkspaceAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.workspace.WorkspaceData <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceData
+	 * @generated
+	 */
+	public Adapter createWorkspaceDataAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.workspace.WorkspaceContext <em>Context</em>}'.
@@ -305,6 +332,20 @@ public class WorkspaceAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.workspace.WorkspaceVerification <em>Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceVerification
+	 * @generated
+	 */
+	public Adapter createWorkspaceVerificationAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.core.scenario.NamedElement <em>Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -329,6 +370,20 @@ public class WorkspaceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createContextAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.core.scenario.Verification <em>Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.core.scenario.Verification
+	 * @generated
+	 */
+	public Adapter createVerificationAdapter() {
 		return null;
 	}
 

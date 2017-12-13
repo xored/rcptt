@@ -9,10 +9,70 @@ import org.eclipse.rcptt.core.scenario.Verification;
  * A representation of the model object '<em><b>Verification</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.rcptt.workspace.WorkspaceVerification#isAllowUncapturedFiles <em>Allow Uncaptured Files</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.WorkspaceVerification#getIgnoredLines <em>Ignored Lines</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.rcptt.workspace.WorkspacePackage#getWorkspaceVerification()
  * @model
  * @generated
  */
-public interface WorkspaceVerification extends WorkspaceInfo, Verification {
+public interface WorkspaceVerification extends WorkspaceData, Verification {
+
+	/**
+	 * Returns the value of the '<em><b>Allow Uncaptured Files</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Allow Uncaptured Files</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Allow Uncaptured Files</em>' attribute.
+	 * @see #setAllowUncapturedFiles(boolean)
+	 * @see org.eclipse.rcptt.workspace.WorkspacePackage#getWorkspaceVerification_AllowUncapturedFiles()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isAllowUncapturedFiles();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.workspace.WorkspaceVerification#isAllowUncapturedFiles <em>Allow Uncaptured Files</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Allow Uncaptured Files</em>' attribute.
+	 * @see #isAllowUncapturedFiles()
+	 * @generated
+	 */
+	void setAllowUncapturedFiles(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Ignored Lines</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Ignored Lines</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Ignored Lines</em>' attribute.
+	 * @see #setIgnoredLines(String)
+	 * @see org.eclipse.rcptt.workspace.WorkspacePackage#getWorkspaceVerification_IgnoredLines()
+	 * @model
+	 * @generated
+	 */
+	String getIgnoredLines();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.rcptt.workspace.WorkspaceVerification#getIgnoredLines <em>Ignored Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Ignored Lines</em>' attribute.
+	 * @see #getIgnoredLines()
+	 * @generated
+	 */
+	void setIgnoredLines(String value);
 } // WorkspaceVerification

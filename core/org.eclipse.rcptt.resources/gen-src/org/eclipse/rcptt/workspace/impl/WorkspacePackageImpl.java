@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.rcptt.workspace.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.rcptt.core.scenario.ScenarioPackage;
-
 import org.eclipse.rcptt.workspace.WSContainer;
 import org.eclipse.rcptt.workspace.WSFile;
 import org.eclipse.rcptt.workspace.WSFileLink;
@@ -23,15 +27,10 @@ import org.eclipse.rcptt.workspace.WSProjectLink;
 import org.eclipse.rcptt.workspace.WSResource;
 import org.eclipse.rcptt.workspace.WSRoot;
 import org.eclipse.rcptt.workspace.WorkspaceContext;
+import org.eclipse.rcptt.workspace.WorkspaceData;
 import org.eclipse.rcptt.workspace.WorkspaceFactory;
 import org.eclipse.rcptt.workspace.WorkspacePackage;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.rcptt.workspace.WorkspaceVerification;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,6 +39,13 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * @generated
  */
 public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePackage {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass workspaceDataEClass = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,6 +124,13 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 	private EClass wsProjectLinkEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass workspaceVerificationEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -186,6 +199,33 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getWorkspaceData() {
+		return workspaceDataEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWorkspaceData_Content() {
+		return (EReference)workspaceDataEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWorkspaceData_Location() {
+		return (EAttribute)workspaceDataEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getWorkspaceContext() {
 		return workspaceContextEClass;
 	}
@@ -195,26 +235,8 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkspaceContext_Content() {
-		return (EReference)workspaceContextEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getWorkspaceContext_Location() {
-		return (EAttribute)workspaceContextEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getWorkspaceContext_ClearWorkspace() {
-		return (EAttribute)workspaceContextEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)workspaceContextEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -223,7 +245,7 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 	 * @generated
 	 */
 	public EAttribute getWorkspaceContext_IgnoredByClearPattern() {
-		return (EAttribute)workspaceContextEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)workspaceContextEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -456,6 +478,33 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getWorkspaceVerification() {
+		return workspaceVerificationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWorkspaceVerification_AllowUncapturedFiles() {
+		return (EAttribute)workspaceVerificationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWorkspaceVerification_IgnoredLines() {
+		return (EAttribute)workspaceVerificationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public WorkspaceFactory getWorkspaceFactory() {
 		return (WorkspaceFactory)getEFactoryInstance();
 	}
@@ -479,11 +528,17 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 		isCreated = true;
 
 		// Create classes and their features
+		workspaceDataEClass = createEClass(WORKSPACE_DATA);
+		createEReference(workspaceDataEClass, WORKSPACE_DATA__CONTENT);
+		createEAttribute(workspaceDataEClass, WORKSPACE_DATA__LOCATION);
+
 		workspaceContextEClass = createEClass(WORKSPACE_CONTEXT);
-		createEReference(workspaceContextEClass, WORKSPACE_CONTEXT__CONTENT);
-		createEAttribute(workspaceContextEClass, WORKSPACE_CONTEXT__LOCATION);
 		createEAttribute(workspaceContextEClass, WORKSPACE_CONTEXT__CLEAR_WORKSPACE);
 		createEAttribute(workspaceContextEClass, WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN);
+
+		workspaceVerificationEClass = createEClass(WORKSPACE_VERIFICATION);
+		createEAttribute(workspaceVerificationEClass, WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES);
+		createEAttribute(workspaceVerificationEClass, WORKSPACE_VERIFICATION__IGNORED_LINES);
 
 		wsResourceEClass = createEClass(WS_RESOURCE);
 		createEAttribute(wsResourceEClass, WS_RESOURCE__NAME);
@@ -552,7 +607,10 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		workspaceContextEClass.getESuperTypes().add(this.getWorkspaceData());
 		workspaceContextEClass.getESuperTypes().add(theScenarioPackage.getContext());
+		workspaceVerificationEClass.getESuperTypes().add(this.getWorkspaceData());
+		workspaceVerificationEClass.getESuperTypes().add(theScenarioPackage.getVerification());
 		wsContainerEClass.getESuperTypes().add(this.getWSResource());
 		wsFileEClass.getESuperTypes().add(this.getWSResource());
 		wsFolderEClass.getESuperTypes().add(this.getWSContainer());
@@ -564,11 +622,17 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 		wsProjectLinkEClass.getESuperTypes().add(this.getWSFolderLink());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(workspaceDataEClass, WorkspaceData.class, "WorkspaceData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getWorkspaceData_Content(), this.getWSRoot(), null, "content", null, 0, 1, WorkspaceData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWorkspaceData_Location(), ecorePackage.getEString(), "location", null, 0, 1, WorkspaceData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(workspaceContextEClass, WorkspaceContext.class, "WorkspaceContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getWorkspaceContext_Content(), this.getWSRoot(), null, "content", null, 0, 1, WorkspaceContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWorkspaceContext_Location(), ecorePackage.getEString(), "location", null, 0, 1, WorkspaceContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkspaceContext_ClearWorkspace(), ecorePackage.getEBoolean(), "clearWorkspace", "true", 0, 1, WorkspaceContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkspaceContext_IgnoredByClearPattern(), ecorePackage.getEString(), "ignoredByClearPattern", null, 0, 1, WorkspaceContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(workspaceVerificationEClass, WorkspaceVerification.class, "WorkspaceVerification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getWorkspaceVerification_AllowUncapturedFiles(), ecorePackage.getEBoolean(), "allowUncapturedFiles", "true", 0, 1, WorkspaceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWorkspaceVerification_IgnoredLines(), ecorePackage.getEString(), "ignoredLines", null, 0, 1, WorkspaceVerification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(wsResourceEClass, WSResource.class, "WSResource", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWSResource_Name(), ecorePackage.getEString(), "name", null, 0, 1, WSResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

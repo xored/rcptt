@@ -33,11 +33,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSRootImpl#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSRootImpl#getProjectLinks <em>Project Links</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

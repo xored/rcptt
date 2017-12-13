@@ -35,7 +35,7 @@ public class WorkspaceFactoryImpl extends EFactoryImpl implements WorkspaceFacto
 	 */
 	public static WorkspaceFactory init() {
 		try {
-			WorkspaceFactory theWorkspaceFactory = (WorkspaceFactory)EPackage.Registry.INSTANCE.getEFactory("http://eclipse.org/rcptt/ctx/workspace"); 
+			WorkspaceFactory theWorkspaceFactory = (WorkspaceFactory)EPackage.Registry.INSTANCE.getEFactory(WorkspacePackage.eNS_URI);
 			if (theWorkspaceFactory != null) {
 				return theWorkspaceFactory;
 			}
@@ -64,7 +64,9 @@ public class WorkspaceFactoryImpl extends EFactoryImpl implements WorkspaceFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case WorkspacePackage.WORKSPACE_DATA: return createWorkspaceData();
 			case WorkspacePackage.WORKSPACE_CONTEXT: return createWorkspaceContext();
+			case WorkspacePackage.WORKSPACE_VERIFICATION: return createWorkspaceVerification();
 			case WorkspacePackage.WS_FILE: return createWSFile();
 			case WorkspacePackage.WS_FOLDER: return createWSFolder();
 			case WorkspacePackage.WS_PROJECT: return createWSProject();
@@ -76,6 +78,16 @@ public class WorkspaceFactoryImpl extends EFactoryImpl implements WorkspaceFacto
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public WorkspaceData createWorkspaceData() {
+		WorkspaceDataImpl workspaceData = new WorkspaceDataImpl();
+		return workspaceData;
 	}
 
 	/**
@@ -166,6 +178,16 @@ public class WorkspaceFactoryImpl extends EFactoryImpl implements WorkspaceFacto
 	public WSProjectLink createWSProjectLink() {
 		WSProjectLinkImpl wsProjectLink = new WSProjectLinkImpl();
 		return wsProjectLink;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public WorkspaceVerification createWorkspaceVerification() {
+		WorkspaceVerificationImpl workspaceVerification = new WorkspaceVerificationImpl();
+		return workspaceVerification;
 	}
 
 	/**

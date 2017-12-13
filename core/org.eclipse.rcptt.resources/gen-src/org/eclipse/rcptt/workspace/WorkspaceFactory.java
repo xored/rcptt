@@ -30,6 +30,15 @@ public interface WorkspaceFactory extends EFactory {
 	WorkspaceFactory eINSTANCE = org.eclipse.rcptt.workspace.impl.WorkspaceFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Data</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data</em>'.
+	 * @generated
+	 */
+	WorkspaceData createWorkspaceData();
+
+	/**
 	 * Returns a new object of class '<em>Context</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -109,6 +118,15 @@ public interface WorkspaceFactory extends EFactory {
 	 * @generated
 	 */
 	WSProjectLink createWSProjectLink();
+
+	/**
+	 * Returns a new object of class '<em>Verification</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Verification</em>'.
+	 * @generated
+	 */
+	WorkspaceVerification createWorkspaceVerification();
 
 	/**
 	 * Returns the package supported by this factory.

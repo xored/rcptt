@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.rcptt.workspace.impl;
 
+import java.util.Collection;
 import org.eclipse.rcptt.core.scenario.impl.ContextImpl;
 
 import org.eclipse.rcptt.workspace.WSRoot;
@@ -19,10 +20,17 @@ import org.eclipse.rcptt.workspace.WorkspacePackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.rcptt.core.scenario.Attachment;
+import org.eclipse.rcptt.core.scenario.Context;
+import org.eclipse.rcptt.core.scenario.NamedElement;
+import org.eclipse.rcptt.core.scenario.ScenarioPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,46 +38,130 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
- *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getContent <em>Content</em>}</li>
- *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getAttachments <em>Attachments</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#isClearWorkspace <em>Clear Workspace</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl#getIgnoredByClearPattern <em>Ignored By Clear Pattern</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContext {
+public class WorkspaceContextImpl extends WorkspaceDataImpl implements WorkspaceContext {
 	/**
-	 * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getContent()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected WSRoot content;
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLocation()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String LOCATION_EDEFAULT = null;
+	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
+	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLocation()
+	 * @see #getVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected String location = LOCATION_EDEFAULT;
+	protected static final String VERSION_EDEFAULT = "2.0";
+
+	/**
+	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String version = VERSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String id = ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTags() <em>Tags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTags()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TAGS_EDEFAULT = "";
+
+	/**
+	 * The cached value of the '{@link #getTags() <em>Tags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTags()
+	 * @generated
+	 * @ordered
+	 */
+	protected String tags = TAGS_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getAttachments() <em>Attachments</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAttachments()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Attachment> attachments;
 
 	/**
 	 * The default value of the '{@link #isClearWorkspace() <em>Clear Workspace</em>}' attribute.
@@ -135,8 +227,8 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WSRoot getContent() {
-		return content;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -144,54 +236,107 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetContent(WSRoot newContent, NotificationChain msgs) {
-		WSRoot oldContent = content;
-		content = newContent;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__CONTENT, oldContent, newContent);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setContent(WSRoot newContent) {
-		if (newContent != content) {
-			NotificationChain msgs = null;
-			if (content != null)
-				msgs = ((InternalEObject)content).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WorkspacePackage.WORKSPACE_CONTEXT__CONTENT, null, msgs);
-			if (newContent != null)
-				msgs = ((InternalEObject)newContent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WorkspacePackage.WORKSPACE_CONTEXT__CONTENT, null, msgs);
-			msgs = basicSetContent(newContent, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__CONTENT, newContent, newContent));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getLocation() {
-		return location;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setLocation(String newLocation) {
-		String oldLocation = location;
-		location = newLocation;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__LOCATION, oldLocation, location));
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVersion(String newVersion) {
+		String oldVersion = version;
+		version = newVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__VERSION, oldVersion, version));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION, oldDescription, description));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getTags() {
+		return tags;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTags(String newTags) {
+		String oldTags = tags;
+		tags = newTags;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_CONTEXT__TAGS, oldTags, tags));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Attachment> getAttachments() {
+		if (attachments == null) {
+			attachments = new EObjectContainmentEList<Attachment>(Attachment.class, this, WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS);
+		}
+		return attachments;
 	}
 
 	/**
@@ -244,8 +389,8 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case WorkspacePackage.WORKSPACE_CONTEXT__CONTENT:
-				return basicSetContent(null, msgs);
+			case WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS:
+				return ((InternalEList<?>)getAttachments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -258,10 +403,18 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case WorkspacePackage.WORKSPACE_CONTEXT__CONTENT:
-				return getContent();
-			case WorkspacePackage.WORKSPACE_CONTEXT__LOCATION:
-				return getLocation();
+			case WorkspacePackage.WORKSPACE_CONTEXT__NAME:
+				return getName();
+			case WorkspacePackage.WORKSPACE_CONTEXT__VERSION:
+				return getVersion();
+			case WorkspacePackage.WORKSPACE_CONTEXT__ID:
+				return getId();
+			case WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION:
+				return getDescription();
+			case WorkspacePackage.WORKSPACE_CONTEXT__TAGS:
+				return getTags();
+			case WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS:
+				return getAttachments();
 			case WorkspacePackage.WORKSPACE_CONTEXT__CLEAR_WORKSPACE:
 				return isClearWorkspace();
 			case WorkspacePackage.WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN:
@@ -275,14 +428,28 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case WorkspacePackage.WORKSPACE_CONTEXT__CONTENT:
-				setContent((WSRoot)newValue);
+			case WorkspacePackage.WORKSPACE_CONTEXT__NAME:
+				setName((String)newValue);
 				return;
-			case WorkspacePackage.WORKSPACE_CONTEXT__LOCATION:
-				setLocation((String)newValue);
+			case WorkspacePackage.WORKSPACE_CONTEXT__VERSION:
+				setVersion((String)newValue);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__ID:
+				setId((String)newValue);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__TAGS:
+				setTags((String)newValue);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS:
+				getAttachments().clear();
+				getAttachments().addAll((Collection<? extends Attachment>)newValue);
 				return;
 			case WorkspacePackage.WORKSPACE_CONTEXT__CLEAR_WORKSPACE:
 				setClearWorkspace((Boolean)newValue);
@@ -302,11 +469,23 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case WorkspacePackage.WORKSPACE_CONTEXT__CONTENT:
-				setContent((WSRoot)null);
+			case WorkspacePackage.WORKSPACE_CONTEXT__NAME:
+				setName(NAME_EDEFAULT);
 				return;
-			case WorkspacePackage.WORKSPACE_CONTEXT__LOCATION:
-				setLocation(LOCATION_EDEFAULT);
+			case WorkspacePackage.WORKSPACE_CONTEXT__VERSION:
+				setVersion(VERSION_EDEFAULT);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__TAGS:
+				setTags(TAGS_EDEFAULT);
+				return;
+			case WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS:
+				getAttachments().clear();
 				return;
 			case WorkspacePackage.WORKSPACE_CONTEXT__CLEAR_WORKSPACE:
 				setClearWorkspace(CLEAR_WORKSPACE_EDEFAULT);
@@ -326,10 +505,18 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case WorkspacePackage.WORKSPACE_CONTEXT__CONTENT:
-				return content != null;
-			case WorkspacePackage.WORKSPACE_CONTEXT__LOCATION:
-				return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+			case WorkspacePackage.WORKSPACE_CONTEXT__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case WorkspacePackage.WORKSPACE_CONTEXT__VERSION:
+				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
+			case WorkspacePackage.WORKSPACE_CONTEXT__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case WorkspacePackage.WORKSPACE_CONTEXT__TAGS:
+				return TAGS_EDEFAULT == null ? tags != null : !TAGS_EDEFAULT.equals(tags);
+			case WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS:
+				return attachments != null && !attachments.isEmpty();
 			case WorkspacePackage.WORKSPACE_CONTEXT__CLEAR_WORKSPACE:
 				return clearWorkspace != CLEAR_WORKSPACE_EDEFAULT;
 			case WorkspacePackage.WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN:
@@ -344,12 +531,72 @@ public class WorkspaceContextImpl extends ContextImpl implements WorkspaceContex
 	 * @generated
 	 */
 	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == NamedElement.class) {
+			switch (derivedFeatureID) {
+				case WorkspacePackage.WORKSPACE_CONTEXT__NAME: return ScenarioPackage.NAMED_ELEMENT__NAME;
+				case WorkspacePackage.WORKSPACE_CONTEXT__VERSION: return ScenarioPackage.NAMED_ELEMENT__VERSION;
+				case WorkspacePackage.WORKSPACE_CONTEXT__ID: return ScenarioPackage.NAMED_ELEMENT__ID;
+				case WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION: return ScenarioPackage.NAMED_ELEMENT__DESCRIPTION;
+				case WorkspacePackage.WORKSPACE_CONTEXT__TAGS: return ScenarioPackage.NAMED_ELEMENT__TAGS;
+				case WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS: return ScenarioPackage.NAMED_ELEMENT__ATTACHMENTS;
+				default: return -1;
+			}
+		}
+		if (baseClass == Context.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == NamedElement.class) {
+			switch (baseFeatureID) {
+				case ScenarioPackage.NAMED_ELEMENT__NAME: return WorkspacePackage.WORKSPACE_CONTEXT__NAME;
+				case ScenarioPackage.NAMED_ELEMENT__VERSION: return WorkspacePackage.WORKSPACE_CONTEXT__VERSION;
+				case ScenarioPackage.NAMED_ELEMENT__ID: return WorkspacePackage.WORKSPACE_CONTEXT__ID;
+				case ScenarioPackage.NAMED_ELEMENT__DESCRIPTION: return WorkspacePackage.WORKSPACE_CONTEXT__DESCRIPTION;
+				case ScenarioPackage.NAMED_ELEMENT__TAGS: return WorkspacePackage.WORKSPACE_CONTEXT__TAGS;
+				case ScenarioPackage.NAMED_ELEMENT__ATTACHMENTS: return WorkspacePackage.WORKSPACE_CONTEXT__ATTACHMENTS;
+				default: return -1;
+			}
+		}
+		if (baseClass == Context.class) {
+			switch (baseFeatureID) {
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (location: ");
-		result.append(location);
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", version: ");
+		result.append(version);
+		result.append(", id: ");
+		result.append(id);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", tags: ");
+		result.append(tags);
 		result.append(", clearWorkspace: ");
 		result.append(clearWorkspace);
 		result.append(", ignoredByClearPattern: ");

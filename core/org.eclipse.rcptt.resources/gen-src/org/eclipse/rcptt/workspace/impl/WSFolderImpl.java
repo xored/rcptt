@@ -34,13 +34,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFolderImpl#getFiles <em>Files</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFolderImpl#getFolders <em>Folders</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFolderImpl#getFolderLinks <em>Folder Links</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSFolderImpl#getFileLinks <em>File Links</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

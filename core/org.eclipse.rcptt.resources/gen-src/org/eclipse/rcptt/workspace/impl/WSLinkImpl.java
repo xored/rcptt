@@ -25,11 +25,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSLinkImpl#getProject <em>Project</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WSLinkImpl#getPath <em>Path</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

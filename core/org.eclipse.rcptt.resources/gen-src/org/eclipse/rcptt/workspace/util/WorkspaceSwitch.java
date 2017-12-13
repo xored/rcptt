@@ -13,6 +13,7 @@ package org.eclipse.rcptt.workspace.util;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.core.scenario.NamedElement;
 
+import org.eclipse.rcptt.core.scenario.Verification;
 import org.eclipse.rcptt.workspace.*;
 
 import java.util.List;
@@ -94,11 +95,27 @@ public class WorkspaceSwitch<T> {
 	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case WorkspacePackage.WORKSPACE_DATA: {
+				WorkspaceData workspaceData = (WorkspaceData)theEObject;
+				T result = caseWorkspaceData(workspaceData);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case WorkspacePackage.WORKSPACE_CONTEXT: {
 				WorkspaceContext workspaceContext = (WorkspaceContext)theEObject;
 				T result = caseWorkspaceContext(workspaceContext);
+				if (result == null) result = caseWorkspaceData(workspaceContext);
 				if (result == null) result = caseContext(workspaceContext);
 				if (result == null) result = caseNamedElement(workspaceContext);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case WorkspacePackage.WORKSPACE_VERIFICATION: {
+				WorkspaceVerification workspaceVerification = (WorkspaceVerification)theEObject;
+				T result = caseWorkspaceVerification(workspaceVerification);
+				if (result == null) result = caseWorkspaceData(workspaceVerification);
+				if (result == null) result = caseVerification(workspaceVerification);
+				if (result == null) result = caseNamedElement(workspaceVerification);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -181,6 +198,21 @@ public class WorkspaceSwitch<T> {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Data</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Data</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseWorkspaceData(WorkspaceData object) {
+		return null;
 	}
 
 	/**
@@ -349,6 +381,21 @@ public class WorkspaceSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Verification</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Verification</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseWorkspaceVerification(WorkspaceVerification object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -375,6 +422,21 @@ public class WorkspaceSwitch<T> {
 	 * @generated
 	 */
 	public T caseContext(Context object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Verification</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Verification</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVerification(Verification object) {
 		return null;
 	}
 

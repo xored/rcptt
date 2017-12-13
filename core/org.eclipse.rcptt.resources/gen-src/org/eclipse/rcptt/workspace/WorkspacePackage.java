@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.rcptt.workspace;
 
-import org.eclipse.rcptt.core.scenario.ScenarioPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -66,68 +64,14 @@ public interface WorkspacePackage extends EPackage {
 	WorkspacePackage eINSTANCE = org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl <em>Context</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl <em>Data</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceContext()
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceData()
 	 * @generated
 	 */
-	int WORKSPACE_CONTEXT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__NAME = ScenarioPackage.CONTEXT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__VERSION = ScenarioPackage.CONTEXT__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__ID = ScenarioPackage.CONTEXT__ID;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__DESCRIPTION = ScenarioPackage.CONTEXT__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Tags</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__TAGS = ScenarioPackage.CONTEXT__TAGS;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__ATTACHMENTS = ScenarioPackage.CONTEXT__ATTACHMENTS;
+	int WORKSPACE_DATA = 0;
 
 	/**
 	 * The feature id for the '<em><b>Content</b></em>' containment reference.
@@ -136,7 +80,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__CONTENT = ScenarioPackage.CONTEXT_FEATURE_COUNT + 0;
+	int WORKSPACE_DATA__CONTENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -145,7 +89,98 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__LOCATION = ScenarioPackage.CONTEXT_FEATURE_COUNT + 1;
+	int WORKSPACE_DATA__LOCATION = 1;
+
+	/**
+	 * The number of structural features of the '<em>Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_DATA_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl <em>Context</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceContext()
+	 * @generated
+	 */
+	int WORKSPACE_CONTEXT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Content</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__CONTENT = WORKSPACE_DATA__CONTENT;
+
+	/**
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__LOCATION = WORKSPACE_DATA__LOCATION;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__NAME = WORKSPACE_DATA_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__VERSION = WORKSPACE_DATA_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__ID = WORKSPACE_DATA_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__DESCRIPTION = WORKSPACE_DATA_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Tags</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__TAGS = WORKSPACE_DATA_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__ATTACHMENTS = WORKSPACE_DATA_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Clear Workspace</b></em>' attribute.
@@ -154,7 +189,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__CLEAR_WORKSPACE = ScenarioPackage.CONTEXT_FEATURE_COUNT + 2;
+	int WORKSPACE_CONTEXT__CLEAR_WORKSPACE = WORKSPACE_DATA_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Ignored By Clear Pattern</b></em>' attribute.
@@ -163,7 +198,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN = ScenarioPackage.CONTEXT_FEATURE_COUNT + 3;
+	int WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN = WORKSPACE_DATA_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Context</em>' class.
@@ -172,7 +207,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT_FEATURE_COUNT = ScenarioPackage.CONTEXT_FEATURE_COUNT + 4;
+	int WORKSPACE_CONTEXT_FEATURE_COUNT = WORKSPACE_DATA_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSResourceImpl <em>WS Resource</em>}' class.
@@ -182,7 +217,206 @@ public interface WorkspacePackage extends EPackage {
 	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSResource()
 	 * @generated
 	 */
-	int WS_RESOURCE = 1;
+	int WS_RESOURCE = 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSContainerImpl <em>WS Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSContainerImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSContainer()
+	 * @generated
+	 */
+	int WS_CONTAINER = 4;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFileImpl <em>WS File</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSFileImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFile()
+	 * @generated
+	 */
+	int WS_FILE = 5;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFolderImpl <em>WS Folder</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSFolderImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFolder()
+	 * @generated
+	 */
+	int WS_FOLDER = 6;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSProjectImpl <em>WS Project</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSProjectImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSProject()
+	 * @generated
+	 */
+	int WS_PROJECT = 7;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSRootImpl <em>WS Root</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSRootImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSRoot()
+	 * @generated
+	 */
+	int WS_ROOT = 8;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSLinkImpl <em>WS Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSLinkImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSLink()
+	 * @generated
+	 */
+	int WS_LINK = 9;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFileLinkImpl <em>WS File Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSFileLinkImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFileLink()
+	 * @generated
+	 */
+	int WS_FILE_LINK = 10;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFolderLinkImpl <em>WS Folder Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSFolderLinkImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFolderLink()
+	 * @generated
+	 */
+	int WS_FOLDER_LINK = 11;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSProjectLinkImpl <em>WS Project Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WSProjectLinkImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSProjectLink()
+	 * @generated
+	 */
+	int WS_PROJECT_LINK = 12;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl <em>Verification</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl
+	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceVerification()
+	 * @generated
+	 */
+	int WORKSPACE_VERIFICATION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Content</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__CONTENT = WORKSPACE_DATA__CONTENT;
+
+	/**
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__LOCATION = WORKSPACE_DATA__LOCATION;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__NAME = WORKSPACE_DATA_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__VERSION = WORKSPACE_DATA_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__ID = WORKSPACE_DATA_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__DESCRIPTION = WORKSPACE_DATA_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Tags</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__TAGS = WORKSPACE_DATA_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__ATTACHMENTS = WORKSPACE_DATA_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Allow Uncaptured Files</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES = WORKSPACE_DATA_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Ignored Lines</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__IGNORED_LINES = WORKSPACE_DATA_FEATURE_COUNT + 7;
+
+	/**
+	 * The number of structural features of the '<em>Verification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION_FEATURE_COUNT = WORKSPACE_DATA_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -203,16 +437,6 @@ public interface WorkspacePackage extends EPackage {
 	int WS_RESOURCE_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSContainerImpl <em>WS Container</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSContainerImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSContainer()
-	 * @generated
-	 */
-	int WS_CONTAINER = 2;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -229,16 +453,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @ordered
 	 */
 	int WS_CONTAINER_FEATURE_COUNT = WS_RESOURCE_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFileImpl <em>WS File</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSFileImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFile()
-	 * @generated
-	 */
-	int WS_FILE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -284,16 +498,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @ordered
 	 */
 	int WS_FILE_FEATURE_COUNT = WS_RESOURCE_FEATURE_COUNT + 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFolderImpl <em>WS Folder</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSFolderImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFolder()
-	 * @generated
-	 */
-	int WS_FOLDER = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -350,16 +554,6 @@ public interface WorkspacePackage extends EPackage {
 	int WS_FOLDER_FEATURE_COUNT = WS_CONTAINER_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSProjectImpl <em>WS Project</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSProjectImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSProject()
-	 * @generated
-	 */
-	int WS_PROJECT = 5;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -414,16 +608,6 @@ public interface WorkspacePackage extends EPackage {
 	int WS_PROJECT_FEATURE_COUNT = WS_FOLDER_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSRootImpl <em>WS Root</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSRootImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSRoot()
-	 * @generated
-	 */
-	int WS_ROOT = 6;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -458,17 +642,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @ordered
 	 */
 	int WS_ROOT_FEATURE_COUNT = WS_CONTAINER_FEATURE_COUNT + 2;
-
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSLinkImpl <em>WS Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSLinkImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSLink()
-	 * @generated
-	 */
-	int WS_LINK = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -505,16 +678,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @ordered
 	 */
 	int WS_LINK_FEATURE_COUNT = WS_RESOURCE_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFileLinkImpl <em>WS File Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSFileLinkImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFileLink()
-	 * @generated
-	 */
-	int WS_FILE_LINK = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -560,17 +723,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @ordered
 	 */
 	int WS_FILE_LINK_FEATURE_COUNT = WS_LINK_FEATURE_COUNT + 1;
-
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSFolderLinkImpl <em>WS Folder Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSFolderLinkImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSFolderLink()
-	 * @generated
-	 */
-	int WS_FOLDER_LINK = 9;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -625,16 +777,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @ordered
 	 */
 	int WS_FOLDER_LINK_FEATURE_COUNT = WS_LINK_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSProjectLinkImpl <em>WS Project Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WSProjectLinkImpl
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWSProjectLink()
-	 * @generated
-	 */
-	int WS_PROJECT_LINK = 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -692,6 +834,38 @@ public interface WorkspacePackage extends EPackage {
 
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.workspace.WorkspaceData <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data</em>'.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceData
+	 * @generated
+	 */
+	EClass getWorkspaceData();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.rcptt.workspace.WorkspaceData#getContent <em>Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Content</em>'.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceData#getContent()
+	 * @see #getWorkspaceData()
+	 * @generated
+	 */
+	EReference getWorkspaceData_Content();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.workspace.WorkspaceData#getLocation <em>Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Location</em>'.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceData#getLocation()
+	 * @see #getWorkspaceData()
+	 * @generated
+	 */
+	EAttribute getWorkspaceData_Location();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.workspace.WorkspaceContext <em>Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -700,28 +874,6 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getWorkspaceContext();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.rcptt.workspace.WorkspaceContext#getContent <em>Content</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Content</em>'.
-	 * @see org.eclipse.rcptt.workspace.WorkspaceContext#getContent()
-	 * @see #getWorkspaceContext()
-	 * @generated
-	 */
-	EReference getWorkspaceContext_Content();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.workspace.WorkspaceContext#getLocation <em>Location</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Location</em>'.
-	 * @see org.eclipse.rcptt.workspace.WorkspaceContext#getLocation()
-	 * @see #getWorkspaceContext()
-	 * @generated
-	 */
-	EAttribute getWorkspaceContext_Location();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.workspace.WorkspaceContext#isClearWorkspace <em>Clear Workspace</em>}'.
@@ -1011,6 +1163,38 @@ public interface WorkspacePackage extends EPackage {
 	EClass getWSProjectLink();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.workspace.WorkspaceVerification <em>Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Verification</em>'.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceVerification
+	 * @generated
+	 */
+	EClass getWorkspaceVerification();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.workspace.WorkspaceVerification#isAllowUncapturedFiles <em>Allow Uncaptured Files</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Allow Uncaptured Files</em>'.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceVerification#isAllowUncapturedFiles()
+	 * @see #getWorkspaceVerification()
+	 * @generated
+	 */
+	EAttribute getWorkspaceVerification_AllowUncapturedFiles();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.workspace.WorkspaceVerification#getIgnoredLines <em>Ignored Lines</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Ignored Lines</em>'.
+	 * @see org.eclipse.rcptt.workspace.WorkspaceVerification#getIgnoredLines()
+	 * @see #getWorkspaceVerification()
+	 * @generated
+	 */
+	EAttribute getWorkspaceVerification_IgnoredLines();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1033,6 +1217,32 @@ public interface WorkspacePackage extends EPackage {
 	 */
 	interface Literals {
 		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl <em>Data</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl
+		 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceData()
+		 * @generated
+		 */
+		EClass WORKSPACE_DATA = eINSTANCE.getWorkspaceData();
+
+		/**
+		 * The meta object literal for the '<em><b>Content</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKSPACE_DATA__CONTENT = eINSTANCE.getWorkspaceData_Content();
+
+		/**
+		 * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WORKSPACE_DATA__LOCATION = eINSTANCE.getWorkspaceData_Location();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceContextImpl <em>Context</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1041,22 +1251,6 @@ public interface WorkspacePackage extends EPackage {
 		 * @generated
 		 */
 		EClass WORKSPACE_CONTEXT = eINSTANCE.getWorkspaceContext();
-
-		/**
-		 * The meta object literal for the '<em><b>Content</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WORKSPACE_CONTEXT__CONTENT = eINSTANCE.getWorkspaceContext_Content();
-
-		/**
-		 * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute WORKSPACE_CONTEXT__LOCATION = eINSTANCE.getWorkspaceContext_Location();
 
 		/**
 		 * The meta object literal for the '<em><b>Clear Workspace</b></em>' attribute feature.
@@ -1293,6 +1487,32 @@ public interface WorkspacePackage extends EPackage {
 		 * @generated
 		 */
 		EClass WS_PROJECT_LINK = eINSTANCE.getWSProjectLink();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl <em>Verification</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl
+		 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceVerification()
+		 * @generated
+		 */
+		EClass WORKSPACE_VERIFICATION = eINSTANCE.getWorkspaceVerification();
+
+		/**
+		 * The meta object literal for the '<em><b>Allow Uncaptured Files</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES = eINSTANCE.getWorkspaceVerification_AllowUncapturedFiles();
+
+		/**
+		 * The meta object literal for the '<em><b>Ignored Lines</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WORKSPACE_VERIFICATION__IGNORED_LINES = eINSTANCE.getWorkspaceVerification_IgnoredLines();
 
 	}
 

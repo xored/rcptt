@@ -39,11 +39,13 @@ import org.eclipse.rcptt.workspace.WorkspaceVerification;
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl#getTags <em>Tags</em>}</li>
  *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl#getAttachments <em>Attachments</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl#isAllowUncapturedFiles <em>Allow Uncaptured Files</em>}</li>
+ *   <li>{@link org.eclipse.rcptt.workspace.impl.WorkspaceVerificationImpl#getIgnoredLines <em>Ignored Lines</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements WorkspaceVerification {
+public class WorkspaceVerificationImpl extends WorkspaceDataImpl implements WorkspaceVerification {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -153,6 +155,46 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 	 * @ordered
 	 */
 	protected EList<Attachment> attachments;
+
+	/**
+	 * The default value of the '{@link #isAllowUncapturedFiles() <em>Allow Uncaptured Files</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAllowUncapturedFiles()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ALLOW_UNCAPTURED_FILES_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isAllowUncapturedFiles() <em>Allow Uncaptured Files</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAllowUncapturedFiles()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean allowUncapturedFiles = ALLOW_UNCAPTURED_FILES_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIgnoredLines() <em>Ignored Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIgnoredLines()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IGNORED_LINES_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIgnoredLines() <em>Ignored Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIgnoredLines()
+	 * @generated
+	 * @ordered
+	 */
+	protected String ignoredLines = IGNORED_LINES_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -295,6 +337,48 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isAllowUncapturedFiles() {
+		return allowUncapturedFiles;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAllowUncapturedFiles(boolean newAllowUncapturedFiles) {
+		boolean oldAllowUncapturedFiles = allowUncapturedFiles;
+		allowUncapturedFiles = newAllowUncapturedFiles;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES, oldAllowUncapturedFiles, allowUncapturedFiles));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIgnoredLines() {
+		return ignoredLines;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIgnoredLines(String newIgnoredLines) {
+		String oldIgnoredLines = ignoredLines;
+		ignoredLines = newIgnoredLines;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkspacePackage.WORKSPACE_VERIFICATION__IGNORED_LINES, oldIgnoredLines, ignoredLines));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -324,6 +408,10 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 				return getTags();
 			case WorkspacePackage.WORKSPACE_VERIFICATION__ATTACHMENTS:
 				return getAttachments();
+			case WorkspacePackage.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES:
+				return isAllowUncapturedFiles();
+			case WorkspacePackage.WORKSPACE_VERIFICATION__IGNORED_LINES:
+				return getIgnoredLines();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -356,6 +444,12 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 				getAttachments().clear();
 				getAttachments().addAll((Collection<? extends Attachment>)newValue);
 				return;
+			case WorkspacePackage.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES:
+				setAllowUncapturedFiles((Boolean)newValue);
+				return;
+			case WorkspacePackage.WORKSPACE_VERIFICATION__IGNORED_LINES:
+				setIgnoredLines((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -386,6 +480,12 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 			case WorkspacePackage.WORKSPACE_VERIFICATION__ATTACHMENTS:
 				getAttachments().clear();
 				return;
+			case WorkspacePackage.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES:
+				setAllowUncapturedFiles(ALLOW_UNCAPTURED_FILES_EDEFAULT);
+				return;
+			case WorkspacePackage.WORKSPACE_VERIFICATION__IGNORED_LINES:
+				setIgnoredLines(IGNORED_LINES_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -410,6 +510,10 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 				return TAGS_EDEFAULT == null ? tags != null : !TAGS_EDEFAULT.equals(tags);
 			case WorkspacePackage.WORKSPACE_VERIFICATION__ATTACHMENTS:
 				return attachments != null && !attachments.isEmpty();
+			case WorkspacePackage.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES:
+				return allowUncapturedFiles != ALLOW_UNCAPTURED_FILES_EDEFAULT;
+			case WorkspacePackage.WORKSPACE_VERIFICATION__IGNORED_LINES:
+				return IGNORED_LINES_EDEFAULT == null ? ignoredLines != null : !IGNORED_LINES_EDEFAULT.equals(ignoredLines);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -486,6 +590,10 @@ public class WorkspaceVerificationImpl extends WorkspaceInfoImpl implements Work
 		result.append(description);
 		result.append(", tags: ");
 		result.append(tags);
+		result.append(", allowUncapturedFiles: ");
+		result.append(allowUncapturedFiles);
+		result.append(", ignoredLines: ");
+		result.append(ignoredLines);
 		result.append(')');
 		return result.toString();
 	}
