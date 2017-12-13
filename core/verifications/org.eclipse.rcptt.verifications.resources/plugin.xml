@@ -35,7 +35,7 @@
 	<extension
 	      point="org.eclipse.rcptt.core.indexer">
 	   <indexer
-	         class="org.eclipse.rcptt.verifications.internal.resources.WorkspaceVerificationIndexer">
+	         class="org.eclipse.rcptt.verifications.resources.WorkspaceVerificationIndexer">
 	   </indexer>
 	</extension>
 </plugin>

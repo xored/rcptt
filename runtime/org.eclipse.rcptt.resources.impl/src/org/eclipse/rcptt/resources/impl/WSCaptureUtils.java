@@ -42,7 +42,7 @@ import org.eclipse.rcptt.workspace.WorkspaceFactory;
 @SuppressWarnings("deprecation")
 public class WSCaptureUtils {
 
-	public static void capture(IWorkspace workspace, WorkspaceData data) throws CoreException {
+	public static void capture(final IWorkspace workspace, final WorkspaceData data) throws CoreException {
 		final WSRoot root = WorkspaceFactory.eINSTANCE.createWSRoot();
 		data.setContent(root);
 		workspace.run(new IWorkspaceRunnable() {
