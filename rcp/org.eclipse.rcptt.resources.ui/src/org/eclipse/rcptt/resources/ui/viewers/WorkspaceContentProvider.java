@@ -8,14 +8,14 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.verifications.resources.ui.viewers;
+package org.eclipse.rcptt.resources.ui.viewers;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.rcptt.resources.WSUtils;
 import org.eclipse.rcptt.workspace.WSFolder;
 import org.eclipse.rcptt.workspace.WSResource;
-import org.eclipse.rcptt.workspace.WorkspaceVerification;
+import org.eclipse.rcptt.workspace.WorkspaceData;
 
 public class WorkspaceContentProvider implements ITreeContentProvider {
 
@@ -40,8 +40,8 @@ public class WorkspaceContentProvider implements ITreeContentProvider {
 	}
 
 	public Object[] getElements(Object inputElement) {
-		WorkspaceVerification verification = (WorkspaceVerification) inputElement;
-		return WSUtils.getContents(verification.getContent()).toArray();
+		WorkspaceData data = (WorkspaceData) inputElement;
+		return WSUtils.getContents(data.getContent()).toArray();
 	}
 
 	public void dispose() {

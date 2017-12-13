@@ -8,27 +8,24 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.ctx.resources;
+package org.eclipse.rcptt.resources;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.zip.ZipInputStream;
 
 import org.eclipse.rcptt.core.Q7Features;
-import org.eclipse.rcptt.resources.WSUtils;
-import org.eclipse.rcptt.resources.ImportUtils.Importer;
 import org.eclipse.rcptt.workspace.WSFile;
-import org.eclipse.rcptt.workspace.WorkspaceContext;
+import org.eclipse.rcptt.workspace.WorkspaceData;
 
-public class WorkspaceContextImporter implements Importer {
+public class WorkspaceDataImporter {
 
-	private WorkspaceContext context;
+	private WorkspaceData data;
 
-	public WorkspaceContextImporter(WorkspaceContext context) {
-		this.context = context;
+	public WorkspaceDataImporter(WorkspaceData data) {
+		this.data = data;
 	}
 
-	@Override
 	public InputStream getContents(Object element) {
 		try {
 			WSFile file = (WSFile) element;
@@ -42,10 +39,11 @@ public class WorkspaceContextImporter implements Importer {
 				}
 				return new ByteArrayInputStream(file.getContent());
 			}
-			return WSUtils.getFileStream(context.getLocation(), file, null);
+			return WSUtils.getFileStream(data.getLocation(), file, null);
 
 		} catch (Exception e) {
 			return null;
 		}
 	}
+
 }

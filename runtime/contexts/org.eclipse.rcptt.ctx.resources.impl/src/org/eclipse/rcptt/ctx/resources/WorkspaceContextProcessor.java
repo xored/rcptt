@@ -29,7 +29,6 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -41,7 +40,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rcptt.core.IContextProcessor;
@@ -51,6 +49,7 @@ import org.eclipse.rcptt.ctx.impl.internal.resources.Activator;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.resources.WSUtils;
 import org.eclipse.rcptt.resources.impl.FileBuffersUtils;
+import org.eclipse.rcptt.resources.impl.WSCaptureUtils;
 import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
@@ -196,64 +195,14 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 		});
 	}
 
+	@Override
 	public Context create(EObject param) throws CoreException {
 		final WorkspaceContext context = WorkspaceFactory.eINSTANCE
 				.createWorkspaceContext();
-		final WSRoot root = WorkspaceFactory.eINSTANCE.createWSRoot();
-		context.setContent(root);
-		final WorkspaceContextMaker maker = new WorkspaceContextMaker();
-		ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
-			public void run(final IProgressMonitor monitor)
-					throws CoreException {
-				final IProject[] projects = ResourcesPlugin.getWorkspace()
-						.getRoot().getProjects();
-				for (final IProject iProject : projects) {
-					if (iProject.exists() && iProject.isOpen()) {
-						// Do a project refresh, before import
-						iProject.refreshLocal(IResource.DEPTH_INFINITE,
-								new SubProgressMonitor(monitor, 1));
+		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
-						final WSProject wsProject = WSUtils.getProject(root,
-								iProject.getName(), true);
-						root.getProjects().add(wsProject);
-						doCreate(wsProject, iProject, maker);
-					}
-				}
-			}
-		}, new NullProgressMonitor());
+		WSCaptureUtils.capture(workspace, context);
 		return context;
-	}
-
-	@SuppressWarnings("deprecation")
-	private void doCreate(final WSFolder folder, final IContainer iContainer,
-			WorkspaceContextMaker maker) throws CoreException {
-		for (final IResource iResource : iContainer.members()) {
-			final String name = iResource.getName();
-			if (iResource instanceof IFolder) {
-				final WSFolder child = WSUtils.getFolder(folder, name, true);
-				doCreate(child, (IFolder) iResource, maker);
-			} else if (iResource instanceof IFile) {
-				final IFile iFile = (IFile) iResource;
-				IPath iPath = iFile.getLocation();
-
-				if (!iFile.isLocal(IResource.DEPTH_ZERO)) {
-					Activator.logWarn("Cannot retrieve contents of a file %s (%s). File skipped.", name,
-							iFile.getLocation());
-					continue;
-				}
-
-				final WSFile child = WSUtils.getFile(folder, name, true);
-				if (null != iPath) {
-					File jfile = iPath.toFile();
-					if (jfile.canExecute()) {
-						child.setExecutable(true);
-					}
-				}
-				// IPath path = iFile.getFullPath();
-				// child.setContentURI(path.toString());
-				maker.makeExecutableContext(child, iFile);
-			}
-		}
 	}
 
 	// private static final int STEP_TOTAL = 31;

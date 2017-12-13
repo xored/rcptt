@@ -24,7 +24,7 @@ import org.eclipse.rcptt.workspace.WSFolder;
 public class ImportUtils {
 
 	public static void importFiles(WSFolder ownFolder, EList<WSFile> files,
-			IPersistenceModel model, Importer importer) {
+			IPersistenceModel model, WorkspaceDataImporter importer) {
 		for (WSFile wsFile : files) {
 			WSFile ownFile = WSUtils.getFile(ownFolder, wsFile.getName(), true);
 			ownFile.setExecutable(wsFile.isExecutable());
@@ -61,19 +61,13 @@ public class ImportUtils {
 
 	public static void importFolders(WSFolder ownProject,
 			EList<WSFolder> folders, IPersistenceModel model,
-			Importer importer) {
+			WorkspaceDataImporter importer) {
 		for (WSFolder wsFolder : folders) {
 			WSFolder ownFolder = WSUtils.getFolder(ownProject,
 					wsFolder.getName(), true);
 			importFolders(ownFolder, wsFolder.getFolders(), model, importer);
 			importFiles(ownFolder, wsFolder.getFiles(), model, importer);
 		}
-	}
-
-	public static interface Importer {
-
-		public InputStream getContents(Object element);
-
 	}
 
 }

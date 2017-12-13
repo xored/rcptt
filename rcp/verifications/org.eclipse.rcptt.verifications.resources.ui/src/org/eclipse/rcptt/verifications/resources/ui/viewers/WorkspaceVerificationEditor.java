@@ -52,13 +52,15 @@ import org.eclipse.rcptt.core.workspace.Q7Utils;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
 import org.eclipse.rcptt.resources.ImportUtils;
 import org.eclipse.rcptt.resources.WSUtils;
+import org.eclipse.rcptt.resources.WorkspaceDataImporter;
 import org.eclipse.rcptt.resources.ui.actions.WSAction;
+import org.eclipse.rcptt.resources.ui.viewers.WorkspaceContentProvider;
+import org.eclipse.rcptt.resources.ui.viewers.WorkspaceLabelProvider;
 import org.eclipse.rcptt.ui.controls.SectionWithComposite;
 import org.eclipse.rcptt.ui.editors.EditorHeader;
 import org.eclipse.rcptt.ui.utils.DefaultTreeViewerEditStrategy;
 import org.eclipse.rcptt.ui.utils.UIContentAdapter;
 import org.eclipse.rcptt.ui.verification.BaseVerificationEditor;
-import org.eclipse.rcptt.verifications.resources.WorkspaceVerificationImporter;
 import org.eclipse.rcptt.workspace.WSContainer;
 import org.eclipse.rcptt.workspace.WSFile;
 import org.eclipse.rcptt.workspace.WSFileLink;
@@ -156,7 +158,7 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 			IPersistenceModel model = PersistenceManager.getInstance()
 					.getModel(getVerificationElement().eResource());
 			// Convert resources to new format
-			WorkspaceVerificationImporter importer = new WorkspaceVerificationImporter(
+			WorkspaceDataImporter importer = new WorkspaceDataImporter(
 					getVerificationElement());
 
 			EList<WSProject> projects = getVerificationElement().getContent()
