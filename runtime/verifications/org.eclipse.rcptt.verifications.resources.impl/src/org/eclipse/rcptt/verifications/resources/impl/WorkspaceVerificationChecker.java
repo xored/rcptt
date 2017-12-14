@@ -157,11 +157,11 @@ public class WorkspaceVerificationChecker {
 				if (isTextFile(file.getName()) && isTextFile(rFile.getName())) {
 					final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 					final BufferedReader rReader = new BufferedReader(new InputStreamReader(rStream));
-					verifyLineByLine(reader, rReader, 1);
+					verifyLineByLine(reader, rReader);
 				} else {
 					final InputStreamReader reader = new InputStreamReader(stream);
 					final InputStreamReader rReader = new InputStreamReader(rStream);
-					verifyCharByChar(reader, rReader, 1);
+					verifyCharByChar(reader, rReader);
 				}
 			} catch (CoreException e) {
 				throw error(
@@ -176,45 +176,47 @@ public class WorkspaceVerificationChecker {
 		}
 	}
 
-	private void verifyLineByLine(final BufferedReader reader, final BufferedReader rReader,
-			int lineNumber) throws IOException, CoreException {
-		String line = null;
-		String rLine = null;
-		if (reader.ready()) {
-			line = reader.readLine();
-		}
-		if (rReader.ready()) {
-			rLine = rReader.readLine();
-		}
-		if (line == null && rLine == null) {
-			return;
-		}
-		if (line != null && !line.equals(rLine) || rLine != null && !rLine.equals(line)) {
-			if (!isSkippedLine(line) || !isSkippedLine(rLine)) {
-				throw error(String.format("Text on %d line do not match. Expected '%s',\nbut was '%s'.",
-						lineNumber, line, rLine));
+	private void verifyLineByLine(final BufferedReader reader, final BufferedReader rReader)
+			throws IOException, CoreException {
+		int lineNumber = 1;
+		String line = reader.ready() ? reader.readLine() : null;
+		String rLine = rReader.ready() ? rReader.readLine() : null;
+
+		while (line != null || rLine != null) {
+			if (line != null && !line.equals(rLine) || rLine != null && !rLine.equals(line)) {
+				if (!isSkippedLine(line) || !isSkippedLine(rLine)) {
+					throw error(String.format("Text on %d line do not match. Expected '%s',\nbut was '%s'.",
+							lineNumber, line, rLine));
+				}
 			}
+
+			++lineNumber;
+			line = reader.ready() ? reader.readLine() : null;
+			rLine = rReader.ready() ? rReader.readLine() : null;
 		}
-		verifyLineByLine(reader, rReader, ++lineNumber);
 	}
 
-	private void verifyCharByChar(final InputStreamReader reader, final InputStreamReader rReader, int byteNumber)
+	private void verifyCharByChar(final InputStreamReader reader, final InputStreamReader rReader)
 			throws IOException, CoreException {
-		final int value = reader.read();
-		final int rValue = rReader.read();
-		if (value == -1 && rValue == -1) {
-			return;
-		}
-		if (value != rValue) {
-			String symbol = value == -1 ? null
-					: String.valueOf((char) value).replaceAll("\\n", "\\\\n").replaceAll("\\r", "\\\\r");
-			String rSymbol = rValue == -1 ? null
-					: String.valueOf((char) rValue).replaceAll("\\n", "\\\\n").replaceAll("\\r", "\\\\r");
+		int byteNumber = 1;
+		int value = reader.read();
+		int rValue = rReader.read();
 
-			throw error(String.format("Symbols on %d position do not match. Expected '%s', but was '%s'.",
-					byteNumber, symbol, rSymbol));
+		while (value != -1 || rValue != -1) {
+			if (value != rValue) {
+				String symbol = value == -1 ? null
+						: String.valueOf((char) value).replaceAll("\\n", "\\\\n").replaceAll("\\r", "\\\\r");
+				String rSymbol = rValue == -1 ? null
+						: String.valueOf((char) rValue).replaceAll("\\n", "\\\\n").replaceAll("\\r", "\\\\r");
+
+				throw error(String.format("Symbols on %d position do not match. Expected '%s', but was '%s'.",
+						byteNumber, symbol, rSymbol));
+			}
+
+			++byteNumber;
+			value = reader.read();
+			rValue = rReader.read();
 		}
-		verifyCharByChar(reader, rReader, ++byteNumber);
 	}
 
 	private final IContentType TEXT = Platform.getContentTypeManager().getContentType(IContentTypeManager.CT_TEXT);
