@@ -20,4 +20,16 @@
             type="org.eclipse.rcptt.verifications.workspace">
       </viewer>
    </extension>
+   <extension
+         point="org.eclipse.rcptt.ui.searchMatchers">
+      <matcher
+            class="org.eclipse.rcptt.verifications.resources.ui.WorkspaceVerificationMatcher">
+      </matcher>
+   </extension>
+   <extension
+         point="org.eclipse.rcptt.core.builder.q7Validator">
+      <validator
+            class="org.eclipse.rcptt.verifications.resources.ui.WorkspaceVerificationContentValidator">
+      </validator>
+   </extension>
 </plugin>

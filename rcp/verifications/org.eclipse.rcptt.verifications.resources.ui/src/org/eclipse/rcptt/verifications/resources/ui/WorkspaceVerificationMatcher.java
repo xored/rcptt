@@ -8,12 +8,12 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.ui.internal.resources;
+package org.eclipse.rcptt.verifications.resources.ui;
 
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.rcptt.core.model.IContext;
 import org.eclipse.rcptt.core.model.IQ7NamedElement;
+import org.eclipse.rcptt.core.model.IVerification;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.model.search.Q7SearchCore;
 import org.eclipse.rcptt.core.scenario.NamedElement;
@@ -21,33 +21,33 @@ import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.internal.ui.Q7UIPlugin;
 import org.eclipse.rcptt.resources.ui.WSSearchSwitch;
 import org.eclipse.rcptt.ui.search.Matcher;
-import org.eclipse.rcptt.workspace.WorkspaceContext;
+import org.eclipse.rcptt.workspace.WorkspaceVerification;
 
-public class WorkspaceContextMatcher implements Matcher {
+public class WorkspaceVerificationMatcher implements Matcher {
 
 	public boolean matches(IQ7NamedElement object, String query,
 			SubMonitor monitor) {
-		if (!(object instanceof IContext)) {
+		if (!(object instanceof IVerification)) {
 			return false;
 		}
-		String type = Q7SearchCore.findContextTypeByDocument((IContext)object);
-		if (type == null && object instanceof IContext) {
+		String type = Q7SearchCore.findVerificationTypeByDocument((IVerification) object);
+		if (type == null) {
 			try {
-				type = ((IContext) object).getType().getId();
+				type = ((IVerification) object).getType().getId();
 			} catch (ModelException e) {
 				RcpttPlugin.log(e);
 			}
 		}
-		if (type != null && !type.equals("org.eclipse.rcptt.ctx.workspace")) {
+		if (type != null && !type.equals("org.eclipse.rcptt.verification.workspace")) {
 			return false;
 		}
 		try {
-			NamedElement ctx = object.getNamedElement();
-			if (ctx instanceof WorkspaceContext) {
-				final WorkspaceContext context = (WorkspaceContext) ctx;
+			NamedElement verification = object.getNamedElement();
+			if (verification instanceof WorkspaceVerification) {
+				final WorkspaceVerification wsVerification = (WorkspaceVerification) verification;
 				final WSSearchSwitch sw = new WSSearchSwitch(query, monitor);
 				try {
-					return sw.doSwitch(context.getContent());
+					return sw.doSwitch(wsVerification.getContent());
 				} catch (OperationCanceledException oce) {
 					return false;
 				}

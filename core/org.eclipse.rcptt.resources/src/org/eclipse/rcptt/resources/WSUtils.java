@@ -59,7 +59,7 @@ import org.eclipse.rcptt.workspace.WSLink;
 import org.eclipse.rcptt.workspace.WSProject;
 import org.eclipse.rcptt.workspace.WSResource;
 import org.eclipse.rcptt.workspace.WSRoot;
-import org.eclipse.rcptt.workspace.WorkspaceContext;
+import org.eclipse.rcptt.workspace.WorkspaceData;
 import org.eclipse.rcptt.workspace.WorkspaceFactory;
 import org.osgi.framework.Bundle;
 
@@ -411,10 +411,10 @@ public class WSUtils {
 	 * @param visitor - process is interrupted if predicate is true
 	 * @param monitor 
 	 */
-	public static void visitWorkspace(WorkspaceContext context, SubMonitor monitor, Predicate<WSResource> visitor) {
-		if (visitor.apply(context.getContent()))
+	public static void visitWorkspace(WorkspaceData data, SubMonitor monitor, Predicate<WSResource> visitor) {
+		if (visitor.apply(data.getContent()))
 			return;
-		visitRoot(context.getContent(), visitor, monitor);
+		visitRoot(data.getContent(), visitor, monitor);
 	}
 
 	private static void visitRoot(WSRoot content, Predicate<WSResource> visitor, SubMonitor monitor) {

@@ -15,12 +15,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
@@ -245,9 +243,7 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 				EMFObservables
 						.observeValue(
 								getVerificationElement(),
-								WorkspacePackage.Literals.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES),
-				new AllowUncapturedFilesChangeListener(),
-				new AllowUncapturedFilesChangeListener());
+								WorkspacePackage.Literals.WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES));
 
 		dbc.bindValue(
 				SWTObservables.observeText(ignoredLinePatterns, SWT.Modify),
@@ -255,22 +251,6 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 						.observeValue(
 								getVerificationElement(),
 								WorkspacePackage.Literals.WORKSPACE_VERIFICATION__IGNORED_LINES));
-	}
-
-	private class AllowUncapturedFilesChangeListener extends UpdateValueStrategy {
-
-		@Override
-		public IStatus validateBeforeSet(Object value) {
-			Boolean sValue = (Boolean) value;
-			if (ignoredLinePatterns != null) {
-				ignoredLinePatterns.setEnabled(sValue);
-			}
-			if (ignoredLinePatternsLabel != null) {
-				ignoredLinePatternsLabel.setEnabled(sValue);
-			}
-			return super.validateBeforeSet(value);
-		}
-
 	}
 
 	private Tree createTree(Composite parent, FormToolkit toolkit) {

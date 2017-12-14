@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.ui.internal.resources;
+package org.eclipse.rcptt.resources.ui;
 
 import static java.util.Arrays.asList;
 
@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.rcptt.core.builder.IQ7ProblemReporter;
 import org.eclipse.rcptt.core.builder.IQ7ProblemReporter.ProblemType;
-import org.eclipse.rcptt.core.model.IContext;
+import org.eclipse.rcptt.core.model.IQ7NamedElement;
 import org.eclipse.rcptt.core.model.ModelException;
 import org.eclipse.rcptt.core.persistence.IPersistenceModel;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
@@ -32,23 +32,22 @@ import org.eclipse.rcptt.util.Predicate;
 import org.eclipse.rcptt.workspace.WSFile;
 import org.eclipse.rcptt.workspace.WSLink;
 import org.eclipse.rcptt.workspace.WSResource;
-import org.eclipse.rcptt.workspace.WorkspaceContext;
+import org.eclipse.rcptt.workspace.WorkspaceData;
 
 public class WSValidators {
 
-	public static void validateContent(final WorkspaceContext ctx,
-			final IContext element, final IQ7ProblemReporter reporter,
+	public static void validateContent(final WorkspaceData data,
+			final IQ7NamedElement element, final IQ7ProblemReporter reporter,
 			final SubMonitor monitor) {
 		try {
 			final IPersistenceModel model = element.getPersistenceModel();
 			model.extractAll();
-			WSUtils.visitWorkspace(ctx, monitor, new Predicate<WSResource>() {
+			WSUtils.visitWorkspace(data, monitor, new Predicate<WSResource>() {
 				@Override
 				public boolean apply(WSResource input) {
 					if (monitor.isCanceled())
 						return true;
 					if (input instanceof WSFile) {
-						
 						String name = ImportUtils.getName((WSFile) input);
 						try {
 							WSUtils.getFileStream(null, (WSFile) input, model)
@@ -56,7 +55,7 @@ public class WSValidators {
 						} catch (IOException e) {
 							String message = String
 									.format("File %s is absent in workspace %s. Please recapture the context or delete broken file.",
-											name, ctx.getName());
+											name, ((IQ7NamedElement) data).getName());
 							reporter.reportProblem((IFile)element.getResource(), ProblemType.Error,
 									message, -1, -1, -1, -1);
 						}
@@ -130,10 +129,10 @@ public class WSValidators {
 		return true;
 	}
 
-	public static void validateLinks(WorkspaceContext ctx,
+	public static void validateLinks(WorkspaceData data,
 			final IFile resource, final IQ7ProblemReporter reporter,
 			SubMonitor monitor) {
-		WSUtils.visitWorkspace(ctx, monitor, new Predicate<WSResource>() {
+		WSUtils.visitWorkspace(data, monitor, new Predicate<WSResource>() {
 			@Override
 			public boolean apply(WSResource input) {
 				if (input instanceof WSLink) {
