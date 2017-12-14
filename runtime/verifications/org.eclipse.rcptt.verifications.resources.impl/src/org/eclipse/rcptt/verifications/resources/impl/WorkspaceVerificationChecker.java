@@ -90,6 +90,9 @@ public class WorkspaceVerificationChecker {
 		if (!rProject.isOpen()) {
 			throw error(String.format("Project '%s' is not open", project.getName()));
 		}
+		if (!allowUncapturedFiles) {
+			verifyUncapturedFiles(project, rProject, "");
+		}
 		verifyContainer(location, project, rProject);
 	}
 	private void verifyContainer(final String location, final WSFolder folder,
@@ -97,26 +100,43 @@ public class WorkspaceVerificationChecker {
 		if (!rFolder.exists()) {
 			throw error(String.format("Folder '%s' does not exist", folder.getName()));
 		}
-		if (!allowUncapturedFiles) {
-			for (IResource rResource : rFolder.members()) {
-				if (!(rResource instanceof IFile)) {
-					continue;
+		verifyContent(location, folder, rFolder);
+	}
+
+	private void verifyUncapturedFiles(final WSFolder folder, final IContainer rFolder, final String path)
+			throws CoreException {
+		for (IResource rResource : rFolder.members()) {
+			if (rResource instanceof IContainer) {
+				IContainer rChildFolder = (IContainer) rResource;
+				WSFolder childFolder = null;
+				if (folder != null) {
+					for (WSFolder child : folder.getFolders()) {
+						if (child.getName().equals(rChildFolder.getName())) {
+							childFolder = child;
+							break;
+						}
+					}
 				}
-				boolean found = false;
-				String rFileName = ((IFile) rResource).getName();
+				verifyUncapturedFiles(childFolder, rChildFolder, String.format("%s%s/", path, rFolder.getName()));
+			}
+			if (!(rResource instanceof IFile)) {
+				continue;
+			}
+			boolean found = false;
+			String rFileName = ((IFile) rResource).getName();
+			if (folder != null) {
 				for (WSFile file : folder.getFiles()) {
 					if (file.getName().equals(rFileName)) {
 						found = true;
 						break;
 					}
 				}
-				if (!found) {
-					throw error(String.format("Folder '%s' contains unexpected '%s' file",
-							folder.getName(), rFileName));
-				}
+			}
+			if (!found) {
+				throw error(String.format("Folder '%s%s/' contains unexpected '%s' file",
+						path, rFolder.getName(), rFileName));
 			}
 		}
-		verifyContent(location, folder, rFolder);
 	}
 
 	private void verifyContent(final String location, final WSFolder folder,
@@ -185,7 +205,7 @@ public class WorkspaceVerificationChecker {
 		while (line != null || rLine != null) {
 			if (line != null && !line.equals(rLine) || rLine != null && !rLine.equals(line)) {
 				if (!isSkippedLine(line) || !isSkippedLine(rLine)) {
-					throw error(String.format("Text on %d line do not match. Expected '%s',\nbut was '%s'.",
+					throw error(String.format("Text on line %d do not match. Expected '%s',\nbut was '%s'.",
 							lineNumber, line, rLine));
 				}
 			}
@@ -209,7 +229,7 @@ public class WorkspaceVerificationChecker {
 				String rSymbol = rValue == -1 ? null
 						: String.valueOf((char) rValue).replaceAll("\\n", "\\\\n").replaceAll("\\r", "\\\\r");
 
-				throw error(String.format("Symbols on %d position do not match. Expected '%s', but was '%s'.",
+				throw error(String.format("Symbols on position %d do not match. Expected '%s', but was '%s'.",
 						byteNumber, symbol, rSymbol));
 			}
 
