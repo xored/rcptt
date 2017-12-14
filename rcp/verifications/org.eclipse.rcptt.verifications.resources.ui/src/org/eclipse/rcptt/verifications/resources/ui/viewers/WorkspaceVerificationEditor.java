@@ -225,10 +225,9 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(allowUncapturedFiles);
 
 		ignoredLinePatternsLabel = new Label(parent, SWT.NONE);
-		ignoredLinePatternsLabel
-				.setText("Do not fail if lines matched by following patterns do not matched (one regex per line):");
-		ignoredLinePatternsLabel.setForeground(toolkit.getColors().getColor(
-				IFormColors.TITLE));
+		ignoredLinePatternsLabel.setText(
+				"Do not fail if lines matched by following patterns aren't equal (specify one regex per line):");
+		ignoredLinePatternsLabel.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		ignoredLinePatternsLabel.setBackground(null);
 		GridDataFactory.fillDefaults().span(2, 1).hint(100, SWT.DEFAULT)
 				.applyTo(ignoredLinePatternsLabel);
@@ -258,8 +257,7 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 		GridDataFactory.fillDefaults().grab(true, true).hint(100, 50).applyTo(tree);
 
 		viewer = new TreeViewer(tree);
-		TreeViewerEditor.create(viewer, new DefaultTreeViewerEditStrategy(
-				viewer), ColumnViewerEditor.DEFAULT);
+		TreeViewerEditor.create(viewer, new DefaultTreeViewerEditStrategy(viewer), ColumnViewerEditor.DEFAULT);
 		viewer.setCellEditors(new CellEditor[] { new TextCellEditor(tree) });
 		viewer.setCellModifier(new ICellModifier() {
 			public void modify(Object element, String property, Object value) {
@@ -322,8 +320,7 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
-				IStructuredSelection sel = (IStructuredSelection) viewer
-						.getSelection();
+				IStructuredSelection sel = (IStructuredSelection) viewer.getSelection();
 				Object[] res = sel.toArray();
 				WSResource[] resources = new WSResource[res.length];
 				for (int i = 0 ; i < res.length; i++)
@@ -392,8 +389,7 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 
 	private Composite createPanel(Composite parent, FormToolkit toolkit) {
 		Composite panel = toolkit.createComposite(parent);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING)
-				.applyTo(panel);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).applyTo(panel);
 		RowLayout layout = new RowLayout(SWT.VERTICAL);
 		layout.pack = false;
 		layout.marginBottom = 0;
@@ -411,8 +407,7 @@ public class WorkspaceVerificationEditor extends BaseVerificationEditor {
 	private void createButton(Composite parent, FormToolkit toolkit,
 			final WSAction action) {
 		action.setViewer(viewer);
-		Button button = toolkit
-				.createButton(parent, action.getText(), SWT.PUSH);
+		Button button = toolkit.createButton(parent, action.getText(), SWT.PUSH);
 		button.setData(action);
 		Image image = action.getImageDescriptor().createImage();
 		button.setImage(image);
