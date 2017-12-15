@@ -29,7 +29,7 @@ import org.eclipse.rcptt.core.scenario.Context;
  * @model
  * @generated
  */
-public interface WorkspaceContext extends WorkspaceData, Context {
+public interface WorkspaceContext extends Context, WorkspaceData {
 	/**
 	 * Returns the value of the '<em><b>Clear Workspace</b></em>' attribute.
 	 * The default value is <code>"true"</code>.

@@ -607,10 +607,10 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		workspaceContextEClass.getESuperTypes().add(this.getWorkspaceData());
 		workspaceContextEClass.getESuperTypes().add(theScenarioPackage.getContext());
-		workspaceVerificationEClass.getESuperTypes().add(this.getWorkspaceData());
+		workspaceContextEClass.getESuperTypes().add(this.getWorkspaceData());
 		workspaceVerificationEClass.getESuperTypes().add(theScenarioPackage.getVerification());
+		workspaceVerificationEClass.getESuperTypes().add(this.getWorkspaceData());
 		wsContainerEClass.getESuperTypes().add(this.getWSResource());
 		wsFileEClass.getESuperTypes().add(this.getWSResource());
 		wsFolderEClass.getESuperTypes().add(this.getWSContainer());
@@ -622,7 +622,7 @@ public class WorkspacePackageImpl extends EPackageImpl implements WorkspacePacka
 		wsProjectLinkEClass.getESuperTypes().add(this.getWSFolderLink());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(workspaceDataEClass, WorkspaceData.class, "WorkspaceData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(workspaceDataEClass, WorkspaceData.class, "WorkspaceData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWorkspaceData_Content(), this.getWSRoot(), null, "content", null, 0, 1, WorkspaceData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkspaceData_Location(), ecorePackage.getEString(), "location", null, 0, 1, WorkspaceData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

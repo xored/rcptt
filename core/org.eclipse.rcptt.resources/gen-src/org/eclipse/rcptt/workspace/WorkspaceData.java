@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  *
  * @see org.eclipse.rcptt.workspace.WorkspacePackage#getWorkspaceData()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface WorkspaceData extends EObject {

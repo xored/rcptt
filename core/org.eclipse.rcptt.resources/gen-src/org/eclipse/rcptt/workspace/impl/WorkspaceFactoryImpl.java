@@ -64,7 +64,6 @@ public class WorkspaceFactoryImpl extends EFactoryImpl implements WorkspaceFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case WorkspacePackage.WORKSPACE_DATA: return createWorkspaceData();
 			case WorkspacePackage.WORKSPACE_CONTEXT: return createWorkspaceContext();
 			case WorkspacePackage.WORKSPACE_VERIFICATION: return createWorkspaceVerification();
 			case WorkspacePackage.WS_FILE: return createWSFile();
@@ -78,16 +77,6 @@ public class WorkspaceFactoryImpl extends EFactoryImpl implements WorkspaceFacto
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public WorkspaceData createWorkspaceData() {
-		WorkspaceDataImpl workspaceData = new WorkspaceDataImpl();
-		return workspaceData;
 	}
 
 	/**

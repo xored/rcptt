@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="workspace" nsURI="http://eclipse.org/rcptt/ctx/workspace" nsPrefix="org.eclipse.rcptt.ctx.workspace">
-  <eClassifiers xsi:type="ecore:EClass" name="WorkspaceData">
+  <eClassifiers xsi:type="ecore:EClass" name="WorkspaceData" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//WSRoot"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="WorkspaceContext" eSuperTypes="#//WorkspaceData ../../org.eclipse.rcptt.core.scenario/models/scenario.ecore#//Context">
+  <eClassifiers xsi:type="ecore:EClass" name="WorkspaceContext" eSuperTypes="../../org.eclipse.rcptt.core.scenario/models/scenario.ecore#//Context #//WorkspaceData">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clearWorkspace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ignoredByClearPattern"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="WorkspaceVerification" eSuperTypes="#//WorkspaceData ../../org.eclipse.rcptt.core.scenario/models/scenario.ecore#//Verification">
+  <eClassifiers xsi:type="ecore:EClass" name="WorkspaceVerification" eSuperTypes="../../org.eclipse.rcptt.core.scenario/models/scenario.ecore#//Verification #//WorkspaceData">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowUncapturedFiles" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ignoredLines" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

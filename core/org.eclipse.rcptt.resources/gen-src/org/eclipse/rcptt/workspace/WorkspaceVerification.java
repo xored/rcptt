@@ -29,7 +29,7 @@ import org.eclipse.rcptt.core.scenario.Verification;
  * @model
  * @generated
  */
-public interface WorkspaceVerification extends WorkspaceData, Verification {
+public interface WorkspaceVerification extends Verification, WorkspaceData {
 
 	/**
 	 * Returns the value of the '<em><b>Allow Uncaptured Files</b></em>' attribute.

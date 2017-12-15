@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.rcptt.core.scenario.ScenarioPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,10 +65,10 @@ public interface WorkspacePackage extends EPackage {
 	WorkspacePackage eINSTANCE = org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl <em>Data</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.WorkspaceData <em>Data</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl
+	 * @see org.eclipse.rcptt.workspace.WorkspaceData
 	 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceData()
 	 * @generated
 	 */
@@ -111,31 +112,13 @@ public interface WorkspacePackage extends EPackage {
 	int WORKSPACE_CONTEXT = 1;
 
 	/**
-	 * The feature id for the '<em><b>Content</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__CONTENT = WORKSPACE_DATA__CONTENT;
-
-	/**
-	 * The feature id for the '<em><b>Location</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_CONTEXT__LOCATION = WORKSPACE_DATA__LOCATION;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__NAME = WORKSPACE_DATA_FEATURE_COUNT + 0;
+	int WORKSPACE_CONTEXT__NAME = ScenarioPackage.CONTEXT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -144,7 +127,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__VERSION = WORKSPACE_DATA_FEATURE_COUNT + 1;
+	int WORKSPACE_CONTEXT__VERSION = ScenarioPackage.CONTEXT__VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -153,7 +136,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__ID = WORKSPACE_DATA_FEATURE_COUNT + 2;
+	int WORKSPACE_CONTEXT__ID = ScenarioPackage.CONTEXT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -162,7 +145,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__DESCRIPTION = WORKSPACE_DATA_FEATURE_COUNT + 3;
+	int WORKSPACE_CONTEXT__DESCRIPTION = ScenarioPackage.CONTEXT__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Tags</b></em>' attribute.
@@ -171,7 +154,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__TAGS = WORKSPACE_DATA_FEATURE_COUNT + 4;
+	int WORKSPACE_CONTEXT__TAGS = ScenarioPackage.CONTEXT__TAGS;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -180,7 +163,25 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__ATTACHMENTS = WORKSPACE_DATA_FEATURE_COUNT + 5;
+	int WORKSPACE_CONTEXT__ATTACHMENTS = ScenarioPackage.CONTEXT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Content</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__CONTENT = ScenarioPackage.CONTEXT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_CONTEXT__LOCATION = ScenarioPackage.CONTEXT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Clear Workspace</b></em>' attribute.
@@ -189,7 +190,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__CLEAR_WORKSPACE = WORKSPACE_DATA_FEATURE_COUNT + 6;
+	int WORKSPACE_CONTEXT__CLEAR_WORKSPACE = ScenarioPackage.CONTEXT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ignored By Clear Pattern</b></em>' attribute.
@@ -198,7 +199,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN = WORKSPACE_DATA_FEATURE_COUNT + 7;
+	int WORKSPACE_CONTEXT__IGNORED_BY_CLEAR_PATTERN = ScenarioPackage.CONTEXT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Context</em>' class.
@@ -207,7 +208,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_CONTEXT_FEATURE_COUNT = WORKSPACE_DATA_FEATURE_COUNT + 8;
+	int WORKSPACE_CONTEXT_FEATURE_COUNT = ScenarioPackage.CONTEXT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.workspace.impl.WSResourceImpl <em>WS Resource</em>}' class.
@@ -320,31 +321,13 @@ public interface WorkspacePackage extends EPackage {
 	int WORKSPACE_VERIFICATION = 2;
 
 	/**
-	 * The feature id for the '<em><b>Content</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_VERIFICATION__CONTENT = WORKSPACE_DATA__CONTENT;
-
-	/**
-	 * The feature id for the '<em><b>Location</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKSPACE_VERIFICATION__LOCATION = WORKSPACE_DATA__LOCATION;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__NAME = WORKSPACE_DATA_FEATURE_COUNT + 0;
+	int WORKSPACE_VERIFICATION__NAME = ScenarioPackage.VERIFICATION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -353,7 +336,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__VERSION = WORKSPACE_DATA_FEATURE_COUNT + 1;
+	int WORKSPACE_VERIFICATION__VERSION = ScenarioPackage.VERIFICATION__VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -362,7 +345,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__ID = WORKSPACE_DATA_FEATURE_COUNT + 2;
+	int WORKSPACE_VERIFICATION__ID = ScenarioPackage.VERIFICATION__ID;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -371,7 +354,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__DESCRIPTION = WORKSPACE_DATA_FEATURE_COUNT + 3;
+	int WORKSPACE_VERIFICATION__DESCRIPTION = ScenarioPackage.VERIFICATION__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Tags</b></em>' attribute.
@@ -380,7 +363,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__TAGS = WORKSPACE_DATA_FEATURE_COUNT + 4;
+	int WORKSPACE_VERIFICATION__TAGS = ScenarioPackage.VERIFICATION__TAGS;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -389,7 +372,25 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__ATTACHMENTS = WORKSPACE_DATA_FEATURE_COUNT + 5;
+	int WORKSPACE_VERIFICATION__ATTACHMENTS = ScenarioPackage.VERIFICATION__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Content</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__CONTENT = ScenarioPackage.VERIFICATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Location</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE_VERIFICATION__LOCATION = ScenarioPackage.VERIFICATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Allow Uncaptured Files</b></em>' attribute.
@@ -398,7 +399,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES = WORKSPACE_DATA_FEATURE_COUNT + 6;
+	int WORKSPACE_VERIFICATION__ALLOW_UNCAPTURED_FILES = ScenarioPackage.VERIFICATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ignored Lines</b></em>' attribute.
@@ -407,7 +408,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION__IGNORED_LINES = WORKSPACE_DATA_FEATURE_COUNT + 7;
+	int WORKSPACE_VERIFICATION__IGNORED_LINES = ScenarioPackage.VERIFICATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Verification</em>' class.
@@ -416,7 +417,7 @@ public interface WorkspacePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_VERIFICATION_FEATURE_COUNT = WORKSPACE_DATA_FEATURE_COUNT + 8;
+	int WORKSPACE_VERIFICATION_FEATURE_COUNT = ScenarioPackage.VERIFICATION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1217,10 +1218,10 @@ public interface WorkspacePackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl <em>Data</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.rcptt.workspace.WorkspaceData <em>Data</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.workspace.impl.WorkspaceDataImpl
+		 * @see org.eclipse.rcptt.workspace.WorkspaceData
 		 * @see org.eclipse.rcptt.workspace.impl.WorkspacePackageImpl#getWorkspaceData()
 		 * @generated
 		 */

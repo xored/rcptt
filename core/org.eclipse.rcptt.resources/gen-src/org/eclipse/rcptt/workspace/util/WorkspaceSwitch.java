@@ -104,8 +104,8 @@ public class WorkspaceSwitch<T> {
 			case WorkspacePackage.WORKSPACE_CONTEXT: {
 				WorkspaceContext workspaceContext = (WorkspaceContext)theEObject;
 				T result = caseWorkspaceContext(workspaceContext);
-				if (result == null) result = caseWorkspaceData(workspaceContext);
 				if (result == null) result = caseContext(workspaceContext);
+				if (result == null) result = caseWorkspaceData(workspaceContext);
 				if (result == null) result = caseNamedElement(workspaceContext);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -113,8 +113,8 @@ public class WorkspaceSwitch<T> {
 			case WorkspacePackage.WORKSPACE_VERIFICATION: {
 				WorkspaceVerification workspaceVerification = (WorkspaceVerification)theEObject;
 				T result = caseWorkspaceVerification(workspaceVerification);
-				if (result == null) result = caseWorkspaceData(workspaceVerification);
 				if (result == null) result = caseVerification(workspaceVerification);
+				if (result == null) result = caseWorkspaceData(workspaceVerification);
 				if (result == null) result = caseNamedElement(workspaceVerification);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
