@@ -13,6 +13,12 @@
 
 <plugin>
    <extension
+         point="org.eclipse.rcptt.tesla.core.networkProcessor">
+      <provider
+            class="org.eclipse.rcptt.runtime.internal.ui.Q7NetworkClientProcessor">
+      </provider>
+   </extension>
+   <extension
          point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet
             class="org.eclipse.rcptt.runtime.internal.ui.GetPerspectivesService"

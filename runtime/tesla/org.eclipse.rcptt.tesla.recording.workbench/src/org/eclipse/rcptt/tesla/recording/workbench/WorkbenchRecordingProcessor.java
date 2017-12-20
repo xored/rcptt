@@ -176,66 +176,6 @@ public class WorkbenchRecordingProcessor
 	private IWindowListener windowListener;
 
 	public WorkbenchRecordingProcessor() {
-		locator = new WorkbenchWidgetLocator(recorder, getSWTRecorder().getLocator(),
-				SWTRecordingHelper.getHelper().getPlayer());
-		getSWTRecorder().getLocator().addExtension(locator);
-
-		listener = new PartListener();
-		pageListener = new IPageListener() {
-
-			public void pageOpened(IWorkbenchPage page) {
-				page.addPartListener(listener);
-			}
-
-			public void pageClosed(IWorkbenchPage page) {
-			}
-
-			public void pageActivated(IWorkbenchPage page) {
-				page.addPartListener(listener);
-			}
-		};
-		windowListener = new IWindowListener() {
-
-			public void windowOpened(IWorkbenchWindow window) {
-				window.addPageListener(pageListener);
-				IWorkbenchPage[] pages = window.getPages();
-				for (IWorkbenchPage page : pages) {
-					page.addPartListener(listener);
-				}
-			}
-
-			public void windowDeactivated(IWorkbenchWindow window) {
-			}
-
-			public void windowClosed(IWorkbenchWindow window) {
-			}
-
-			public void windowActivated(IWorkbenchWindow window) {
-				window.addPageListener(pageListener);
-			}
-		};
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		workbench.addWindowListener(windowListener);
-		IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
-		for (IWorkbenchWindow win : windows) {
-			win.addPageListener(pageListener);
-			IWorkbenchPage[] pages = win.getPages();
-			for (IWorkbenchPage page : pages) {
-				page.addPartListener(listener);
-			}
-		}
-
-		SWTEventManager.addListener(this);
-		WorkbenchEventManager.addListener(this);
-		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
-			public boolean preShutdown(IWorkbench workbench, boolean forced) {
-				return true;
-			}
-
-			public void postShutdown(IWorkbench workbench) {
-				restartEclipse();
-			}
-		});
 	}
 
 	public void closeEditors(IEditorReference[] refArray) {
@@ -427,6 +367,66 @@ public class WorkbenchRecordingProcessor
 
 	public void initialize(TeslaRecorder teslaRecorder) {
 		this.recorder = teslaRecorder;
+		locator = new WorkbenchWidgetLocator(recorder, getSWTRecorder().getLocator(),
+				SWTRecordingHelper.getHelper().getPlayer());
+		getSWTRecorder().getLocator().addExtension(locator);
+
+		listener = new PartListener();
+		pageListener = new IPageListener() {
+
+			public void pageOpened(IWorkbenchPage page) {
+				page.addPartListener(listener);
+			}
+
+			public void pageClosed(IWorkbenchPage page) {
+			}
+
+			public void pageActivated(IWorkbenchPage page) {
+				page.addPartListener(listener);
+			}
+		};
+		windowListener = new IWindowListener() {
+
+			public void windowOpened(IWorkbenchWindow window) {
+				window.addPageListener(pageListener);
+				IWorkbenchPage[] pages = window.getPages();
+				for (IWorkbenchPage page : pages) {
+					page.addPartListener(listener);
+				}
+			}
+
+			public void windowDeactivated(IWorkbenchWindow window) {
+			}
+
+			public void windowClosed(IWorkbenchWindow window) {
+			}
+
+			public void windowActivated(IWorkbenchWindow window) {
+				window.addPageListener(pageListener);
+			}
+		};
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		workbench.addWindowListener(windowListener);
+		IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
+		for (IWorkbenchWindow win : windows) {
+			win.addPageListener(pageListener);
+			IWorkbenchPage[] pages = win.getPages();
+			for (IWorkbenchPage page : pages) {
+				page.addPartListener(listener);
+			}
+		}
+
+		SWTEventManager.addListener(this);
+		WorkbenchEventManager.addListener(this);
+		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+			public boolean preShutdown(IWorkbench workbench, boolean forced) {
+				return true;
+			}
+
+			public void postShutdown(IWorkbench workbench) {
+				restartEclipse();
+			}
+		});
 	}
 
 	public int getInitLevel() {

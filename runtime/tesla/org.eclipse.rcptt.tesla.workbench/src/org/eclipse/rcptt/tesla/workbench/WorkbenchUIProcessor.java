@@ -57,6 +57,7 @@ import org.eclipse.rcptt.tesla.internal.core.info.InfoUtils.Node;
 import org.eclipse.rcptt.tesla.internal.core.processing.ElementGenerator;
 import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
+import org.eclipse.rcptt.tesla.internal.ui.player.ISWTUIPlayerExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
@@ -111,6 +112,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	private Display display;
 
+	private ISWTUIPlayerExtension extension;
 	private SWTUIProcessor swtProcessor;
 	private SWTUIPlayer swtPlayer;
 	private WorkbenchUIPlayer workbenchPlayer;
@@ -130,6 +132,9 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 		this.client = client;
 		// TODO (e4 support): remove quick fix
 		this.display = Display.getCurrent();
+
+		this.extension = new WorkbenchUIPlayerExtension();
+		SWTUIPlayer.addExtension(extension);
 	}
 
 	@Override
@@ -137,6 +142,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 		this.client = null;
 		this.display = null;
 
+		SWTUIPlayer.removeExtension(extension);
 		this.swtProcessor = null;
 		this.swtPlayer = null;
 		this.workbenchPlayer = null;

@@ -13,7 +13,7 @@ package org.eclipse.rcptt.tesla.workbench.provider;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.tesla.internal.workbench.TeslaWorkbenchPlugin;
 
 public class EclipseWorkbenchProvider {
 	private static IEclipseWorkbenchProvider currentProvider = null;
@@ -25,7 +25,7 @@ public class EclipseWorkbenchProvider {
 
 	private static void initialize() {
 		if (currentProvider == null) {
-			final String extensionPointId = SWTTeslaActivator.PLUGIN_ID + ".workbenchProvider";
+			final String extensionPointId = TeslaWorkbenchPlugin.PLUGIN_ID + ".workbenchProvider";
 			IConfigurationElement[] elements = Platform.getExtensionRegistry()
 					.getConfigurationElementsFor(
 							extensionPointId);
@@ -42,7 +42,7 @@ public class EclipseWorkbenchProvider {
 			}
 			if (currentProvider == null)
 				throw new NullPointerException("Failed to find " + extensionPointId
-						+ " extension. Is org.eclipse.rcptt.tesla.swt.e*x extension loaded?");
+						+ " extension. Is org.eclipse.rcptt.tesla.workbench.e*x extension loaded?");
 		}
 	}
 }

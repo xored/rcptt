@@ -33,8 +33,10 @@ public class ChildrenCollector {
 
 	public SWTUIElement[] collectFor(SWTUIElement w, SWTUIElement[] ignores,
 			boolean goIntoComposites, Class<?>[] classes, SWTUIElement after) {
-		// for WorkbenchUIElement
-		after = player.wrap(after.unwrapWidget());
+		if (after != null) {
+			// for WorkbenchUIElement
+			after = player.wrap(after.unwrapWidget());
+		}
 		if (after == null) {
 			return collectFor(w, ignores, goIntoComposites, classes);
 		}

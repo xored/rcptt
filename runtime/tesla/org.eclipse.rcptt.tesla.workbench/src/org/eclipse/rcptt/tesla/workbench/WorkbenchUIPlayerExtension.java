@@ -13,11 +13,10 @@ import java.util.Set;
 
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
-import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
+import org.eclipse.rcptt.tesla.internal.ui.player.AbstractSWTUIPlayerExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.ChildrenCollectingSession;
 import org.eclipse.rcptt.tesla.internal.ui.player.IChildrenCollectingExtension;
-import org.eclipse.rcptt.tesla.internal.ui.player.ISWTUIPlayerExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils;
@@ -42,7 +41,7 @@ import org.eclipse.ui.internal.WorkbenchPartReference;
 import org.eclipse.ui.internal.registry.EditorRegistry;
 
 @SuppressWarnings("restriction")
-public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
+public class WorkbenchUIPlayerExtension extends AbstractSWTUIPlayerExtension {
 	
 	// TODO (e4 support): is it needed?
 	protected static Map<Class<?>, ElementKind> elementKinds = new LinkedHashMap<Class<?>, ElementKind>();
@@ -104,14 +103,19 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 				return false;
 			}
 			return true;
-		} else {
-			boolean visible = true;
-			Widget control = unwrapWidget(widget);
-			if (control instanceof Control) {
-				visible = !control.isDisposed() && PlayerWidgetUtils.isVisible((Control) control);
-			}
-			return !PlayerWidgetUtils.isDisabled(widget) && visible;
 		}
+
+		ElementKind kind = widget.getKind().kind;
+		if (!ElementKind.View.equals(kind) && !ElementKind.Editor.equals(kind)) {
+			return false;
+		}
+
+		boolean visible = true;
+		Widget control = unwrapWidget(widget);
+		if (control instanceof Control) {
+			visible = !control.isDisposed() && PlayerWidgetUtils.isVisible((Control) control);
+		}
+		return !PlayerWidgetUtils.isDisabled(widget) && visible;
 	}
 
 	private boolean canClickView(SWTUIElement w) {
@@ -317,7 +321,7 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 
 			@Override
 			public void collect() {
-				if (session.w instanceof WorkbenchUIElement) {
+				if (!(session.w instanceof WorkbenchUIElement)) {
 					return;
 				}
 				WorkbenchUIElement wbelement = (WorkbenchUIElement) session.w;
@@ -363,26 +367,6 @@ public class WorkbenchUIPlayerExtension implements ISWTUIPlayerExtension {
 	@Override
 	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
 		EclipseWorkbenchProvider.getProvider().updateActiveSelection(selectionData, element);
-	}
-
-	@Override
-	public GenericElementKind getKind(Object w) {
-		return null;
-	}
-
-	@Override
-	public SWTUIElement getShell(SWTUIElement element) {
-		return null;
-	}
-
-	@Override
-	public Class<?> getSearchableClass(Object widget) {
-		return null;
-	}
-
-	@Override
-	public boolean isCollectable(SWTUIElement element, Class<?>[] collectableTypes) {
-		return false;
 	}
 
 }

@@ -13,7 +13,7 @@
 
 <plugin>
    <extension
-         point="org.eclipse.rcptt.tesla.swt.workbenchProvider">
+         point="org.eclipse.rcptt.tesla.workbench.workbenchProvider">
       <workbenchProvider
             class="org.eclipse.rcptt.tesla.workbench.e3x.ClassicEclipseWorkbenchProvider">
       </workbenchProvider>

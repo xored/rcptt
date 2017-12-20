@@ -11,15 +11,7 @@
     	Xored Software Inc - initial API and implementation and/or initial documentation
  -->
 
-<plugin>
-   <extension
-         point="org.eclipse.rcptt.tesla.core.networkProcessor">
-      <provider
-            class="org.eclipse.rcptt.internal.runtime.Q7NetworkClientProcessor">
-      </provider>
-   </extension>
-   
-   
+<plugin>   
    <extension
          point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet

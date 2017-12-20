@@ -78,7 +78,8 @@ public class WorkbenchWidgetLocator implements IWidgetLocatorExtension {
 			SWTUIElement uiElement = getSWTPlayer().wrap(control);
 			SWTUIElement parentElement = getSWTPlayer().getParentElement(uiElement);
 
-			FindResult parentResult = findElement(parentElement, unknownAllowed, alwaysFindLeaf,
+			// TODO (e4 support): check findElement() from swt locator usage
+			FindResult parentResult = getSWTLocator().findElement(parentElement, unknownAllowed, alwaysFindLeaf,
 					supportEclipseWorkbench);
 
 			if (parentResult != null && parentResult.element != null) {
@@ -308,7 +309,9 @@ public class WorkbenchWidgetLocator implements IWidgetLocatorExtension {
 		if (part instanceof IEditorPart) {
 			IEditorPart editorPart = (IEditorPart) part;
 			String title = ((WorkbenchPart) editorPart).getPartName();
-			FindResult element = findElement(getSWTPlayer().wrap(window.getShell()), false, false, false);
+			// TODO (e4 support): check findElement() from swt locator usage
+			FindResult element = getSWTLocator().findElement(getSWTPlayer().wrap(window.getShell()), false, false,
+					false);
 			WindowUIElement windowElement = new WindowUIElement(element.element, getRecorder());
 			getRecorder().setControls(SWTModelMapper.map(wrap));
 

@@ -133,7 +133,8 @@ import org.eclipse.swt.widgets.Widget;
 public final class SWTUIPlayer {
 	private static final boolean DEBUG_PROCEED = "true"
 			.equals(Platform.getDebugOption("org.eclipse.rcptt.tesla.swt/debug/proceed"));
-	final Display display;
+	// TODO (e4 support): remove quick fix
+	/* final */ Display display = Display.getDefault();
 	private SWTUIElement[] ignoreWindows;
 	private Shell[] ignoredShells;
 	private final List<File> screenshotsDuringSession = null;
@@ -1507,6 +1508,8 @@ public final class SWTUIPlayer {
 	}
 
 	public boolean canProceed(Context context, Q7WaitInfoRoot info) {
+		// TODO (e4 support): remove quick fix
+		this.display = Display.getDefault();
 		if (!display.equals(Display.getCurrent())) {
 			// Q7WaitUtils.updateInfo("display", "non current", info);
 			debugProceed("Wrong display");
@@ -2258,7 +2261,9 @@ public final class SWTUIPlayer {
 	}
 
 	public Display getDisplay() {
-		return display;
+		// TODO (e4 support): remove quick fix
+		// return display;
+		return Display.getDefault();
 	}
 
 	public void wakeup() {

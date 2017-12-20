@@ -565,14 +565,13 @@ public class TeslaSWTAccess {
 		return false;
 	}
 
-	@SuppressWarnings("restriction")
+	// TODO (e4 support): remove optional dependency from tesla.swt to ui.workbench?
 	public static Object getDecoratorManagerFamily() {
 		try {
 			Class<?> decoratorManager = Class.forName("org.eclipse.ui.internal.decorators.DecoratorManager");
 			Field familyField = decoratorManager.getField("FAMILY_DECORATE");
 			familyField.setAccessible(true);
 			return familyField.get(decoratorManager);
-
 		} catch (Throwable e) {
 			TeslaCore.log(e);
 		}
