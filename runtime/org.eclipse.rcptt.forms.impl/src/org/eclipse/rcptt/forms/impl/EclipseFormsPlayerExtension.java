@@ -87,7 +87,7 @@ public class EclipseFormsPlayerExtension extends AbstractSWTUIPlayerExtension {
 	}
 
 	@Override
-	public Object getIndirectParent(Widget widget) {
+	public Widget getIndirectParent(Widget widget) {
 		if (widget instanceof Hyperlink) {
 			return ((Hyperlink) widget).getParent();
 		} else if (widget instanceof AbstractHyperlink) {

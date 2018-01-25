@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1949,9 +1948,9 @@ public final class SWTUIPlayer {
 		// TODO Auto-generated method stub
 	}
 
-	private static Object parentFromExtension(Widget current) {
+	private static Widget parentFromExtension(Widget current) {
 		for (ISWTUIPlayerExtension ext : getExtensions()) {
-			Object result = ext.getIndirectParent(current);
+			Widget result = ext.getIndirectParent(current);
 			if (result != null) {
 				return result;
 			}
@@ -1959,22 +1958,32 @@ public final class SWTUIPlayer {
 		return null;
 	}
 
-	public List<SWTUIElement> collectParents(Widget widget, Widget... stopAt) {
-		List<SWTUIElement> parents = new ArrayList<SWTUIElement>();
+	private static Object getReference(Widget current) {
+		for (ISWTUIPlayerExtension ext : getExtensions()) {
+			Object result = ext.getReference(current);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	public static List<Widget> collectParents(Widget widget, Widget... stopAt) {
+		List<Widget> parents = new ArrayList<Widget>();
 		if (widget == null || widget.isDisposed()) {
 			return parents;
 		}
 		Widget current = widget;
 		Widget prev = null;
-		SWTUIElement currentParent = null;
 		while (current != null) {
 			prev = current;
-			currentParent = null;
-			Object indirectParent = parentFromExtension(current);
+			Widget indirectParent = parentFromExtension(current);
 			if (indirectParent != null) {
-				currentParent = wrap(indirectParent);
-				current = currentParent.unwrapWidget();
+				current = indirectParent;
 			} else if (current instanceof Control) {
+				// TODO (e4 support): should we check for view/editor toolbars,
+				// because they may have different parent?
+				// see deleted code
 				current = ((Control) current).getParent();
 			} else if (current instanceof TreeItem) {
 				current = ((TreeItem) current).getParent();
@@ -2006,7 +2015,7 @@ public final class SWTUIPlayer {
 						if (coolItem != null) {
 							Control control = coolItem.getControl();
 							if (control != null && control.equals(prev)) {
-								parents.add(wrap(coolItem));
+								parents.add(coolItem);
 							}
 						}
 					}
@@ -2023,11 +2032,7 @@ public final class SWTUIPlayer {
 						break;
 					}
 				}
-				if (currentParent != null) {
-					parents.add(currentParent);
-				} else {
-					parents.add(wrap(current));
-				}
+				parents.add(current);
 			}
 		}
 		return parents;
@@ -2124,23 +2129,24 @@ public final class SWTUIPlayer {
 	}
 
 	public List<SWTUIElement> getParentsList(SWTUIElement swtuiElement) {
-		List<SWTUIElement> parents = collectParents(unwrapWidget(swtuiElement));
-		Iterator<SWTUIElement> iterator = parents.iterator();
-		while (iterator.hasNext()) {
-			SWTUIElement e = iterator.next();
+		List<Widget> parents = collectParents(unwrapWidget(swtuiElement));
+		List<SWTUIElement> elements = new ArrayList<SWTUIElement>();
+		for (Widget widget : parents) {
+			Object reference = getReference(widget);
+			SWTUIElement e = wrap(reference == null ? widget : reference);
 			if (e != null) {
 				GenericElementKind kind = e.getKind();
 				if (kind.is(ElementKind.Any) || kind.is(ElementKind.Unknown) || kind.is(ElementKind.Toolbar)
 						|| kind.is(ElementKind.CoolBar) || kind.is(ElementKind.CBanner)
 						|| kind.is(ElementKind.TabFolder) || kind.is(ElementKind.Canvas)
 						|| kind.is(ElementKind.Combo)) {
-					iterator.remove();
-				} else if (!isVisible(e)) {
-					iterator.remove();
+					continue;
 				}
+				if (isVisible(e))
+					elements.add(e);
 			}
 		}
-		return parents;
+		return elements;
 	}
 
 	public UIJobCollector getCollector() {

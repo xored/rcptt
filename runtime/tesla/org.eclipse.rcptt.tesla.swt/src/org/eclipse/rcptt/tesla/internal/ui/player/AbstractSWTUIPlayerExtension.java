@@ -49,7 +49,7 @@ public abstract class AbstractSWTUIPlayerExtension implements
 	}
 
 	@Override
-	public Object getIndirectParent(Widget current) {
+	public Widget getIndirectParent(Widget current) {
 		return null;
 	}
 
@@ -76,6 +76,11 @@ public abstract class AbstractSWTUIPlayerExtension implements
 
 	@Override
 	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
+	}
+
+	@Override
+	public Object getReference(Widget widget) {
+		return null;
 	}
 
 }

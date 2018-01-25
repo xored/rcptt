@@ -54,7 +54,7 @@ public class ExpandBarPlayerExtension extends AbstractSWTUIPlayerExtension {
 	}
 
 	@Override
-	public Object getIndirectParent(Widget current) {
+	public Widget getIndirectParent(Widget current) {
 		if (current instanceof ExpandItem) {
 			return ((ExpandItem) current).getParent();
 		}

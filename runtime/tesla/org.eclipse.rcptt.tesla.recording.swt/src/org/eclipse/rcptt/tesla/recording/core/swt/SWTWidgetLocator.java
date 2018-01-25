@@ -102,10 +102,7 @@ public final class SWTWidgetLocator {
 				return "";
 			}
 
-			List<Widget> parents = new ArrayList<Widget>();
-			for (SWTUIElement parentElement : getPlayer().collectParents(widget)) {
-				parents.add(parentElement.unwrapWidget());
-			}
+			List<Widget> parents = SWTUIPlayer.collectParents(widget);
 			Collections.reverse(parents);
 
 			StringBuilder builder = new StringBuilder();

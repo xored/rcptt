@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
+import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.AbstractSWTUIPlayerExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.ChildrenCollectingSession;
@@ -26,7 +27,6 @@ import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorReference;
@@ -43,12 +43,28 @@ import org.eclipse.ui.internal.registry.EditorRegistry;
 @SuppressWarnings("restriction")
 public class WorkbenchUIPlayerExtension extends AbstractSWTUIPlayerExtension {
 	
-	// TODO (e4 support): is it needed?
 	protected static Map<Class<?>, ElementKind> elementKinds = new LinkedHashMap<Class<?>, ElementKind>();
 	
 	static {
 		elementKinds.put(IViewReference.class, ElementKind.View);
 		elementKinds.put(IEditorReference.class, ElementKind.Editor);
+	}
+
+	@Override
+	public GenericElementKind getKind(Object w) {
+		ElementKind kind = elementKinds.get(w.getClass());
+		if (kind == null) {
+			for (Map.Entry<Class<?>, ElementKind> entry : elementKinds.entrySet()) {
+				Class<?> key = entry.getKey();
+				if (key.isInstance(w)) {
+					return new GenericElementKind(entry.getValue());
+				}
+			}
+		}
+		if (kind != null) {
+			return new GenericElementKind(kind);
+		}
+		return null;
 	}
 
 	@Override
@@ -352,21 +368,18 @@ public class WorkbenchUIPlayerExtension extends AbstractSWTUIPlayerExtension {
 	}
 
 	@Override
-	public Object getIndirectParent(Widget current) {
-		if (current instanceof ToolBar) {
-			// Check work view/editor toolbars, they have different parent
-			Map<Control, Object> references = EclipseWorkbenchProvider.getProvider()
-					.getWorkbenchReference();
-			if (references != null && references.containsKey(current)) {
-				return references.get(current);
-			}
-		}
-		return null;
+	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
+		EclipseWorkbenchProvider.getProvider().updateActiveSelection(selectionData, element);
 	}
 
 	@Override
-	public void updateActiveSelection(List<Object> selectionData, SWTUIElement element) {
-		EclipseWorkbenchProvider.getProvider().updateActiveSelection(selectionData, element);
+	public Object getReference(Widget widget) {
+		Map<Control, Object> references = EclipseWorkbenchProvider.getProvider()
+				.getWorkbenchReference();
+		if (references != null && references.containsKey(widget)) {
+			return references.get(widget);
+		}
+		return null;
 	}
 
 }

@@ -77,7 +77,7 @@ public interface ISWTUIPlayerExtension {
 	 * @param current
 	 * @return
 	 */
-	Object getIndirectParent(Widget current);
+	Widget getIndirectParent(Widget current);
 
 	/**
 	 * Returns real class for supported widget
@@ -120,5 +120,12 @@ public interface ISWTUIPlayerExtension {
 	 * @param element
 	 */
 	void updateActiveSelection(List<Object> selectionData, SWTUIElement element);
+
+	/**
+	 * Gets widget reference, for example workbench reference
+	 * 
+	 * @param widget
+	 */
+	Object getReference(Widget widget);
 
 }
