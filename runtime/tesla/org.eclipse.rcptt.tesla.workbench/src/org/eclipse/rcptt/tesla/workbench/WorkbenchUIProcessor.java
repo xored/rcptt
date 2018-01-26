@@ -751,7 +751,6 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	@Override
 	public void postSelect(Element element, IElementProcessorMapper mapper) {
-
 	}
 
 	@Override
