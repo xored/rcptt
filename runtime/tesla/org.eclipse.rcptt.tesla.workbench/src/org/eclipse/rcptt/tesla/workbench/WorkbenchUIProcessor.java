@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.CellEditor;
@@ -56,6 +55,7 @@ import org.eclipse.rcptt.tesla.internal.core.info.InfoUtils;
 import org.eclipse.rcptt.tesla.internal.core.info.InfoUtils.Node;
 import org.eclipse.rcptt.tesla.internal.core.processing.ElementGenerator;
 import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
+import org.eclipse.rcptt.tesla.internal.ui.SWTElementMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTUIPlayerExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.PlayerSelectionFilter;
@@ -88,6 +88,10 @@ import org.eclipse.ui.handlers.IHandlerService;
 public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMapperExtension {
 
 	private static final ElementKind[] allSelectors = {
+			ElementKind.EclipseWindow,
+			ElementKind.View,
+			ElementKind.Editor,
+			ElementKind.QuickAccess,
 			ElementKind.Button
 	};
 
@@ -109,6 +113,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 			.unmodifiableSet(new HashSet<>(Arrays.asList("ContextInformationPopup.createContextInfoPopup()")));
 
 	private AbstractTeslaClient client;
+	private String id;
 
 	private Display display;
 
@@ -130,6 +135,8 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	@Override
 	public void initialize(AbstractTeslaClient client, String id) {
 		this.client = client;
+		this.id = id;
+
 		// TODO (e4 support): remove quick fix
 		this.display = Display.getCurrent();
 
@@ -140,6 +147,8 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	@Override
 	public void terminate() {
 		this.client = null;
+		this.id = null;
+
 		this.display = null;
 
 		SWTUIPlayer.removeExtension(extension);
@@ -180,7 +189,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	public boolean activateViewEditor(final Element cmdElement,
 			boolean onlyOpen, Q7WaitInfoRoot info) {
-		final SWTUIElement element = getSWTProcessor().getMapper().get(cmdElement);
+		final SWTUIElement element = getMapper().get(cmdElement);
 		if (element != null) {
 			return activateViewEditor(element, onlyOpen, info);
 		}
@@ -340,27 +349,33 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 				return handleClickPreferencesMenu((ClickPreferencesMenu) command);
 			case ProtocolPackage.SHOW_TAB_LIST:
 				return handleShowTabList((ShowTabList) command);
+			default:
+				return getSWTProcessor().executeCommand(command, mapper);
 			}
 		}
 		return null;
 	}
 
 	private Response handleClick(final Click command) {
-		final SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
-		if (element != null && !canClickView(element)) {
-			response.setMessage(NLS
-					.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_PerspectiveNotContainsView,
-							element.getText()));
-			response.setStatus(ResponseStatus.FAILED);
-			return response;
+		if (element != null) {
+			if (canClickView(element)) {
+				getSWTPlayer().click(element, command.isDefault(), false,
+						command.isArrow());
+			} else {
+				response.setMessage(NLS
+						.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_PerspectiveNotContainsView,
+								element.getText()));
+				response.setStatus(ResponseStatus.FAILED);
+				return response;
+			}
 		}
 		if (ElementKind.Perspective.toString().equals(
 				command.getElement().getKind())) {
 			getWorkbenchPlayer().setPerspective(command.getElement().getId());
-			return response;
 		}
-		return null;
+		return response;
 	}
 
 	private boolean canClickView(SWTUIElement w) {
@@ -373,17 +388,17 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleSendClose(final Close command) {
-		final SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		final SWTUIElement element = getMapper().get(command.getElement());
 		if (element != null && element instanceof WorkbenchUIElement) {
 			getWorkbenchPlayer().close(element);
-			getSWTProcessor().getMapper().remove(command.getElement());
+			getMapper().remove(command.getElement());
 			return RawFactory.eINSTANCE.createResponse();
 		}
 		return null;
 	}
 
 	private Response handleRestore(Restore command) {
-		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		SWTUIElement element = getMapper().get(command.getElement());
 		Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			getWorkbenchPlayer().restore(element);
@@ -394,7 +409,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleMaximize(Maximize command) {
-		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		SWTUIElement element = getMapper().get(command.getElement());
 		Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			if (element instanceof WorkbenchUIElement) {
@@ -408,7 +423,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleMinimize(Minimize command) {
-		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		SWTUIElement element = getMapper().get(command.getElement());
 		Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			getWorkbenchPlayer().minimize(element);
@@ -419,7 +434,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleSave(Save command) {
-		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		SWTUIElement element = getMapper().get(command.getElement());
 		Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			getWorkbenchPlayer().save(element);
@@ -430,7 +445,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleIsDirty(IsDirty command) {
-		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		SWTUIElement element = getMapper().get(command.getElement());
 		BooleanResponse response = ProtocolFactory.eINSTANCE.createBooleanResponse();
 		if (element != null) {
 			response.setResult(getWorkbenchPlayer().isDirty(element));
@@ -441,7 +456,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleTypeAction(final TypeAction command) {
-		final SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			getWorkbenchPlayer().typeAction(element, command.getActionId());
@@ -452,7 +467,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	}
 
 	private Response handleShowTabList(ShowTabList command) {
-		SWTUIElement element = getSWTProcessor().getMapper().get(command.getElement());
+		SWTUIElement element = getMapper().get(command.getElement());
 		Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
 			getWorkbenchPlayer().showTabList(element);
@@ -490,36 +505,29 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	@Override
 	public SelectResponse select(SelectCommand command, ElementGenerator generator, IElementProcessorMapper mapper) {
-		final SelectData data = command.getData();
-		SWTUIElement parent = getSWTProcessor().getMapper().get(data.getParent());
-		final SWTUIElement after = getSWTProcessor().getMapper().get(data.getAfter());
-		final EList<String> path = data.getPath();
-		String[] pathArray = null;
-		if (path.size() > 0) {
-			pathArray = path.toArray(new String[path.size()]);
-		}
-		if (parent == null && after != null) {
-			parent = getSWTPlayer().getParentElement(after);
-		}
-		EList<Integer> indexes = data.getIndexes();
-		final SWTUIElement result = getSWTPlayer().select(
-				new PlayerSelectionFilter(parent, GenericElementKind
-						.fromString(data.getKind()), data.getPattern(),
-						pathArray, data.getIndex(), after,
-						indexes.toArray(new Integer[data.getIndexes().size()]),
-						data.getClassPattern()));
+		// TODO (e4 support): is it needed?
+		getSWTPlayer().getCollector().enable();
 
+		final SelectData data = command.getData();
+		final SWTUIElement result = getWorkbenchPlayer().select(
+				new PlayerSelectionFilter(null, GenericElementKind
+						.fromString(data.getKind()), data.getPattern(),
+						null, data.getIndex(), null, null,
+						data.getClassPattern())); // fill non-used params as null
 		if (result != null) {
-			// will be selected by SWTUIPlayer
-			return null;
+			final SelectResponse response = ProtocolFactory.eINSTANCE.createSelectResponse();
+			response.getElements().add(getMapper().get(result));
+			return response;
 		}
+
+		final SWTUIElement parent = getMapper().get(data.getParent());
 		if (parent != null && isWorkbenchWindow(parent)
 				&& data.getKind().equals(ElementKind.Button.toString())
 				&& data.getPattern() != null
 				&& data.getPattern().endsWith(" perspective")) {
-			String perspectiveName = data.getPattern().substring(0, data.getPattern().lastIndexOf(" perspective"));
-			PerspectiveUIElement perspective = new PerspectiveUIElement(perspectiveName);
-
+			final String perspectiveName = data.getPattern().substring(0,
+					data.getPattern().lastIndexOf(" perspective"));
+			final PerspectiveUIElement perspective = new PerspectiveUIElement(perspectiveName);
 			if (perspective.isPerspeciveFind()) {
 				final Element element = RawFactory.eINSTANCE.createElement();
 				element.setKind(perspective.getGenerationKind());
@@ -556,6 +564,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 		// Required element hierarchy
 		SWTUIElement uiElement = null;
 		if (element != null) {
+			// TODO (e4 support) what mapper should be used here?
 			uiElement = getSWTProcessor().getMapper().get(element);
 		}
 		if (uiElement != null) {
@@ -747,6 +756,10 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 			SWTModelMapper.fillControl(editor, ((org.eclipse.swt.widgets.Control) element.unwrapWidget()));
 		}
 		return editor;
+	}
+
+	public SWTElementMapper getMapper() {
+		return SWTElementMapper.getMapper(id);
 	}
 
 	@Override
