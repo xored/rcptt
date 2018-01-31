@@ -541,7 +541,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	@Override
 	public void initialize(final AbstractTeslaClient client, final String id) {
 		// TODO (e4 support): move up
-		this.display = Display.getCurrent();
+		this.display = Display.getDefault();
 		this.client = client;
 		this.id = id;
 		dragSupport.initialize(client, id);

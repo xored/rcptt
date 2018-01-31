@@ -138,7 +138,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 		this.id = id;
 
 		// TODO (e4 support): remove quick fix
-		this.display = Display.getCurrent();
+		this.display = Display.getDefault();
 
 		this.extension = new WorkbenchUIPlayerExtension();
 		SWTUIPlayer.addExtension(extension);
@@ -505,7 +505,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 
 	@Override
 	public SelectResponse select(SelectCommand command, ElementGenerator generator, IElementProcessorMapper mapper) {
-		// TODO (e4 support): is it needed?
+		// TODO (e4 support): should we create a new collector instance or use an existing one?
 		getSWTPlayer().getCollector().enable();
 
 		final SelectData data = command.getData();
