@@ -39,11 +39,11 @@ import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
 import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 
 public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 
 	private AbstractTeslaClient client;
-	// private String id;
 	private Set<String> elements = new HashSet<String>();
 
 	public ProblemViewSupportProcessor() {
@@ -80,9 +80,8 @@ public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
-		// this.id = id;
 	}
 
 	@Override
@@ -131,7 +130,7 @@ public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 	}
 
 	private class WaitForJobsStatus extends PreExecuteStatus {
-		final UIJobCollector collector = new UIJobCollector() {
+		final UIJobCollector collector = new UIJobCollector(PlatformUI.getWorkbench().getDisplay()) {
 			@Override
 			protected JobStatus calcJobStatus(Job job, long delay) {
 				if (isMarkersJob(job)) {

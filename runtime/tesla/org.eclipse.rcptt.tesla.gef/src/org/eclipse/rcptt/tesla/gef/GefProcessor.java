@@ -234,9 +234,9 @@ public class GefProcessor implements ITeslaCommandProcessor, IModelMapperHelper 
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
-		this.id = id;
+		this.id = client.getID();
 	}
 
 	@Override

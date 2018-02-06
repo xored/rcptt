@@ -65,8 +65,6 @@ public class GMFProcessor implements ITeslaCommandProcessor, IGefReplayHelper {
 			ProtocolPackage.Literals.GET_TEXT };
 	private AbstractTeslaClient client;
 
-	// private String id;
-
 	public GMFProcessor() {
 	}
 
@@ -113,9 +111,8 @@ public class GMFProcessor implements ITeslaCommandProcessor, IGefReplayHelper {
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
-		// this.id = id;
 	}
 
 	@Override

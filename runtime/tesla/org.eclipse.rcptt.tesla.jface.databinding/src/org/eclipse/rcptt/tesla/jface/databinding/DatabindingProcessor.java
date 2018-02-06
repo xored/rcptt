@@ -36,9 +36,6 @@ import org.eclipse.rcptt.tesla.jface.DatabindingObservableManager;
 public class DatabindingProcessor implements ITeslaCommandProcessor,
 		ISWTWaitPolicy {
 
-	// private AbstractTeslaClient client;
-	// private String id;
-
 	public DatabindingProcessor() {
 	}
 
@@ -81,9 +78,7 @@ public class DatabindingProcessor implements ITeslaCommandProcessor,
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
-		// this.client = client;
-		// this.id = id;
+	public void initialize(AbstractTeslaClient client) {
 	}
 
 	@Override

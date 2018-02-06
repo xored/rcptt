@@ -57,7 +57,7 @@ public class ExpandBarUIProcessor implements ISWTModelMapperExtension, ITeslaCom
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 		SWTUIPlayer.addExtension(ext);
 	}

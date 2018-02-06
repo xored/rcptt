@@ -28,9 +28,6 @@ import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.util.OpenStrategy;
-import org.osgi.framework.Bundle;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
 import org.eclipse.rcptt.core.IContextProcessor;
 import org.eclipse.rcptt.core.scenario.Context;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
@@ -46,6 +43,10 @@ import org.eclipse.rcptt.tesla.core.TeslaLimits;
 import org.eclipse.rcptt.tesla.ecl.impl.UIRunnable;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
+import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Bundle;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 public class PreferencesContextProcessor implements IContextProcessor {
 
@@ -56,7 +57,8 @@ public class PreferencesContextProcessor implements IContextProcessor {
 			DefaultScope.SCOPE, ConfigurationScope.SCOPE };
 
 	public void apply(final Context contextToApply) throws CoreException {
-		final UIJobCollector collector = new UIJobCollector();
+		// TODO (e4 support): remove quickfix
+		final UIJobCollector collector = new UIJobCollector(PlatformUI.getWorkbench().getDisplay());
 		Job.getJobManager().addJobChangeListener(collector);
 		SWTUIPlayer.disableMessageDialogs();
 		try {

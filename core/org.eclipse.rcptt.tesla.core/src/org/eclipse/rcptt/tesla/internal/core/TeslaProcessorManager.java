@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -62,9 +61,9 @@ public class TeslaProcessorManager {
 		}
 	}
 
-	public void initializeProcessors(AbstractTeslaClient client, String clientId) {
+	public void initializeProcessors(AbstractTeslaClient client) {
 		for (ITeslaCommandProcessor processor : processors) {
-			processor.initialize(client, clientId);
+			processor.initialize(client);
 		}
 	}
 

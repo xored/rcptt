@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.internal.databinding.observable.Queue;
-
 import org.eclipse.rcptt.tesla.core.Q7WaitUtils;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
@@ -36,9 +35,6 @@ import org.eclipse.rcptt.tesla.jface.databinding.observable.aspects.rap.Databind
 
 public class DatabindingProcessor implements ITeslaCommandProcessor,
 		ISWTWaitPolicy {
-
-	// private AbstractTeslaClient client;
-	// private String id;
 
 	public DatabindingProcessor() {
 	}
@@ -76,9 +72,7 @@ public class DatabindingProcessor implements ITeslaCommandProcessor,
 		return null;
 	}
 
-	public void initialize(AbstractTeslaClient client, String id) {
-		// this.client = client;
-		// this.id = id;
+	public void initialize(AbstractTeslaClient client) {
 	}
 
 	public void postSelect(Element element, IElementProcessorMapper mapper) {

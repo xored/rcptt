@@ -206,7 +206,7 @@ public final class SWTUIPlayer {
 				this.ignoreWindows[i++] = wrap(shell);
 			}
 		}
-		collector = new UIJobCollector();
+		collector = new UIJobCollector(display);
 		Job.getJobManager().addJobChangeListener(collector);
 		timerListener = getTimerExecHelper();
 		TeslaTimerExecManager.getManager().addEventListener(timerListener);

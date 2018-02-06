@@ -539,11 +539,10 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	@Override
-	public void initialize(final AbstractTeslaClient client, final String id) {
-		// TODO (e4 support): move up
-		this.display = Display.getDefault();
+	public void initialize(final AbstractTeslaClient client) {
 		this.client = client;
-		this.id = id;
+		this.display = client.getDisplay();
+		this.id = client.getID();
 		dragSupport.initialize(client, id);
 		LocalClipboard.setEnabled(TeslaFeatures.isUseInternalClipboard());
 		TeslaEventManager.getManager().setUnhandledNativeDialogHandler(

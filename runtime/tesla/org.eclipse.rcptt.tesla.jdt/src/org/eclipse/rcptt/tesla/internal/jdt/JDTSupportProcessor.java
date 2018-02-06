@@ -30,7 +30,6 @@ public class JDTSupportProcessor implements ITeslaCommandProcessor {
 
 	@SuppressWarnings("unused")
 	private AbstractTeslaClient client;
-	// private String id;
 	private Set<String> elements = new HashSet<String>();
 
 	public JDTSupportProcessor() {
@@ -68,9 +67,8 @@ public class JDTSupportProcessor implements ITeslaCommandProcessor {
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
-		// this.id = id;
 	}
 
 	@Override

@@ -36,6 +36,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.CellEditor;
+
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -50,7 +52,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.osgi.util.NLS;
@@ -146,6 +147,12 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.RawFactory;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
 import org.eclipse.rcptt.tesla.core.protocol.raw.ResponseStatus;
+import org.eclipse.rcptt.tesla.core.ui.Combo;
+import org.eclipse.rcptt.tesla.core.ui.Item;
+import org.eclipse.rcptt.tesla.core.ui.Table;
+import org.eclipse.rcptt.tesla.core.ui.TableItem;
+import org.eclipse.rcptt.tesla.core.ui.Tree;
+import org.eclipse.rcptt.tesla.core.ui.Widget;
 import org.eclipse.rcptt.tesla.core.utils.TeslaUtils;
 import org.eclipse.rcptt.tesla.internal.core.AbstractTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.SimpleCommandPrinter;
@@ -190,25 +197,9 @@ import org.eclipse.rcptt.util.swt.rap.TableTreeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Item;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Slider;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewReference;
@@ -219,6 +210,8 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.handlers.IHandlerService;
+
+import javafx.scene.control.Spinner;
 
 public class SWTUIProcessor implements ITeslaCommandProcessor,
 		IModelMapperHelper {
@@ -561,9 +554,9 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	}
 
 	@Override
-	public void initialize(final AbstractTeslaClient client, final String id) {
+	public void initialize(final AbstractTeslaClient client) {
 		this.client = client;
-		this.id = id;
+		this.id = client.getID();
 		dragSupport.initialize(client, id);
 		LocalClipboard.setEnabled(TeslaFeatures.isUseInternalClipboard());
 		TeslaEventManager.getManager().setUnhandledNativeDialogHandler(

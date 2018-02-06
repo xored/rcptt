@@ -37,6 +37,7 @@ import org.eclipse.rcptt.tesla.core.protocol.UISelector;
 import org.eclipse.rcptt.tesla.core.protocol.WindowUIElement;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
+import org.eclipse.rcptt.tesla.core.ui.Widget;
 import org.eclipse.rcptt.tesla.core.utils.AbstractFeatureManager.Option;
 import org.eclipse.rcptt.tesla.ecl.TeslaErrorStatus;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
@@ -85,7 +86,7 @@ public class TeslaBridge {
 			client.shutdown();
 			client = null;
 		}
-		client = new TeslaQClient();
+		client = new TeslaQClient(RWTUtils.findDisplay());
 		// To be sure all info are clear before test
 		try {
 			client.clean();

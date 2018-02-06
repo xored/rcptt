@@ -209,7 +209,7 @@ public class PropertiesViewProcessor implements ITeslaCommandProcessor {
 		return null;
 	}
 
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 	}
 

@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.rcptt.logging.IQ7ActivityLogs;
 import org.eclipse.rcptt.logging.Q7LoggingManager;
 import org.eclipse.rcptt.tesla.core.TeslaFeatures;
@@ -29,6 +28,7 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.SetMode;
 import org.eclipse.rcptt.tesla.core.protocol.raw.TeslaMode;
 import org.eclipse.rcptt.tesla.core.server.TeslaNetworkServer;
 import org.eclipse.rcptt.tesla.internal.core.network.DataSerializer;
+import org.eclipse.swt.widgets.Display;
 
 public class TeslaNetworkClientConnection extends Thread {
 	final private Socket socket;
@@ -43,7 +43,7 @@ public class TeslaNetworkClientConnection extends Thread {
 
 	private TeslaNetworkServer server;
 
-	public TeslaNetworkClientConnection(Socket socket, TeslaNetworkServer server)
+	public TeslaNetworkClientConnection(Display display, Socket socket, TeslaNetworkServer server)
 			throws IOException {
 		super("Tesla network client connection:" + socket.getLocalPort());
 		if (TeslaFeatures.isActivityLogging()) {
@@ -54,7 +54,7 @@ public class TeslaNetworkClientConnection extends Thread {
 		this.server = server;
 		din = new DataInputStream(socket.getInputStream());
 		dout = new DataOutputStream(socket.getOutputStream());
-		teslaClient = new NetworkTeslaClient(dout, Long.toString(getId()));
+		teslaClient = new NetworkTeslaClient(display, dout, Long.toString(getId()));
 		for (ITeslaNetworkClientProcessor processor : processors) {
 			if (TeslaFeatures.isActivityLogging()) {
 				Q7LoggingManager.logMessage(IQ7ActivityLogs.NETWORK,

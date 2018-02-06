@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.rcptt.tesla.swt;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.rcptt.tesla.core;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.rcptt.tesla.swt.aspects;bundle-version="[2.3.0,3.0.0)",
- org.eclipse.jface
+ org.eclipse.jface,
+ org.eclipse.ui.workbench
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

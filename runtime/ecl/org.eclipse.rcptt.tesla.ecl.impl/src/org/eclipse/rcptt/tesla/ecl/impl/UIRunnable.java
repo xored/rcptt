@@ -44,8 +44,8 @@ public abstract class UIRunnable<T> {
 		final Object[] result = new Object[1];
 		final AtomicReference processed = new AtomicReference(RunningState.Starting);
 		final Throwable[] exception = new Throwable[] { null };
-		final UIJobCollector collector = new UIJobCollector();
 		final Display display = PlatformUI.getWorkbench().getDisplay();
+		final UIJobCollector collector = new UIJobCollector(display);
 		Job.getJobManager().addJobChangeListener(collector);
 		collector.enable();
 		ITeslaEventListener listener = null;

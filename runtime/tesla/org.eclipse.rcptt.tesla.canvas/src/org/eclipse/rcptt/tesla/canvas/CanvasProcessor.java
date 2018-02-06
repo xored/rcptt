@@ -159,7 +159,7 @@ public class CanvasProcessor implements ITeslaCommandProcessor {
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 	}
 

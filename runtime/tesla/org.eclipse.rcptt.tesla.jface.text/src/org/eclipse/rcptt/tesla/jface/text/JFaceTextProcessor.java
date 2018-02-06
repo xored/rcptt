@@ -54,8 +54,6 @@ public class JFaceTextProcessor implements ITeslaCommandProcessor {
 
 	private WeakHashMap<AbstractReconciler, Long> reconcilerTimeours = new WeakHashMap<AbstractReconciler, Long>();
 
-	// private String id;
-
 	public JFaceTextProcessor() {
 	}
 
@@ -131,9 +129,8 @@ public class JFaceTextProcessor implements ITeslaCommandProcessor {
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
-		// this.id = id;
 	}
 
 	@Override

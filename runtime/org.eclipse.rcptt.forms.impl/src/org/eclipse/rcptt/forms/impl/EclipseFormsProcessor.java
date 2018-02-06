@@ -47,7 +47,7 @@ public class EclipseFormsProcessor implements ITeslaCommandProcessor, ISWTModelM
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		SWTUIPlayer.addExtension(extension);
 	}
 

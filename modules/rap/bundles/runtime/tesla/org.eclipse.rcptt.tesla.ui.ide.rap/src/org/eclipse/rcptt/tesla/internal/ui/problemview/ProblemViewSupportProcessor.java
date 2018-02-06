@@ -43,7 +43,6 @@ import org.eclipse.ui.IWorkbenchPart;
 public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 
 	private AbstractTeslaClient client;
-	// private String id;
 	private Set<String> elements = new HashSet<String>();
 
 	public ProblemViewSupportProcessor() {
@@ -80,9 +79,8 @@ public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
-		// this.id = id;
 	}
 
 	@Override

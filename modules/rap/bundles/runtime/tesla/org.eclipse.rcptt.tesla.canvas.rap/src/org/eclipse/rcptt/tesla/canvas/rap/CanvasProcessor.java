@@ -31,8 +31,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Event;
 
 public class CanvasProcessor implements ITeslaCommandProcessor {
 
@@ -134,7 +132,7 @@ public class CanvasProcessor implements ITeslaCommandProcessor {
 		return null;
 	}
 
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 	}
 

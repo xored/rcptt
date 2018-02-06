@@ -104,9 +104,8 @@ public interface ITeslaCommandProcessor {
 	 * Initialize processor. Id is per client identifier.
 	 *
 	 * @param client
-	 * @param id
 	 */
-	void initialize(AbstractTeslaClient client, String id);
+	void initialize(AbstractTeslaClient client);
 
 	/**
 	 * Called for each processor after some select command return element. Allow

@@ -25,14 +25,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
-
-import org.eclipse.rcptt.util.swt.Bounds;
-import org.eclipse.rcptt.util.swt.Events;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.core.protocol.ActivateCellEditor;
@@ -82,6 +74,13 @@ import org.eclipse.rcptt.tesla.nebula.viewers.NebulaViewers;
 import org.eclipse.rcptt.tesla.protocol.nebula.NebulaPackage;
 import org.eclipse.rcptt.tesla.protocol.nebula.SetSelectionEx;
 import org.eclipse.rcptt.tesla.protocol.nebula.SetSelectionRange;
+import org.eclipse.rcptt.util.swt.Bounds;
+import org.eclipse.rcptt.util.swt.Events;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Widget;
 
 public class NebulaUIProcessor extends SWTUIProcessor implements
 		ISWTModelMapperExtension {
@@ -490,8 +489,8 @@ public class NebulaUIProcessor extends SWTUIProcessor implements
 	}
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
-		super.initialize(client, id);
+	public void initialize(AbstractTeslaClient client) {
+		super.initialize(client);
 		this.client = client;
 	}
 

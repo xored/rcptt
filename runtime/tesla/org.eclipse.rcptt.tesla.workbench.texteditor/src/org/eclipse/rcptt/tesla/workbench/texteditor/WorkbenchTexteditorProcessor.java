@@ -775,7 +775,7 @@ public class WorkbenchTexteditorProcessor implements ITeslaCommandProcessor,
 		return getSWTUIProcessor().preExecute(command, previousStatus, info);
 	}
 
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 	}
 

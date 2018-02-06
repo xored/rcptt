@@ -20,6 +20,8 @@ import org.eclipse.rcptt.tesla.core.protocol.SelectResponse;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Command;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
+import org.eclipse.rcptt.tesla.core.ui.FormText;
+import org.eclipse.rcptt.tesla.core.ui.Link;
 import org.eclipse.rcptt.tesla.core.ui.UiFactory;
 import org.eclipse.rcptt.tesla.core.ui.Widget;
 import org.eclipse.rcptt.tesla.internal.core.AbstractTeslaClient;
@@ -32,9 +34,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.forms.widgets.AbstractHyperlink;
-import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.internal.forms.widgets.FormTextModel;
 
 @SuppressWarnings("restriction")
@@ -43,7 +43,7 @@ public class EclipseFormsProcessor implements ITeslaCommandProcessor, ISWTModelM
 	private final ISWTUIPlayerExtension extension = new EclipseFormsPlayerExtension();
 
 	@Override
-	public void initialize(AbstractTeslaClient client, String id) {
+	public void initialize(AbstractTeslaClient client) {
 		SWTUIPlayer.addExtension(extension);
 	}
 
