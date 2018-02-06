@@ -23,7 +23,7 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
 import org.eclipse.rcptt.tesla.recording.workbench.WorkbenchRecordingProcessor;
-import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;

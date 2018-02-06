@@ -16,7 +16,7 @@ import org.eclipse.rcptt.tesla.recording.core.swt.SWTRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTWidgetLocator;
 import org.eclipse.rcptt.tesla.swt.util.GetWindowUtil;
 import org.eclipse.rcptt.tesla.swt.util.IndexUtil;
-import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Composite;

@@ -51,7 +51,7 @@ import org.eclipse.rcptt.tesla.recording.core.gef.GefRecordingHelper.GraphicalVi
 import org.eclipse.rcptt.tesla.recording.core.swt.BasicRecordingHelper.ElementEntry;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
 import org.eclipse.rcptt.tesla.swt.util.IdentifyObjectUtil;
-import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Control;

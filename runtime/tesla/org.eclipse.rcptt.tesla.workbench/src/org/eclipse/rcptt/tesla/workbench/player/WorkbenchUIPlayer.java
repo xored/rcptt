@@ -1,4 +1,4 @@
-package org.eclipse.rcptt.tesla.workbench;
+package org.eclipse.rcptt.tesla.workbench.player;
 
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.safeMatches;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;

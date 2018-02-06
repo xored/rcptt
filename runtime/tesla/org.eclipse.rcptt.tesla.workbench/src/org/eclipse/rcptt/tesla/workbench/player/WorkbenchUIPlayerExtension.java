@@ -1,4 +1,4 @@
-package org.eclipse.rcptt.tesla.workbench;
+package org.eclipse.rcptt.tesla.workbench.player;
 
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrap;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrapWidget;

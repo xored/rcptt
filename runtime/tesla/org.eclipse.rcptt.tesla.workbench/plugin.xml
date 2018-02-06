@@ -16,18 +16,18 @@
     <extension
           point="org.eclipse.ui.startup">
        <startup
-             class="org.eclipse.rcptt.tesla.workbench.UITeslaStartup"></startup>
+             class="org.eclipse.rcptt.tesla.workbench.formatter.UITeslaStartup"></startup>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
-            class="org.eclipse.rcptt.tesla.workbench.WorkbenchUIProcessor">
+            class="org.eclipse.rcptt.tesla.workbench.processors.WorkbenchUIProcessor">
       </provider>
    </extension>
    <extension
          point="org.eclipse.rcptt.tesla.swt.describerExtensions">
       <describerExtension
-            class="org.eclipse.rcptt.tesla.ui.WorkbenchUIPlayerExtension"
+            class="org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIPlayerExtension"
             priority="1">
       </describerExtension>
    </extension>

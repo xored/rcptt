@@ -107,7 +107,8 @@ public class WorkspaceContextProcessor implements IContextProcessor {
 		final WorkspaceContext wc = (WorkspaceContext) context;
 
 		// Smart cancel/close jobs with showed UI interactions.
-		final UIJobCollector collector = new UIJobCollector();
+		// TODO (e4 support): remove quickfix
+		final UIJobCollector collector = new UIJobCollector(PlatformUI.getWorkbench().getDisplay());
 		Job.getJobManager().addJobChangeListener(collector);
 
 		try {

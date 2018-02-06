@@ -33,7 +33,7 @@ import org.eclipse.rcptt.tesla.nebula.NebulaUIElement;
 import org.eclipse.rcptt.tesla.nebula.grid.parts.ItemPart;
 import org.eclipse.rcptt.tesla.nebula.viewers.NebulaViewers;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
-import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
 
 public class GridSetSelectionViewers {
 

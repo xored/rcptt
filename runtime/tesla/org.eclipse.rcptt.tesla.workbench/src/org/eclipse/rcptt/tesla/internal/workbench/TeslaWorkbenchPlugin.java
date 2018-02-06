@@ -18,7 +18,6 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-// TODO (e4 support): organize plugin classes
 public class TeslaWorkbenchPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID

@@ -1,4 +1,4 @@
-package org.eclipse.rcptt.tesla.workbench;
+package org.eclipse.rcptt.tesla.workbench.processors;
 
 import static org.eclipse.rcptt.tesla.swt.util.GetWindowUtil.getShellCreationMethodName;
 
@@ -69,6 +69,10 @@ import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.ui.SWTTeslaActivator;
+import org.eclipse.rcptt.tesla.workbench.player.PerspectiveUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIPlayer;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIPlayerExtension;
 import org.eclipse.rcptt.tesla.workbench.provider.EclipseWorkbenchProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;

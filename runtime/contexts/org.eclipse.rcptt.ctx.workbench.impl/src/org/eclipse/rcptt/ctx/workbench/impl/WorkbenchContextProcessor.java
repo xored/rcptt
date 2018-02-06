@@ -115,7 +115,8 @@ public class WorkbenchContextProcessor implements IContextProcessor {
 
 	public void apply(final Context context) throws CoreException {
 		final WorkbenchContext ctx = (WorkbenchContext) context;
-		final UIJobCollector collector = new UIJobCollector();
+		// TODO (e4 support): remove quickfix
+		final UIJobCollector collector = new UIJobCollector(PlatformUI.getWorkbench().getDisplay());
 		Job.getJobManager().addJobChangeListener(collector);
 		try {
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {

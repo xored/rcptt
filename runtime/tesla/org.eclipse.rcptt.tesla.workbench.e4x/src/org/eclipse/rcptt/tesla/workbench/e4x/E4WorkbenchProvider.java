@@ -31,7 +31,7 @@ import org.eclipse.rcptt.tesla.core.protocol.GenericElementKind;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
-import org.eclipse.rcptt.tesla.workbench.WorkbenchUIElement;
+import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
 import org.eclipse.rcptt.tesla.workbench.provider.IEclipseWorkbenchProvider;
 import org.eclipse.rcptt.util.ReflectionUtil;
 import org.eclipse.swt.SWT;
