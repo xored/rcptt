@@ -538,6 +538,17 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 				return response;
 			}
 		}
+
+		// return fail status only if it does not overwrite swt processor select result
+		if (result == null && !getSWTProcessor().isSelectorSupported(data.getKind())) {
+			final SelectResponse response = ProtocolFactory.eINSTANCE.createSelectResponse();
+			response.setMessage(NLS.bind(
+					TeslaSWTMessages.SWTUIProcessor_CannotFindControl,
+					data.getKind(),
+					(data.getPattern() != null ? data.getPattern() : data.getPath())));
+			response.setStatus(ResponseStatus.FAILED);
+			return response;
+		}
 		return null;
 	}
 
