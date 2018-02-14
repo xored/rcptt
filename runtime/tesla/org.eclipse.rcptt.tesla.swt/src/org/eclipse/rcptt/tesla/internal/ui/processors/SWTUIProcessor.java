@@ -14,6 +14,7 @@ import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.replace
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.safeMatches;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.unifyMultilines;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerTextUtils.validateRegex;
+import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.canClick;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.getModalChild;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWidgetUtils.isDisabled;
 import static org.eclipse.rcptt.tesla.internal.ui.player.PlayerWrapUtils.unwrap;
@@ -2094,8 +2095,16 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
-			getPlayer().click(element, command.isDefault(), false,
+			if (!canClick(element)) {
+				response.setMessage(NLS
+						.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_ControlDisabledDisposedOrInvisible,
+								element.getText()));
+				response.setStatus(ResponseStatus.FAILED);
+			}
+			else {
+				getPlayer().click(element, command.isDefault(), false,
 						command.isArrow());
+			}
 		} else {
 			response.setStatus(ResponseStatus.FAILED);
 		}
@@ -2106,7 +2115,15 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
-			getPlayer().check(element, command.isState());
+			if (!canClick(element)) {
+				response.setMessage(NLS
+						.bind(TeslaSWTMessages.SWTUIProcessor_CannotClick_ControlDisabledDisposedOrInvisible,
+								element.getText()));
+				response.setStatus(ResponseStatus.FAILED);
+			}
+			else {
+				getPlayer().check(element, command.isState());
+			}
 		}
 		else {
 			response.setStatus(ResponseStatus.FAILED);
@@ -2118,7 +2135,15 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		final SWTUIElement element = getMapper().get(command.getElement());
 		final Response response = RawFactory.eINSTANCE.createResponse();
 		if (element != null) {
-			getPlayer().click(element, false, true, false);
+			if (!canClick(element)) {
+				response.setMessage(NLS
+						.bind(TeslaSWTMessages.SWTUIProcessor_CannotDoubleClick_ControlDisabledDisposedOrInvisible,
+								element.getText()));
+				response.setStatus(ResponseStatus.FAILED);
+			}
+			else {
+				getPlayer().click(element, false, true, false);
+			}
 		}
 		else {
 			response.setStatus(ResponseStatus.FAILED);
