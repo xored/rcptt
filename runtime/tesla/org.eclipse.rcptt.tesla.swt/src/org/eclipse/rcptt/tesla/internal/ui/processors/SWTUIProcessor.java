@@ -104,6 +104,7 @@ import org.eclipse.rcptt.tesla.core.protocol.IntResponse;
 import org.eclipse.rcptt.tesla.core.protocol.IsDisposed;
 import org.eclipse.rcptt.tesla.core.protocol.IsEnabled;
 import org.eclipse.rcptt.tesla.core.protocol.LinkUIElement;
+import org.eclipse.rcptt.tesla.core.protocol.Maximize;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEvent;
 import org.eclipse.rcptt.tesla.core.protocol.MouseEventKind;
 import org.eclipse.rcptt.tesla.core.protocol.MultiSelectionItem;
@@ -666,6 +667,8 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 				return handleGetSelection((GetSelection) command);
 			case ProtocolPackage.CELL_CLICK:
 				return handleCellClick((CellClick) command);
+			case ProtocolPackage.MAXIMIZE:
+				return handleMaximize((Maximize) command);
 			case ProtocolPackage.SET_STATUS_DIALOG_MODE:
 				return handleSetStatusDialogMode((SetStatusDialogMode) command);
 			case ProtocolPackage.CLICK_LINK:
@@ -1128,6 +1131,17 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		Response response = RawFactory.eINSTANCE.createResponse();
 		TeslaEventManager.getManager().setStatusDialogModeAllowed(
 				command.isEnabled());
+		return response;
+	}
+
+	private Response handleMaximize(Maximize command) {
+		SWTUIElement element = getMapper().get(command.getElement());
+		Response response = RawFactory.eINSTANCE.createResponse();
+		if (element != null) {
+			getPlayer().maximize(element);
+		} else {
+			response.setStatus(ResponseStatus.FAILED);
+		}
 		return response;
 	}
 

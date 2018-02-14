@@ -179,7 +179,6 @@ public final class SWTUIPlayer {
 		elementKinds.put(DateTime.class, ElementKind.DateTime);
 		elementKinds.put(Slider.class, ElementKind.Slider);
 		elementKinds.put(Link.class, ElementKind.Link);
-		elementKinds.put(Shell.class, ElementKind.Window);
 		elementKinds.put(TreeItem.class, ElementKind.Item);
 		elementKinds.put(TableItem.class, ElementKind.Item);
 		elementKinds.put(Canvas.class, ElementKind.Canvas);
@@ -2269,6 +2268,42 @@ public final class SWTUIPlayer {
 
 	public void wakeup() {
 		notifyUI(getDisplay());
+	}
+
+	public void minimize(SWTUIElement uiElement) {
+		final Widget widget = unwrapWidget(uiElement);
+
+		exec("maximize", new Runnable() {
+			@Override
+			public void run() {
+				if (widget instanceof Shell) {
+					((Shell) widget).setMinimized(true);
+					try {
+						ShellUtilsProvider.getShellUtils().forceActive((Shell) widget);
+					} catch (CoreException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		});
+	}
+
+	public void maximize(SWTUIElement uiElement) {
+		final Widget widget = unwrapWidget(uiElement);
+
+		exec("maximize", new Runnable() {
+			@Override
+			public void run() {
+				if (widget instanceof Shell) {
+					((Shell) widget).setMaximized(true);
+					try {
+						ShellUtilsProvider.getShellUtils().forceActive((Shell) widget);
+					} catch (CoreException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		});
 	}
 
 	public final class ExecRunnable implements Runnable {
