@@ -23,13 +23,5 @@
       <provider
             class="org.eclipse.rcptt.tesla.workbench.processors.WorkbenchUIProcessor">
       </provider>
-   </extension>
-   <extension
-         point="org.eclipse.rcptt.tesla.swt.describerExtensions">
-      <describerExtension
-            class="org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIPlayerExtension"
-            priority="1">
-      </describerExtension>
-   </extension>
-   
+   </extension>   
 </plugin>
