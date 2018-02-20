@@ -149,10 +149,11 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	public void terminate() {
 		this.client = null;
 		this.id = null;
-
 		this.display = null;
 
 		SWTUIPlayer.removeExtension(extension);
+		this.extension = null;
+
 		this.swtProcessor = null;
 		this.swtPlayer = null;
 		this.workbenchPlayer = null;
