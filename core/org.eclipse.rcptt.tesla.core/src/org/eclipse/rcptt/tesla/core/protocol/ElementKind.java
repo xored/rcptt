@@ -22,7 +22,7 @@ public enum ElementKind {
 	CoolBar, CBanner, Toolbar,
 
 	// workbench kinds
-	View, Editor,
+	View, Editor, Part,
 
 	// Text editor
 	TextViewer, VerticalRuler, LeftRuler, VerticalColumn, RightRuler,

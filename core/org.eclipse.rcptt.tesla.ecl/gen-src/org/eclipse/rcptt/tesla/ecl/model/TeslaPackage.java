@@ -3169,6 +3169,97 @@ public interface TeslaPackage extends EPackage {
 	int GET_EDITOR_FEATURE_COUNT = TEXT_SELECTOR_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.GetPartImpl <em>Get Part</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.GetPartImpl
+	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetPart()
+	 * @generated
+	 */
+	int GET_PART = 41;
+
+	/**
+	 * The feature id for the '<em><b>Host</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__HOST = TEXT_SELECTOR__HOST;
+
+	/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__BINDINGS = TEXT_SELECTOR__BINDINGS;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__ID = TEXT_SELECTOR__ID;
+
+	/**
+	 * The feature id for the '<em><b>After</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__AFTER = TEXT_SELECTOR__AFTER;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__TYPE = TEXT_SELECTOR__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__INDEX = TEXT_SELECTOR__INDEX;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__PARENT = TEXT_SELECTOR__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART__TEXT = TEXT_SELECTOR__TEXT;
+
+	/**
+	 * The number of structural features of the '<em>Get Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GET_PART_FEATURE_COUNT = TEXT_SELECTOR_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.GetSectionImpl <em>Get Section</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3176,7 +3267,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetSection()
 	 * @generated
 	 */
-	int GET_SECTION = 41;
+	int GET_SECTION = 42;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3267,7 +3358,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetBanner()
 	 * @generated
 	 */
-	int GET_BANNER = 42;
+	int GET_BANNER = 43;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3349,7 +3440,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetCoolbar()
 	 * @generated
 	 */
-	int GET_COOLBAR = 43;
+	int GET_COOLBAR = 44;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3431,7 +3522,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetColorSelector()
 	 * @generated
 	 */
-	int GET_COLOR_SELECTOR = 44;
+	int GET_COLOR_SELECTOR = 45;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3513,7 +3604,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetCell()
 	 * @generated
 	 */
-	int GET_CELL = 45;
+	int GET_CELL = 46;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3613,7 +3704,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getClick()
 	 * @generated
 	 */
-	int CLICK = 46;
+	int CLICK = 47;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3686,7 +3777,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDoubleClick()
 	 * @generated
 	 */
-	int DOUBLE_CLICK = 47;
+	int DOUBLE_CLICK = 48;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3759,7 +3850,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetText()
 	 * @generated
 	 */
-	int GET_TEXT = 48;
+	int GET_TEXT = 49;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3805,7 +3896,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getIsDisabled()
 	 * @generated
 	 */
-	int IS_DISABLED = 49;
+	int IS_DISABLED = 50;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3851,7 +3942,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getIsDisposed()
 	 * @generated
 	 */
-	int IS_DISPOSED = 50;
+	int IS_DISPOSED = 51;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3897,7 +3988,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getTypeText()
 	 * @generated
 	 */
-	int TYPE_TEXT = 51;
+	int TYPE_TEXT = 52;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -3961,7 +4052,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getKeyType()
 	 * @generated
 	 */
-	int KEY_TYPE = 52;
+	int KEY_TYPE = 53;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4043,7 +4134,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getTypeCommandKey()
 	 * @generated
 	 */
-	int TYPE_COMMAND_KEY = 53;
+	int TYPE_COMMAND_KEY = 54;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4098,7 +4189,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetText()
 	 * @generated
 	 */
-	int SET_TEXT = 54;
+	int SET_TEXT = 55;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4153,7 +4244,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetTextSelection()
 	 * @generated
 	 */
-	int SET_TEXT_SELECTION = 55;
+	int SET_TEXT_SELECTION = 56;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4244,7 +4335,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetTextOffset()
 	 * @generated
 	 */
-	int SET_TEXT_OFFSET = 56;
+	int SET_TEXT_OFFSET = 57;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4308,7 +4399,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCheck()
 	 * @generated
 	 */
-	int CHECK = 57;
+	int CHECK = 58;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4354,7 +4445,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getUncheck()
 	 * @generated
 	 */
-	int UNCHECK = 58;
+	int UNCHECK = 59;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4400,7 +4491,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSelect()
 	 * @generated
 	 */
-	int SELECT = 59;
+	int SELECT = 60;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4473,7 +4564,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCellEdit()
 	 * @generated
 	 */
-	int CELL_EDIT = 60;
+	int CELL_EDIT = 61;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4519,7 +4610,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getActivateCellEdit()
 	 * @generated
 	 */
-	int ACTIVATE_CELL_EDIT = 61;
+	int ACTIVATE_CELL_EDIT = 62;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4592,7 +4683,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getApplyCellEdit()
 	 * @generated
 	 */
-	int APPLY_CELL_EDIT = 62;
+	int APPLY_CELL_EDIT = 63;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4647,7 +4738,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCancelCellEdit()
 	 * @generated
 	 */
-	int CANCEL_CELL_EDIT = 63;
+	int CANCEL_CELL_EDIT = 64;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4693,7 +4784,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDeactivateCellEdit()
 	 * @generated
 	 */
-	int DEACTIVATE_CELL_EDIT = 64;
+	int DEACTIVATE_CELL_EDIT = 65;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4739,7 +4830,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getClose()
 	 * @generated
 	 */
-	int CLOSE = 65;
+	int CLOSE = 66;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4785,7 +4876,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getReturnFromOsDialog()
 	 * @generated
 	 */
-	int RETURN_FROM_OS_DIALOG = 66;
+	int RETURN_FROM_OS_DIALOG = 67;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4840,7 +4931,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getWaitUntilEclipseIsReady()
 	 * @generated
 	 */
-	int WAIT_UNTIL_ECLIPSE_IS_READY = 67;
+	int WAIT_UNTIL_ECLIPSE_IS_READY = 68;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4877,7 +4968,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getShowContentAssist()
 	 * @generated
 	 */
-	int SHOW_CONTENT_ASSIST = 68;
+	int SHOW_CONTENT_ASSIST = 69;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -4923,7 +5014,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragAction()
 	 * @generated
 	 */
-	int DRAG_ACTION = 69;
+	int DRAG_ACTION = 70;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5023,7 +5114,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragStart()
 	 * @generated
 	 */
-	int DRAG_START = 70;
+	int DRAG_START = 71;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5123,7 +5214,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragEnd()
 	 * @generated
 	 */
-	int DRAG_END = 71;
+	int DRAG_END = 72;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5223,7 +5314,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragEnter()
 	 * @generated
 	 */
-	int DRAG_ENTER = 72;
+	int DRAG_ENTER = 73;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5323,7 +5414,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragExit()
 	 * @generated
 	 */
-	int DRAG_EXIT = 73;
+	int DRAG_EXIT = 74;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5423,7 +5514,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragSetData()
 	 * @generated
 	 */
-	int DRAG_SET_DATA = 74;
+	int DRAG_SET_DATA = 75;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5523,7 +5614,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragAccept()
 	 * @generated
 	 */
-	int DRAG_ACCEPT = 75;
+	int DRAG_ACCEPT = 76;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5623,7 +5714,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragDetect()
 	 * @generated
 	 */
-	int DRAG_DETECT = 76;
+	int DRAG_DETECT = 77;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5723,7 +5814,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDragOver()
 	 * @generated
 	 */
-	int DRAG_OVER = 77;
+	int DRAG_OVER = 78;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5823,7 +5914,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDrop()
 	 * @generated
 	 */
-	int DROP = 78;
+	int DROP = 79;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -5923,7 +6014,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getRecognize()
 	 * @generated
 	 */
-	int RECOGNIZE = 79;
+	int RECOGNIZE = 80;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6005,7 +6096,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getRecognizeResponse()
 	 * @generated
 	 */
-	int RECOGNIZE_RESPONSE = 80;
+	int RECOGNIZE_RESPONSE = 81;
 
 	/**
 	 * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -6033,7 +6124,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getContainsImage()
 	 * @generated
 	 */
-	int CONTAINS_IMAGE = 81;
+	int CONTAINS_IMAGE = 82;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6097,7 +6188,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRegionText()
 	 * @generated
 	 */
-	int GET_REGION_TEXT = 82;
+	int GET_REGION_TEXT = 83;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6197,7 +6288,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRegion()
 	 * @generated
 	 */
-	int GET_REGION = 83;
+	int GET_REGION = 84;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6315,7 +6406,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetAdvancedInfo()
 	 * @generated
 	 */
-	int GET_ADVANCED_INFO = 84;
+	int GET_ADVANCED_INFO = 85;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6352,7 +6443,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetAboutMenu()
 	 * @generated
 	 */
-	int GET_ABOUT_MENU = 85;
+	int GET_ABOUT_MENU = 86;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6389,7 +6480,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetPreferencesMenu()
 	 * @generated
 	 */
-	int GET_PREFERENCES_MENU = 86;
+	int GET_PREFERENCES_MENU = 87;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6426,7 +6517,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetDateTime()
 	 * @generated
 	 */
-	int GET_DATE_TIME = 87;
+	int GET_DATE_TIME = 88;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6517,7 +6608,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetSlider()
 	 * @generated
 	 */
-	int GET_SLIDER = 88;
+	int GET_SLIDER = 89;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6608,7 +6699,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetValue()
 	 * @generated
 	 */
-	int SET_VALUE = 89;
+	int SET_VALUE = 90;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6663,7 +6754,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getMinimize()
 	 * @generated
 	 */
-	int MINIMIZE = 90;
+	int MINIMIZE = 91;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6709,7 +6800,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getMaximize()
 	 * @generated
 	 */
-	int MAXIMIZE = 91;
+	int MAXIMIZE = 92;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6755,7 +6846,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getRestore()
 	 * @generated
 	 */
-	int RESTORE = 92;
+	int RESTORE = 93;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6801,7 +6892,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getShowTabList()
 	 * @generated
 	 */
-	int SHOW_TAB_LIST = 93;
+	int SHOW_TAB_LIST = 94;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6847,7 +6938,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getOptions()
 	 * @generated
 	 */
-	int OPTIONS = 94;
+	int OPTIONS = 95;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6902,7 +6993,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getExecWithOptions()
 	 * @generated
 	 */
-	int EXEC_WITH_OPTIONS = 95;
+	int EXEC_WITH_OPTIONS = 96;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -6966,7 +7057,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getShutdownAut()
 	 * @generated
 	 */
-	int SHUTDOWN_AUT = 96;
+	int SHUTDOWN_AUT = 97;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7003,7 +7094,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetDialogResult()
 	 * @generated
 	 */
-	int SET_DIALOG_RESULT = 97;
+	int SET_DIALOG_RESULT = 98;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7058,7 +7149,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetPropertyNodes()
 	 * @generated
 	 */
-	int GET_PROPERTY_NODES = 98;
+	int GET_PROPERTY_NODES = 99;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7113,7 +7204,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetByOs()
 	 * @generated
 	 */
-	int GET_BY_OS = 99;
+	int GET_BY_OS = 100;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7186,7 +7277,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getFromRawKey()
 	 * @generated
 	 */
-	int FROM_RAW_KEY = 100;
+	int FROM_RAW_KEY = 101;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7250,7 +7341,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getHoverAtTextOffset()
 	 * @generated
 	 */
-	int HOVER_AT_TEXT_OFFSET = 101;
+	int HOVER_AT_TEXT_OFFSET = 102;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7314,7 +7405,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetTextViewer()
 	 * @generated
 	 */
-	int GET_TEXT_VIEWER = 102;
+	int GET_TEXT_VIEWER = 103;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7396,7 +7487,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSelectRange()
 	 * @generated
 	 */
-	int SELECT_RANGE = 103;
+	int SELECT_RANGE = 104;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7478,7 +7569,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetCaretPos()
 	 * @generated
 	 */
-	int SET_CARET_POS = 104;
+	int SET_CARET_POS = 105;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7542,7 +7633,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getHoverText()
 	 * @generated
 	 */
-	int HOVER_TEXT = 105;
+	int HOVER_TEXT = 106;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7615,7 +7706,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getOpenDeclaration()
 	 * @generated
 	 */
-	int OPEN_DECLARATION = 106;
+	int OPEN_DECLARATION = 107;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7661,7 +7752,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetVerticalRuler()
 	 * @generated
 	 */
-	int GET_VERTICAL_RULER = 107;
+	int GET_VERTICAL_RULER = 108;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7743,7 +7834,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetLeftRuler()
 	 * @generated
 	 */
-	int GET_LEFT_RULER = 108;
+	int GET_LEFT_RULER = 109;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7825,7 +7916,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRulerColumn()
 	 * @generated
 	 */
-	int GET_RULER_COLUMN = 109;
+	int GET_RULER_COLUMN = 110;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7916,7 +8007,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRightRuler()
 	 * @generated
 	 */
-	int GET_RIGHT_RULER = 110;
+	int GET_RIGHT_RULER = 111;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -7998,7 +8089,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getClickRuler()
 	 * @generated
 	 */
-	int CLICK_RULER = 111;
+	int CLICK_RULER = 112;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8071,7 +8162,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDoubleClickRuler()
 	 * @generated
 	 */
-	int DOUBLE_CLICK_RULER = 112;
+	int DOUBLE_CLICK_RULER = 113;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8144,7 +8235,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getHoverRuler()
 	 * @generated
 	 */
-	int HOVER_RULER = 113;
+	int HOVER_RULER = 114;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8208,7 +8299,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getControlCommand()
 	 * @generated
 	 */
-	int CONTROL_COMMAND = 114;
+	int CONTROL_COMMAND = 115;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8254,7 +8345,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getClickLink()
 	 * @generated
 	 */
-	int CLICK_LINK = 115;
+	int CLICK_LINK = 116;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8309,7 +8400,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getExpand()
 	 * @generated
 	 */
-	int EXPAND = 116;
+	int EXPAND = 117;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8355,7 +8446,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCollapse()
 	 * @generated
 	 */
-	int COLLAPSE = 117;
+	int COLLAPSE = 118;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8401,7 +8492,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetFocus()
 	 * @generated
 	 */
-	int SET_FOCUS = 118;
+	int SET_FOCUS = 119;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8447,7 +8538,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetTableData()
 	 * @generated
 	 */
-	int GET_TABLE_DATA = 119;
+	int GET_TABLE_DATA = 120;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8511,7 +8602,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getClickColumn()
 	 * @generated
 	 */
-	int CLICK_COLUMN = 120;
+	int CLICK_COLUMN = 121;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8575,7 +8666,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getTrace()
 	 * @generated
 	 */
-	int TRACE = 121;
+	int TRACE = 122;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8621,7 +8712,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getMouse()
 	 * @generated
 	 */
-	int MOUSE = 122;
+	int MOUSE = 123;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8721,7 +8812,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetObject()
 	 * @generated
 	 */
-	int GET_OBJECT = 123;
+	int GET_OBJECT = 124;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8767,7 +8858,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetItems()
 	 * @generated
 	 */
-	int GET_ITEMS = 124;
+	int GET_ITEMS = 125;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8813,7 +8904,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getExpandAll()
 	 * @generated
 	 */
-	int EXPAND_ALL = 125;
+	int EXPAND_ALL = 126;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8859,7 +8950,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCollapseAll()
 	 * @generated
 	 */
-	int COLLAPSE_ALL = 126;
+	int COLLAPSE_ALL = 127;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8905,7 +8996,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getTakeScreenshot()
 	 * @generated
 	 */
-	int TAKE_SCREENSHOT = 127;
+	int TAKE_SCREENSHOT = 128;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8951,7 +9042,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSelectItem()
 	 * @generated
 	 */
-	int SELECT_ITEM = 128;
+	int SELECT_ITEM = 129;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -8997,7 +9088,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetWidgetDetails()
 	 * @generated
 	 */
-	int GET_WIDGET_DETAILS = 129;
+	int GET_WIDGET_DETAILS = 130;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9043,7 +9134,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getClickText()
 	 * @generated
 	 */
-	int CLICK_TEXT = 130;
+	int CLICK_TEXT = 131;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9116,7 +9207,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetQuickAccess()
 	 * @generated
 	 */
-	int GET_QUICK_ACCESS = 131;
+	int GET_QUICK_ACCESS = 132;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9198,7 +9289,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetColumnHeader()
 	 * @generated
 	 */
-	int GET_COLUMN_HEADER = 132;
+	int GET_COLUMN_HEADER = 133;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9289,7 +9380,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetPosition()
 	 * @generated
 	 */
-	int SET_POSITION = 133;
+	int SET_POSITION = 134;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9344,7 +9435,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getSetWidth()
 	 * @generated
 	 */
-	int SET_WIDTH = 134;
+	int SET_WIDTH = 135;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9399,7 +9490,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetPropertyTab()
 	 * @generated
 	 */
-	int GET_PROPERTY_TAB = 135;
+	int GET_PROPERTY_TAB = 136;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9490,7 +9581,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getShowAlert()
 	 * @generated
 	 */
-	int SHOW_ALERT = 136;
+	int SHOW_ALERT = 137;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9536,7 +9627,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDoubleClickText()
 	 * @generated
 	 */
-	int DOUBLE_CLICK_TEXT = 137;
+	int DOUBLE_CLICK_TEXT = 138;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9600,7 +9691,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getToControlHandle()
 	 * @generated
 	 */
-	int TO_CONTROL_HANDLE = 138;
+	int TO_CONTROL_HANDLE = 139;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9646,7 +9737,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getBoundControlHandle()
 	 * @generated
 	 */
-	int BOUND_CONTROL_HANDLE = 139;
+	int BOUND_CONTROL_HANDLE = 140;
 
 	/**
 	 * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -9809,7 +9900,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getUnfocus()
 	 * @generated
 	 */
-	int UNFOCUS = 140;
+	int UNFOCUS = 141;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9855,7 +9946,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDecrypt()
 	 * @generated
 	 */
-	int DECRYPT = 141;
+	int DECRYPT = 142;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9901,7 +9992,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getDecryptResult()
 	 * @generated
 	 */
-	int DECRYPT_RESULT = 142;
+	int DECRYPT_RESULT = 143;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -9929,7 +10020,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getRestartAut()
 	 * @generated
 	 */
-	int RESTART_AUT = 143;
+	int RESTART_AUT = 144;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -9966,7 +10057,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getMessageBoxInfo()
 	 * @generated
 	 */
-	int MESSAGE_BOX_INFO = 144;
+	int MESSAGE_BOX_INFO = 145;
 
 	/**
 	 * The feature id for the '<em><b>Title</b></em>' attribute.
@@ -10003,7 +10094,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetLastMessageBox()
 	 * @generated
 	 */
-	int GET_LAST_MESSAGE_BOX = 145;
+	int GET_LAST_MESSAGE_BOX = 146;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10040,7 +10131,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getCheckDownloadResult()
 	 * @generated
 	 */
-	int CHECK_DOWNLOAD_RESULT = 146;
+	int CHECK_DOWNLOAD_RESULT = 147;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10095,7 +10186,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetRuntimeTarget()
 	 * @generated
 	 */
-	int GET_RUNTIME_TARGET = 147;
+	int GET_RUNTIME_TARGET = 148;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10132,7 +10223,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetTestCaseName()
 	 * @generated
 	 */
-	int GET_TEST_CASE_NAME = 148;
+	int GET_TEST_CASE_NAME = 149;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10169,7 +10260,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetComboItems()
 	 * @generated
 	 */
-	int GET_COMBO_ITEMS = 149;
+	int GET_COMBO_ITEMS = 150;
 
 	/**
 	 * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -10215,7 +10306,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getButton()
 	 * @generated
 	 */
-	int BUTTON = 150;
+	int BUTTON = 151;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.ecl.model.ActivationEventType <em>Activation Event Type</em>}' enum.
@@ -10225,7 +10316,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getActivationEventType()
 	 * @generated
 	 */
-	int ACTIVATION_EVENT_TYPE = 151;
+	int ACTIVATION_EVENT_TYPE = 152;
 
 	/**
 	 * The meta object id for the '<em>Element Kind</em>' data type.
@@ -10235,7 +10326,7 @@ public interface TeslaPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getElementKind()
 	 * @generated
 	 */
-	int ELEMENT_KIND = 152;
+	int ELEMENT_KIND = 153;
 
 
 	/**
@@ -11219,6 +11310,16 @@ public interface TeslaPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGetEditor();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.ecl.model.GetPart <em>Get Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Get Part</em>'.
+	 * @see org.eclipse.rcptt.tesla.ecl.model.GetPart
+	 * @generated
+	 */
+	EClass getGetPart();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.ecl.model.GetSection <em>Get Section</em>}'.
@@ -14882,6 +14983,16 @@ public interface TeslaPackage extends EPackage {
 		 * @generated
 		 */
 		EClass GET_EDITOR = eINSTANCE.getGetEditor();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.GetPartImpl <em>Get Part</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.rcptt.tesla.ecl.model.impl.GetPartImpl
+		 * @see org.eclipse.rcptt.tesla.ecl.model.impl.TeslaPackageImpl#getGetPart()
+		 * @generated
+		 */
+		EClass GET_PART = eINSTANCE.getGetPart();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.ecl.model.impl.GetSectionImpl <em>Get Section</em>}' class.

@@ -42,6 +42,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetLeftRuler;
 import org.eclipse.rcptt.tesla.ecl.model.GetLink;
 import org.eclipse.rcptt.tesla.ecl.model.GetList;
 import org.eclipse.rcptt.tesla.ecl.model.GetMenu;
+import org.eclipse.rcptt.tesla.ecl.model.GetPart;
 import org.eclipse.rcptt.tesla.ecl.model.GetPreferencesMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetPropertyTab;
 import org.eclipse.rcptt.tesla.ecl.model.GetQuickAccess;
@@ -219,7 +220,9 @@ public class SelectorService implements ICommandService {
 		else if (selector instanceof GetEditor) {
 			handler.setType(((GetEditor) command).getType());
 			handler.setKind(ElementKind.Editor);
-		} else if (selector instanceof GetTabItem)
+		} else if (selector instanceof GetPart)
+			handler.setKind(ElementKind.Part);
+		else if (selector instanceof GetTabItem)
 			handler.setKind(ElementKind.TabItem);
 		else if (selector instanceof GetWindow) {
 			handler.setKind(ElementKind.Window);

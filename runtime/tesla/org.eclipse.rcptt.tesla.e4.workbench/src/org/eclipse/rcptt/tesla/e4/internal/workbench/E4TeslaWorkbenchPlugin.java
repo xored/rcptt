@@ -8,44 +8,44 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.runtime.e4.ui.aspects;
+package org.eclipse.rcptt.tesla.e4.internal.workbench;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.rcptt.tesla.core.am.AspectManager;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends Plugin {
+public class E4TeslaWorkbenchPlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime.e4.ui.aspects"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.e4.workbench";
 
 	// The shared instance
-	private static Activator plugin;
-	
+	private static E4TeslaWorkbenchPlugin plugin;
+
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public E4TeslaWorkbenchPlugin() {
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext)
+	 * @see org.eclipse.ui.plugin.Plugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		AspectManager.activateBundle(PLUGIN_ID);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
+	 * @see org.eclipse.ui.plugin.Plugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
@@ -57,8 +57,30 @@ public class Activator extends Plugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static E4TeslaWorkbenchPlugin getDefault() {
 		return plugin;
+	}
+
+	public static void log(Throwable t) {
+		log(t.getMessage(), t);
+	}
+
+	public static void log(String message, Throwable t) {
+		log(createStatus(message, t));
+	}
+
+	public static void log(IStatus status) {
+		if (getDefault() != null) {
+			getDefault().getLog().log(status);
+		}
+	}
+
+	public static IStatus createStatus(String message, Throwable t) {
+		return createStatus(Status.ERROR, message, t);
+	}
+
+	public static IStatus createStatus(int state, String message, Throwable t) {
+		return new Status(state, PLUGIN_ID, message, t);
 	}
 
 }

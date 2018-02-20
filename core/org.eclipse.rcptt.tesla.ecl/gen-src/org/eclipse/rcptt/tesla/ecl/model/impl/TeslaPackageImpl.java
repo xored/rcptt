@@ -23,6 +23,7 @@ import org.eclipse.rcptt.tesla.core.info.InfoPackage;
 import org.eclipse.rcptt.tesla.core.protocol.ElementKind;
 import org.eclipse.rcptt.tesla.core.protocol.ProtocolPackage;
 import org.eclipse.rcptt.tesla.core.protocol.raw.RawPackage;
+import org.eclipse.rcptt.tesla.core.ui.UiPackage;
 import org.eclipse.rcptt.tesla.ecl.model.ActivateCellEdit;
 import org.eclipse.rcptt.tesla.ecl.model.ActivationEventType;
 import org.eclipse.rcptt.tesla.ecl.model.ApplyCellEdit;
@@ -94,6 +95,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetLink;
 import org.eclipse.rcptt.tesla.ecl.model.GetList;
 import org.eclipse.rcptt.tesla.ecl.model.GetMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetObject;
+import org.eclipse.rcptt.tesla.ecl.model.GetPart;
 import org.eclipse.rcptt.tesla.ecl.model.GetPreferencesMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetProperty;
 import org.eclipse.rcptt.tesla.ecl.model.GetPropertyNodes;
@@ -473,6 +475,13 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 	 * @generated
 	 */
 	private EClass getEditorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass getPartEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2163,6 +2172,15 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 	 */
 	public EClass getGetEditor() {
 		return getEditorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGetPart() {
+		return getPartEClass;
 	}
 
 	/**
@@ -4721,6 +4739,8 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 
 		getEditorEClass = createEClass(GET_EDITOR);
 
+		getPartEClass = createEClass(GET_PART);
+
 		getSectionEClass = createEClass(GET_SECTION);
 
 		getBannerEClass = createEClass(GET_BANNER);
@@ -5179,6 +5199,7 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		getWindowEClass.getESuperTypes().add(this.getSelector());
 		getViewEClass.getESuperTypes().add(this.getTextSelector());
 		getEditorEClass.getESuperTypes().add(this.getTextSelector());
+		getPartEClass.getESuperTypes().add(this.getTextSelector());
 		getSectionEClass.getESuperTypes().add(this.getTextSelector());
 		getBannerEClass.getESuperTypes().add(this.getSelector());
 		getCoolbarEClass.getESuperTypes().add(this.getSelector());
@@ -5420,6 +5441,8 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 		initEClass(getViewEClass, GetView.class, "GetView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(getEditorEClass, GetEditor.class, "GetEditor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(getPartEClass, GetPart.class, "GetPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(getSectionEClass, GetSection.class, "GetSection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -6235,6 +6258,15 @@ public class TeslaPackageImpl extends EPackageImpl implements TeslaPackage {
 			 "returns", "editor",
 			 "recorded", "true",
 			 "example", "get-editor EclContext | get-section Script | get-editbox | get-property text | equals \"wait 1000\" | verify-true"
+		   });	
+		addAnnotation
+		  (getPartEClass, 
+		   source, 
+		   new String[] {
+			 "description", "Gets part with defined name. If this part doesn\'t exist, then error is returned.",
+			 "returns", "part",
+			 "recorded", "true",
+			 "example", "get-part \"Navigator\" | get-tree | select \"Q7Project/CheckSetCommand\" | double-click"
 		   });	
 		addAnnotation
 		  (getSectionEClass, 

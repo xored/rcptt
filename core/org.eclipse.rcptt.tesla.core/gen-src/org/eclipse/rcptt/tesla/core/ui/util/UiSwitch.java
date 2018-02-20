@@ -381,6 +381,15 @@ public class UiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case UiPackage.PART: {
+				Part part = (Part)theEObject;
+				T result = casePart(part);
+				if (result == null) result = caseControl(part);
+				if (result == null) result = caseWidget(part);
+				if (result == null) result = casePropertyNodeList(part);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case UiPackage.WINDOW: {
 				Window window = (Window)theEObject;
 				T result = caseWindow(window);
@@ -964,6 +973,21 @@ public class UiSwitch<T> {
 	 * @generated
 	 */
 	public T caseEditor(Editor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Part</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePart(Part object) {
 		return null;
 	}
 

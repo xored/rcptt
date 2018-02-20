@@ -327,6 +327,15 @@ public interface UiFactory extends EFactory {
 	Editor createEditor();
 
 	/**
+	 * Returns a new object of class '<em>Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Part</em>'.
+	 * @generated
+	 */
+	Part createPart();
+
+	/**
 	 * Returns a new object of class '<em>Window</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

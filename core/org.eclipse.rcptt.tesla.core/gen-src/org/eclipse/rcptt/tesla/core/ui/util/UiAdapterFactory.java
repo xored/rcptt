@@ -214,6 +214,10 @@ public class UiAdapterFactory extends AdapterFactoryImpl {
 				return createEditorAdapter();
 			}
 			@Override
+			public Adapter casePart(Part object) {
+				return createPartAdapter();
+			}
+			@Override
 			public Adapter caseWindow(Window object) {
 				return createWindowAdapter();
 			}
@@ -740,6 +744,20 @@ public class UiAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEditorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.core.ui.Part <em>Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.core.ui.Part
+	 * @generated
+	 */
+	public Adapter createPartAdapter() {
 		return null;
 	}
 

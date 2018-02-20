@@ -85,6 +85,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetLink;
 import org.eclipse.rcptt.tesla.ecl.model.GetList;
 import org.eclipse.rcptt.tesla.ecl.model.GetMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetObject;
+import org.eclipse.rcptt.tesla.ecl.model.GetPart;
 import org.eclipse.rcptt.tesla.ecl.model.GetPreferencesMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetProperty;
 import org.eclipse.rcptt.tesla.ecl.model.GetPropertyNodes;
@@ -387,6 +388,10 @@ public class TeslaAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseGetEditor(GetEditor object) {
 				return createGetEditorAdapter();
+			}
+			@Override
+			public Adapter caseGetPart(GetPart object) {
+				return createGetPartAdapter();
 			}
 			@Override
 			public Adapter caseGetSection(GetSection object) {
@@ -1423,6 +1428,20 @@ public class TeslaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGetEditorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.rcptt.tesla.ecl.model.GetPart <em>Get Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.rcptt.tesla.ecl.model.GetPart
+	 * @generated
+	 */
+	public Adapter createGetPartAdapter() {
 		return null;
 	}
 

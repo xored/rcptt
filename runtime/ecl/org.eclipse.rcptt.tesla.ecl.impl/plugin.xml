@@ -232,6 +232,11 @@
       </scriptlet>
       <scriptlet
             class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectorService"
+            name="GetPart"
+            namespace="http://eclipse.org/rcptt/tesla/ecl">
+      </scriptlet>
+      <scriptlet
+            class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.SelectorService"
             name="GetSection"
             namespace="http://eclipse.org/rcptt/tesla/ecl">
       </scriptlet>

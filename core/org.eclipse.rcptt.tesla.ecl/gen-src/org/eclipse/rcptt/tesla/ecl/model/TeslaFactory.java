@@ -372,6 +372,15 @@ public interface TeslaFactory extends EFactory {
 	GetEditor createGetEditor();
 
 	/**
+	 * Returns a new object of class '<em>Get Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Get Part</em>'.
+	 * @generated
+	 */
+	GetPart createGetPart();
+
+	/**
 	 * Returns a new object of class '<em>Get Section</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

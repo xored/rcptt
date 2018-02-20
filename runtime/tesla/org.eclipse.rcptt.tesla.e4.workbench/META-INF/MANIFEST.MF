@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCPTT Runtime E4 UI Support
+Bundle-SymbolicName: org.eclipse.rcptt.tesla.e4.workbench;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: org.eclipse.rcptt.tesla.e4.internal.workbench.E4TeslaWorkbenchPlugin
+Bundle-Vendor: Eclipse RCP Testing Tool Project
+Require-Bundle: org.eclipse.osgi,
+ org.eclipse.core.runtime,
+ org.eclipse.swt,
+ org.eclipse.jface,
+ org.eclipse.rcptt.tesla.core,
+ org.eclipse.rcptt.tesla.swt,
+ org.eclipse.rcptt.tesla.recording.swt,
+ org.eclipse.rcptt.tesla.jface.aspects,
+ org.eclipse.rcptt.util,
+ org.eclipse.e4.ui.model.workbench,
+ org.eclipse.rcptt.runtime.e4.ui,
+ org.eclipse.e4.ui.workbench
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.rcptt.tesla.e4.workbench.player,
+ org.eclipse.rcptt.tesla.e4.workbench.processors
