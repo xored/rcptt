@@ -80,7 +80,7 @@ public class TeslaBridge {
 			client = null;
 		}
 		// TODO (e4 support): should we get a display instance here?
-		client = new TeslaQClient(Display.getDefault());
+		client = new TeslaQClient();
 		// To be sure all info are clear before test
 		try {
 			client.clean();

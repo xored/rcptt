@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.core.network.server.TeslaNetworkClientConnection;
-import org.eclipse.swt.widgets.Display;
 
 public class TeslaNetworkServer extends Thread {
 	private boolean running = true;
@@ -51,10 +50,8 @@ public class TeslaNetworkServer extends Thread {
 					&& !isInterrupted()) {
 				try {
 					final Socket clientSocket = socket.accept();
-					// TODO (e4 support): remove quickfix
-					final Display display = Display.getDefault();
 					TeslaNetworkClientConnection client = new TeslaNetworkClientConnection(
-							display, clientSocket, this);
+							clientSocket, this);
 					client.start();
 					synchronized (clients) {
 						// System.out.println("NEW TESLA CLIENT CONNECTED:"

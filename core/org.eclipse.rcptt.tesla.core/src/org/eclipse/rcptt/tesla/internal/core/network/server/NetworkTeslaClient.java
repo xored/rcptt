@@ -19,7 +19,6 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Response;
 import org.eclipse.rcptt.tesla.internal.core.AbstractTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.core.network.DataSerializer;
-import org.eclipse.swt.widgets.Display;
 
 public class NetworkTeslaClient extends AbstractTeslaClient {
 	private final class LocalEmptyStream extends TeslaStream {
@@ -55,8 +54,8 @@ public class NetworkTeslaClient extends AbstractTeslaClient {
 	private DataOutputStream dataOutput;
 	private LocalEmptyStream stream;
 
-	public NetworkTeslaClient(Display display, DataOutputStream dout, String id) {
-		super(display, id);
+	public NetworkTeslaClient(DataOutputStream dout, String id) {
+		super(id);
 		this.dataOutput = dout;
 	}
 

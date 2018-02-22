@@ -45,7 +45,6 @@ import org.eclipse.rcptt.tesla.ecl.model.BoundControlHandle;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.internal.core.queue.TeslaQClient;
 import org.eclipse.rcptt.tesla.internal.core.queue.TeslaQPlayer;
-import org.eclipse.rcptt.tesla.internal.ui.player.FakeEclipseWindowUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
@@ -57,11 +56,6 @@ import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.rcptt.tesla.ui.RWTUtils;
 import org.eclipse.rcptt.util.Base64;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IWindowListener;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 public class TeslaBridge {
 	private static TeslaQPlayer player;
@@ -86,7 +80,7 @@ public class TeslaBridge {
 			client.shutdown();
 			client = null;
 		}
-		client = new TeslaQClient(RWTUtils.findDisplay());
+		client = new TeslaQClient();
 		// To be sure all info are clear before test
 		try {
 			client.clean();

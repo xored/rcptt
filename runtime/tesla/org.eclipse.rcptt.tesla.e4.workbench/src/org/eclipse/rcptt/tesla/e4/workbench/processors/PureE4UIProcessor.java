@@ -13,6 +13,7 @@ package org.eclipse.rcptt.tesla.e4.workbench.processors;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.rcptt.runtime.e4.ui.PureE4ModelProcessor;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
@@ -81,7 +82,9 @@ public class PureE4UIProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 		this.id = client.getID();
-		this.display = client.getDisplay();
+
+		this.display = PureE4ModelProcessor.getDisplay();
+		getSWTProcessor().setDisplay(display);
 
 		this.extension = new PureE4UIPlayerExtension();
 		SWTUIPlayer.addExtension(extension);
@@ -91,6 +94,7 @@ public class PureE4UIProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 	public void terminate() {
 		this.client = null;
 		this.id = null;
+
 		this.display = null;
 
 		SWTUIPlayer.removeExtension(extension);

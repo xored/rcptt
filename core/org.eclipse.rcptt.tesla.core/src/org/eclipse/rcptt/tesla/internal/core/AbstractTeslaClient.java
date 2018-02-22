@@ -43,7 +43,6 @@ import org.eclipse.rcptt.tesla.internal.core.processing.ElementGenerator;
 import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor;
 import org.eclipse.rcptt.tesla.internal.core.processing.ITeslaCommandProcessor.PreExecuteStatus;
 import org.eclipse.rcptt.util.Exceptions;
-import org.eclipse.swt.widgets.Display;
 
 public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 	private boolean processing = false;
@@ -55,20 +54,14 @@ public abstract class AbstractTeslaClient implements IElementProcessorMapper {
 	private Context currentContext;
 	private boolean closed = false;
 
-	private final Display display;
 	private final String id;
 	private final AtomicInteger hasEvents = new AtomicInteger(-1);
 	private AdvancedInformation lastFailureInformation;
 
-	public AbstractTeslaClient(Display display, String id) {
+	public AbstractTeslaClient(String id) {
 		super();
-		this.display = display;
 		this.id = id;
 		processors.initializeProcessors(this);
-	}
-
-	public Display getDisplay() {
-		return display;
 	}
 
 	public String getID() {

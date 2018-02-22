@@ -13,7 +13,6 @@ package org.eclipse.rcptt.tesla.internal.core.queue;
 import org.eclipse.rcptt.tesla.core.protocol.TeslaStream;
 import org.eclipse.rcptt.tesla.internal.core.AbstractTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
-import org.eclipse.swt.widgets.Display;
 
 public class TeslaQClient extends AbstractTeslaClient {
 	TeslaQStream qStream = new TeslaQStream(null);
@@ -23,8 +22,8 @@ public class TeslaQClient extends AbstractTeslaClient {
 		return qStream;
 	}
 
-	public TeslaQClient(Display display) {
-		super(display, "myid:" + System.currentTimeMillis());
+	public TeslaQClient() {
+		super("myid:" + System.currentTimeMillis());
 	}
 
 	@Override

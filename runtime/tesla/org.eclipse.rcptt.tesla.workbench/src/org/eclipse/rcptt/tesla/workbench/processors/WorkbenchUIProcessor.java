@@ -139,7 +139,9 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	public void initialize(AbstractTeslaClient client) {
 		this.client = client;
 		this.id = client.getID();
-		this.display = client.getDisplay();
+
+		this.display = PlatformUI.getWorkbench().getDisplay();
+		getSWTProcessor().setDisplay(display);
 
 		this.extension = new WorkbenchUIPlayerExtension();
 		SWTUIPlayer.addExtension(extension);
@@ -149,6 +151,7 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 	public void terminate() {
 		this.client = null;
 		this.id = null;
+
 		this.display = null;
 
 		SWTUIPlayer.removeExtension(extension);

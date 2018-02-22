@@ -543,8 +543,13 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 	@Override
 	public void initialize(final AbstractTeslaClient client) {
 		this.client = client;
-		this.display = client.getDisplay();
 		this.id = client.getID();
+
+		// set 'display' if an workbench processor hasn't set it yet
+		if (display == null) {
+			this.display = Display.getDefault();
+		}
+
 		dragSupport.initialize(client, id);
 		LocalClipboard.setEnabled(TeslaFeatures.isUseInternalClipboard());
 		TeslaEventManager.getManager().setUnhandledNativeDialogHandler(
@@ -556,6 +561,10 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 								+ clazz.getName() + " message: " + message;
 					}
 				});
+	}
+
+	public void setDisplay(Display display) {
+		this.display = display;
 	}
 
 	public SWTUIProcessor() {
