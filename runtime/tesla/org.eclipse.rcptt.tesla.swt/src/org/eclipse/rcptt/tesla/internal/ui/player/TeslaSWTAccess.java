@@ -33,6 +33,7 @@ import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.swt.events.TimerUtils;
+import org.eclipse.rcptt.util.ReflectionUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CTabFolder;
@@ -366,7 +367,7 @@ public class TeslaSWTAccess {
 			Field field = class1.getDeclaredField("this$0");
 			field.setAccessible(true);
 			Object object = field.get(job);
-			if (isInstanceOf(object.getClass(), "org.eclipse.ui.progress.DeferredTreeContentManager")) {
+			if (ReflectionUtil.isInstanceOf(object.getClass(), "org.eclipse.ui.progress.DeferredTreeContentManager")) {
 				return true;
 			}
 			return false;
@@ -604,26 +605,6 @@ public class TeslaSWTAccess {
 		}
 		return null;
 
-	}
-
-	public static boolean isInstanceOf(Class clazz, String className) {
-		if (clazz == null || clazz.getName().equals("java.lang.Object")) {
-			return false;
-		}
-		if (clazz.getName().equals(className)) {
-			return true;
-		}
-		// go through interfaces
-		for (Class interfaze : clazz.getInterfaces()) {
-			if (isInstanceOf(interfaze, className)) {
-				return true;
-			}
-		}
-		// go through super classes
-		if (isInstanceOf(clazz.getSuperclass(), className)) {
-			return true;
-		}
-		return false;
 	}
 
 }

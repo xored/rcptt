@@ -18,8 +18,8 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.rcptt.util.ReflectionUtil;
 import org.eclipse.swt.program.Program;
-import org.eclipse.ui.internal.misc.ExternalProgramImageDescriptor;
 import org.osgi.framework.Bundle;
 
 public enum DescriptorInfo {
@@ -112,10 +112,13 @@ public enum DescriptorInfo {
 		
 		@Override
 		String extract(ImageDescriptor descriptor) {
-			if (descriptor instanceof ExternalProgramImageDescriptor) {
+			if (ReflectionUtil.isInstanceOf(descriptor.getClass(),
+					"org.eclipse.ui.internal.misc.ExternalProgramImageDescriptor")) {
 				if (isWindows) {
 					try {
-						Program p = ((ExternalProgramImageDescriptor) descriptor).program;
+						Field programField = descriptor.getClass().getDeclaredField("program");
+						programField.setAccessible(true);
+						Program p = (Program) programField.get(descriptor);
 	
 						Field extensionField = p.getClass().getDeclaredField("extension");
 						extensionField.setAccessible(true);

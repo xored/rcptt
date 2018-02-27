@@ -154,4 +154,24 @@ public class ReflectionUtil {
 		}
 	}
 
+	public static boolean isInstanceOf(Class<?> clazz, String className) {
+		if (clazz == null || clazz.getName().equals("java.lang.Object")) {
+			return false;
+		}
+		if (clazz.getName().equals(className)) {
+			return true;
+		}
+		// go through interfaces
+		for (Class<?> interfaze : clazz.getInterfaces()) {
+			if (isInstanceOf(interfaze, className)) {
+				return true;
+			}
+		}
+		// go through super classes
+		if (isInstanceOf(clazz.getSuperclass(), className)) {
+			return true;
+		}
+		return false;
+	}
+
 }
