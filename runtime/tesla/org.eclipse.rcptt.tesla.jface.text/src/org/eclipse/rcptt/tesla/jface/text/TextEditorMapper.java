@@ -8,22 +8,27 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.workbench.texteditor;
+package org.eclipse.rcptt.tesla.jface.text;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
+import org.eclipse.rcptt.tesla.core.ui.Marker;
 import org.eclipse.rcptt.tesla.core.ui.StyleRangeEntry;
 import org.eclipse.rcptt.tesla.core.ui.Text;
 import org.eclipse.rcptt.tesla.core.ui.TextPosition;
 import org.eclipse.rcptt.tesla.core.ui.UiFactory;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
-import org.eclipse.rcptt.tesla.jface.text.JFaceTextManager;
+import org.eclipse.rcptt.tesla.jface.text.annotations.TextEditorAnnotationFinder;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Widget;
 
 public class TextEditorMapper {
+
 	public static org.eclipse.rcptt.tesla.core.ui.Widget mapExtraValues(
 			SWTUIElement element, org.eclipse.rcptt.tesla.core.ui.Widget result) {
 		Widget unwrap = element.unwrapWidget();
@@ -52,8 +57,8 @@ public class TextEditorMapper {
 		if (text == null) {
 			return;
 		}
-		TextEditorAnnotationFinder finder = new TextEditorAnnotationFinder();
-		text.getMarkers().putAll(finder.findAnnotations(viewer));
+		Map<String, EList<Marker>> annotations = TextEditorAnnotationFinder.findAnnotations(viewer);
+		text.getMarkers().putAll(annotations);
 		text.setMarkersCount(text.getMarkers().size());
 	}
 

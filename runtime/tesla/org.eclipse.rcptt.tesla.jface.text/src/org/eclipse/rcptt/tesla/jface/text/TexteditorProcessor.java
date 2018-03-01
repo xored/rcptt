@@ -8,7 +8,7 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.workbench.texteditor;
+package org.eclipse.rcptt.tesla.jface.text;
 
 import static java.lang.Integer.parseInt;
 import static org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor.failResponse;
@@ -71,8 +71,6 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTEvents;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
-import org.eclipse.rcptt.tesla.jface.text.JFaceTextManager;
-import org.eclipse.rcptt.tesla.jface.text.JFaceTextProcessor;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.rcptt.util.swt.Events;
 import org.eclipse.swt.SWT;
@@ -83,7 +81,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
-public class WorkbenchTexteditorProcessor implements ITeslaCommandProcessor,
+public class TexteditorProcessor implements ITeslaCommandProcessor,
 		ISWTModelMapperExtension {
 	private AbstractTeslaClient client;
 	private SWTUIProcessor swtUIProcessor;
@@ -118,11 +116,11 @@ public class WorkbenchTexteditorProcessor implements ITeslaCommandProcessor,
 		}
 
 		public String getRawText(SWTUIElement element) {
-			return getTextEditorRulerText(element.unwrapWidget());
+			return getTextEditorRulerText(element.unwrap());
 		}
 	};
 
-	public WorkbenchTexteditorProcessor() {
+	public TexteditorProcessor() {
 		SWTUIPlayer.addExtension(extension);
 	}
 
@@ -529,7 +527,7 @@ public class WorkbenchTexteditorProcessor implements ITeslaCommandProcessor,
 	private static IStatus createInvalidRulerLineErr(int line) {
 		return new Status(
 				IStatus.ERROR,
-				WorkbenchTexteditorActivator.PLUGIN_ID,
+				JFaceTextActivator.PLUGIN_ID,
 				String.format(
 						"Line %d is not present on ruler. Probably it is folded or removed?",
 						line));

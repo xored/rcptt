@@ -18,5 +18,17 @@
             class="org.eclipse.rcptt.tesla.recording.jface.text.JFaceTextRecordingProcessor">
       </recorder>
    </extension>
-
+   <extension
+         point="org.eclipse.rcptt.tesla.recording.core.recorder">
+      <recorder
+            class="org.eclipse.rcptt.tesla.recording.jface.text.TexteditorRecordingProcessor">
+      </recorder>
+   </extension>
+   <extension
+         point="org.eclipse.rcptt.tesla.recording.swt.describerExtensions">
+      <describerExtension
+            class="org.eclipse.rcptt.tesla.recording.jface.text.RecordingDescriberExtension"
+            priority="1000">
+      </describerExtension>
+   </extension>
 </plugin>

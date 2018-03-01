@@ -14,11 +14,11 @@ import org.eclipse.swt.widgets.Widget;
 
 import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
+import org.eclipse.rcptt.tesla.jface.text.TextEditorMapper;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.IRecorderDescriberExtension;
 import org.eclipse.rcptt.tesla.recording.core.swt.IRecordingDescriber;
 import org.eclipse.rcptt.tesla.recording.core.swt.RecordingWidgetDescriber;
-import org.eclipse.rcptt.tesla.workbench.texteditor.TextEditorMapper;
 
 public class RecordingDescriberExtension implements IRecorderDescriberExtension {
 	public IRecordingDescriber getDescriber(Widget widget,
@@ -41,8 +41,8 @@ public class RecordingDescriberExtension implements IRecorderDescriberExtension 
 
 		@Override
 		public Element searchForElement(TeslaRecorder recorder) {
-			WorkbenchTexteditorRecordingProcessor processor = recorder
-					.getProcessor(WorkbenchTexteditorRecordingProcessor.class);
+			TexteditorRecordingProcessor processor = recorder
+					.getProcessor(TexteditorRecordingProcessor.class);
 			if (processor == null) {
 				return super.searchForElement(recorder);
 			}

@@ -54,10 +54,9 @@ import org.eclipse.rcptt.tesla.internal.ui.player.FindResult;
 import org.eclipse.rcptt.tesla.internal.ui.player.ISWTModelMapperExtension;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.rcptt.tesla.jface.text.TextEditorMapper;
 import org.eclipse.rcptt.tesla.recording.aspects.IExtendedSWTEventListener;
-import org.eclipse.rcptt.tesla.recording.aspects.IWorkbenchTexteditorEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.SWTEventManager;
-import org.eclipse.rcptt.tesla.recording.aspects.WorkbenchTexteditorEventManager;
 import org.eclipse.rcptt.tesla.recording.aspects.jface.text.IJFaceTextEventListener;
 import org.eclipse.rcptt.tesla.recording.aspects.jface.text.JFaceTextEventManager;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
@@ -69,7 +68,6 @@ import org.eclipse.rcptt.tesla.recording.core.swt.SWTEventRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.SWTRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.LastEvents;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
-import org.eclipse.rcptt.tesla.workbench.texteditor.TextEditorMapper;
 import org.eclipse.rcptt.util.KeysAndButtons;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -83,10 +81,10 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
-public class WorkbenchTexteditorRecordingProcessor implements
-		IRecordingProcessor, IWorkbenchTexteditorEventListener,
-		IRecordingProcessorExtension, IExtendedSWTEventListener,
-		IJFaceTextEventListener, ISWTModelMapperExtension {
+public class TexteditorRecordingProcessor implements
+		IRecordingProcessor, IRecordingProcessorExtension,
+		IExtendedSWTEventListener, IJFaceTextEventListener,
+		ISWTModelMapperExtension {
 
 	private TeslaRecorder recorder;
 	private SWTEventRecorder eventRecorder;
@@ -99,7 +97,7 @@ public class WorkbenchTexteditorRecordingProcessor implements
 	// For compatibility
 	final AtomicInteger useTextViewer = new AtomicInteger(0);
 
-	public WorkbenchTexteditorRecordingProcessor() {
+	public TexteditorRecordingProcessor() {
 
 		processor = new AbstractSWTUIPlayerExtension() {
 			public GenericElementKind getKind(Object w) {
@@ -127,7 +125,6 @@ public class WorkbenchTexteditorRecordingProcessor implements
 
 	public void initialize(TeslaRecorder teslaRecorder) {
 		this.recorder = teslaRecorder;
-		WorkbenchTexteditorEventManager.addListener(this);
 		SWTEventManager.addListener(this);
 		JFaceTextEventManager.addListener(this);
 	}

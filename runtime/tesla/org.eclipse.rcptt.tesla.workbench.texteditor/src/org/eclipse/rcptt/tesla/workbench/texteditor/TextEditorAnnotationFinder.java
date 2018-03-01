@@ -31,14 +31,22 @@ import org.eclipse.rcptt.tesla.core.ui.Marker;
 import org.eclipse.rcptt.tesla.core.ui.UiFactory;
 import org.eclipse.rcptt.tesla.internal.core.TeslaCore;
 import org.eclipse.rcptt.tesla.jface.text.JFaceTextManager;
+import org.eclipse.rcptt.tesla.jface.text.annotations.ITextEditorAnnotationFinder;
 import org.eclipse.rcptt.tesla.recording.aspects.jface.text.JFaceTextEventManager;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.rulers.AbstractContributedRulerColumn;
 
-public class TextEditorAnnotationFinder {
+public class TextEditorAnnotationFinder implements ITextEditorAnnotationFinder {
+	
+	@Override
+	public boolean isSupported() {
+		return PlatformUI.isWorkbenchRunning();
+	}
 
+	@Override
 	public Map<String, EList<Marker>> findAnnotations(TextViewer viewer) {
 		Map<String, EList<Marker>> markersAtEditor = new HashMap<String, EList<Marker>>();
 		FoundResults rulers = findRulerColumn(viewer);

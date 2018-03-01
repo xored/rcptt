@@ -12,11 +12,17 @@
  -->
 
 <plugin>
+   <extension-point id="annotationFinder" name="annotationFinder" schema="schema/annotationFinder.exsd"/>
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider
             class="org.eclipse.rcptt.tesla.jface.text.JFaceTextProcessor">
       </provider>
    </extension>
-
+   <extension
+         point="org.eclipse.rcptt.tesla.core.processor">
+      <provider
+            class="org.eclipse.rcptt.tesla.jface.text.TexteditorProcessor">
+      </provider>
+   </extension>
 </plugin>

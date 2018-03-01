@@ -45,7 +45,6 @@
     <module>org.eclipse.rcptt.tesla.recording.aspects.jface.text</module>
     <module>org.eclipse.rcptt.tesla.recording.aspects.swt</module>
     <module>org.eclipse.rcptt.tesla.recording.aspects.workbench</module>
-    <module>org.eclipse.rcptt.tesla.recording.aspects.workbench.texteditor</module>
     <module>org.eclipse.rcptt.tesla.recording.draw2d</module>
     <module>org.eclipse.rcptt.tesla.recording.gef</module>
     <module>org.eclipse.rcptt.tesla.recording.gmf</module>
@@ -53,7 +52,6 @@
     <module>org.eclipse.rcptt.tesla.recording.canvas</module>
     <module>org.eclipse.rcptt.tesla.recording.jface.text</module>
     <module>org.eclipse.rcptt.tesla.recording.workbench</module>
-    <module>org.eclipse.rcptt.tesla.recording.workbench.texteditor</module>
     <module>org.eclipse.rcptt.tesla.swt.aspects</module>
     <module>org.eclipse.rcptt.tesla.swt.fragment</module>
     <module>org.eclipse.rcptt.tesla.swt</module>
@@ -62,7 +60,6 @@
     <module>org.eclipse.rcptt.tesla.ui.views</module>
     <module>org.eclipse.rcptt.tesla.workbench</module>
     <module>org.eclipse.rcptt.tesla.workbench.texteditor</module>
-    <module>org.eclipse.rcptt.tesla.workbench.texteditor.aspects</module>
     <module>org.eclipse.rcptt.tesla.variables</module>
     <module>org.eclipse.rcptt.tesla.properties.view</module>
   </modules>

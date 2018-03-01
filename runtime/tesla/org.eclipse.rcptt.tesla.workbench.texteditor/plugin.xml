@@ -13,10 +13,9 @@
 
 <plugin>
    <extension
-         point="org.eclipse.rcptt.tesla.core.processor">
-      <provider
-            class="org.eclipse.rcptt.tesla.workbench.texteditor.WorkbenchTexteditorProcessor">
-      </provider>
+         point="org.eclipse.rcptt.tesla.jface.text.annotationFinder">
+      <annotationFinder
+            class="org.eclipse.rcptt.tesla.workbench.texteditor.TextEditorAnnotationFinder">
+      </annotationFinder>
    </extension>
-
 </plugin>
