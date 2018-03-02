@@ -13,16 +13,19 @@ package org.eclipse.rcptt.runtime.e4.internal.ui;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.rcptt.reporting.core.ReportManager;
+import org.eclipse.rcptt.runtime.AutEventManager;
+import org.eclipse.rcptt.runtime.Q7Monitor;
+import org.eclipse.rcptt.runtime.e4.ui.PureE4Helper;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-// TODO (e4 support): remove the bundle?
 public class Activator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime.ui";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.runtime.e4.ui";
 
 	// The shared instance
 	private static Activator plugin;
@@ -44,6 +47,19 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+
+		// TODO (e4 support): review
+		if (PureE4Helper.isPureE4()) {
+			if (AutEventManager.getQ7EclPort() != -1) {
+				new Q7Monitor().start();
+				sendInitialState();
+			}
+			ReportManager.reload();
+		}
+	}
+
+	private void sendInitialState() {
+		AutEventManager.getInstance().sendInit();
 	}
 
 	/*

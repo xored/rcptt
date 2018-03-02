@@ -13,7 +13,6 @@ package org.eclipse.rcptt.runtime.e4.ui;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-@SuppressWarnings("restriction")
 public class PureE4Helper {
 	
 	public static boolean isPureE4() {
@@ -26,8 +25,8 @@ public class PureE4Helper {
 		Bundle workbenchBundle = Platform.getBundle("org.eclipse.ui.workbench");
 		if (workbenchBundle != null) {
 			try {
-				workbenchBundle.loadClass("org.eclipse.ui.internal.Workbench");
-				isCompatibilityLayerDisabled = org.eclipse.ui.internal.Workbench.getInstance() == null;
+				workbenchBundle.loadClass("org.eclipse.ui.PlatformUI");
+				isCompatibilityLayerDisabled = !org.eclipse.ui.PlatformUI.isWorkbenchRunning();
 			} catch (ClassNotFoundException e) {
 				// ignore
 			}
