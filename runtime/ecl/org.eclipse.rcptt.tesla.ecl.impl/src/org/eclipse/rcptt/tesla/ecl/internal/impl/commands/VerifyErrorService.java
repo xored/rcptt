@@ -18,12 +18,11 @@ import org.eclipse.rcptt.ecl.core.util.CommandToStringConverter;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.ecl.runtime.ISession;
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
 import org.eclipse.rcptt.tesla.ecl.model.VerifyError;
 import org.eclipse.rcptt.tesla.internal.core.queue.TeslaQClient;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 
 public class VerifyErrorService implements ICommandService {
 
@@ -45,12 +44,11 @@ public class VerifyErrorService implements ICommandService {
 			if (result.isOK()) {
 				TeslaBridge.endNoErrorMode();
 				if (client != null) {
-					PlatformUI.getWorkbench().getDisplay()
-							.syncExec(new Runnable() {
-								public void run() {
-									client.collectLastFailureInformation();
-								}
-							});
+					TeslaDisplayProvider.getDisplay().syncExec(new Runnable() {
+						public void run() {
+							client.collectLastFailureInformation();
+						}
+					});
 				}
 				String msg = "Command "
 						+ new CommandToStringConverter().convert(c)

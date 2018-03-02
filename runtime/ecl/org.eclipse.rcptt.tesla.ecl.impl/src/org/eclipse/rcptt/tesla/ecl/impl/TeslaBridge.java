@@ -49,13 +49,13 @@ import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.rcptt.util.Base64;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.PlatformUI;
 
 public class TeslaBridge {
 	private static TeslaQPlayer player;
@@ -368,7 +368,7 @@ public class TeslaBridge {
 			return;
 		}
 		if (TeslaFeatures.getInstance().isTrue(TeslaFeatures.CAPTURE_EXECUTION) || onError) {
-			Display display = PlatformUI.getWorkbench().getDisplay();
+			Display display = TeslaDisplayProvider.getDisplay();
 			ReportScreenshotProvider.takeScreenshot(display, onError, message);
 		}
 	}

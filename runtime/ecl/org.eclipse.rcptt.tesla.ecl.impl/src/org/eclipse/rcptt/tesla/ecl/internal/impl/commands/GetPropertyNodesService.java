@@ -18,8 +18,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.tesla.core.ui.PropertyNodeList;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
@@ -27,6 +25,7 @@ import org.eclipse.rcptt.tesla.ecl.model.GetPropertyNodes;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 
 public class GetPropertyNodesService implements ICommandService {
 
@@ -36,7 +35,7 @@ public class GetPropertyNodesService implements ICommandService {
 		final IProcess finalContext = context;
 		final IStatus[] resultStatus = new IStatus[] { Status.OK_STATUS };
 
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+		TeslaDisplayProvider.getDisplay().syncExec(new Runnable() {
 
 			public void run() {
 				PropertyNodeList response = null;

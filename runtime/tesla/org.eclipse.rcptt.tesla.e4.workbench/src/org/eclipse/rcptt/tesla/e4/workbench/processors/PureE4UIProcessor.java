@@ -84,7 +84,6 @@ public class PureE4UIProcessor implements ITeslaCommandProcessor, ISWTModelMappe
 		this.id = client.getID();
 
 		this.display = PureE4ModelProcessor.getDisplay();
-		getSWTProcessor().setDisplay(display);
 
 		this.extension = new PureE4UIPlayerExtension();
 		SWTUIPlayer.addExtension(extension);

@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.IWorkbench;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
@@ -55,6 +56,10 @@ public class PureE4ModelProcessor {
 
 	public static MApplication getApplication() {
 		return INSTANCE.application;
+	}
+
+	public static IWorkbench getWorkbench() {
+		return INSTANCE.application.getContext().get(IWorkbench.class);
 	}
 
 	public static List<MWindow> getWorkbenchWindows() {

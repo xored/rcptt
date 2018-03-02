@@ -14,6 +14,7 @@
 <plugin>
    <extension-point id="jobCollector" name="jobCollertor" schema="schema/jobCollector.exsd"/>
    <extension-point id="describerExtensions" name="describerExtensions" schema="schema/describerExtensions.exsd"/>
+   <extension-point id="displayProvider" name="displayProvider" schema="schema/displayProvider.exsd"/>
    <extension
          point="org.eclipse.rcptt.tesla.core.processor">
       <provider

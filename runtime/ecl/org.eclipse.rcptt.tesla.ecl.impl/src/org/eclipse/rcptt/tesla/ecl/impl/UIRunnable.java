@@ -28,11 +28,11 @@ import org.eclipse.rcptt.tesla.internal.core.queue.TeslaQClient;
 import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.internal.ui.player.UIJobCollector;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 
 public abstract class UIRunnable<T> {
 	private enum RunningState {
@@ -44,7 +44,7 @@ public abstract class UIRunnable<T> {
 		final Object[] result = new Object[1];
 		final AtomicReference processed = new AtomicReference(RunningState.Starting);
 		final Throwable[] exception = new Throwable[] { null };
-		final Display display = PlatformUI.getWorkbench().getDisplay();
+		final Display display = TeslaDisplayProvider.getDisplay();
 		final UIJobCollector collector = new UIJobCollector(display);
 		Job.getJobManager().addJobChangeListener(collector);
 		collector.enable();
@@ -59,7 +59,7 @@ public abstract class UIRunnable<T> {
 					
 					boolean resultValue = true;
 					
-					if (!PlatformUI.getWorkbench().getDisplay()
+					if (!TeslaDisplayProvider.getDisplay()
 							.equals(Display.getCurrent())) {
 						resultValue = false;
 					}

@@ -20,14 +20,13 @@ import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.BoxedValues;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
-import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.TeslaImplPlugin;
 import org.eclipse.rcptt.tesla.ecl.model.GetWidgetDetails;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 
 public class GetWidgetDetailsService implements ICommandService {
 
@@ -37,7 +36,7 @@ public class GetWidgetDetailsService implements ICommandService {
 		final IProcess finalContext = context;
 		final IStatus[] resultStatus = new IStatus[] { Status.OK_STATUS };
 
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+		TeslaDisplayProvider.getDisplay().syncExec(new Runnable() {
 
 			public void run() {
 				EObject response = null;

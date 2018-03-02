@@ -22,7 +22,7 @@ import org.eclipse.rcptt.tesla.core.info.AdvancedInformation;
 import org.eclipse.rcptt.tesla.core.info.InfoFactory;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.internal.core.info.GeneralInformationCollector;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 
 public class AdvancedInfoService implements ICommandService {
 
@@ -31,39 +31,39 @@ public class AdvancedInfoService implements ICommandService {
 
 		final IProcess finalContext = context;
 
-		if (PlatformUI.isWorkbenchRunning()) {
+		// TODO (e4 support): review
+		// if (PlatformUI.isWorkbenchRunning()) {
 			final boolean complete[] = { false };
 			final CoreException error[] = { null };
 			Thread askForInfoThread = new Thread(new Runnable() {
 				public void run() {
-					PlatformUI.getWorkbench().getDisplay()
-							.syncExec(new Runnable() {
-
-								public void run() {
-									boolean mustClientShutdown = false;
-									if (TeslaBridge.getClient() == null) {
-										mustClientShutdown = true;
-										TeslaBridge.setup();
+					TeslaDisplayProvider.getDisplay().syncExec(new Runnable() {
+	
+						public void run() {
+							boolean mustClientShutdown = false;
+							if (TeslaBridge.getClient() == null) {
+								mustClientShutdown = true;
+								TeslaBridge.setup();
+							}
+							try {
+								TeslaBridge.makeScreenshot(true,
+										"Timeout during execution");
+								final AdvancedInformation info = TeslaBridge
+										.getClient()
+										.getAdvancedInformation(null);
+								returnGeneralInfo(info, finalContext);
+								ReportHelper.addSnapshotWithData(ReportManager.getCurrentReportNode(), info);
+							} catch (CoreException e) {
+								error[0] = e;
+							} finally {
+								if (mustClientShutdown) {
+									TeslaBridge.shutdown();
 									}
-									try {
-										TeslaBridge.makeScreenshot(true,
-												"Timeout during execution");
-										final AdvancedInformation info = TeslaBridge
-												.getClient()
-												.getAdvancedInformation(null);
-										returnGeneralInfo(info, finalContext);
-										ReportHelper.addSnapshotWithData(ReportManager.getCurrentReportNode(), info);
-									} catch (CoreException e) {
-										error[0] = e;
-									} finally {
-										if (mustClientShutdown) {
-											TeslaBridge.shutdown();
-										}
-										complete[0] = true;
-									}
-								}
-							});
-
+								complete[0] = true;
+							}
+						}
+					});
+	
 				}
 			}, "get-advanced-info thread");
 			askForInfoThread.start();
@@ -74,9 +74,9 @@ public class AdvancedInfoService implements ICommandService {
 			}
 			if (error[0] != null)
 				return error[0].getStatus();
-		} else {
-			returnGeneralInfo(null, finalContext);
-		}
+		// } else {
+		// returnGeneralInfo(null, finalContext);
+		// }
 
 		return Status.OK_STATUS;
 	}

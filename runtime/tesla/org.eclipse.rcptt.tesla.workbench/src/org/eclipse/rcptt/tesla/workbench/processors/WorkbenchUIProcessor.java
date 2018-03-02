@@ -141,7 +141,6 @@ public class WorkbenchUIProcessor implements ITeslaCommandProcessor, ISWTModelMa
 		this.id = client.getID();
 
 		this.display = PlatformUI.getWorkbench().getDisplay();
-		getSWTProcessor().setDisplay(display);
 
 		this.extension = new WorkbenchUIPlayerExtension();
 		SWTUIPlayer.addExtension(extension);

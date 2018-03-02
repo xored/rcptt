@@ -16,12 +16,11 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
+import org.eclipse.rcptt.tesla.ecl.model.ShowAlert;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
+import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-
-import org.eclipse.rcptt.tesla.ecl.model.ShowAlert;
-import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 
 public class ShowAlertService implements ICommandService {
 
@@ -29,12 +28,11 @@ public class ShowAlertService implements ICommandService {
 			throws InterruptedException, CoreException {
 		final ShowAlert showAlert = (ShowAlert) command;
 
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+		TeslaDisplayProvider.getDisplay().syncExec(new Runnable() {
 			public void run() {
 				TeslaEventManager.getManager().setShowingAlert(true);
 
-				Shell shell = PlatformUI.getWorkbench().getDisplay()
-						.getShells()[0];
+				Shell shell = TeslaDisplayProvider.getDisplay().getShells()[0];
 				MessageBox mb = new MessageBox(shell);
 				mb.setMessage(showAlert.getMessage());
 				mb.open();

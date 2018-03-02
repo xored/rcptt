@@ -23,5 +23,11 @@
       <provider
             class="org.eclipse.rcptt.tesla.workbench.processors.WorkbenchUIProcessor">
       </provider>
+   </extension>
+   <extension
+         point="org.eclipse.rcptt.tesla.swt.displayProvider">
+      <displayProvider
+            class="org.eclipse.rcptt.tesla.workbench.WorkbenchDisplayProvider">
+      </displayProvider>
    </extension>   
 </plugin>

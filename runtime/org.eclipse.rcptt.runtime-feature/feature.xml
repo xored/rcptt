@@ -95,6 +95,13 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.rcptt.tesla.ecl.impl.workbench"
+         download-size="0"
+         install-size="0"
+         version="2.3.0.qualifier"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.rcptt.core.scenario"
          download-size="0"
          install-size="0"

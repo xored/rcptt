@@ -18,16 +18,17 @@ import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.tesla.ecl.model.TakeScreenshot;
 import org.eclipse.rcptt.tesla.internal.ui.player.ReportScreenshotProvider;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
+import org.eclipse.swt.widgets.Display;
 
 public class TakeScreenshotService implements ICommandService {
 
 	public IStatus service(Command command, IProcess context)
 			throws InterruptedException, CoreException {
-		TakeScreenshot cmd = (TakeScreenshot) command;
+		final TakeScreenshot cmd = (TakeScreenshot) command;
+		final Display display = TeslaDisplayProvider.getDisplay();
 
-		ReportScreenshotProvider.takeScreenshot(
-				PlatformUI.getWorkbench().getDisplay(), true,
+		ReportScreenshotProvider.takeScreenshot(display, true,
 				"user take snapshot:" + System.currentTimeMillis()+": " + cmd.getMessage());
 		return Status.OK_STATUS;
 	}

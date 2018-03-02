@@ -154,6 +154,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.TeslaSWTAccess;
 import org.eclipse.rcptt.tesla.internal.ui.player.viewers.Viewers;
 import org.eclipse.rcptt.tesla.jface.TeslaCellEditorManager;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.rcptt.tesla.swt.TeslaSWTMessages;
 import org.eclipse.rcptt.tesla.swt.dialogs.SWTDialogManager;
 import org.eclipse.rcptt.tesla.swt.dnd.LocalClipboard;
@@ -545,10 +546,7 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 		this.client = client;
 		this.id = client.getID();
 
-		// set 'display' if an workbench processor hasn't set it yet
-		if (display == null) {
-			this.display = Display.getDefault();
-		}
+		this.display = TeslaDisplayProvider.getDisplay();
 
 		dragSupport.initialize(client, id);
 		LocalClipboard.setEnabled(TeslaFeatures.isUseInternalClipboard());
@@ -561,10 +559,6 @@ public class SWTUIProcessor implements ITeslaCommandProcessor,
 								+ clazz.getName() + " message: " + message;
 					}
 				});
-	}
-
-	public void setDisplay(Display display) {
-		this.display = display;
 	}
 
 	public SWTUIProcessor() {

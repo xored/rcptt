@@ -18,4 +18,10 @@
             class="org.eclipse.rcptt.tesla.e4.workbench.processors.PureE4UIProcessor">
       </provider>
    </extension>
+   <extension
+         point="org.eclipse.rcptt.tesla.swt.displayProvider">
+      <displayProvider
+            class="org.eclipse.rcptt.tesla.e4.workbench.PureE4DisplayProvider">
+      </displayProvider>
+   </extension>
 </plugin>
