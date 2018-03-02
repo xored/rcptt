@@ -39,7 +39,6 @@ import org.eclipse.rcptt.tesla.internal.ui.processors.SWTUIProcessor;
 import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
 import org.eclipse.rcptt.tesla.workbench.player.WorkbenchUIElement;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 
 public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 
@@ -130,7 +129,7 @@ public class ProblemViewSupportProcessor implements ITeslaCommandProcessor {
 	}
 
 	private class WaitForJobsStatus extends PreExecuteStatus {
-		final UIJobCollector collector = new UIJobCollector(PlatformUI.getWorkbench().getDisplay()) {
+		final UIJobCollector collector = new UIJobCollector() {
 			@Override
 			protected JobStatus calcJobStatus(Job job, long delay) {
 				if (isMarkersJob(job)) {

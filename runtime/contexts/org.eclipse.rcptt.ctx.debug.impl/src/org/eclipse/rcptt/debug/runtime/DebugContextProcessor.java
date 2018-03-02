@@ -222,8 +222,7 @@ public class DebugContextProcessor implements IContextProcessor {
 		if (!(ctx instanceof DebugContext)) {
 			return;
 		}
-		// TODO (e4 support): remove quickfix
-		final UIJobCollector collector = new UIJobCollector(PlatformUI.getWorkbench().getDisplay());
+		final UIJobCollector collector = new UIJobCollector();
 		Job.getJobManager().addJobChangeListener(collector);
 		try {
 			UIRunnable.exec(new UIRunnable<Object>() {

@@ -26,7 +26,6 @@ public class RestartAutService implements ICommandService {
 	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
 		ShutdownAutService.tryTerminateLaunches();
 		// TODO (e4 support): save all dirtyable parts
-		// PlatformUI.getWorkbench().saveAllEditors(false);
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {

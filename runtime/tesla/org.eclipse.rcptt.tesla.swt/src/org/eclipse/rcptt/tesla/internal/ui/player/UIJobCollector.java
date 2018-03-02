@@ -41,6 +41,7 @@ import org.eclipse.rcptt.tesla.core.context.ContextManagement;
 import org.eclipse.rcptt.tesla.core.context.ContextManagement.Context;
 import org.eclipse.rcptt.tesla.core.info.Q7WaitInfoRoot;
 import org.eclipse.rcptt.tesla.jobs.JobsManager;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.ui.IJobCollector;
 import org.eclipse.rcptt.tesla.ui.IJobCollector.JobStatus;
@@ -144,15 +145,10 @@ public class UIJobCollector implements IJobChangeListener {
 
 	}
 
-	private final Display display;
 	private final Map<Job, JobInfo> jobs = Collections.synchronizedMap(new IdentityHashMap<Job, JobInfo>());
 	private boolean state;
 	private boolean needDisable = false;
 	private long stepModeNext = 0;
-
-	public UIJobCollector(Display display) {
-		this.display = display;
-	}
 
 	private JobInfo getOrCreateJobInfo(Job job) {
 		synchronized (jobs) {
@@ -588,7 +584,7 @@ public class UIJobCollector implements IJobChangeListener {
 									if (jobContext.contains("org.eclipse.ui.internal.UISynchronizer", "syncExec")
 											&& (jobContext.contains("org.eclipse.ui.internal.Semaphore", "acquire")||
 													jobContext.contains("org.eclipse.ui.internal.PendingSyncExec", "waitUntilExecuted"))) {
-										if (!SWTUIPlayer.hasRunnables(display)) {
+										if (!SWTUIPlayer.hasRunnables(TeslaDisplayProvider.getDisplay())) {
 											List<Context> execs = TeslaEventManager.getManager().getSyncExecs();
 											boolean toContinue = true;
 											for (Context context2 : execs) {
@@ -640,6 +636,7 @@ public class UIJobCollector implements IJobChangeListener {
 				if ((flags & 0xFF) == 0x08) {
 					return logReturnResult(true, realJobs, jobsInUI, info);
 				}
+				final Display display = TeslaDisplayProvider.getDisplay();
 				final boolean value[] = { false };
 				display.syncExec(new Runnable() {
 
