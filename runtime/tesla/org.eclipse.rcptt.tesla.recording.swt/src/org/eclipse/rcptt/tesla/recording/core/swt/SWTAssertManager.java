@@ -138,7 +138,6 @@ public class SWTAssertManager implements IRecordingProcessor,
 		}
 		SWTEventManager.setIgnoreFreeze(player.getIgnored());
 		SWTEventManager.setFreeze(value);
-		WorkbenchEventManager.setFreeze(value);
 		if (value == false) {
 			display.asyncExec(new Runnable() {
 				public void run() {

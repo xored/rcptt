@@ -303,28 +303,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.rcptt.tesla.recording.aspects.workbench.texteditor"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.rcptt.tesla.recording.workbench.texteditor"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.qualifier"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.rcptt.tesla.workbench.texteditor"
-         download-size="0"
-         install-size="0"
-         version="2.3.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.rcptt.tesla.workbench.texteditor.aspects"
          download-size="0"
          install-size="0"
          version="2.3.0.qualifier"
