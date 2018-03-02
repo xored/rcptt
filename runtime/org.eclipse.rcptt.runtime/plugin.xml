@@ -25,11 +25,6 @@
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
       <scriptlet
-            class="org.eclipse.rcptt.internal.runtime.SetQ7FeaturesService"
-            name="SetQ7Features"
-            namespace="http://eclipse.org/rcptt/core/ecl">
-      </scriptlet>
-      <scriptlet
             class="org.eclipse.rcptt.internal.runtime.SetOptionService"
             name="SetQ7Option"
             namespace="http://eclipse.org/rcptt/core/ecl">

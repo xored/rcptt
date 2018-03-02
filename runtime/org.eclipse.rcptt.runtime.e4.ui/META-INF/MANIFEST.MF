@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.osgi,
  org.eclipse.e4.ui.services,
  org.eclipse.ui.workbench;resolution:=optional,
  org.eclipse.rcptt.runtime,
- org.eclipse.rcptt.reporting
+ org.eclipse.rcptt.reporting,
+ org.eclipse.rcptt.core.ecl.core
 Export-Package: org.eclipse.rcptt.runtime.e4.ui
 Bundle-Activator: org.eclipse.rcptt.runtime.e4.internal.ui.Activator

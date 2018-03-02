@@ -30,6 +30,11 @@
             name="GetViews"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
+      <scriptlet
+            class="org.eclipse.rcptt.runtime.internal.ui.SetQ7FeaturesService"
+            name="SetQ7Features"
+            namespace="http://eclipse.org/rcptt/core/ecl">
+      </scriptlet>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
