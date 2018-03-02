@@ -244,7 +244,8 @@ public class RcpttCore {
 		}
 
 		// Add close modal dialogs context as first
-		addDefaultContext(contexts);
+		// TODO (e4 support): revert
+		// addDefaultContext(contexts);
 		return contexts.toArray(new IContext[contexts.size()]);
 	}
 
