@@ -24,6 +24,7 @@ import org.eclipse.rcptt.tesla.internal.ui.player.SWTModelMapper;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIElement;
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 
@@ -42,8 +43,7 @@ public class SWTRecordingHelper extends BasicRecordingHelper<SWTUIElement> {
 
 	public synchronized SWTUIPlayer getPlayer() {
 		if (player == null) {
-			// TODO (e4 support): remove quickfix
-			player = SWTUIPlayer.getPlayer(Display.getDefault());
+			player = SWTUIPlayer.getPlayer(TeslaDisplayProvider.getDisplay());
 		}
 		return player;
 	}

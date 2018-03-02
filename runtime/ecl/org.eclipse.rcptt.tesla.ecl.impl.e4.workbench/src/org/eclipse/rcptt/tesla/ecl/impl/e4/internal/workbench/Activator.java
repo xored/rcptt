@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 
 // TODO (e4 support): remove a dependency on org.eclipse.rcptt.runtime.e4.ui?
 public class Activator extends Plugin {
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ecl.impl.e3";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ecl.impl.e4.workbench";
 	private static Activator plugin;
 
 	/**

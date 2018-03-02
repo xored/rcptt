@@ -23,7 +23,7 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.Element;
 import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.eclipse.rcptt.tesla.ecl.model.ControlHandler;
 import org.eclipse.rcptt.tesla.internal.ui.processors.IModelMapperHelper;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 
 public class Q7EclDebug implements IEclDebugExtension {
 
@@ -72,8 +72,7 @@ public class Q7EclDebug implements IEclDebugExtension {
 					final List<IModelMapperHelper> helpers = TeslaBridge.getClient().getProcessors(
 							IModelMapperHelper.class);
 					if (!helpers.isEmpty()) {
-						// TODO (e4 support): remove quickfix
-						Display.getCurrent().syncExec(new Runnable() {
+						TeslaDisplayProvider.getDisplay().syncExec(new Runnable() {
 							@Override
 							public void run() {
 								for (IModelMapperHelper helper : helpers) {

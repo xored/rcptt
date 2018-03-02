@@ -11,6 +11,7 @@
 package org.eclipse.rcptt.tesla.ui.describers;
 
 import org.eclipse.rcptt.tesla.internal.ui.player.SWTUIPlayer;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -105,8 +106,7 @@ public class WidgetDescriber implements IWidgetDescriber {
 			return new Point(bounds.x, bounds.y);
 		}
 		if (display == null) {
-			// TODO (e4 support): remove quickfix
-			display = Display.getDefault();
+			display = TeslaDisplayProvider.getDisplay();
 		}
 		// for menu item bounds can be null
 		if (bounds != null) {

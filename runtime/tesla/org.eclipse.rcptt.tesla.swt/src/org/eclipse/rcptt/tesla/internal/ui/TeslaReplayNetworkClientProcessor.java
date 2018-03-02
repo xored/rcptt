@@ -23,10 +23,10 @@ import org.eclipse.rcptt.tesla.core.protocol.raw.TeslaMode;
 import org.eclipse.rcptt.tesla.internal.core.network.server.ITeslaNetworkClientProcessor;
 import org.eclipse.rcptt.tesla.internal.core.network.server.NetworkTeslaClient;
 import org.eclipse.rcptt.tesla.internal.core.network.server.TeslaNetworkClientConnection;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.rcptt.tesla.swt.events.ITeslaEventListener;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager.HasEventKind;
-import org.eclipse.swt.widgets.Display;
 
 public class TeslaReplayNetworkClientProcessor implements
 		ITeslaNetworkClientProcessor {
@@ -59,12 +59,11 @@ public class TeslaReplayNetworkClientProcessor implements
 		AspectManager.printInfo();
 		if (command.getMode().equals(TeslaMode.REPLAY)) {
 			// Use async exec to be sure display are wakeup
-			// TODO (e4 support): remove quickfix
-			Display.getDefault().asyncExec(new Runnable() {
+			TeslaDisplayProvider.getDisplay().asyncExec(new Runnable() {
 				public void run() {
 					TeslaEventManager.getManager().addEventListener(listener);
 					// Wait up Display
-					Display.getDefault().asyncExec(new Runnable() {
+					TeslaDisplayProvider.getDisplay().asyncExec(new Runnable() {
 						public void run() {
 						}
 					});

@@ -22,6 +22,7 @@ import org.eclipse.rcptt.ecl.runtime.IProcess;
 import org.eclipse.rcptt.internal.core.RcpttPlugin;
 import org.eclipse.rcptt.tesla.core.am.AspectManager;
 import org.eclipse.rcptt.tesla.core.server.TeslaServerManager;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.swt.widgets.Display;
 
 public class GetQ7InformationService implements ICommandService {
@@ -38,8 +39,7 @@ public class GetQ7InformationService implements ICommandService {
 		if (info.isTeslaActive()) {
 			info.setTeslaPort(TeslaServerManager.getServer().getPort());
 		}
-		// TODO (e4 support): remove quickfix
-		final Display display = Display.getDefault();
+		final Display display = TeslaDisplayProvider.getDisplay();
 		if (display != null) {
 			display.syncExec(new Runnable() {
 				@Override

@@ -46,6 +46,7 @@ import org.eclipse.rcptt.tesla.recording.core.IRecordingHelper;
 import org.eclipse.rcptt.tesla.recording.core.IRecordingProcessor;
 import org.eclipse.rcptt.tesla.recording.core.TeslaRecorder;
 import org.eclipse.rcptt.tesla.recording.core.swt.util.RecordedEvent;
+import org.eclipse.rcptt.tesla.swt.TeslaDisplayProvider;
 import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 import org.eclipse.rcptt.util.ShellUtilsProvider;
 import org.eclipse.swt.SWT;
@@ -128,8 +129,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 			Q7LoggingManager.logMessage(IQ7ActivityLogs.ASSERTIONS,
 					"set freeze mode to: " + value);
 		}
-		// TODO (e4 support): remove quickfix
-		final Display display = Display.getDefault();
+		final Display display = TeslaDisplayProvider.getDisplay();
 		boolean oldValue = SWTEventManager.getFreeze();
 		if (display.isDisposed()) {
 			SWTEventManager.setFreeze(false);
@@ -875,8 +875,7 @@ public class SWTAssertManager implements IRecordingProcessor,
 		}
 		freezedCtrl = null;
 		lastFocusedWidget = null;
-		// TODO (e4 support): remove quickfix
-		Display display = Display.getDefault();
+		Display display = TeslaDisplayProvider.getDisplay();
 		display.asyncExec(new Runnable() {
 			public void run() {
 				if (selectionShell != null) {

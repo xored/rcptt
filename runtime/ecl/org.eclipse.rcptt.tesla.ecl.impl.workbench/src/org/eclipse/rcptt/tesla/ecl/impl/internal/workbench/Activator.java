@@ -18,7 +18,7 @@ import org.eclipse.rcptt.tesla.ecl.impl.TeslaBridge;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends Plugin {
-	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ecl.impl.e3";
+	public static final String PLUGIN_ID = "org.eclipse.rcptt.tesla.ecl.impl.workbench";
 	private static Activator plugin;
 
 	/**
