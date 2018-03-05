@@ -425,14 +425,6 @@
       <details key="example" value="get-editor EclContext | get-section Script | get-editbox | get-property text | equals &quot;wait 1000&quot; | verify-true"/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GetPart" eSuperTypes="#//TextSelector">
-    <eAnnotations source="http://www.eclipse.org/ecl/docs">
-      <details key="description" value="Gets part with defined name. If this part doesn't exist, then error is returned."/>
-      <details key="returns" value="part"/>
-      <details key="recorded" value="true"/>
-      <details key="example" value="get-part &quot;Navigator&quot; | get-tree | select &quot;Q7Project/CheckSetCommand&quot; | double-click"/>
-    </eAnnotations>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GetSection" eSuperTypes="#//TextSelector">
     <eAnnotations source="http://www.eclipse.org/ecl/docs">
       <details key="description" value="Gets section with defined parameter. If this section doesn't exist, then error is returned."/>

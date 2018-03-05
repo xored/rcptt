@@ -86,7 +86,6 @@ import org.eclipse.rcptt.tesla.ecl.model.GetLink;
 import org.eclipse.rcptt.tesla.ecl.model.GetList;
 import org.eclipse.rcptt.tesla.ecl.model.GetMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetObject;
-import org.eclipse.rcptt.tesla.ecl.model.GetPart;
 import org.eclipse.rcptt.tesla.ecl.model.GetPreferencesMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetProperty;
 import org.eclipse.rcptt.tesla.ecl.model.GetPropertyNodes;
@@ -248,7 +247,6 @@ public class TeslaFactoryImpl extends EFactoryImpl implements TeslaFactory {
 			case TeslaPackage.GET_WINDOW: return createGetWindow();
 			case TeslaPackage.GET_VIEW: return createGetView();
 			case TeslaPackage.GET_EDITOR: return createGetEditor();
-			case TeslaPackage.GET_PART: return createGetPart();
 			case TeslaPackage.GET_SECTION: return createGetSection();
 			case TeslaPackage.GET_BANNER: return createGetBanner();
 			case TeslaPackage.GET_COOLBAR: return createGetCoolbar();
@@ -737,16 +735,6 @@ public class TeslaFactoryImpl extends EFactoryImpl implements TeslaFactory {
 	public GetEditor createGetEditor() {
 		GetEditorImpl getEditor = new GetEditorImpl();
 		return getEditor;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GetPart createGetPart() {
-		GetPartImpl getPart = new GetPartImpl();
-		return getPart;
 	}
 
 	/**

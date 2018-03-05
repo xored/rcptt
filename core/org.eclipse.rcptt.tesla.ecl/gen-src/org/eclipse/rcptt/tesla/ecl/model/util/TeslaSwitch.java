@@ -85,7 +85,6 @@ import org.eclipse.rcptt.tesla.ecl.model.GetLink;
 import org.eclipse.rcptt.tesla.ecl.model.GetList;
 import org.eclipse.rcptt.tesla.ecl.model.GetMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetObject;
-import org.eclipse.rcptt.tesla.ecl.model.GetPart;
 import org.eclipse.rcptt.tesla.ecl.model.GetPreferencesMenu;
 import org.eclipse.rcptt.tesla.ecl.model.GetProperty;
 import org.eclipse.rcptt.tesla.ecl.model.GetPropertyNodes;
@@ -558,15 +557,6 @@ public class TeslaSwitch<T> {
 				if (result == null) result = caseTextSelector(getEditor);
 				if (result == null) result = caseSelector(getEditor);
 				if (result == null) result = caseCommand(getEditor);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case TeslaPackage.GET_PART: {
-				GetPart getPart = (GetPart)theEObject;
-				T result = caseGetPart(getPart);
-				if (result == null) result = caseTextSelector(getPart);
-				if (result == null) result = caseSelector(getPart);
-				if (result == null) result = caseCommand(getPart);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1998,21 +1988,6 @@ public class TeslaSwitch<T> {
 	 * @generated
 	 */
 	public T caseGetEditor(GetEditor object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Get Part</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Get Part</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGetPart(GetPart object) {
 		return null;
 	}
 

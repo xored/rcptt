@@ -312,13 +312,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass partEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass windowEClass = null;
 
 	/**
@@ -1925,24 +1918,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPart() {
-		return partEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPart_Title() {
-		return (EAttribute)partEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getWindow() {
 		return windowEClass;
 	}
@@ -2754,9 +2729,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEAttribute(editorEClass, EDITOR__DIRTY);
 		createEAttribute(editorEClass, EDITOR__ACTIVE);
 
-		partEClass = createEClass(PART);
-		createEAttribute(partEClass, PART__TITLE);
-
 		windowEClass = createEClass(WINDOW);
 		createEAttribute(windowEClass, WINDOW__TITLE);
 		createEAttribute(windowEClass, WINDOW__SIZEABLE);
@@ -2879,7 +2851,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		browserEClass.getESuperTypes().add(this.getControl());
 		viewEClass.getESuperTypes().add(this.getControl());
 		editorEClass.getESuperTypes().add(this.getControl());
-		partEClass.getESuperTypes().add(this.getControl());
 		windowEClass.getESuperTypes().add(this.getControl());
 		dateTimeEClass.getESuperTypes().add(this.getControl());
 		sliderEClass.getESuperTypes().add(this.getControl());
@@ -3099,9 +3070,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEAttribute(getEditor_Input(), ecorePackage.getEString(), "input", null, 0, 1, Editor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEditor_Dirty(), ecorePackage.getEBoolean(), "dirty", null, 0, 1, Editor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEditor_Active(), ecorePackage.getEBoolean(), "active", null, 1, 1, Editor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(partEClass, Part.class, "Part", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPart_Title(), ecorePackage.getEString(), "title", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(windowEClass, Window.class, "Window", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWindow_Title(), ecorePackage.getEString(), "title", null, 0, 1, Window.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

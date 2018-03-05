@@ -74,7 +74,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getPropertyNodeList()
 	 * @generated
 	 */
-	int PROPERTY_NODE_LIST = 39;
+	int PROPERTY_NODE_LIST = 38;
 
 	/**
 	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
@@ -3801,115 +3801,6 @@ public interface UiPackage extends EPackage {
 	int EDITOR_FEATURE_COUNT = CONTROL_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.ui.impl.PartImpl <em>Part</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.rcptt.tesla.core.ui.impl.PartImpl
-	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getPart()
-	 * @generated
-	 */
-	int PART = 34;
-
-	/**
-	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__PROPERTY_NODES = CONTROL__PROPERTY_NODES;
-
-	/**
-	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__CLASS_NAME = CONTROL__CLASS_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Enablement</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__ENABLEMENT = CONTROL__ENABLEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Background Color</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__BACKGROUND_COLOR = CONTROL__BACKGROUND_COLOR;
-
-	/**
-	 * The feature id for the '<em><b>Foreground Color</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__FOREGROUND_COLOR = CONTROL__FOREGROUND_COLOR;
-
-	/**
-	 * The feature id for the '<em><b>Contain Menu</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__CONTAIN_MENU = CONTROL__CONTAIN_MENU;
-
-	/**
-	 * The feature id for the '<em><b>Bounds</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__BOUNDS = CONTROL__BOUNDS;
-
-	/**
-	 * The feature id for the '<em><b>Border With</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__BORDER_WITH = CONTROL__BORDER_WITH;
-
-	/**
-	 * The feature id for the '<em><b>Decorators</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__DECORATORS = CONTROL__DECORATORS;
-
-	/**
-	 * The feature id for the '<em><b>Title</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__TITLE = CONTROL_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Part</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART_FEATURE_COUNT = CONTROL_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.ui.impl.WindowImpl <em>Window</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3917,7 +3808,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getWindow()
 	 * @generated
 	 */
-	int WINDOW = 35;
+	int WINDOW = 34;
 
 	/**
 	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
@@ -4116,7 +4007,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getDateTime()
 	 * @generated
 	 */
-	int DATE_TIME = 36;
+	int DATE_TIME = 35;
 
 	/**
 	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
@@ -4252,7 +4143,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getSlider()
 	 * @generated
 	 */
-	int SLIDER = 37;
+	int SLIDER = 36;
 
 	/**
 	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
@@ -4361,7 +4252,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getPropertyNode()
 	 * @generated
 	 */
-	int PROPERTY_NODE = 38;
+	int PROPERTY_NODE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4407,7 +4298,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getFormText()
 	 * @generated
 	 */
-	int FORM_TEXT = 40;
+	int FORM_TEXT = 39;
 
 	/**
 	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
@@ -4516,7 +4407,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getImage()
 	 * @generated
 	 */
-	int IMAGE = 41;
+	int IMAGE = 40;
 
 	/**
 	 * The feature id for the '<em><b>Path</b></em>' attribute.
@@ -4553,7 +4444,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getWithImage()
 	 * @generated
 	 */
-	int WITH_IMAGE = 42;
+	int WITH_IMAGE = 41;
 
 	/**
 	 * The feature id for the '<em><b>Image</b></em>' containment reference.
@@ -4581,7 +4472,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getValuesMap()
 	 * @generated
 	 */
-	int VALUES_MAP = 43;
+	int VALUES_MAP = 42;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -4618,7 +4509,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getLineMarkersValue()
 	 * @generated
 	 */
-	int LINE_MARKERS_VALUE = 45;
+	int LINE_MARKERS_VALUE = 44;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.ui.impl.MarkerImpl <em>Marker</em>}' class.
@@ -4628,7 +4519,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getMarker()
 	 * @generated
 	 */
-	int MARKER = 44;
+	int MARKER = 43;
 
 	/**
 	 * The feature id for the '<em><b>Property Nodes</b></em>' containment reference list.
@@ -4719,7 +4610,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getCell()
 	 * @generated
 	 */
-	int CELL = 46;
+	int CELL = 45;
 
 	/**
 	 * The feature id for the '<em><b>Image</b></em>' containment reference.
@@ -4747,7 +4638,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getButtonKind()
 	 * @generated
 	 */
-	int BUTTON_KIND = 47;
+	int BUTTON_KIND = 46;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.rcptt.tesla.core.ui.PropertyNodeType <em>Property Node Type</em>}' enum.
@@ -4757,7 +4648,7 @@ public interface UiPackage extends EPackage {
 	 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getPropertyNodeType()
 	 * @generated
 	 */
-	int PROPERTY_NODE_TYPE = 48;
+	int PROPERTY_NODE_TYPE = 47;
 
 
 	/**
@@ -6683,27 +6574,6 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEditor_Active();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.ui.Part <em>Part</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Part</em>'.
-	 * @see org.eclipse.rcptt.tesla.core.ui.Part
-	 * @generated
-	 */
-	EClass getPart();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.rcptt.tesla.core.ui.Part#getTitle <em>Title</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Title</em>'.
-	 * @see org.eclipse.rcptt.tesla.core.ui.Part#getTitle()
-	 * @see #getPart()
-	 * @generated
-	 */
-	EAttribute getPart_Title();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.rcptt.tesla.core.ui.Window <em>Window</em>}'.
@@ -8714,24 +8584,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EDITOR__ACTIVE = eINSTANCE.getEditor_Active();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.ui.impl.PartImpl <em>Part</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.rcptt.tesla.core.ui.impl.PartImpl
-		 * @see org.eclipse.rcptt.tesla.core.ui.impl.UiPackageImpl#getPart()
-		 * @generated
-		 */
-		EClass PART = eINSTANCE.getPart();
-
-		/**
-		 * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PART__TITLE = eINSTANCE.getPart_Title();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.rcptt.tesla.core.ui.impl.WindowImpl <em>Window</em>}' class.

@@ -101,7 +101,6 @@ public class UiFactoryImpl extends EFactoryImpl implements UiFactory {
 			case UiPackage.BROWSER: return createBrowser();
 			case UiPackage.VIEW: return createView();
 			case UiPackage.EDITOR: return createEditor();
-			case UiPackage.PART: return createPart();
 			case UiPackage.WINDOW: return createWindow();
 			case UiPackage.DATE_TIME: return createDateTime();
 			case UiPackage.SLIDER: return createSlider();
@@ -481,16 +480,6 @@ public class UiFactoryImpl extends EFactoryImpl implements UiFactory {
 	public Editor createEditor() {
 		EditorImpl editor = new EditorImpl();
 		return editor;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Part createPart() {
-		PartImpl part = new PartImpl();
-		return part;
 	}
 
 	/**
