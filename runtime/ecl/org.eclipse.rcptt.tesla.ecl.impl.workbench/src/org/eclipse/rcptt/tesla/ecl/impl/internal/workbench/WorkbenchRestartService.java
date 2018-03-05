@@ -8,31 +8,30 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.tesla.ecl.impl.e4.internal.workbench;
+package org.eclipse.rcptt.tesla.ecl.impl.internal.workbench;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.rcptt.ecl.core.Command;
-import org.eclipse.rcptt.ecl.runtime.ICommandService;
-import org.eclipse.rcptt.ecl.runtime.IProcess;
-import org.eclipse.rcptt.runtime.e4.ui.PureE4ModelProcessor;
+import org.eclipse.rcptt.tesla.ecl.impl.IRestartAutService;
 import org.eclipse.rcptt.tesla.ecl.internal.impl.commands.ShutdownAutService;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
-public class RestartAutService implements ICommandService {
+public class WorkbenchRestartService implements IRestartAutService {
 
 	@Override
-	public IStatus service(Command command, IProcess context) throws InterruptedException, CoreException {
+	public boolean isSupported() {
+		return PlatformUI.isWorkbenchRunning();
+	}
+
+	@Override
+	public void restart() {
 		ShutdownAutService.tryTerminateLaunches();
-		// TODO (e4 support): save all dirtyable parts
+		PlatformUI.getWorkbench().saveAllEditors(false);
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				PureE4ModelProcessor.getWorkbench().restart();
+				PlatformUI.getWorkbench().restart();
 			}
 		});
-		return Status.OK_STATUS;
 	}
 
 }

@@ -12,6 +12,7 @@
  -->
 
 <plugin>
+   <extension-point id="restartService" name="restartService" schema="schema/restartService.exsd"/>
     <extension
          point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet
@@ -789,6 +790,11 @@
     <scriptlet
           class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.GetComboItemsService"
           name="GetComboItems"
+          namespace="http://eclipse.org/rcptt/tesla/ecl">
+    </scriptlet>
+    <scriptlet
+          class="org.eclipse.rcptt.tesla.ecl.internal.impl.commands.RestartAutService"
+          name="RestartAut"
           namespace="http://eclipse.org/rcptt/tesla/ecl">
     </scriptlet>
    </extension>

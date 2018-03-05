@@ -12,12 +12,10 @@
  -->
 
 <plugin>
-    <extension
-         point="org.eclipse.rcptt.ecl.core.scriptlet">
-      <scriptlet
-            class="org.eclipse.rcptt.tesla.ecl.impl.internal.workbench.RestartAutService"
-            name="RestartAut"
-            namespace="http://eclipse.org/rcptt/tesla/ecl">
-      </scriptlet>
-    </extension>
+   <extension
+         point="org.eclipse.rcptt.tesla.ecl.impl.restartService">
+      <restartService
+            class="org.eclipse.rcptt.tesla.ecl.impl.internal.workbench.WorkbenchRestartService">
+      </restartService>
+   </extension>
 </plugin>
