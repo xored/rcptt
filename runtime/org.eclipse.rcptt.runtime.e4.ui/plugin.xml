@@ -21,12 +21,4 @@
             class="org.eclipse.rcptt.runtime.e4.ui.PureE4ModelProcessor">
       </processor>
    </extension>
-   <extension
-         point="org.eclipse.rcptt.ecl.core.scriptlet">
-      <scriptlet
-            class="org.eclipse.rcptt.runtime.e4.internal.ui.SetQ7FeaturesService"
-            name="SetQ7Features"
-            namespace="http://eclipse.org/rcptt/core/ecl">
-      </scriptlet>
-   </extension>
 </plugin>

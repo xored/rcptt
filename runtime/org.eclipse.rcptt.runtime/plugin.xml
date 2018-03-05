@@ -11,7 +11,8 @@
     	Xored Software Inc - initial API and implementation and/or initial documentation
  -->
 
-<plugin>   
+<plugin>
+   <extension-point id="featureInstaller" name="featureInstaller" schema="schema/featureInstaller.exsd"/>
    <extension
          point="org.eclipse.rcptt.ecl.core.scriptlet">
       <scriptlet
@@ -37,6 +38,11 @@
       <scriptlet
             class="org.eclipse.rcptt.internal.runtime.SetOptionService"
             name="SetOption"
+            namespace="http://eclipse.org/rcptt/core/ecl">
+      </scriptlet>
+      <scriptlet
+            class="org.eclipse.rcptt.internal.runtime.SetQ7FeaturesService"
+            name="SetQ7Features"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
    </extension>

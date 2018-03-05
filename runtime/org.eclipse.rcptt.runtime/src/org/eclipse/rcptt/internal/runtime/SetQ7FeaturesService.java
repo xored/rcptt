@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 Xored Software Inc and others.
+ * Copyright (c) 2009, 2018 Xored Software Inc and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,19 +8,21 @@
  * Contributors:
  *     Xored Software Inc - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.rcptt.runtime.internal.ui;
+package org.eclipse.rcptt.internal.runtime;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jface.bindings.keys.formatting.KeyFormatterFactory;
+import org.eclipse.rcptt.core.Q7Features;
 import org.eclipse.rcptt.core.ecl.core.model.SetQ7Features;
 import org.eclipse.rcptt.ecl.core.Command;
 import org.eclipse.rcptt.ecl.runtime.ICommandService;
 import org.eclipse.rcptt.ecl.runtime.IProcess;
-import org.eclipse.rcptt.runtime.RcpttFeatureUtils;
-import org.eclipse.rcptt.tesla.workbench.formatter.Q7KeyFormatter;
+import org.eclipse.rcptt.runtime.features.FeatureManager;
+import org.eclipse.rcptt.tesla.core.TeslaFeatures;
+import org.eclipse.rcptt.tesla.core.TeslaVariables;
+import org.eclipse.rcptt.tesla.swt.events.TeslaEventManager;
 
 public class SetQ7FeaturesService implements ICommandService {
 
@@ -28,16 +30,29 @@ public class SetQ7FeaturesService implements ICommandService {
 			throws InterruptedException, CoreException {
 		SetQ7Features service = (SetQ7Features) command;
 		EList<String> features = service.getFeatures();
-		RcpttFeatureUtils.setFeatures(features);
 
-		checkShortcutsFormatter();
+		checkStatusDialogFeature(features);
+
+		Q7Features.getInstance().setValues(features);
+		TeslaFeatures.getInstance().setValues(features);
+
+		TeslaVariables.updateFromFeatureList(features);
+
+		FeatureManager.getInstance().installFeatures();
 
 		return Status.OK_STATUS;
 	}
 
-	private void checkShortcutsFormatter() {
-		if (!(KeyFormatterFactory.getDefault() instanceof Q7KeyFormatter))
-			Q7KeyFormatter.installQ7Formatter();
+	private void checkStatusDialogFeature(EList<String> features) {
+		for (String feature : features) {
+			int pos = feature.indexOf('=');
+			String key = feature.substring(0, pos);
+			String value = feature.substring(pos + 1);
+			if (key.equals(TeslaFeatures.STATUS_DIALOG_ALLOWED)) {
+				TeslaEventManager.getManager().setStatusDialogModeAllowed(
+						Boolean.valueOf(value));
+			}
+		}
 	}
 
 }

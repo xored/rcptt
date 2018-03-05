@@ -20,4 +20,5 @@ Require-Bundle: org.eclipse.swt,
  org.eclipse.rcptt.util;bundle-version="[2.3.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.rcptt.runtime
+Export-Package: org.eclipse.rcptt.runtime,
+ org.eclipse.rcptt.runtime.features

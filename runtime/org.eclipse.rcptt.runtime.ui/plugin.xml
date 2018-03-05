@@ -30,11 +30,6 @@
             name="GetViews"
             namespace="http://eclipse.org/rcptt/core/ecl">
       </scriptlet>
-      <scriptlet
-            class="org.eclipse.rcptt.runtime.internal.ui.SetQ7FeaturesService"
-            name="SetQ7Features"
-            namespace="http://eclipse.org/rcptt/core/ecl">
-      </scriptlet>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
@@ -49,5 +44,11 @@
       <startup 
             class="org.eclipse.rcptt.runtime.internal.ui.Q7RuntimeStartup"> 
       </startup> 
+   </extension>
+   <extension
+         point="org.eclipse.rcptt.runtime.featureInstaller">
+      <formatterInstaller
+            class="org.eclipse.rcptt.runtime.internal.ui.FormatterInstaller">
+      </formatterInstaller>
    </extension>
 </plugin>
