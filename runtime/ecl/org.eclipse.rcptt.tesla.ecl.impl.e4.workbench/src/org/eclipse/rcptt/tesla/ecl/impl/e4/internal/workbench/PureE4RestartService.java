@@ -26,7 +26,7 @@ public class PureE4RestartService implements IRestartAutService {
 	@Override
 	public void restart() {
 		ShutdownAutService.tryTerminateLaunches();
-		// TODO (e4 support): save all dirtyable parts
+		PureE4ModelProcessor.getPartService().saveAll(false);
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
