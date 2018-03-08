@@ -32,7 +32,6 @@ import org.eclipse.rcptt.tesla.core.ui.Label;
 import org.eclipse.rcptt.tesla.core.ui.Link;
 import org.eclipse.rcptt.tesla.core.ui.Marker;
 import org.eclipse.rcptt.tesla.core.ui.MenuItem;
-import org.eclipse.rcptt.tesla.core.ui.Part;
 import org.eclipse.rcptt.tesla.core.ui.Point;
 import org.eclipse.rcptt.tesla.core.ui.PropertyEntry;
 import org.eclipse.rcptt.tesla.core.ui.PropertyMap;

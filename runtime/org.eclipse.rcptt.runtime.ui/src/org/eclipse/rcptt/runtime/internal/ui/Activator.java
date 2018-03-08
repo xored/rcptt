@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-// TODO (e4 support): implement 'get-views' (and 'get-perspectives?) for e4
+// TODO (e4 support): implement 'get-views' and 'get-perspectives' for e4
 public class Activator extends Plugin {
 
 	// The plug-in ID
