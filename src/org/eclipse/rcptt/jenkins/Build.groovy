@@ -109,18 +109,23 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   }
 
   void build_and_test(Boolean sign) {
-      this.script.stage("Build") {
-          build(sign)
-          get_version() // print productVersion and productQualifier
-      }
-      this.script.stage("Archive") {
-          archive()
-      }
+      build(sign)
+
       this.script.stage("RCPTT Test") {
           rcptt_tests()
       }
       this.script.stage("Mockup Test") {
           mockup_tests()
+      }
+  }
+
+  void build(Boolean sign) {
+      this.script.stage("Build") {
+          _build(sign)
+          get_version() // print productVersion and productQualifier
+      }
+      this.script.stage("Archive") {
+          archive()
       }
   }
 
@@ -131,7 +136,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       }
   }
 
-  void build(Boolean sign) {
+  void _build(Boolean sign) {
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "mvn --version"
       this.script.sh "./fast-build.sh -Dmaven.repo.local=${getWorkspace()}/m2 -U -B -e ${sign ? "-P sign" : ""}"
