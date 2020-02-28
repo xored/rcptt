@@ -302,7 +302,6 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       this.script.sh "$SSH_CLIENT mkdir $storageFolder/runner"
 
       for(item in [ [ RCPTT_REPOSITORY_DIR, "repository" ],
-                    [ RUNTIME_DIR_E3, "runtime3x" ],
                     [ RUNTIME_DIR_E4, "runtime4x" ],
                     [ "$DOC_DIR/target/doc", "doc" ],
                     [ "$RCPTT_REPOSITORY_TARGET/rcptt.repository-*.zip", "repository-${version}${qualifiedDecoration}.zip" ],
