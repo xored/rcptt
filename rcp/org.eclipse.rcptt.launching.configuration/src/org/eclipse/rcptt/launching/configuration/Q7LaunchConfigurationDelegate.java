@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -45,8 +46,10 @@ import org.eclipse.rcptt.internal.launching.ext.Q7TargetPlatformManager;
 import org.eclipse.rcptt.launching.IQ7Launch;
 import org.eclipse.rcptt.launching.events.AutEventManager;
 import org.eclipse.rcptt.launching.ext.BundleStart;
+import org.eclipse.rcptt.launching.ext.DependencyResolver;
 import org.eclipse.rcptt.launching.ext.OriginalOrderProperties;
 import org.eclipse.rcptt.launching.ext.Q7ExternalLaunchDelegate;
+import org.eclipse.rcptt.launching.ext.Q7ExternalLaunchDelegate.BundlesToLaunch;
 import org.eclipse.rcptt.launching.ext.Q7LaunchDelegateUtils;
 import org.eclipse.rcptt.launching.internal.target.TargetPlatformHelper;
 import org.eclipse.rcptt.launching.target.ITargetPlatformHelper;
@@ -150,6 +153,7 @@ public class Q7LaunchConfigurationDelegate extends
 			IStatus rv = Q7TargetPlatformInitializer.initialize(helper, monitor);
 			if (!rv.isOK())
 				Activator.getDefault().getLog().log(rv);
+
 			helper.save();
 			Q7TargetPlatformManager.setHelper(targetName, helper);
 		}
