@@ -21,11 +21,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <ajdt43repository>http://download.eclipse.org/tools/ajdt/43/update/</ajdt43repository>
     <signExcludeInnerJars>true</signExcludeInnerJars>
-    <aspectj_version>1.7</aspectj_version>
-    <aspectj_dep>1.7.0</aspectj_dep>
-    <ajJavaSource>1.7</ajJavaSource>
-    <ajJavaTarget>1.7</ajJavaTarget>
-    <ajJavaCompilance>1.7</ajJavaCompilance>
+    <aspectj_version>1.12.1</aspectj_version>
+    <aspectj_dep>1.9.4</aspectj_dep>
+    <ajJavaSource>11</ajJavaSource>
+    <ajJavaTarget>11</ajJavaTarget>
+    <ajJavaCompilance>11</ajJavaCompilance>
     <cbi-version>1.1.8-SNAPSHOT</cbi-version>
   </properties>
   <distributionManagement>
@@ -171,7 +171,7 @@
           <version>3.0.0</version>
         </plugin>
         <plugin>
-          <groupId>org.codehaus.mojo</groupId>
+          <groupId>com.nickwongdev</groupId>
           <artifactId>aspectj-maven-plugin</artifactId>
           <version>${aspectj_version}</version>
         </plugin>
