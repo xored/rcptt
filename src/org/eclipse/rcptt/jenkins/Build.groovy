@@ -212,9 +212,6 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
     this.script.junit "**/target/*-reports/*.xml"
     this.script.archiveArtifacts allowEmptyArchive: true, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
 
-    this.script.sh "dd if=/dev/zero of=file.txt count=100 bs=1048576" // 1048576 bytes = 1Mb
-    this.script.sh "rm file.txt"
-
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "ps x"
     }
