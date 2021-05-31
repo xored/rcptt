@@ -131,7 +131,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
 
   void set_milestone(String decorator) {
       this.script.container(BUILD_CONTAINER_NAME) {
-        version = get_version_from_pom().split("-")[0]
+        def version = get_version_from_pom().split("-")[0]
         this.script.sh "./update_version.sh $version $decorator"
       }
   }
