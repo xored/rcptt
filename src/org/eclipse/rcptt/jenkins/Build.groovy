@@ -15,7 +15,7 @@ class Build implements Serializable {
   private final String BUILD_CONTAINER_NAME="ubuntu"
   private final String BUILD_CONTAINER="""
     - name: $BUILD_CONTAINER_NAME
-      image: dudaevar/ubuntu-rcptt:3.5.4
+      image: basilevs/ubuntu-rcptt:3.6.0
       tty: true
       resources:
         limits:
