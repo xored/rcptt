@@ -120,12 +120,15 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   }
 
   void build(Boolean sign) {
-      this.script.stage("Build") {
-          _build(sign)
-          get_version() // print productVersion and productQualifier
-      }
-      this.script.stage("Archive") {
-          archive()
+      try {
+        this.script.stage("Build") {
+            _build(sign)
+            get_version() // print productVersion and productQualifier
+        }
+      } finally {
+        this.script.stage("Archive") {
+            archive()
+        }
       }
   }
 
