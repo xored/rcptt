@@ -142,7 +142,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   void _build(Boolean sign) {
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "mvn --version"
-      this.script.sh "./fast-build.sh -Dmaven.repo.local=${getWorkspace()}/m2 -U -B -e ${sign ? "-P sign" : ""}"
+      this.script.sh "./fast-build.sh --fail-at-end -Dmaven.repo.local=${getWorkspace()}/m2 -U -B -e ${sign ? "-P sign" : ""}"
       this.script.sh "./build_runner.sh -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
       this.script.sh "mvn -f maven-plugin/pom.xml clean install -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
       this.script.sh "./$DOC_DIR/generate-doc.sh -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
