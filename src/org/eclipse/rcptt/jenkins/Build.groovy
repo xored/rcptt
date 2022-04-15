@@ -147,7 +147,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       }
       mvn "releng/mirroring/pom.xml"
       mvn "releng/core/pom.xml"
-      mvn "releng/runtime/pom.xml"
+      mvn "releng/runtime/pom.xml -P runtime4x"
       mvn "releng/ide/pom.xml"
       mvn "releng/rap/pom.xml -P core"
       mvn "releng/rap/pom.xml -P ide"
