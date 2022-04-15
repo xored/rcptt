@@ -121,10 +121,8 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
 
   void build(Boolean sign) {
       try {
-        this.script.stage("Build") {
-            _build(sign)
-            get_version() // print productVersion and productQualifier
-        }
+        _build(sign)
+        get_version() // print productVersion and productQualifier
       } finally {
         this.script.stage("Archive") {
             archive()
@@ -142,9 +140,20 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   void _build(Boolean sign) {
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "mvn --version"
-      this.script.sh "./fast-build.sh --fail-at-end -Dmaven.repo.local=${getWorkspace()}/m2 -U -B -e ${sign ? "-P sign" : ""}"
-      this.script.sh "./build_runner.sh -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
-      this.script.sh "mvn -f maven-plugin/pom.xml clean install -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
+      def mvn = { pom ->
+        this.script.stage(pom) {
+          this.script.sh "mvn clean verify -Dtycho.localArtifacts=ignore -Dmaven.repo.local=${getWorkspace()}/m2 -B -e -f ${pom}" 
+        }
+      }
+      mvn "releng/mirroring/pom.xml"
+      mvn "releng/core/pom.xml"
+      mvn "releng/runtime/pom.xml"
+      mvn "releng/ide/pom.xml"
+      mvn "releng/rap/pom.xml -P core"
+      mvn "releng/rap/pom.xml -P ide"
+      mvn "releng/rcptt/pom.xml"
+      mvn "releng/runner/pom.xml"
+      mvn "maven-plugin/pom.xml install"
       this.script.sh "./$DOC_DIR/generate-doc.sh -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
     }
   }
