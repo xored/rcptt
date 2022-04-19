@@ -212,12 +212,16 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   }
 
   private void _run_tests(String runner, String args) {
-    this.script.sh "mvn clean verify -B -f rcpttTests/pom.xml \
-        -Dmaven.repo.local=${getWorkspace()}/m2 -e \
-        -Dci-maven-version=2.0.0-SNAPSHOT \
-        -DexplicitRunner=`readlink -f ${runner}` \
-        ${args} || true"
-    this.script.sh "test -f ${getWorkspace()}/rcpttTests/target/results/tests.html"
+    try {
+      this.script.sh "mvn clean verify -B -f rcpttTests/pom.xml \
+          -Dmaven.repo.local=${getWorkspace()}/m2 -e \
+          -Dci-maven-version=2.0.0-SNAPSHOT \
+          -DexplicitRunner=`readlink -f ${runner}` \
+          ${args} || true"
+      this.script.sh "test -f ${getWorkspace()}/rcpttTests/target/results/tests.html"
+    } finally {
+      this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
+    }
   }
 
   void post_build_actions() {
