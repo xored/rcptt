@@ -161,6 +161,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   void archive() {
     this.script.fingerprint "$RUNTIME_DIR/org.eclipse.rcptt.updates.runtime*/q7/**/*.*"
     this.script.archiveArtifacts allowEmptyArchive: true, artifacts: "repository/**/target/repository/**/*, $PRODUCTS_DIR/*, $RUNNER_DIR/*.zip, maven-plugin/rcptt-maven-*/target/rcptt-maven-*.jar, $DOC_DIR/target/doc/**/*, **/target/**/*.log"
+    this.script.junit "**/target/*-reports/*.xml"
   }
 
   private void sh_with_return(String command) {
@@ -221,12 +222,11 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       this.script.sh "test -f ${getWorkspace()}/rcpttTests/target/results/tests.html"
     } finally {
       this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
+      this.script.junit "**/rcpttTests/target/*-reports/*.xml"
     }
   }
 
   void post_build_actions() {
-    this.script.junit "**/target/*-reports/*.xml"
-    this.script.archiveArtifacts allowEmptyArchive: true, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
 
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "ps x"
