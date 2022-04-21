@@ -142,7 +142,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       this.script.sh "mvn --version"
       def mvn = { pom ->
         this.script.stage(pom) {
-          this.script.sh "mvn clean verify -Dtycho.localArtifacts=ignore -Dmaven.repo.local=${getWorkspace()}/m2 -B -e -f ${pom}" 
+          this.script.sh "mvn clean verify --threads=1.0C -Dtycho.localArtifacts=ignore -Dmaven.repo.local=${getWorkspace()}/m2 -B -e -f ${pom}" 
         }
       }
       mvn "releng/mirroring/pom.xml"
@@ -153,15 +153,15 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       mvn "releng/rap/pom.xml -P ide"
       mvn "releng/rcptt/pom.xml"
       mvn "releng/runner/pom.xml"
-      mvn "maven-plugin/pom.xml install"
+      mvn "maven-plugin/pom.xml install"      
       this.script.sh "./$DOC_DIR/generate-doc.sh -Dmaven.repo.local=${getWorkspace()}/m2 -B -e"
     }
   }
 
   void archive() {
+    this.script.junit "**/target/*-reports/*.xml"
     this.script.fingerprint "$RUNTIME_DIR/org.eclipse.rcptt.updates.runtime*/q7/**/*.*"
     this.script.archiveArtifacts allowEmptyArchive: true, artifacts: "repository/**/target/repository/**/*, $PRODUCTS_DIR/*, $RUNNER_DIR/*.zip, maven-plugin/rcptt-maven-*/target/rcptt-maven-*.jar, $DOC_DIR/target/doc/**/*, **/target/**/*.log"
-    this.script.junit "**/target/*-reports/*.xml"
   }
 
   private void sh_with_return(String command) {
@@ -219,10 +219,10 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
           -Dci-maven-version=2.0.0-SNAPSHOT \
           -DexplicitRunner=`readlink -f ${runner}` \
           ${args} || true"
-      this.script.sh "test -f ${getWorkspace()}/rcpttTests/target/results/tests.html"
+      this.script.sh "test -f rcpttTests/target/results/tests.html"
     } finally {
       this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
-      this.script.junit "**/rcpttTests/target/*-reports/*.xml"
+      this.script.junit "rcpttTests/target/*-reports/*.xml"
     }
   }
 
