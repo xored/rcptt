@@ -190,7 +190,10 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
         "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
         "-DrcpttPath=${getWorkspace()}/$PRODUCTS_DIR/org.eclipse.rcptt.platform.product-linux.gtk.x86_64.zip"
       )
+      this.script.stash "mainTestResults", "rcpttTests/target/*-reports/*.xml"
     }
+    this.script.unstash "mainTestResults"
+    this.script.junit "rcpttTests/target/*-reports/*.xml"
   }
 
   void mockup_tests() {
@@ -202,7 +205,10 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
           "-DmockupsRepository=https://ci.eclipse.org/rcptt/job/mockups/lastSuccessfulBuild/artifact/repository/target/repository"
         )
       }
+      this.script.stash "mockupsTestResult", "mockups/rcpttTests/target/*-reports/*.xml"
     }
+    this.script.unstash "mockupsTestResult"
+    this.script.junit "mockups/rcpttTests/target/*-reports/*.xml"
   }
 
   void tests(String repo, String runner, String args) {
@@ -222,7 +228,6 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
       this.script.sh "test -f rcpttTests/target/results/tests.html"
     } finally {
       this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
-      this.script.junit "rcpttTests/target/*-reports/*.xml"
     }
   }
 
