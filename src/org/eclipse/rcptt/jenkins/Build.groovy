@@ -27,7 +27,7 @@ class Build implements Serializable {
       env:
       - name: "MAVEN_OPTS"
         value: "-Duser.home=/home/jenkins"
-      - name: "JAVA_TOOL_OPTIONS"
+      - name: "JAVA_OPTS"
         value: "-Xmx1G"
       volumeMounts:
       - name: settings-xml
