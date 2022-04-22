@@ -27,6 +27,8 @@ class Build implements Serializable {
       env:
       - name: "MAVEN_OPTS"
         value: "-Duser.home=/home/jenkins"
+      - name: "XDG_CONFIG_HOME"
+        value: "/tmp"
       volumeMounts:
       - name: settings-xml
         mountPath: /home/jenkins/.m2/settings.xml
