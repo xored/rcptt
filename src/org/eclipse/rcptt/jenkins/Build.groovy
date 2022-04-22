@@ -27,6 +27,8 @@ class Build implements Serializable {
       env:
       - name: "MAVEN_OPTS"
         value: "-Duser.home=/home/jenkins"
+      - name: "JAVA_TOOL_OPTIONS"
+        value: "-Xmx1G"
       volumeMounts:
       - name: settings-xml
         mountPath: /home/jenkins/.m2/settings.xml
@@ -190,10 +192,8 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
         "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
         "-DrcpttPath=${getWorkspace()}/$PRODUCTS_DIR/org.eclipse.rcptt.platform.product-linux.gtk.x86_64.zip"
       )
-      this.script.stash name: "mainTestResults", includes: "rcpttTests/target/*-reports/*.xml"
+      this.script.junit "rcpttTests/target/*-reports/*.xml"
     }
-    this.script.unstash "mainTestResults"
-    this.script.junit "rcpttTests/target/*-reports/*.xml"
   }
 
   void mockup_tests() {
@@ -205,10 +205,8 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
           "-DmockupsRepository=https://ci.eclipse.org/rcptt/job/mockups/lastSuccessfulBuild/artifact/repository/target/repository"
         )
       }
-      this.script.stash name: "mockupsTestResult", includes: "mockups/rcpttTests/target/*-reports/*.xml"
+      this.script.junit "mockups/rcpttTests/target/*-reports/*.xml"
     }
-    this.script.unstash "mockupsTestResult"
-    this.script.junit "mockups/rcpttTests/target/*-reports/*.xml"
   }
 
   void tests(String repo, String runner, String args) {
