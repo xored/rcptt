@@ -190,7 +190,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
         "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
         "-DrcpttPath=${getWorkspace()}/$PRODUCTS_DIR/org.eclipse.rcptt.platform.product-linux.gtk.x86_64.zip"
       )
-      this.script.stash "mainTestResults", "rcpttTests/target/*-reports/*.xml"
+      this.script.stash name: "mainTestResults", includes: "rcpttTests/target/*-reports/*.xml"
     }
     this.script.unstash "mainTestResults"
     this.script.junit "rcpttTests/target/*-reports/*.xml"
@@ -205,7 +205,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
           "-DmockupsRepository=https://ci.eclipse.org/rcptt/job/mockups/lastSuccessfulBuild/artifact/repository/target/repository"
         )
       }
-      this.script.stash "mockupsTestResult", "mockups/rcpttTests/target/*-reports/*.xml"
+      this.script.stash name: "mockupsTestResult", includes: "mockups/rcpttTests/target/*-reports/*.xml"
     }
     this.script.unstash "mockupsTestResult"
     this.script.junit "mockups/rcpttTests/target/*-reports/*.xml"
