@@ -27,8 +27,6 @@ class Build implements Serializable {
       env:
       - name: "MAVEN_OPTS"
         value: "-Duser.home=/home/jenkins"
-      - name: "JAVA_OPTS"
-        value: "-Xmx1G"
       volumeMounts:
       - name: settings-xml
         mountPath: /home/jenkins/.m2/settings.xml
@@ -58,6 +56,9 @@ class Build implements Serializable {
   private final String SSH_DEPLOY_CONTAINER_NAME="jnlp"
   private final String SSH_DEPLOY_CONTAINER="""
     - name: $SSH_DEPLOY_CONTAINER_NAME
+      env:
+      - name: "JAVA_TOOL_OPTIONS"
+        value: "-Xmx1G"
       volumeMounts:
       - name: volume-known-hosts
         mountPath: /home/jenkins/.ssh"""
