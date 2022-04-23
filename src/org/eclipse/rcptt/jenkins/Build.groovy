@@ -146,9 +146,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "mvn --version"
       def mvn = { pom ->
-        this.script.stage(pom) {
           this.script.sh "mvn clean verify --threads=1.0C -Dtycho.localArtifacts=ignore -Dmaven.repo.local=${getWorkspace()}/m2 -B -e -f ${pom}" 
-        }
       }
       mvn "releng/mirroring/pom.xml"
       mvn "releng/core/pom.xml"
@@ -193,7 +191,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
     this.script.container(BUILD_CONTAINER_NAME) {
       _run_tests(
         "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
-        ".",
+        "rcpttTests",
         "-DrcpttPath=${getWorkspace()}/$PRODUCTS_DIR/org.eclipse.rcptt.platform.product-linux.gtk.x86_64.zip"
       )
       //this.script.junit "rcpttTests/target/*-reports/*.xml"
@@ -216,7 +214,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   void tests(String repo, String runner, String args) {
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.git repo
-      _run_tests(runner, ".", args)
+      _run_tests(runner, "rcpttTests", args)
     }
   }
 
