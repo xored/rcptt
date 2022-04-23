@@ -193,6 +193,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
     this.script.container(BUILD_CONTAINER_NAME) {
       _run_tests(
         "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
+        ".",
         "-DrcpttPath=${getWorkspace()}/$PRODUCTS_DIR/org.eclipse.rcptt.platform.product-linux.gtk.x86_64.zip"
       )
       //this.script.junit "rcpttTests/target/*-reports/*.xml"
@@ -203,33 +204,33 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.dir('mockups') {
         this.script.git "https://github.com/DudaevAR/q7.quality.mockups.git"
-        _run_tests(
-          "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
-          "-DmockupsRepository=https://ci.eclipse.org/rcptt/job/mockups/lastSuccessfulBuild/artifact/repository/target/repository"
-        )
       }
-      //this.script.junit "mockups/rcpttTests/target/*-reports/*.xml"
+      _run_tests(
+          "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
+          "mockups/rcpttTests",
+          "-DmockupsRepository=https://ci.eclipse.org/rcptt/job/mockups/lastSuccessfulBuild/artifact/repository/target/repository"
+      )
     }
   }
 
   void tests(String repo, String runner, String args) {
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.git repo
-      _run_tests(runner, args)
+      _run_tests(runner, ".", args)
     }
   }
 
-  private void _run_tests(String runner, String args) {
+  private void _run_tests(String runner, String dir, String args) {
     try {
-      this.script.sh "mvn clean verify -B -f rcpttTests/pom.xml \
+      this.script.sh "mvn clean verify -B -f ${dir}/pom.xml \
           -Dmaven.repo.local=${getWorkspace()}/m2 -e \
           -Dci-maven-version=2.0.0-SNAPSHOT \
           -DexplicitRunner=`readlink -f ${runner}` \
           ${args} || true"
-      this.script.sh "test -f rcpttTests/target/results/tests.html"
+      this.script.sh "test -f ${dir}/target/results/tests.html"
     } finally {
-      this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "rcpttTests/target/results/**/*, rcpttTests/target/**/*err*log, rcpttTests/target/runner/configuration/*.log, rcpttTests/target/runner-workspace/**/*, rcpttTests/target/**/.log, mockups/rcpttTests/target/results/**/*, mockups/rcpttTests/target/**/*err*log, mockups/rcpttTests/target/runner/configuration/*.log, mockups/rcpttTests/target/runner-workspace/**/*, mockups/rcpttTests/target/**/.log"
-    }
+      this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "${dir}/target/results/**/*, ${dir}/target/**/*log"
+   }
   }
 
   void post_build_actions() {
