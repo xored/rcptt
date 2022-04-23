@@ -233,7 +233,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   }
 
   void post_build_actions() {
-
+    this.script.sh "jps -v"
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.sh "ps x"
     }
