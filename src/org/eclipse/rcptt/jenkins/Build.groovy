@@ -201,7 +201,7 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
   void mockup_tests() {
     this.script.container(BUILD_CONTAINER_NAME) {
       this.script.dir('mockups') {
-        this.script.git "https://github.com/DudaevAR/q7.quality.mockups.git"
+        this.script.git "https://github.com/xored/q7.quality.mockups.git"
       }
       _run_tests(
           "${getWorkspace()}/$RUNNER_DIR/rcptt.runner-*.zip",
