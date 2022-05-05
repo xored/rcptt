@@ -227,8 +227,8 @@ $SSH_DEPLOY_CONTAINER_VOLUMES
           ${args} || true"
       this.script.sh "test -f ${dir}/target/results/tests.html"
     } finally {
-      this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "${dir}/target/results/**/*, ${dir}/target/**/*log"
-   }
+      this.script.archiveArtifacts allowEmptyArchive: false, artifacts: "${dir}/target/results/**/*, ${dir}/target/**/*log,${dir}/target/surefire-reports/**"
+    }
   }
 
   void post_build_actions() {
